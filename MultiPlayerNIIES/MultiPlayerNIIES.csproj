@@ -55,6 +55,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\AreaVideoPlayersView.xaml.cs">
+      <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainPanelView.xaml.cs">
+      <DependentUpon>MainPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VideoPlayerListView.xaml.cs">
+      <DependentUpon>VideoPlayerListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VideoPlayerPropertiesView.xaml.cs">
+      <DependentUpon>VideoPlayerPropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VideoPlayerView.xaml.cs">
+      <DependentUpon>VideoPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VideoSetsPanelView.xaml.cs">
+      <DependentUpon>VideoSetsPanelView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +88,34 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AreaVideoPlayersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VideoPlayerListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VideoPlayerPropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VideoPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VideoSetsPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -93,6 +142,31 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="VM\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PNG\Add.png" />
+    <Resource Include="Images\PNG\Cross.png" />
+    <Resource Include="Images\PNG\Delete.png" />
+    <Resource Include="Images\PNG\Disk.png" />
+    <Resource Include="Images\PNG\Export-Excel.png" />
+    <Resource Include="Images\PNG\Measure.png" />
+    <Resource Include="Images\PNG\Page-White-Add.png" />
+    <Resource Include="Images\PNG\Page-White-Get.png" />
+    <Resource Include="Images\PNG\Page-White-Put.png" />
+    <Resource Include="Images\PNG\Question.png" />
+    <Resource Include="Images\PNG\Save-As.png" />
+    <Resource Include="Images\PNG\Table-Delete.png" />
+    <Resource Include="Images\PNG\Table-Import.png" />
+    <Resource Include="Images\PNG\Table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\button.png" />
+    <Resource Include="Images\lever.png" />
+    <Resource Include="Images\tumbler.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
