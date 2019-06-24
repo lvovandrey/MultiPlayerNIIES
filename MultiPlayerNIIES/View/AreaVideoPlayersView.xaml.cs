@@ -36,9 +36,9 @@ namespace MultiPlayerNIIES.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            player1.Load(@"C:\\tmp\test1.avi");
-            player2.Load(@"C:\\tmp\test2.avi");
-            player3.Load(@"C:\\tmp\test3.avi");
+            player1.Load(@"C:\\tmp\test5.avi");
+            player2.Load(@"C:\\tmp\test6.avi");
+            player3.Load(@"C:\\tmp\test7.avi");
             player4.Load(@"C:\\tmp\test4.avi");
 
         }
