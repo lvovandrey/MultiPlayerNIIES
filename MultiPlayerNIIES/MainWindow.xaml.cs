@@ -23,6 +23,8 @@ namespace MultiPlayerNIIES
         public MainWindow()
         {
             InitializeComponent();
+            Unosquare.FFME.Library.FFmpegDirectory = @"c:\ffmpeg\";
+
         }
     }
 }

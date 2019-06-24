@@ -24,5 +24,23 @@ namespace MultiPlayerNIIES.View
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            player1.start();
+            player2.start();
+            player3.start();
+            player4.start();
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            player1.Load(@"C:\\tmp\test1.avi");
+            player2.Load(@"C:\\tmp\test2.avi");
+            player3.Load(@"C:\\tmp\test3.avi");
+            player4.Load(@"C:\\tmp\test4.avi");
+
+        }
     }
 }

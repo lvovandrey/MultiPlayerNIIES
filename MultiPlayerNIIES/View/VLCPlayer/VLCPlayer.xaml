@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.VLCPlayer.VLCPlayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.VLCPlayer"
+             xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+            
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300" BorderBrush="Black" Margin="2,2,2,3"
+             x:Name="ThisPlayer">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="80"/>
+
+
+        </Grid.ColumnDefinitions>
+        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="6"/>
+        <Slider Name="TimeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="3"  
+                VerticalAlignment="Stretch" Maximum="1000" Value="{Binding ElementName=ThisPlayer, Path=Position, UpdateSourceTrigger=PropertyChanged}" 
+                PreviewMouseDown="TimeSlider_PreviewMouseDown" 
+                PreviewMouseUp="TimeSlider_PreviewMouseUp" />
+        <Button Name="PlayBtn" Grid.Row="1" Grid.Column="0" Margin="3" Click="PlayBtn_Click_1" >
+            <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png"/>
+        </Button>
+
+        <Slider Name="VolumeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="1"  
+                VerticalAlignment="Stretch" Maximum="100" Value="{Binding ElementName=ThisPlayer, Path=Volume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+
+
+
+
+        <Button Name="MuteBtn" Grid.Row="1" Grid.Column="2" Margin="3" Click="MuteBtn_Click" >
+            <Image Source="/MultiPlayerNIIES;component/Images/mute.png"/>
+        </Button>
+        <TextBox  x:Name="TimeTextBox" Grid.Row="1" Grid.Column="4" 
+                            TextAlignment="Center" VerticalAlignment="Center" MinHeight="10" 
+                            BorderBrush="{x:Null}" Text="{Binding ElementName=ThisPlayer, Path=CurTime, StringFormat=hh\\:mm\\:ss\\.ff }"/>
+
+
+
+    </Grid>
+</UserControl>

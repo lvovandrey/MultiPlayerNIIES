@@ -24,5 +24,34 @@ namespace MultiPlayerNIIES.View
         {
             InitializeComponent();
         }
+        public void start()
+        {
+            //            VLC.play();
+            //ME.Play();
+            FFME.Play();
+        }
+        public void Load(string filepath)
+        {
+            //          VLC.vlc.MediaPlayer.Play(new Uri(@filepath));
+
+            //            Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(0.1));
+
+            //ME.Source = new Uri(@filepath);
+            //ME.Play();
+            //Tools.ToolsTimer.Delay(() => 
+            //{
+            //    ME.Pause();
+            //    ME.Position= TimeSpan.FromSeconds(4);
+            //}, TimeSpan.FromSeconds(0.1));
+
+
+            FFME.Source = new Uri(@filepath);
+            FFME.Play();
+            Tools.ToolsTimer.Delay(() =>
+            {
+                FFME.Pause();
+                FFME.Position = TimeSpan.FromSeconds(4);
+            }, TimeSpan.FromSeconds(0.1));
+        }
     }
 }

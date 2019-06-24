@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,9 +35,38 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ffme.win, Version=4.1.300.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFME.Windows.4.1.300\lib\net461\ffme.win.dll</HintPath>
+    </Reference>
+    <Reference Include="FFmpeg.AutoGen, Version=4.1.0.2, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFmpeg.AutoGen.4.1.0.2\lib\net45\FFmpeg.AutoGen.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -46,15 +76,29 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Vlc.DotNet.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Core.2.2.1\lib\net45\Vlc.DotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Core.Interops, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Core.Interops.2.2.1\lib\net45\Vlc.DotNet.Core.Interops.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Forms, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Forms.2.2.1\lib\net45\Vlc.DotNet.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Wpf, Version=2.2.1.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Wpf.2.2.1\lib\net45\Vlc.DotNet.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Tools\ToolTimer.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
     </Compile>
@@ -75,6 +119,10 @@
     </Compile>
     <Compile Include="View\VideoSetsPanelView.xaml.cs">
       <DependentUpon>VideoSetsPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VLCPlayer\Helper.cs" />
+    <Compile Include="View\VLCPlayer\VLCPlayer.xaml.cs">
+      <DependentUpon>VLCPlayer.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -116,6 +164,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\VLCPlayer\VLCPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -135,6 +187,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
