@@ -37,19 +37,6 @@ namespace MultiPlayerNIIES.View
             //--------------------------------------
             //VLC
             VLC.Source = new Uri(@filepath);
-            //VLC.vlc.MediaPlayer.Pause();
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(1));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(2));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(3));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(4));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(5));
-
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(6));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(7));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(8));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(9));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(10));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(11));
 
             //--------------------------------------
             //MediaELEMENT
@@ -70,6 +57,8 @@ namespace MultiPlayerNIIES.View
             //    FFME.Pause();
             //    FFME.Position = TimeSpan.FromSeconds(4);
             //}, TimeSpan.FromSeconds(0.1));
+
+            
         }
 
         internal void Pause()

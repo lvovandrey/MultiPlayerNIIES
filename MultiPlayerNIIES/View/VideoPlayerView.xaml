@@ -9,7 +9,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="BlanchedAlmond" >
-        <vlc:VLCPlayer Margin="5" x:Name="VLC"></vlc:VLCPlayer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Тут могли быть Ваши титры..." x:Name="TextBlockSubtitles"/>
+        <vlc:VLCPlayer Grid.Row="1" Margin="5" x:Name="VLC"></vlc:VLCPlayer>
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
 

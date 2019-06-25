@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,6 +58,12 @@ namespace MultiPlayerNIIES.View
             player2.Pause();
             player3.Pause();
             player4.Pause();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Subtitler s = new Subtitler();
+            s.LoadSubtitles(@"C:\\tmp\test1.srt");
         }
     }
 }

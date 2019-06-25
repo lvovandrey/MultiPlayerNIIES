@@ -25,6 +25,7 @@
             <Button Content="start" Width="60" Height="30" Click="Button_Click" />
             <Button Content="sync" Width="60" Height="30"  Click="Button_Click_2" />
             <Button Content="Pause" Width="60" Height="30"  Click="Button_Click_3" />
+            <Button Content="SubsRead" Width="60" Height="30"  Click="Button_Click_4" />
         </StackPanel>
         <local:VideoPlayerView Grid.Row="0" Grid.Column="0" Margin="0,30,0,0" x:Name="player1"/>
         <local:VideoPlayerView Grid.Row="0" Grid.Column="2" x:Name="player2"/>
