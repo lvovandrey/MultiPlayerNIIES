@@ -31,7 +31,6 @@ namespace MultiPlayerNIIES.View
             player2.start();
             player3.start();
             player4.start();
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -41,6 +40,23 @@ namespace MultiPlayerNIIES.View
             player3.Load(@"C:\\tmp\test7.avi");
             player4.Load(@"C:\\tmp\test4.avi");
 
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            TimeSpan curPos = player1.VLC.CurTime;
+            player1.SetPosition(curPos);
+            player2.SetPosition(curPos);
+            player3.SetPosition(curPos);
+            player4.SetPosition(curPos);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            player1.Pause();
+            player2.Pause();
+            player3.Pause();
+            player4.Pause();
         }
     }
 }

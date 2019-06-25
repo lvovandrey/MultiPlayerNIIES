@@ -26,18 +26,30 @@ namespace MultiPlayerNIIES.View
         }
         public void start()
         {
-            //VLC.play();
+            VLC.play();
             
             //ME.Play();
-            FFME.Play();
+           // FFME.Play();
         }
         public void Load(string filepath)
         {
 
             //--------------------------------------
             //VLC
-            //VLC.vlc.MediaPlayer.Play(new Uri(@filepath));
-            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(0.1));
+            VLC.Source = new Uri(@filepath);
+            //VLC.vlc.MediaPlayer.Pause();
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(1));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(2));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(3));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(4));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(5));
+
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(6));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(7));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(8));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(9));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(10));
+            //Tools.ToolsTimer.Delay(() => { VLC.pause(); }, TimeSpan.FromSeconds(11));
 
             //--------------------------------------
             //MediaELEMENT
@@ -51,13 +63,29 @@ namespace MultiPlayerNIIES.View
 
             //--------------------------------------
             //FFME
-            FFME.Source = new Uri(@filepath);
-            FFME.Play();
-            Tools.ToolsTimer.Delay(() =>
-            {
-                FFME.Pause();
-                FFME.Position = TimeSpan.FromSeconds(4);
-            }, TimeSpan.FromSeconds(0.1));
+            //FFME.Source = new Uri(@filepath);
+            //FFME.Play();
+            //Tools.ToolsTimer.Delay(() =>
+            //{
+            //    FFME.Pause();
+            //    FFME.Position = TimeSpan.FromSeconds(4);
+            //}, TimeSpan.FromSeconds(0.1));
+        }
+
+        internal void Pause()
+        {
+            VLC.pause();
+        }
+
+        public void SetPosition(TimeSpan position)
+        {
+            VLC.pause();
+
+            double pos = 1000* position.TotalSeconds / VLC.Duration.TotalSeconds;
+
+            Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
+            
+
         }
     }
 }

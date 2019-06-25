@@ -20,9 +20,12 @@
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <GridSplitter Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
-        <Button Content="start" Width="60" Height="30" VerticalAlignment="Top" Click="Button_Click" />
-        <Button Content="Load" Width="60" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Click="Button_Click_1" />
-
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Content="Load" Width="60" Height="30"  Click="Button_Click_1" />
+            <Button Content="start" Width="60" Height="30" Click="Button_Click" />
+            <Button Content="sync" Width="60" Height="30"  Click="Button_Click_2" />
+            <Button Content="Pause" Width="60" Height="30"  Click="Button_Click_3" />
+        </StackPanel>
         <local:VideoPlayerView Grid.Row="0" Grid.Column="0" Margin="0,30,0,0" x:Name="player1"/>
         <local:VideoPlayerView Grid.Row="0" Grid.Column="2" x:Name="player2"/>
         <local:VideoPlayerView Grid.Row="2" Grid.Column="0" x:Name="player3"/>
