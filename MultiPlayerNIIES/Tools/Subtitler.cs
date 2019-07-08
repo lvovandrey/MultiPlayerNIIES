@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,11 @@ namespace MultiPlayerNIIES.Tools
 
     public class Subtitler
     {
-        Dictionary<TimeInterval, string> Subtitles;
+        List<TitleInfo> Subtitles;
         List<string> RawSubtitles;
         public Subtitler()
         {
-            Subtitles = new Dictionary<TimeInterval, string>();
+            Subtitles = new List<TitleInfo>();
             RawSubtitles = new List<string>();
         }
         public void LoadSubtitles(string filename)
@@ -37,13 +38,54 @@ namespace MultiPlayerNIIES.Tools
                 MessageBox.Show("Ошибка считывания файлов титров: " + e.Message);
             }
             SubtitlesParser.ParseRawTitles(RawSubtitles, out Subtitles);
+            RawSubtitles = null;
+
+            TitleInfo T = Subtitles[BinarySearch(TimeSpan.FromSeconds(2400))];
+            MessageBox.Show(T.Begin.ToString() + " --> " + T.End.ToString() + "   " + T.Text);
+        }
+
+        public int BinarySearch(TimeSpan time)
+        {
+            int left = 0;
+            int right = Subtitles.Count-1;
+            if (left == right)
+                return left;
+            while (true)
+            {
+                if (right - left == 1)
+                {
+                    if (Subtitles[left].Compare(time) == 0)
+                        return left;
+                    if (Subtitles[right].Compare(time) == 0)
+                        return right;
+                    return -1;
+                }
+                else
+                {
+                    int middle = left + (right - left) / 2;
+                    int comparisonResult = Subtitles[middle].Compare(time);
+                    if (comparisonResult == 0)
+                        return middle;
+                    if (comparisonResult < 0)
+                        left = middle;
+                    if (comparisonResult > 0)
+                        right = middle;
+                }
+            }
         }
     }
 
-    public class TimeInterval
+    public class TitleInfo
     {
         public TimeSpan Begin;
         public TimeSpan End;
+        private string text;
+        public string Text
+        {
+            get { return text; }
+            set { text = value; TimeFromText = SetTimeFromText(text); }
+        }
+        public TimeSpan TimeFromText;
 
         public bool IsIncluded(TimeSpan time)
         {
@@ -53,13 +95,47 @@ namespace MultiPlayerNIIES.Tools
             }
             return false;
         }
+
+        public int Compare(TimeSpan time)
+        {
+            if (time >= Begin && time < End)
+            {
+                return 0;
+            }
+            else if (time < Begin )
+            {
+                return 1;
+            }
+            else if (time > End)
+            {
+                return -1;
+            }
+            return -1;
+        }
+
+        //TODO: позже сделать в SetTimeFromText закидывание делегата для парсинга 
+        public static TimeSpan SetTimeFromText(string Text)
+        {
+            //string tmpstr = Text;
+            //tmpstr = tmpstr.Substring(0, 11);
+            //tmpstr.Replace(";", ":");
+            //string s1 =  tmpstr.Substring(0,tmpstr.LastIndexOf(":"));
+            //string s2 = tmpstr.Substring(tmpstr.LastIndexOf(":")+1);
+            //tmpstr = s1 + "." + s2;
+
+            TimeSpan time;
+            string Format = @"h\;mm\;ss\;fff";
+            CultureInfo culture = CultureInfo.CurrentCulture;
+            TimeSpan.TryParseExact(Text, Format, culture, TimeSpanStyles.None, out time);
+            return time;
+        }
     }
 
     public static class SubtitlesParser
     {
-        public static bool GetTimeInterval(string s, out TimeInterval timeInterval)
+        public static bool GetTimeInterval(string s, out TitleInfo titleInfo)
         {
-            timeInterval = new TimeInterval();
+            titleInfo = new TitleInfo();
             int endOfFirstTime, beginOfSecondTime, delimiterIndex;
             delimiterIndex = s.IndexOf(" --> ");
             if (delimiterIndex < 5) { return false;}
@@ -70,24 +146,23 @@ namespace MultiPlayerNIIES.Tools
             FirstTimeStr = s.Substring(1,endOfFirstTime);
             SecondTimeStr = s.Substring(beginOfSecondTime);
 
-            if (!TimeSpan.TryParse(FirstTimeStr,out timeInterval.Begin)) return false;
-            if (!TimeSpan.TryParse(SecondTimeStr,out timeInterval.End)) return false;
+            if (!TimeSpan.TryParse(FirstTimeStr,out titleInfo.Begin)) return false;
+            if (!TimeSpan.TryParse(SecondTimeStr,out titleInfo.End)) return false;
             
             return true;
         }
 
-        public static bool GetSubtitleText(string s, out string Text)
+        public static bool GetSubtitleText(string s, ref TitleInfo titleInfo)
         {
-
-            Text = s;
-            TitleClearTags(ref Text);
-            Text = Text.Trim();
+            string tmpstr = s;
+            TitleClearTags(ref tmpstr);
+            titleInfo.Text = tmpstr.Trim();
             return true;
         }
 
         static void TitleClearTags(ref string Text)
         {
-            string tmpstr= Text;
+            string tmpstr = Text;
 
             int antiInfinity = 0;
             while (tmpstr.Contains("{"))
@@ -138,13 +213,13 @@ namespace MultiPlayerNIIES.Tools
 
 
 
-        public static bool ParseRawTitles(List<string> RawSubtitles, out Dictionary<TimeInterval, string> OuterSubtitles)
+        public static bool ParseRawTitles(List<string> RawSubtitles, out List<TitleInfo> OuterSubtitles)
         {
             int curStrNumber = 1;
             int nextRecStrNumber = 0;
             string TimeStr, TextStr; 
 
-            OuterSubtitles = new Dictionary<TimeInterval, string>();
+            OuterSubtitles = new List<TitleInfo>();
 
             while (curStrNumber < RawSubtitles.Count)
             {
@@ -154,11 +229,11 @@ namespace MultiPlayerNIIES.Tools
 
                 TimeStr = RawSubtitles[nextRecStrNumber + 2];
                 TextStr = RawSubtitles[nextRecStrNumber + 3];
-                TimeInterval timeInterval = new TimeInterval();
+                TitleInfo titleInfo = new TitleInfo();
                 string text = "";
-                GetTimeInterval(TimeStr, out timeInterval);
-                GetSubtitleText(TextStr, out text);
-                OuterSubtitles.Add(timeInterval, text);
+                GetTimeInterval(TimeStr, out titleInfo);
+                GetSubtitleText(TextStr, ref titleInfo);
+                OuterSubtitles.Add(titleInfo);
                 curStrNumber = nextRecStrNumber+1;
             }
             return false;
