@@ -27,5 +27,21 @@ namespace MultiPlayerNIIES.Tools
             ToolTimer.Interval = Interval;
             ToolTimer.Start();
         }
+
+        public static void Timer(VoidDelegate Tick, TimeSpan Interval)
+        {
+            System.Windows.Threading.DispatcherTimer ToolTimer = new System.Windows.Threading.DispatcherTimer();
+
+            if (ToolTimer == null)
+            {
+                ToolTimer = new System.Windows.Threading.DispatcherTimer();
+            }
+            ToolTimer.Tick += (s, _) =>
+            {
+                Tick();
+            };
+            ToolTimer.Interval = Interval;
+            ToolTimer.Start();
+        }
     }
 }

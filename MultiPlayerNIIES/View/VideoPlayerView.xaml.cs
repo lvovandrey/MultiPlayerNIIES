@@ -1,7 +1,9 @@
-﻿using System;
+﻿using MultiPlayerNIIES.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +25,18 @@ namespace MultiPlayerNIIES.View
         public VideoPlayerView()
         {
             InitializeComponent();
+            ToolsTimer.Timer(TimerTick, TimeSpan.FromSeconds(0.05));
         }
+
+        private void TimerTick()
+        {
+            if (subtitler != null && subtitler.Ready)
+            {
+                TextBlockSubtitles.Text = subtitler.Subtitles[subtitler.BinarySearch(VLC.CurTime)].Text;
+            }
+        }
+
+
         public void start()
         {
             VLC.play();
@@ -73,8 +86,9 @@ namespace MultiPlayerNIIES.View
             double pos = 1000* position.TotalSeconds / VLC.Duration.TotalSeconds;
 
             Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
-            
-
         }
+
+        public Subtitler subtitler;
+
     }
 }

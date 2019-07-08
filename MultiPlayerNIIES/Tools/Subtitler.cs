@@ -12,7 +12,8 @@ namespace MultiPlayerNIIES.Tools
 
     public class Subtitler
     {
-        List<TitleInfo> Subtitles;
+        public bool Ready = false;
+        public List<TitleInfo> Subtitles;
         List<string> RawSubtitles;
         public Subtitler()
         {
@@ -42,6 +43,7 @@ namespace MultiPlayerNIIES.Tools
 
             TitleInfo T = Subtitles[BinarySearch(TimeSpan.FromSeconds(2400))];
             MessageBox.Show(T.Begin.ToString() + " --> " + T.End.ToString() + "   " + T.Text);
+            Ready = true;
         }
 
         public int BinarySearch(TimeSpan time)
