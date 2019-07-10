@@ -41,8 +41,6 @@ namespace MultiPlayerNIIES.Tools
             SubtitlesParser.ParseRawTitles(RawSubtitles, out Subtitles);
             RawSubtitles = null;
 
-            TitleInfo T = Subtitles[BinarySearch(TimeSpan.FromSeconds(2400))];
-            MessageBox.Show(T.Begin.ToString() + " --> " + T.End.ToString() + "   " + T.Text);
             Ready = true;
         }
 
@@ -75,6 +73,38 @@ namespace MultiPlayerNIIES.Tools
                 }
             }
         }
+
+
+        //TODO: повторяющийся код в функциях BinarySearchInTimesFromTitles и BinarySearch - может и хрен с ним?
+        public int BinarySearchInTimesFromTitles(TimeSpan time)
+        {
+            int left = 0;
+            int right = Subtitles.Count - 1;
+            if (left == right)
+                return left;
+            while (true)
+            {
+                if (right - left == 1)
+                {
+                    if (Subtitles[left].CompareWithTitleTime(time) == 0)
+                        return left;
+                    if (Subtitles[right].CompareWithTitleTime(time) == 0)
+                        return right;
+                    return -1;
+                }
+                else
+                {
+                    int middle = left + (right - left) / 2;
+                    int comparisonResult = Subtitles[middle].CompareWithTitleTime(time);
+                    if (comparisonResult == 0)
+                        return middle;
+                    if (comparisonResult < 0)
+                        left = middle;
+                    if (comparisonResult > 0)
+                        right = middle;
+                }
+            }
+        }
     }
 
     public class TitleInfo
@@ -85,9 +115,16 @@ namespace MultiPlayerNIIES.Tools
         public string Text
         {
             get { return text; }
-            set { text = value; TimeFromText = SetTimeFromText(text); }
+            set
+            {
+                text = value;
+                TimeFromText = SetTimeFromText(text);
+                TimeFromTextEnd = TimeFromText + (End - Begin);
+            }
         }
         public TimeSpan TimeFromText;
+        public TimeSpan TimeFromTextEnd;
+
 
         public bool IsIncluded(TimeSpan time)
         {
@@ -109,6 +146,23 @@ namespace MultiPlayerNIIES.Tools
                 return 1;
             }
             else if (time > End)
+            {
+                return -1;
+            }
+            return -1;
+        }
+
+        public int CompareWithTitleTime(TimeSpan time)
+        {
+            if (time >= TimeFromText && time < TimeFromTextEnd)
+            {
+                return 0;
+            }
+            else if (time < TimeFromText)
+            {
+                return 1;
+            }
+            else if (time > TimeFromTextEnd)
             {
                 return -1;
             }
