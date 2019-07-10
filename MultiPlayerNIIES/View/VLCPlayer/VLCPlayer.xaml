@@ -13,19 +13,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="25"/>
             <ColumnDefinition />
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="50"/>
 
 
         </Grid.ColumnDefinitions>
-        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="6"/>
-        <Slider Name="TimeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="3"  
+        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="8"/>
+        <Slider Name="TimeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="7"  
                 VerticalAlignment="Stretch" Maximum="1000" Value="{Binding ElementName=ThisPlayer, Path=Position, UpdateSourceTrigger=PropertyChanged}" 
                 PreviewMouseDown="TimeSlider_PreviewMouseDown" 
                 PreviewMouseUp="TimeSlider_PreviewMouseUp" />
@@ -33,6 +37,7 @@
             <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png"/>
         </Button>
 
+        
         <Slider Name="VolumeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="1"  
                 VerticalAlignment="Stretch" Maximum="100" Value="{Binding ElementName=ThisPlayer, Path=Volume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
@@ -43,9 +48,15 @@
         <Button Name="MuteBtn" Grid.Row="1" Grid.Column="2" Margin="3" Click="MuteBtn_Click" >
             <Image Source="/MultiPlayerNIIES;component/Images/mute.png"/>
         </Button>
-        <TextBox  x:Name="TimeTextBox" Grid.Row="1" Grid.Column="4" 
+        
+        <Button Name="DecSpeedBtn" Content="x0.5" Grid.Row="1" Grid.Column="3" Margin="3" Click="DecSpeedBtn_Click" FontSize="8" />
+        <Button Name="IncSpeedBtn" Content="x2" Grid.Row="1" Grid.Column="4" Margin="3" Click="IncSpeedBtn_Click" FontSize="8" />
+        <Button Name="FrameBackwardBtn" Content="&lt;-" Grid.Row="1" Grid.Column="5" Margin="3" Click="FrameBackwardBtn_Click" FontSize="8" />
+        <Button Name="FrameForwardBtn" Content="-&gt;" Grid.Row="1" Grid.Column="6" Margin="3" Click="FrameForwardBtn_Click" FontSize="8" />
+       
+        <TextBox  x:Name="TimeTextBox" Grid.Row="1" Grid.Column="8" FontSize="10"
                             TextAlignment="Center" VerticalAlignment="Center" MinHeight="10" 
-                            BorderBrush="{x:Null}" Text="{Binding ElementName=ThisPlayer, Path=CurTime, StringFormat=hh\\:mm\\:ss\\.ff }"/>
+                            BorderBrush="{x:Null}" Text="{Binding ElementName=ThisPlayer, Path=CurTime, StringFormat=hh\\:mm\\:ss\\.ff }" />
 
 
 

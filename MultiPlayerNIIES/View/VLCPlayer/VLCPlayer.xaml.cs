@@ -99,7 +99,7 @@ namespace MultiPlayerNIIES.View.VLCPlayer
             InitializeComponent();
 
 
-          
+
 
             vlc.MediaPlayer.VlcLibDirectory = new System.IO.DirectoryInfo(@"c:\Program Files\VideoLAN\VLC\");
             vlc.MediaPlayer.EndInit();
@@ -241,6 +241,28 @@ namespace MultiPlayerNIIES.View.VLCPlayer
 
             ToolsTimer.Delay(() => { timer.Start(); }, TimeSpan.FromMilliseconds(1000));
 
+        }
+
+        private void DecSpeedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (vlc.MediaPlayer.IsPlaying) vlc.MediaPlayer.Rate = vlc.MediaPlayer.Rate - 0.1f;
+        }
+
+        private void IncSpeedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (vlc.MediaPlayer.IsPlaying) vlc.MediaPlayer.Rate = vlc.MediaPlayer.Rate + 0.1f;
+        }
+
+        private void FrameBackwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            pause();
+            Position = Position - (0.1 * 1000 / Duration.TotalSeconds);
+        }
+
+        private void FrameForwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            pause();
+            Position = Position + (0.1 * 1000 / Duration.TotalSeconds);
         }
     }
 }
