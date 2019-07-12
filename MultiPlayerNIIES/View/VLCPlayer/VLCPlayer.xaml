@@ -28,7 +28,7 @@
 
 
         </Grid.ColumnDefinitions>
-        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="8"/>
+        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="9" ClipToBounds="True" />
         <Slider Name="TimeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="7"  
                 VerticalAlignment="Stretch" Maximum="1000" Value="{Binding ElementName=ThisPlayer, Path=Position, UpdateSourceTrigger=PropertyChanged}" 
                 PreviewMouseDown="TimeSlider_PreviewMouseDown" 

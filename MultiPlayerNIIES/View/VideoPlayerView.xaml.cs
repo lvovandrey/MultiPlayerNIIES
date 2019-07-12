@@ -90,5 +90,19 @@ namespace MultiPlayerNIIES.View
 
         public Subtitler subtitler;
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CropBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VLC.vlc.MediaPlayer.Video.CropGeometry = "1000x1000+300+200";
+        }
+
+        private void AspectRatioBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VLC.vlc.MediaPlayer.Video.AspectRatio = "10:10";
+        }
     }
 }

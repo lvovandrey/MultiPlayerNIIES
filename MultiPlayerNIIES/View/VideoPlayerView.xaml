@@ -11,10 +11,17 @@
     <Grid Background="BlanchedAlmond" >
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Тут могли быть Ваши титры..." x:Name="TextBlockSubtitles"/>
-        <vlc:VLCPlayer Grid.Row="1" Margin="5" x:Name="VLC"></vlc:VLCPlayer>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button x:Name="CropBtn" Content="Crop" Click="CropBtn_Click" />
+            <Button x:Name="AspectRatioBtn" Content="AspRatio" Click="AspectRatioBtn_Click" />
+        </StackPanel>
+
+        <vlc:VLCPlayer Grid.Row="2" Margin="5" x:Name="VLC"></vlc:VLCPlayer>
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
 

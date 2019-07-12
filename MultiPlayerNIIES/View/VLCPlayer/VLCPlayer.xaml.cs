@@ -99,7 +99,7 @@ namespace MultiPlayerNIIES.View.VLCPlayer
             InitializeComponent();
 
 
-
+            
 
             vlc.MediaPlayer.VlcLibDirectory = new System.IO.DirectoryInfo(@"c:\Program Files\VideoLAN\VLC\");
             vlc.MediaPlayer.EndInit();
@@ -257,12 +257,18 @@ namespace MultiPlayerNIIES.View.VLCPlayer
         {
             pause();
             Position = Position - (0.1 * 1000 / Duration.TotalSeconds);
+
+
+
+
         }
 
         private void FrameForwardBtn_Click(object sender, RoutedEventArgs e)
         {
             pause();
             Position = Position + (0.1 * 1000 / Duration.TotalSeconds);
+
+
         }
     }
 }
