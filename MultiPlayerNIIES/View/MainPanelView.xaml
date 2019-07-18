@@ -6,29 +6,44 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              mc:Ignorable="d" 
               d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Style  x:Key="ButtonMainPanel">
+            <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
+            <Setter Property="Control.Margin" Value="3"/>
+            <Setter Property="Control.Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0.594"/>
+                        <GradientStop Color="#FFC6C5E2" Offset="1"/>
+                        <GradientStop Color="#FFF1F1FF" Offset="0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <ToolBarTray >
             <ToolBar Height="60" VerticalAlignment="Top">
-                <Separator />
-                <ToggleButton Command="{Binding PlayCommand}">
+
+                <Button Command="{Binding PlayCommand}" Style="{StaticResource ButtonMainPanel}" >
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
-                </ToggleButton>
-                <Button Command="{Binding StopCommand}">
+                </Button>
+                <Button Command="{Binding StopCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Stop-64.png" />
                 </Button>
-            
-                <Button  Command="{Binding OpenCommand}">
+
+                <Button  Command="{Binding OpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
                 </Button>
             </ToolBar>
 
             <ToolBar Height="60">
-               
-                <Button Command="{Binding RateIncreaceCommand}">
+
+                <Button Command="{Binding RateIncreaceCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Backward-64.png" />
                 </Button>
 
-                <Button  Command="{Binding RateDecreaceCommand}" >
+                <Button  Command="{Binding RateDecreaceCommand}"  Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Forward-64.png" />
                 </Button>
                 <StackPanel>
@@ -40,11 +55,11 @@
 
             <ToolBar Height="60">
 
-                <Button Command="{Binding StepBackwardCommand}">
+                <Button Command="{Binding StepBackwardCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Backward-64.png" />
                 </Button>
 
-                <Button  Command="{Binding StepForwardCommand}" >
+                <Button  Command="{Binding StepForwardCommand}"  Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Forward-64.png" />
                 </Button>
                 <Separator/>
@@ -72,20 +87,34 @@
             </ToolBar>
             <ToolBar Height="60">
 
-                <Button  Command="{Binding ExcelOpenCommand}">
+                <Button  Command="{Binding ExcelOpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" />
                 </Button>
-                <Button  Command="{Binding SendToExcelTime1Command}">
+                <Button  Command="{Binding SendToExcelTime1Command}" Style="{StaticResource ButtonMainPanel}">
+                    <Grid>
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" />
+                    <Label Content="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="20,5,0,0" Foreground="#FF09BD00" >
+                            <Label.Effect>
+                                <DropShadowEffect BlurRadius="3" ShadowDepth="1.5" Color="#FF303030"/>
+                            </Label.Effect>
+                        </Label>
+                    </Grid>
                 </Button>
-                <Button  Command="{Binding SendToExcelTime2Command}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Missed-64.png" />
+                <Button  Command="{Binding SendToExcelTime2Command}" Style="{StaticResource ButtonMainPanel}">
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" />
+                        <Label Content="2" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="20,5,0,0" Foreground="#FFBD3400" >
+                            <Label.Effect>
+                                <DropShadowEffect BlurRadius="3" ShadowDepth="1.5" Color="#FF303030"/>
+                            </Label.Effect>
+                        </Label>
+                    </Grid>
                 </Button>
 
             </ToolBar>
 
             <ToolBar Height="60">
-                <Button  Command="{Binding SettingsOpenCommand}">
+                <Button  Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" />
                 </Button>
             </ToolBar>
