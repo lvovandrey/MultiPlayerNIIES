@@ -5,39 +5,90 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              mc:Ignorable="d" 
-              d:DesignWidth="800">
+              d:DesignWidth="1000">
     <Grid>
-        <ToolBar Height="40" VerticalAlignment="Top">
-            <Separator />
-            <Button Command="{Binding OpenCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Page-White-Add.png" />
-            </Button>
-            <Button Command="{Binding SaveCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Disk.png" />
-            </Button>
+        <ToolBarTray >
+            <ToolBar Height="60" VerticalAlignment="Top">
+                <Separator />
+                <ToggleButton Command="{Binding PlayCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
+                </ToggleButton>
+                <Button Command="{Binding StopCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Stop-64.png" />
+                </Button>
+            
+                <Button  Command="{Binding OpenCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
+                </Button>
+            </ToolBar>
 
+            <ToolBar Height="60">
+               
+                <Button Command="{Binding RateIncreaceCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Backward-64.png" />
+                </Button>
 
-            <Button  Command="{Binding ImportCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Page-White-Put.png" />
-            </Button>
+                <Button  Command="{Binding RateDecreaceCommand}" >
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Forward-64.png" />
+                </Button>
+                <StackPanel>
+                    <Label Content="Скорость"/>
+                    <Label Content="2х" FontSize="15"/>
+                </StackPanel>
 
-            <Separator />
-            <Button Command="{Binding AddCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Add.png" />
-            </Button>
+                </ToolBar>
 
-            <Button  Command="{Binding RemoveCommand}" >
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Delete.png" />
-            </Button>
-            <Separator/>
+            <ToolBar Height="60">
 
+                <Button Command="{Binding StepBackwardCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Backward-64.png" />
+                </Button>
 
-            <Button  Command="{Binding MeasureCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Measure.png" />
-            </Button>
-            <Separator />
-            <TextBox Foreground="LightGray" Width="100">Поиск по имени...</TextBox>
-        </ToolBar>
+                <Button  Command="{Binding StepForwardCommand}" >
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Forward-64.png" />
+                </Button>
+                <Separator/>
+                <StackPanel>
+                    <Label Content="Шаг" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Height="26" Width="50" VerticalContentAlignment="Center" FontSize="15">0,24</TextBox>
+                        <StackPanel>
+                            <Button Height="13" Width="20" Command="{Binding StepValueIncreaceCommand}">
+                                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" />
+                            </Button>
+                            <Button Height="13" Width="20" Command="{Binding StepValueDecreaceCommand}">
+                                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" RenderTransformOrigin="0.5,0.5" >
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1"/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
 
+            </ToolBar>
+            <ToolBar Height="60">
+
+                <Button  Command="{Binding ExcelOpenCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" />
+                </Button>
+                <Button  Command="{Binding SendToExcelTime1Command}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" />
+                </Button>
+                <Button  Command="{Binding SendToExcelTime2Command}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Missed-64.png" />
+                </Button>
+
+            </ToolBar>
+
+            <ToolBar Height="60">
+                <Button  Command="{Binding SettingsOpenCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
     </Grid>
 </UserControl>

@@ -222,5 +222,57 @@
     <Resource Include="Images\lever.png" />
     <Resource Include="Images\tumbler.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PNG\File-Excel-64.png" />
+    <Resource Include="Images\PNG\Gnome-Applications-Multimedia-64.png" />
+    <Resource Include="Images\PNG\Gnome-Applications-System-64.png" />
+    <Resource Include="Images\PNG\Gnome-Appointment-Missed-64.png" />
+    <Resource Include="Images\PNG\Gnome-Appointment-New-64.png" />
+    <Resource Include="Images\PNG\Gnome-Appointment-Soon-64.png" />
+    <Resource Include="Images\PNG\Gnome-Edit-Redo-64.png" />
+    <Resource Include="Images\PNG\Gnome-Edit-Undo-64.png" />
+    <Resource Include="Images\PNG\Gnome-Emblem-Readonly-64.png" />
+    <Resource Include="Images\PNG\Gnome-Emblem-Symbolic-Link-64.png" />
+    <Resource Include="Images\PNG\Gnome-Emblem-Unreadable-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Bottom-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Down-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-First-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Jump-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Last-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Next-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Previous-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Top-64.png" />
+    <Resource Include="Images\PNG\Gnome-Go-Up-64.png" />
+    <Resource Include="Images\PNG\Gnome-List-Add-64.png" />
+    <Resource Include="Images\PNG\Gnome-List-Remove-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Eject-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Optical-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Playback-Pause-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Playback-Start-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Playback-Stop-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Playlist-Repeat-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Playlist-Shuffle-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Record-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Seek-Backward-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Seek-Forward-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Skip-Backward-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Skip-Forward-64.png" />
+    <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64.png" />
+    <Resource Include="Images\PNG\Gnome-Object-Flip-Vertical-64.png" />
+    <Resource Include="Images\PNG\Gnome-Object-Rotate-Left-64.png" />
+    <Resource Include="Images\PNG\Gnome-Object-Rotate-Right-64.png" />
+    <Resource Include="Images\PNG\Gnome-Video-X-Generic-64.png" />
+    <Resource Include="Images\PNG\Gnome-View-Refresh-64.png" />
+    <Resource Include="Images\PNG\Gnome-Window-Close-64.png" />
+    <Resource Include="Images\PNG\Gnome-Zoom-Fit-Best-64.png" />
+    <Resource Include="Images\PNG\Gnome-Zoom-In-64.png" />
+    <Resource Include="Images\PNG\Gnome-Zoom-Original-64.png" />
+    <Resource Include="Images\PNG\Gnome-Zoom-Out-64.png" />
+    <Resource Include="Images\PNG\Ms-Excel-48.png" />
+    <Resource Include="Images\PNG\User-Info-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PNG\Arrow-sans-up-32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
