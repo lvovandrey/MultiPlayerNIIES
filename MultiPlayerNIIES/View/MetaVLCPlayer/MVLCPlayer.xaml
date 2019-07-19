@@ -8,7 +8,7 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="500" Name="ThisPlayer">
-    <Grid>
+    <Grid x:Name="MainGrid" ClipToBounds="True">
         <Grid.Resources>
             <x:Array Type="{x:Type system:String}" x:Key="VlcOptions">
                 <system:String>-I</system:String>
@@ -37,7 +37,7 @@
         </Grid.ColumnDefinitions>
         <wpf:VlcPlayer Grid.Row="0" Grid.ColumnSpan="9" x:Name="vlc"
                            VlcOption="{StaticResource VlcOptions}" LibVlcPath="C:\Program Files\VideoLAN\VLC"  
-                           EndBehavior="Nothing" Stretch="Fill"/>
+                           EndBehavior="Nothing" Stretch="Fill" ClipToBounds="True" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Slider Name="TimeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="7"  
                 VerticalAlignment="Stretch" Maximum="1000" Value="{Binding ElementName=ThisPlayer,Path=Position, UpdateSourceTrigger=PropertyChanged}" 
                 PreviewMouseDown="TimeSlider_PreviewMouseDown" 
