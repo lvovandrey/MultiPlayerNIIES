@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MultiPlayerNIIES.ViewModel;
 
 namespace MultiPlayerNIIES
 {
@@ -20,10 +21,19 @@ namespace MultiPlayerNIIES
     /// </summary>
     public partial class MainWindow : Window
     {
+        VM vm;
         public MainWindow()
         {
             InitializeComponent();
             Unosquare.FFME.Library.FFmpegDirectory = @"c:\ffmpeg\";
+
+           vm = new VM();
+            DataContext = vm;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            vm.CloseAppCommand.Execute(null);
 
         }
     }

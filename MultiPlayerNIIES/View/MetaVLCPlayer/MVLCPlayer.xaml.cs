@@ -113,15 +113,15 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             timer = new System.Windows.Threading.DispatcherTimer();
 
             timer.Tick += new EventHandler(timerTick);
-            timer.Interval = TimeSpan.FromSeconds(0.01);
+            timer.Interval = TimeSpan.FromSeconds(0.05);
             timer.Start();
         }
         private void timerTick(object sender, EventArgs e)
         {
             if (vlc.Time> TimeSpan.FromSeconds(0.01))
             {
-                Duration =vlc.VlcMediaPlayer.Length;
-                CurTime = vlc.VlcMediaPlayer.Time;
+                Duration =vlc.Length;
+                CurTime = vlc.Time;
                 Position = 1000 * CurTime.TotalMilliseconds / Duration.TotalMilliseconds;
             }
         }
@@ -129,7 +129,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         public void SetCurTime(TimeSpan time)
         {
             if (time < TimeSpan.FromSeconds(0)) return;
-            vlc.VlcMediaPlayer.Time = time;
+            vlc.Time = time;
         }
 
         private void VideoPlayer_OnPlayerSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -145,7 +145,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         {
             if ((vlc.VlcMediaPlayer != null) && (!vlc.VlcMediaPlayer.IsPlaying))
             {
-                vlc.VlcMediaPlayer.Time = TimeSpan.FromMilliseconds(Position * Duration.TotalMilliseconds / 1000);
+                vlc.Position = (float)(Position/1000);
             }
         }
 
@@ -223,7 +223,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
                 Position = position;
                 CurTime = TimeSpan.FromSeconds(Position / 1000 * Duration.TotalSeconds);
-                vlc.VlcMediaPlayer.Time = TimeSpan.FromMilliseconds(Position * Duration.TotalMilliseconds / 1000);
+                vlc.Position = (float)(Position / 1000);
 
                 ToolsTimer.Delay(() => { vlc.Play(); }, TimeSpan.FromMilliseconds(1000));
             }
@@ -233,7 +233,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
                 Position = position;
                 CurTime = TimeSpan.FromSeconds(Position / 1000 * Duration.TotalSeconds);
-                vlc.VlcMediaPlayer.Time = TimeSpan.FromMilliseconds(Position * Duration.TotalMilliseconds / 1000);
+                vlc.Position = (float)(Position / 1000);
 
             }
 

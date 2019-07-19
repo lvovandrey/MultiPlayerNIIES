@@ -161,7 +161,7 @@
     <Compile Include="View\VLCPlayer\VLCPlayer.xaml.cs">
       <DependentUpon>VLCPlayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VM\VM.cs" />
+    <Compile Include="ViewModel\VM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

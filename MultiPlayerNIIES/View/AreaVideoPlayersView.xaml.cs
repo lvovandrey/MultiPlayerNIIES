@@ -82,19 +82,35 @@ namespace MultiPlayerNIIES.View
 
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
-            player1.Pause();
-            player2.Pause();
+            //player1.Pause();
+            //player2.Pause();
 
             //Берем от титров на первой камере время титров
-            TimeSpan SyncTitlesTime = player1.subtitler.Subtitles[player1.subtitler.BinarySearch(player1.VLC.CurTime)].TimeFromText;
+            int tmp = player1.subtitler.BinarySearch(player1.VLC.CurTime);
+            if (tmp < 0) return;
+            TimeSpan SyncTitlesTime = player1.subtitler.Subtitles[tmp].TimeFromText;
+
+
+            tmp = player1.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime); if (tmp < 0) return;
 
             //ищем на 1 камере в титрах время Begin которому соответствует время из текста титров SyncTitlesTime - это чтобы точно поставить и первую камеру в нужное время
-            TimeSpan SyncCam1Time = player1.subtitler.Subtitles[player1.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime)].Begin;
+            TimeSpan SyncCam1Time = player1.subtitler.Subtitles[tmp].Begin;
 
             //ищем на 2 камере в титрах время Begin которому соответствует время из текста титров SyncTitlesTime
-            TimeSpan SyncCam2Time = player2.subtitler.Subtitles[player2.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime)].Begin;
-            TimeSpan SyncCam3Time = player3.subtitler.Subtitles[player3.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime)].Begin;
-            TimeSpan SyncCam4Time = player4.subtitler.Subtitles[player4.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime)].Begin;
+            tmp = player2.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime); if (tmp < 0) return;
+            TimeSpan SyncCam2Time = player2.subtitler.Subtitles[tmp].Begin;
+
+            tmp = player3.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime); if (tmp < 0) return;
+            TimeSpan SyncCam3Time = player3.subtitler.Subtitles[tmp].Begin;
+
+            tmp = player4.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime); if (tmp < 0) return;
+            TimeSpan SyncCam4Time = player4.subtitler.Subtitles[tmp].Begin;
+
+
+            player1.Pause();
+            player2.Pause();
+            player3.Pause();
+            player4.Pause();
 
             //Устанавливаем вычисленное время на 2 камере. По аналогии - с остальными камерами поступать так же.
             player1.SetPosition(SyncCam1Time);

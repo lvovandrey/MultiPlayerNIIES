@@ -31,7 +31,7 @@
             <ColumnDefinition Width="25"/>
             <ColumnDefinition Width="25"/>
             <ColumnDefinition />
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="60"/>
 
 
         </Grid.ColumnDefinitions>

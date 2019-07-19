@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiPlayerNIIES.VM
+namespace MultiPlayerNIIES.ViewModel
 {
     public class VM: INPCBase
     {
@@ -190,6 +190,19 @@ namespace MultiPlayerNIIES.VM
                   }));
             }
         }
-        
+
+
+        private RelayCommand closeAppCommand;
+        public RelayCommand CloseAppCommand
+        {
+            get
+            {
+                return closeAppCommand ??
+                  (closeAppCommand = new RelayCommand(obj =>
+                  {
+
+                  }));
+            }
+        }
     }
 }
