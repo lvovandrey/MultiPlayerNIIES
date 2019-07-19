@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              xmlns:vlc="clr-namespace:MultiPlayerNIIES.View.VLCPlayer"
+             xmlns:mvlc="clr-namespace:MultiPlayerNIIES.View.MetaVLCPlayer"
              xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"  BorderBrush="#FF3A3A3A" BorderThickness="1">
     <Grid Background="BlanchedAlmond" >
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -21,9 +22,10 @@
             <Button x:Name="AspectRatioBtn" Content="AspRatio" Click="AspectRatioBtn_Click" />
         </StackPanel>
 
-        <vlc:VLCPlayer Grid.Row="2" Margin="5" x:Name="VLC"></vlc:VLCPlayer>
+        <mvlc:MVLCPlayer Grid.Row="2" Margin="5" x:Name="VLC"></mvlc:MVLCPlayer>
+        <!--<vlc:VLCPlayer Grid.Row="2" Margin="5" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
-
+        
     </Grid>
 </UserControl>

@@ -22,7 +22,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <ToolBarTray >
+        <ToolBarTray HorizontalAlignment="Left">
             <ToolBar Height="60" VerticalAlignment="Top">
 
                 <Button Command="{Binding PlayCommand}" Style="{StaticResource ButtonMainPanel}" >
@@ -119,5 +119,16 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
+        <Label Content="00:22:33,45" 
+               HorizontalAlignment="Right" VerticalAlignment="Center" 
+               BorderThickness="1" BorderBrush="#FF948AC3" 
+               Background="#FF050025" Foreground="#FFFFE677"
+               FontSize="25" Width="140" HorizontalContentAlignment="Center">
+            <Label.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Копировать" Command="{Binding CopyTimeToClipBoardCommand}"></MenuItem>
+                </ContextMenu>
+            </Label.ContextMenu>
+        </Label>
     </Grid>
 </UserControl>

@@ -97,12 +97,82 @@ namespace MultiPlayerNIIES.View
 
         private void CropBtn_Click(object sender, RoutedEventArgs e)
         {
-            VLC.vlc.MediaPlayer.Video.CropGeometry = "1000x1000+300+200";
+//            VLC.vlc.VlcMediaPlayer.CropGeometry = "1000x1000+300+200";
         }
 
         private void AspectRatioBtn_Click(object sender, RoutedEventArgs e)
         {
-            VLC.vlc.MediaPlayer.Video.AspectRatio = "10:10";
+//            VLC.vlc.VlcMediaPlayer.Video.AspectRatio = "10:10";
         }
+
+        #region Реализация Drag'n'Drop
+
+        public UIElement Container;
+
+        public bool IsDragDrop { get; private set; }
+
+        Vector relativeMousePos;
+        FrameworkElement draggedObject;
+
+        public void DragDropSwitchOn(UIElement container)
+        {
+            if (IsDragDrop) return;
+            Container = container;
+            IsDragDrop = true;
+            MouseLeftButtonDown += StartDrag;
+
+        }
+
+        public void DragDropSwitchOff(UIElement container)
+        {
+            if (!IsDragDrop) return;
+            Container = null;
+            IsDragDrop = false;
+            MouseLeftButtonDown -= StartDrag;
+
+        }
+
+        void StartDrag(object sender, MouseButtonEventArgs e)
+        {
+            if ((Container == null) || !IsDragDrop) return;
+            draggedObject = (FrameworkElement)sender;
+            relativeMousePos = e.GetPosition(draggedObject) - new Point();
+            draggedObject.MouseMove += OnDragMove;
+            draggedObject.LostMouseCapture += OnLostCapture;
+            draggedObject.MouseUp += OnMouseUp;
+            Mouse.Capture(draggedObject);
+        }
+
+        void OnDragMove(object sender, MouseEventArgs e)
+        {
+            UpdatePosition(e);
+        }
+
+        void UpdatePosition(MouseEventArgs e)
+        {
+            var point = e.GetPosition(Container);
+            var newPos = point - relativeMousePos;
+            draggedObject.Margin = new Thickness(newPos.X, newPos.Y, 0, 0);
+        }
+
+        void OnMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            FinishDrag(sender, e);
+            Mouse.Capture(null);
+        }
+
+        void OnLostCapture(object sender, MouseEventArgs e)
+        {
+            FinishDrag(sender, e);
+        }
+
+        void FinishDrag(object sender, MouseEventArgs e)
+        {
+            draggedObject.MouseMove -= OnDragMove;
+            draggedObject.LostMouseCapture -= OnLostCapture;
+            draggedObject.MouseUp -= OnMouseUp;
+            UpdatePosition(e);
+        }
+        #endregion
     }
 }

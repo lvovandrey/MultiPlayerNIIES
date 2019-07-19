@@ -24,6 +24,10 @@ namespace MultiPlayerNIIES.View
         public AreaVideoPlayersView()
         {
             InitializeComponent();
+            player1.DragDropSwitchOn(GridMain);
+            player2.DragDropSwitchOn(GridMain);
+            player3.DragDropSwitchOn(GridMain);
+            player4.DragDropSwitchOn(GridMain);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
