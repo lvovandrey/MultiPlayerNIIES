@@ -76,7 +76,18 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         /// <returns></returns>
         public Subtitle GetSubtitle(TimeSpan TimeVideo)
         {
-            return subtitles[SearchAndTools.BinarySearch(TimeVideo, subtitles)];
+            Subtitle S = new Subtitle();
+            try
+            {
+                int N = SearchAndTools.BinarySearch(TimeVideo, subtitles);
+                if (N < 0 || N > subtitles.Count - 1) throw new Exception();
+                S = subtitles[N];
+            }
+            catch(Exception e)
+            {
+                throw new Exception();
+            }
+            return S;
         }
 
         /// <summary>
@@ -86,7 +97,19 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         /// <returns></returns>
         public Subtitle GetSubtitleOfTitlesTimeText(TimeSpan TimeTitles)
         {
-            return subtitles[SearchAndTools.BinarySearchInTimesFromTitles(TimeTitles, subtitles,0, subtitles.FindLastIndex((x)=> {return x.Begin > TimeSpan.FromSeconds(-1); } ))];
+            Subtitle S = new Subtitle();
+            try
+            {
+                int N = SearchAndTools.BinarySearchInTimesFromTitles(TimeTitles, subtitles, 0, subtitles.FindLastIndex((x) => { return x.Begin > TimeSpan.FromSeconds(-1); }));
+                if (N < 0 || N > subtitles.Count - 1) throw new Exception();
+                S = subtitles[N];
+            }
+            catch (Exception e)
+            {
+                throw new Exception();
+            }
+            return S;
+           // return subtitles[SearchAndTools.BinarySearchInTimesFromTitles(TimeTitles, subtitles,0, subtitles.FindLastIndex((x)=> {return x.Begin > TimeSpan.FromSeconds(-1); } ))];
         }
 
         /// <summary>
@@ -97,7 +120,21 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         /// <returns></returns>
         internal TimeSpan GetSyncTime(TimeSpan syncTitlesTime, int recordNumber)
         {
-            return Subtitles[SearchAndTools.BinarySearchInTimesFromTitles(syncTitlesTime, Subtitles, Records[recordNumber])].Begin;
+            //return Subtitles[SearchAndTools.BinarySearchInTimesFromTitles(syncTitlesTime, Subtitles, Records[recordNumber])].Begin;
+
+            TimeSpan TS = new TimeSpan();
+            try
+            {
+                int N = SearchAndTools.BinarySearchInTimesFromTitles(syncTitlesTime, Subtitles, Records[recordNumber]);
+                if (N < 0 || N > subtitles.Count - 1) throw new Exception();
+                TS = subtitles[N].Begin;
+            }
+            catch (Exception e)
+            {
+                throw new Exception();
+            }
+            return TS;
+
         }
     }
 

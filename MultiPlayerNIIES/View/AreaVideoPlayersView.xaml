@@ -20,18 +20,23 @@
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <GridSplitter Grid.Column="1" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="3">
             <Button Content="Load" Width="60" Height="30"  Click="Button_Click_1" />
             <Button Content="start" Width="60" Height="30" Click="Button_Click" />
             <Button Content="sync" Width="60" Height="30"  Click="Button_Click_2" />
             <Button Content="Pause" Width="60" Height="30"  Click="Button_Click_3" />
             <Button Content="SubsRead" Width="60" Height="30"  Click="Button_Click_4" />
             <Button Content="SyncTitl" Width="60" Height="30"  Click="Button_Click_6" />
+            <CheckBox Content="AutoSync" x:Name="CheckBoxAutoSync" Click="CheckBox_Click" ></CheckBox>
+            <Label Content="---" x:Name="LabelUnSyncronize"></Label>
         </StackPanel>
         <local:VideoPlayerView Grid.Row="0" Grid.Column="0" x:Name="player1" Height="450" Width="600"  Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <local:VideoPlayerView Grid.Row="0" Grid.Column="2" x:Name="player2" Height="450" Width="600"  Margin="600,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <local:VideoPlayerView Grid.Row="2" Grid.Column="0" x:Name="player3" Height="450" Width="600"  Margin="0,450,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <local:VideoPlayerView Grid.Row="2" Grid.Column="2" x:Name="player4" Height="450" Width="600"  Margin="600,450,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        
+        <local:VideoPlayerView Grid.Row="2" Grid.Column="2" x:Name="player5" Height="450" Width="600"  Margin="600,450,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <local:VideoPlayerView Grid.Row="2" Grid.Column="2" x:Name="player6" Height="450" Width="600"  Margin="600,450,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
     </Grid>
 </UserControl>
