@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Tools;
+using MultiPlayerNIIES.Tools.Subtitles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,9 @@ namespace MultiPlayerNIIES.View
 
         private void TimerTick()
         {
-            if (subtitler != null && subtitler.Ready)
+            if (subtitleProcessor != null && subtitleProcessor.Ready)
             {
-                TextBlockSubtitles.Text = subtitler.Subtitles[subtitler.BinarySearch(VLC.CurTime)].Text;
+                TextBlockSubtitles.Text = subtitleProcessor.GetSubtitle(VLC.CurTime).Text;
             }
         }
 
@@ -88,7 +89,7 @@ namespace MultiPlayerNIIES.View
             Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
         }
 
-        public Subtitler subtitler;
+        public SubtitleProcessor subtitleProcessor;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

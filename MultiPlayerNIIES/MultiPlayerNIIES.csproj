@@ -131,7 +131,11 @@
     </ApplicationDefinition>
     <Compile Include="Abstract\INPCBase.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
-    <Compile Include="Tools\Subtitler.cs" />
+    <Compile Include="Tools\Subtitles\Subtitle.cs" />
+    <Compile Include="Tools\Subtitles\SubtitleProcessor.cs" />
+    <Compile Include="Tools\Subtitles\Parser.cs" />
+    <Compile Include="Tools\Subtitles\Record.cs" />
+    <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
