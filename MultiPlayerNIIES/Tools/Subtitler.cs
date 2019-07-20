@@ -13,12 +13,15 @@ namespace MultiPlayerNIIES.Tools
     public class Subtitler
     {
         public bool Ready = false;
-        public List<TitleInfo> Subtitles;
+        public List<Subtitle> Subtitles;
         List<string> RawSubtitles;
+        List<SubtitlesRecord> SubtitlesRecords;
+
         public Subtitler()
         {
-            Subtitles = new List<TitleInfo>();
+            Subtitles = new List<Subtitle>();
             RawSubtitles = new List<string>();
+            SubtitlesRecords = new List<SubtitlesRecord>(); 
         }
         public void LoadSubtitles(string filename)
         {
@@ -40,6 +43,7 @@ namespace MultiPlayerNIIES.Tools
             }
             SubtitlesParser.ParseRawTitles(RawSubtitles, out Subtitles);
             RawSubtitles = null;
+            SubtitlesParser.SegregateSubtitlesToRecords(Subtitles, out SubtitlesRecords);
 
             Ready = true;
         }
@@ -47,7 +51,7 @@ namespace MultiPlayerNIIES.Tools
         public int BinarySearch(TimeSpan time)
         {
             int left = 0;
-            int right = Subtitles.Count-1;
+            int right = Subtitles.Count - 1;
             if (left == right)
                 return left;
             while (true)
@@ -105,9 +109,16 @@ namespace MultiPlayerNIIES.Tools
                 }
             }
         }
+
+
+
+        int SearchSubRecord(TimeSpan time) { return 0; }
     }
 
-    public class TitleInfo
+    /// <summary>
+    /// Отдельный субтитр
+    /// </summary>
+    public class Subtitle
     {
         public TimeSpan Begin;
         public TimeSpan End;
@@ -118,11 +129,11 @@ namespace MultiPlayerNIIES.Tools
             set
             {
                 text = value;
-                TimeFromText = SetTimeFromText(text);
-                TimeFromTextEnd = TimeFromText + (End - Begin);
+                TimeFromTextBegin = SetTimeFromText(text);
+                TimeFromTextEnd = TimeFromTextBegin + (End - Begin);
             }
         }
-        public TimeSpan TimeFromText;
+        public TimeSpan TimeFromTextBegin;
         public TimeSpan TimeFromTextEnd;
 
 
@@ -141,7 +152,7 @@ namespace MultiPlayerNIIES.Tools
             {
                 return 0;
             }
-            else if (time < Begin )
+            else if (time < Begin)
             {
                 return 1;
             }
@@ -154,11 +165,11 @@ namespace MultiPlayerNIIES.Tools
 
         public int CompareWithTitleTime(TimeSpan time)
         {
-            if (time >= TimeFromText && time < TimeFromTextEnd)
+            if (time >= TimeFromTextBegin && time < TimeFromTextEnd)
             {
                 return 0;
             }
-            else if (time < TimeFromText)
+            else if (time < TimeFromTextBegin)
             {
                 return 1;
             }
@@ -172,13 +183,6 @@ namespace MultiPlayerNIIES.Tools
         //TODO: позже сделать в SetTimeFromText закидывание делегата для парсинга 
         public static TimeSpan SetTimeFromText(string Text)
         {
-            //string tmpstr = Text;
-            //tmpstr = tmpstr.Substring(0, 11);
-            //tmpstr.Replace(";", ":");
-            //string s1 =  tmpstr.Substring(0,tmpstr.LastIndexOf(":"));
-            //string s2 = tmpstr.Substring(tmpstr.LastIndexOf(":")+1);
-            //tmpstr = s1 + "." + s2;
-
             TimeSpan time;
             string Format = @"h\;mm\;ss\;fff";
             CultureInfo culture = CultureInfo.CurrentCulture;
@@ -187,11 +191,53 @@ namespace MultiPlayerNIIES.Tools
         }
     }
 
+    /// <summary>
+    /// Класс описывыет часть видео с непрерывными по времени субтитрами - в общем часть видео которая действительно непрерывна
+    /// Сами субтитры тут не представлены чтобы не дублировать их
+    /// </summary>
+    public class SubtitlesRecord
+    {
+        public TimeSpan Begin;
+        public TimeSpan End;
+
+        public SubtitlesRecord(TimeSpan begin, TimeSpan end)
+        {
+            Begin = begin;
+            End = end;
+        }
+
+        public bool IsIncluded(TimeSpan time)
+        {
+            if (time >= Begin && time < End)
+            {
+                return true;
+            }
+            return false;
+        }
+        public int Compare(TimeSpan time)
+        {
+            if (time >= Begin && time < End)
+            {
+                return 0;
+            }
+            else if (time < Begin)
+            {
+                return 1;
+            }
+            else if (time > End)
+            {
+                return -1;
+            }
+            return -1;
+        }
+    }
+
+
     public static class SubtitlesParser
     {
-        public static bool GetTimeInterval(string s, out TitleInfo titleInfo)
+        private static bool GetTimeInterval(string s, out Subtitle titleInfo)
         {
-            titleInfo = new TitleInfo();
+            titleInfo = new Subtitle();
             int endOfFirstTime, beginOfSecondTime, delimiterIndex;
             delimiterIndex = s.IndexOf(" --> ");
             if (delimiterIndex < 5) { return false;}
@@ -208,7 +254,7 @@ namespace MultiPlayerNIIES.Tools
             return true;
         }
 
-        public static bool GetSubtitleText(string s, ref TitleInfo titleInfo)
+        private static bool GetSubtitleText(string s, ref Subtitle titleInfo)
         {
             string tmpstr = s;
             TitleClearTags(ref tmpstr);
@@ -216,7 +262,7 @@ namespace MultiPlayerNIIES.Tools
             return true;
         }
 
-        static void TitleClearTags(ref string Text)
+        private static void TitleClearTags(ref string Text)
         {
             string tmpstr = Text;
 
@@ -249,10 +295,8 @@ namespace MultiPlayerNIIES.Tools
             }
             Text = tmpstr;
         }
-       
 
-
-        public static int FindNextTitleRecord(List<string> RawSubtitles, int curStringNumber)
+        private static int FindNextTitleRecord(List<string> RawSubtitles, int curStringNumber)
         {
             int i = curStringNumber;
             while (RawSubtitles[i] != "")
@@ -267,15 +311,13 @@ namespace MultiPlayerNIIES.Tools
             return i;
         }
 
-
-
-        public static bool ParseRawTitles(List<string> RawSubtitles, out List<TitleInfo> OuterSubtitles)
+        public static bool ParseRawTitles(List<string> RawSubtitles, out List<Subtitle> OuterSubtitles)
         {
             int curStrNumber = 1;
             int nextRecStrNumber = 0;
             string TimeStr, TextStr; 
 
-            OuterSubtitles = new List<TitleInfo>();
+            OuterSubtitles = new List<Subtitle>();
 
             while (curStrNumber < RawSubtitles.Count)
             {
@@ -285,7 +327,7 @@ namespace MultiPlayerNIIES.Tools
 
                 TimeStr = RawSubtitles[nextRecStrNumber + 2];
                 TextStr = RawSubtitles[nextRecStrNumber + 3];
-                TitleInfo titleInfo = new TitleInfo();
+                Subtitle titleInfo = new Subtitle();
                 string text = "";
                 GetTimeInterval(TimeStr, out titleInfo);
                 GetSubtitleText(TextStr, ref titleInfo);
@@ -293,6 +335,32 @@ namespace MultiPlayerNIIES.Tools
                 curStrNumber = nextRecStrNumber+1;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Разбиваем весть интервал с титрами на куски соответствующие непрерывным видеозаписям 
+        /// Приходится делать, когда в одном видео насчитывается несколько слепленных вместе видеозаписей и соответственно несколько кусочков титров.
+        /// </summary>
+        /// <param name="Subtitles">Весь интервал субтитров</param>
+        /// <param name="OuterSubtitlesRecords">Коллекция отдельных непрерывных кусочков субтитров</param>
+        /// <returns></returns>
+        public static bool SegregateSubtitlesToRecords(List<Subtitle> Subtitles, out List<SubtitlesRecord> OuterSubtitlesRecords)
+        {
+            OuterSubtitlesRecords = new List<SubtitlesRecord>();
+            if (Subtitles.Count < 2) return false;
+
+            OuterSubtitlesRecords.Add(new SubtitlesRecord(Subtitles.First().Begin, Subtitles.Last().End)); //добавляем весь интервал с титрами, который представлен на видео (короче все видео)
+
+            for (int i = 0; i < Subtitles.Count - 2; i++)
+            {
+                if (Subtitles[i].TimeFromTextBegin > Subtitles[i + 1].TimeFromTextBegin) //если найдена граница (разрыв) интеравала внутри текста субтитров типа 0:00-0:01-0:02-0:03-0:04-0:05-!ТУТ!-0:00-0:01-0:02....
+                {
+                    OuterSubtitlesRecords.Last().End = Subtitles[i].End;
+                    OuterSubtitlesRecords.Add(new SubtitlesRecord(Subtitles[i+1].Begin, Subtitles.Last().End));
+                }
+            }
+
+            return true;
         }
 
     }

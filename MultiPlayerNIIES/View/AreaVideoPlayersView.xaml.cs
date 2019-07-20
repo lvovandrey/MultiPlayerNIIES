@@ -88,7 +88,7 @@ namespace MultiPlayerNIIES.View
             //Берем от титров на первой камере время титров
             int tmp = player1.subtitler.BinarySearch(player1.VLC.CurTime);
             if (tmp < 0) return;
-            TimeSpan SyncTitlesTime = player1.subtitler.Subtitles[tmp].TimeFromText;
+            TimeSpan SyncTitlesTime = player1.subtitler.Subtitles[tmp].TimeFromTextBegin;
 
 
             tmp = player1.subtitler.BinarySearchInTimesFromTitles(SyncTitlesTime); if (tmp < 0) return;
