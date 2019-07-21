@@ -32,7 +32,7 @@ namespace MultiPlayerNIIES.View
             player5.DragDropSwitchOn(GridMain, player5.Dragger);
             player6.DragDropSwitchOn(GridMain, player6.Dragger);
 
-            player1.ResizeSwitchOn(GridMain, player1.SizerRightBottom);
+            player1.ResizeSwitchOn(GridMain);
 
 
             timer = new System.Windows.Threading.DispatcherTimer();

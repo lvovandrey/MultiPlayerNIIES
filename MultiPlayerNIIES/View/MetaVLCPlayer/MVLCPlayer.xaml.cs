@@ -140,8 +140,8 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             vlc.Stop();
             vlc.LoadMedia(Source);
 
-            vlc.Height = ActualHeight - 40;
-            vlc.Width = ActualWidth - 10;
+            //vlc.Height = ActualHeight - 40;
+            //vlc.Width = ActualWidth - 10;
 
             vlc.Play();
             Volume = 20;

@@ -182,45 +182,39 @@ namespace MultiPlayerNIIES.View
         public bool IsResize { get; private set; }
 
         Vector ResizeRelativeMousePos;
+        Vector ResizeGlobalRelativeMousePos;
         FrameworkElement ResizedObject;
-        UIElement ResizerRightBottom;
-        UIElement CurResizer;
-
+        UIElement Resizer;
         double oldWidth;
         double oldHeight;
         double oldLeft;
         double oldTop;
 
-        public void ResizeSwitchOn(UIElement container, UIElement resizerRightBottom)
+        public void ResizeSwitchOn(UIElement container)
         {
             if (IsResize) return;
             ResizeContainer = container;
             IsResize = true;
-            ResizerRightBottom = resizerRightBottom;
-      //      MouseLeftButtonDown += StartResize;
         }
 
-        //public void ResizieSwitchOff(UIElement container)
-        //{
-        //    if (!IsResize) return;
-        //    ResizeContainer = null;
-        //    IsResize = false;
-        //    MouseLeftButtonDown -= StartResize;
-        //}
-
-        private void SizerRightBottom_MouseDown(object sender, MouseButtonEventArgs e)
+        public void ResizieSwitchOff(UIElement container)
+        {
+            if (!IsResize) return;
+            ResizeContainer = null;
+            IsResize = false;
+        }
+        private void Sizer_MouseDown(object sender, MouseButtonEventArgs e)
         {
             StartResize(sender, e);
         }
 
         void StartResize(object sender, MouseButtonEventArgs e)
         {
-           // if (!sender.IsMouseOver) return;
-
             if ((ResizeContainer == null) || !IsResize) return;
             ResizedObject = (FrameworkElement)this;
-            CurResizer = (UIElement)sender;
+            Resizer = (UIElement)sender;
             ResizeRelativeMousePos = e.GetPosition(ResizedObject) - new Point();
+            ResizeGlobalRelativeMousePos = e.GetPosition(Container) - new Point();
             oldWidth = ResizedObject.ActualWidth;
             oldHeight = ResizedObject.ActualHeight;
             oldTop = ResizedObject.Margin.Top;
@@ -245,13 +239,52 @@ namespace MultiPlayerNIIES.View
             double newHeight =oldHeight;
             double newLeft = oldLeft;
             double newTop = oldTop;
-
-            if (CurResizer.Equals(ResizerRightBottom))
+    
+            if (Resizer.Equals(this.SizerRightBottom))
             {
                 newWidth = oldWidth + newPos.X - ResizedObject.Margin.Left;
                 newHeight = oldHeight + newPos.Y - ResizedObject.Margin.Top;
             }
 
+            if (Resizer.Equals(this.SizerRightTop))
+            {
+                newWidth = oldWidth + newPos.X - ResizedObject.Margin.Left;
+                newHeight = oldHeight + ResizeGlobalRelativeMousePos.Y - point.Y;
+                newTop = newPos.Y;
+            }
+            if (Resizer.Equals(this.SizerLeftBottom))
+            {
+                newWidth = oldWidth + ResizeGlobalRelativeMousePos.X - point.X;
+                newLeft = newPos.X;
+                newHeight = oldHeight + newPos.Y - ResizedObject.Margin.Top;
+            }
+            if (Resizer.Equals(this.SizerLeftTop))
+            {
+                newWidth = oldWidth + ResizeGlobalRelativeMousePos.X - point.X;
+                newLeft = newPos.X;
+                newHeight = oldHeight + ResizeGlobalRelativeMousePos.Y - point.Y;
+                newTop = newPos.Y;
+            }
+            if (Resizer.Equals(this.SizerRight))
+            {
+                newWidth = oldWidth + newPos.X - ResizedObject.Margin.Left;
+            }
+            if (Resizer.Equals(this.SizerLeft))
+            {
+                newWidth = oldWidth + ResizeGlobalRelativeMousePos.X - point.X;
+                newLeft = newPos.X;
+            }
+            if (Resizer.Equals(this.SizerTop))
+            {
+                newHeight = oldHeight + ResizeGlobalRelativeMousePos.Y - point.Y;
+                newTop = newPos.Y;
+            }
+            if (Resizer.Equals(this.SizerBottom))
+            {
+                newHeight = oldHeight + newPos.Y - ResizedObject.Margin.Top;
+            }
+
+            ResizedObject.Margin = new Thickness(newLeft, newTop, ResizedObject.Margin.Right, ResizedObject.Margin.Bottom);
             if (newWidth > 50)
                 ResizedObject.Width = newWidth;
             if (newHeight > 50)
@@ -276,8 +309,13 @@ namespace MultiPlayerNIIES.View
             ResizedObject.MouseUp -= OnMouseUpResize;
             UpdateResizePosition(e);
         }
+
+
         #endregion
 
-
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

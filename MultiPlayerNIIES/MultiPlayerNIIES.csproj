@@ -321,6 +321,10 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\PNG\Arrow-Inout.png" />
+    <Resource Include="Images\PNG\Close_Window.png" />
+    <Resource Include="Images\PNG\Maximize_Window.png" />
+    <Resource Include="Images\PNG\Minimize_Window.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
