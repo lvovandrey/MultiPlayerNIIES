@@ -91,10 +91,6 @@ namespace MultiPlayerNIIES.View
 
         public SubtitleProcessor subtitleProcessor;
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void CropBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -114,14 +110,16 @@ namespace MultiPlayerNIIES.View
 
         Vector relativeMousePos;
         FrameworkElement draggedObject;
+        UIElement DraggerArea;
 
-        public void DragDropSwitchOn(UIElement container)
+        public void DragDropSwitchOn(UIElement container,UIElement dragger)
         {
             if (IsDragDrop) return;
             Container = container;
+            DraggerArea = dragger;
             IsDragDrop = true;
             MouseLeftButtonDown += StartDrag;
-
+           
         }
 
         public void DragDropSwitchOff(UIElement container)
@@ -135,6 +133,7 @@ namespace MultiPlayerNIIES.View
 
         void StartDrag(object sender, MouseButtonEventArgs e)
         {
+            if (!DraggerArea.IsMouseOver) return;
             if ((Container == null) || !IsDragDrop) return;
             draggedObject = (FrameworkElement)sender;
             relativeMousePos = e.GetPosition(draggedObject) - new Point();
@@ -175,5 +174,110 @@ namespace MultiPlayerNIIES.View
             UpdatePosition(e);
         }
         #endregion
+
+
+        #region Реализация Resize
+        public UIElement ResizeContainer;
+
+        public bool IsResize { get; private set; }
+
+        Vector ResizeRelativeMousePos;
+        FrameworkElement ResizedObject;
+        UIElement ResizerRightBottom;
+        UIElement CurResizer;
+
+        double oldWidth;
+        double oldHeight;
+        double oldLeft;
+        double oldTop;
+
+        public void ResizeSwitchOn(UIElement container, UIElement resizerRightBottom)
+        {
+            if (IsResize) return;
+            ResizeContainer = container;
+            IsResize = true;
+            ResizerRightBottom = resizerRightBottom;
+      //      MouseLeftButtonDown += StartResize;
+        }
+
+        //public void ResizieSwitchOff(UIElement container)
+        //{
+        //    if (!IsResize) return;
+        //    ResizeContainer = null;
+        //    IsResize = false;
+        //    MouseLeftButtonDown -= StartResize;
+        //}
+
+        private void SizerRightBottom_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            StartResize(sender, e);
+        }
+
+        void StartResize(object sender, MouseButtonEventArgs e)
+        {
+           // if (!sender.IsMouseOver) return;
+
+            if ((ResizeContainer == null) || !IsResize) return;
+            ResizedObject = (FrameworkElement)this;
+            CurResizer = (UIElement)sender;
+            ResizeRelativeMousePos = e.GetPosition(ResizedObject) - new Point();
+            oldWidth = ResizedObject.ActualWidth;
+            oldHeight = ResizedObject.ActualHeight;
+            oldTop = ResizedObject.Margin.Top;
+            oldLeft = ResizedObject.Margin.Left;
+
+            ResizedObject.MouseMove += OnResizeMove;
+            ResizedObject.LostMouseCapture += OnLostCaptureResize;
+            ResizedObject.MouseUp += OnMouseUpResize;
+            Mouse.Capture(ResizedObject);
+        }
+
+        void OnResizeMove(object sender, MouseEventArgs e)
+        {
+            UpdateResizePosition(e);
+        }
+
+        void UpdateResizePosition(MouseEventArgs e)
+        {
+            var point = e.GetPosition(Container);
+            var newPos = point - ResizeRelativeMousePos;
+            double newWidth = oldWidth;
+            double newHeight =oldHeight;
+            double newLeft = oldLeft;
+            double newTop = oldTop;
+
+            if (CurResizer.Equals(ResizerRightBottom))
+            {
+                newWidth = oldWidth + newPos.X - ResizedObject.Margin.Left;
+                newHeight = oldHeight + newPos.Y - ResizedObject.Margin.Top;
+            }
+
+            if (newWidth > 50)
+                ResizedObject.Width = newWidth;
+            if (newHeight > 50)
+                ResizedObject.Height = newHeight;
+        }
+
+        void OnMouseUpResize(object sender, MouseButtonEventArgs e)
+        {
+            FinishResize(sender, e);
+            Mouse.Capture(null);
+        }
+
+        void OnLostCaptureResize(object sender, MouseEventArgs e)
+        {
+            FinishResize(sender, e);
+        }
+
+        void FinishResize(object sender, MouseEventArgs e)
+        {
+            ResizedObject.MouseMove -= OnResizeMove;
+            ResizedObject.LostMouseCapture -= OnLostCaptureResize;
+            ResizedObject.MouseUp -= OnMouseUpResize;
+            UpdateResizePosition(e);
+        }
+        #endregion
+
+
     }
 }

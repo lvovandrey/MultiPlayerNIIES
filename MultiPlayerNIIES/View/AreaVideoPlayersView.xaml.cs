@@ -25,12 +25,14 @@ namespace MultiPlayerNIIES.View
         public AreaVideoPlayersView()
         {
             InitializeComponent();
-            player1.DragDropSwitchOn(GridMain);
-            player2.DragDropSwitchOn(GridMain);
-            player3.DragDropSwitchOn(GridMain);
-            player4.DragDropSwitchOn(GridMain);
-            player5.DragDropSwitchOn(GridMain);
-            player6.DragDropSwitchOn(GridMain);
+            player1.DragDropSwitchOn(GridMain, player1.Dragger);
+            player2.DragDropSwitchOn(GridMain, player2.Dragger);
+            player3.DragDropSwitchOn(GridMain, player3.Dragger);
+            player4.DragDropSwitchOn(GridMain, player4.Dragger);
+            player5.DragDropSwitchOn(GridMain, player5.Dragger);
+            player6.DragDropSwitchOn(GridMain, player6.Dragger);
+
+            player1.ResizeSwitchOn(GridMain, player1.SizerRightBottom);
 
 
             timer = new System.Windows.Threading.DispatcherTimer();
