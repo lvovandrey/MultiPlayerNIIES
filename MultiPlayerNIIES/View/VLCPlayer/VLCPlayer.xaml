@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300" BorderBrush="Black" Margin="2,2,2,3"
              x:Name="ThisPlayer">
-    <Grid>
+    <Grid x:Name="GridMain">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="25"/>
@@ -28,7 +28,7 @@
 
 
         </Grid.ColumnDefinitions>
-        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="9" ClipToBounds="True" />
+        <wpf:VlcControl Name="vlc" Grid.Row="0" Grid.ColumnSpan="10" />
         <Slider Name="TimeSlider" HorizontalAlignment="Stretch" Grid.Row="1" Margin="3" Grid.Column="7"  
                 VerticalAlignment="Stretch" Maximum="1000" Value="{Binding ElementName=ThisPlayer, Path=Position, UpdateSourceTrigger=PropertyChanged}" 
                 PreviewMouseDown="TimeSlider_PreviewMouseDown" 

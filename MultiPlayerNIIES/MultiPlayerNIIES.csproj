@@ -137,6 +137,7 @@
     <Compile Include="Tools\Subtitles\Record.cs" />
     <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
+    <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
     </Compile>

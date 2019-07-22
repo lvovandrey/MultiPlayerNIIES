@@ -27,7 +27,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch" />
-            <view:AreaVideoPlayersView Grid.Column="0" />
+            <view:AreaVideoPlayersView Grid.Column="0" x:Name="AreaVideoPlayers" />
             <view:VideoSetsPanelView Grid.Column="2" />
         </Grid>
         <view:MainPanelView Grid.Row="2" />

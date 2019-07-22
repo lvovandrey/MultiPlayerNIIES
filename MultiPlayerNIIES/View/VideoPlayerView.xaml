@@ -32,7 +32,7 @@
             </Button>
         </StackPanel>
         <mvlc:MVLCPlayer  x:Name="VLC" Grid.Row="2" Grid.Column="1"></mvlc:MVLCPlayer>
-        <!--<vlc:VLCPlayer Grid.Row="2" Margin="5" x:Name="VLC"></vlc:VLCPlayer>-->
+        <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
 

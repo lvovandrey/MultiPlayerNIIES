@@ -104,6 +104,7 @@ namespace MultiPlayerNIIES.View.VLCPlayer
             vlc.MediaPlayer.VlcLibDirectory = new System.IO.DirectoryInfo(@"c:\Program Files\VideoLAN\VLC\");
             vlc.MediaPlayer.EndInit();
             vlc.MediaPlayer.Play(new Uri(@"C:\test.mkv"));
+ 
 
             Tools.ToolsTimer.Delay(() => { pause(); }, TimeSpan.FromSeconds(0.1));
 

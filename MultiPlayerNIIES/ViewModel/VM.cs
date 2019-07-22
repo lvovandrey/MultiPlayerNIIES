@@ -4,11 +4,138 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace MultiPlayerNIIES.ViewModel
 {
-    public class VM: INPCBase
+    public class VM : INPCBase
     {
+
+        List<VideoPlayerVM> videoPlayerVMs;
+        Grid AreaVideoPlayersGrid;
+
+        public VM(Grid areaVideoPlayersGrid)
+        {
+            videoPlayerVMs = new List<VideoPlayerVM>();
+            AreaVideoPlayersGrid = areaVideoPlayersGrid;
+        }
+
+
+        #region Methods
+        private VideoPlayerVM AddVideoPlayer(Rect AreaForPlacement)
+        {
+            VideoPlayerVM videoPlayerVM = new VideoPlayerVM(AreaVideoPlayersGrid, this, AreaForPlacement);
+            videoPlayerVMs.Add(videoPlayerVM);
+            return videoPlayerVM;
+        }
+
+        /// <summary>
+        /// Вычисляем расположение видеоплееров по их количеству
+        /// </summary>
+        /// <param name="playersCount"></param>
+        /// <returns></returns>
+        private Queue<Rect> CalcAreasForPlacementVideoplayers(int playersCount)
+        {
+            Queue<Rect> rects = new Queue<Rect>();
+
+            double w = AreaVideoPlayersGrid.ActualWidth;
+            double h = AreaVideoPlayersGrid.ActualHeight;
+
+            if (playersCount == 1)
+            {
+                rects.Enqueue(new Rect(0, 0, w, h));
+            }
+            if (playersCount == 2)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 2, h));
+                rects.Enqueue(new Rect(w / 2, 0, w / 2, h));
+            }
+            if (playersCount == 3)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 2, h / 2));
+                rects.Enqueue(new Rect(w / 2, 0, w / 2, h / 2));
+                rects.Enqueue(new Rect(0, h / 2, w / 2, h / 2));
+
+            }
+            if (playersCount == 4)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 2, h / 2));
+                rects.Enqueue(new Rect(w / 2, 0, w / 2, h / 2));
+                rects.Enqueue(new Rect(0, h / 2, w / 2, h / 2 ));
+                rects.Enqueue(new Rect(w / 2 , h / 2 , w / 2 , h / 2 ));
+            }
+            if (playersCount == 5)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 3, h / 2));
+                rects.Enqueue(new Rect(w / 3 , 0, w / 3 , h / 2));
+                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 2 ));
+
+                rects.Enqueue(new Rect(0, h / 2, w / 3, h / 2));
+                rects.Enqueue(new Rect(w / 3, h / 2, w / 3, h / 2));
+            }
+            if (playersCount == 6)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 3, h / 2));
+                rects.Enqueue(new Rect(w / 3, 0, w / 3, h / 2));
+                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 2));
+
+                rects.Enqueue(new Rect(0, h / 2, w / 3, h / 2));
+                rects.Enqueue(new Rect(w / 3, h / 2, w / 3, h / 2));
+                rects.Enqueue(new Rect(2 * w / 3, h / 2, w / 3, h / 2));
+            }
+            if (playersCount == 7)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, 0, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 3));
+
+                rects.Enqueue(new Rect(0, h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, h / 3, w / 3, h / 3));
+
+                rects.Enqueue(new Rect(0, 2 * h / 3, w / 3, h / 3));
+
+            }
+            if (playersCount == 8)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, 0, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 3));
+
+                rects.Enqueue(new Rect(0, h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, h / 3, w / 3, h / 3));
+
+                rects.Enqueue(new Rect(0, 2 * h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, 2 * h / 3, w / 3, h / 3));
+            }
+            if (playersCount == 9)
+            {
+                rects.Enqueue(new Rect(0, 0, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, 0, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 3));
+
+                rects.Enqueue(new Rect(0, h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, h / 3, w / 3, h / 3));
+
+                rects.Enqueue(new Rect(0, 2 * h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(w / 3, 2 * h / 3, w / 3, h / 3));
+                rects.Enqueue(new Rect(2 * w / 3, 2 * h / 3, w / 3, h / 3));
+            }
+            if (playersCount > 9)
+            {
+                for (int i = 1; i <= playersCount; i++)
+                    rects.Enqueue(new Rect(30 * i, 30 * i, 300, 300));
+            }
+
+            return rects;
+        }
+        #endregion
+
+        #region КОМАНДЫ
         private RelayCommand playCommand;
         public RelayCommand PlayCommand
         {
@@ -17,7 +144,10 @@ namespace MultiPlayerNIIES.ViewModel
                 return playCommand ??
                   (playCommand = new RelayCommand(obj =>
                   {
-
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                      {
+                          player.PlayCommand.Execute(null);
+                      }
                   }));
             }
         }
@@ -43,7 +173,23 @@ namespace MultiPlayerNIIES.ViewModel
                 return openCommand ??
                   (openCommand = new RelayCommand(obj =>
                   {
+                      OpenFileDialog openFileDialog = new OpenFileDialog();
+                      openFileDialog.Multiselect = true;
+                      if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
+                      Queue<Rect> AreasForPlacement = CalcAreasForPlacementVideoplayers(openFileDialog.FileNames.Count() + videoPlayerVMs.Count);
+
+
+                      foreach (var v in videoPlayerVMs)
+                      {
+                          v.Replace(AreasForPlacement.Dequeue());
+                      }
+
+                      foreach (String file in openFileDialog.FileNames)
+                      {
+                          var v = AddVideoPlayer(AreasForPlacement.Dequeue());
+                          v.LoadFile(file);
+                      }
                   }));
             }
         }
@@ -204,5 +350,6 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
             }
         }
+        #endregion
     }
 }
