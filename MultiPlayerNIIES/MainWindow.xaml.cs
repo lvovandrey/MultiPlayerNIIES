@@ -27,7 +27,7 @@ namespace MultiPlayerNIIES
             InitializeComponent();
             Unosquare.FFME.Library.FFmpegDirectory = @"c:\ffmpeg\";
 
-            vm = new VM(AreaVideoPlayers.GridMain);
+            vm = new VM(AreaVideoPlayers.GridMain, this);
             DataContext = vm;
         }
 

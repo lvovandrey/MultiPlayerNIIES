@@ -38,13 +38,6 @@ namespace MultiPlayerNIIES.View
         }
 
 
-        public void start()
-        {
-            VLC.play();
-            
-            //ME.Play();
-           // FFME.Play();
-        }
         public void Load(string filepath)
         {
 
@@ -75,10 +68,7 @@ namespace MultiPlayerNIIES.View
             
         }
 
-        internal void Pause()
-        {
-            VLC.pause();
-        }
+
 
         public void SetPosition(TimeSpan position)
         {
@@ -97,6 +87,19 @@ namespace MultiPlayerNIIES.View
 //            VLC.vlc.VlcMediaPlayer.CropGeometry = "1000x1000+300+200";
         }
 
+        internal void Pause()
+        {
+            VLC.pause();
+        }
+        internal void Play()
+        {
+            VLC.play();
+        }
+        internal void Stop()
+        {
+            VLC.stop();
+        }
+
         private void AspectRatioBtn_Click(object sender, RoutedEventArgs e)
         {
 //            VLC.vlc.VlcMediaPlayer.Video.AspectRatio = "10:10";
@@ -111,6 +114,8 @@ namespace MultiPlayerNIIES.View
         Vector relativeMousePos;
         FrameworkElement draggedObject;
         UIElement DraggerArea;
+
+
 
         public void DragDropSwitchOn(UIElement container,UIElement dragger)
         {
@@ -141,6 +146,15 @@ namespace MultiPlayerNIIES.View
             draggedObject.LostMouseCapture += OnLostCapture;
             draggedObject.MouseUp += OnMouseUp;
             Mouse.Capture(draggedObject);
+        }
+
+        internal void RateIncreace()//TODO: Подключить VM и убрать это отсюда
+        {
+            VLC.RateIncreace();
+        }
+        internal void RateDecreace()//TODO: Подключить VM и убрать это отсюда
+        {
+            VLC.RateDecreace();
         }
 
         void OnDragMove(object sender, MouseEventArgs e)
@@ -180,6 +194,9 @@ namespace MultiPlayerNIIES.View
         public UIElement ResizeContainer;
 
         public bool IsResize { get; private set; }
+        public bool IsPlaying { get { return VLC.IsPlaying; }  }
+
+        public double Rate { get { return VLC.Rate;} }
 
         Vector ResizeRelativeMousePos;
         Vector ResizeGlobalRelativeMousePos;
@@ -313,9 +330,20 @@ namespace MultiPlayerNIIES.View
 
         #endregion
 
+
+        #region Реализация Focused
+        public event VoidDelegate UpFocus;
+
+        private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpFocus();
+        }
+        #endregion
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             
         }
+
+
     }
 }

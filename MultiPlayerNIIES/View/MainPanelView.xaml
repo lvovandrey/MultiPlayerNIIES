@@ -25,7 +25,7 @@
         <ToolBarTray HorizontalAlignment="Left">
             <ToolBar Height="60" VerticalAlignment="Top">
 
-                <Button Command="{Binding PlayCommand}" Style="{StaticResource ButtonMainPanel}" >
+                <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource ButtonMainPanel}" >
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
                 </Button>
                 <Button Command="{Binding StopCommand}" Style="{StaticResource ButtonMainPanel}">
@@ -48,7 +48,7 @@
                 </Button>
                 <StackPanel>
                     <Label Content="Скорость"/>
-                    <Label Content="2х" FontSize="15"/>
+                    <Label Content="{Binding Rate,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" FontSize="15"/>
                 </StackPanel>
 
                 </ToolBar>

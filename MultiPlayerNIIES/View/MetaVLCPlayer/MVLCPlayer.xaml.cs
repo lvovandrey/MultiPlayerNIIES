@@ -95,6 +95,15 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
         System.Windows.Threading.DispatcherTimer timer;
 
+        internal void RateIncreace()
+        {
+            IncSpeedBtn_Click(null, null);
+        }
+        internal void RateDecreace()
+        {
+            DecSpeedBtn_Click(null, null);
+        }
+
 
         public MVLCPlayer()
         {
@@ -176,6 +185,11 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         {
            vlc.Play();
         }
+        public void stop()
+        {
+            vlc.Stop();
+        }
+
 
         private void PlayBtn_Click_1(object sender, RoutedEventArgs e)
         {
@@ -275,6 +289,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
         }
 
+        public double Rate { get {return (double)vlc.Rate;} }
 
 
 

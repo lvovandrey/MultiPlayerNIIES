@@ -15,12 +15,36 @@ namespace MultiPlayerNIIES.ViewModel
 
         List<VideoPlayerVM> videoPlayerVMs;
         Grid AreaVideoPlayersGrid;
+        MainWindow MainWindow;
 
-        public VM(Grid areaVideoPlayersGrid)
+        VideoPlayerVM focusedPlayer;
+        VideoPlayerVM FocusedPlayer
+        { 
+            get { return focusedPlayer; }
+            set
+            {
+                focusedPlayer = value;
+                OnPropertyChanged("FocusedPlayer");
+                OnPropertyChanged("Rate");
+            }
+        }
+
+
+        public double Rate { get { return FocusedPlayer.Rate; } }
+               
+        double oldMainWindowWidth, oldMainWindowHeight;
+
+        public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
         {
             videoPlayerVMs = new List<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
+            MainWindow = mainWindow;
+            MainWindow.SizeChanged += MainWindow_SizeChanged;
+            oldMainWindowWidth = MainWindow.ActualWidth;
+            oldMainWindowHeight = MainWindow.ActualHeight;
         }
+
+
 
 
         #region Methods
@@ -28,6 +52,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             VideoPlayerVM videoPlayerVM = new VideoPlayerVM(AreaVideoPlayersGrid, this, AreaForPlacement);
             videoPlayerVMs.Add(videoPlayerVM);
+            videoPlayerVM.UpFocus += UpFocus;
+            UpFocus(videoPlayerVM, null);
             return videoPlayerVM;
         }
 
@@ -63,14 +89,14 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 rects.Enqueue(new Rect(0, 0, w / 2, h / 2));
                 rects.Enqueue(new Rect(w / 2, 0, w / 2, h / 2));
-                rects.Enqueue(new Rect(0, h / 2, w / 2, h / 2 ));
-                rects.Enqueue(new Rect(w / 2 , h / 2 , w / 2 , h / 2 ));
+                rects.Enqueue(new Rect(0, h / 2, w / 2, h / 2));
+                rects.Enqueue(new Rect(w / 2, h / 2, w / 2, h / 2));
             }
             if (playersCount == 5)
             {
                 rects.Enqueue(new Rect(0, 0, w / 3, h / 2));
-                rects.Enqueue(new Rect(w / 3 , 0, w / 3 , h / 2));
-                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 2 ));
+                rects.Enqueue(new Rect(w / 3, 0, w / 3, h / 2));
+                rects.Enqueue(new Rect(2 * w / 3, 0, w / 3, h / 2));
 
                 rects.Enqueue(new Rect(0, h / 2, w / 3, h / 2));
                 rects.Enqueue(new Rect(w / 3, h / 2, w / 3, h / 2));
@@ -133,21 +159,80 @@ namespace MultiPlayerNIIES.ViewModel
 
             return rects;
         }
+
+        private void UpFocus(object sender, EventArgs e)
+        {
+            VideoPlayerVM videoPlayerVM = (VideoPlayerVM)sender;
+            //сначала разбираемяся с Z-индексами
+            List<int> Zindexes = new List<int>();
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+                Zindexes.Add(v.ZIndex);
+            int Min = Zindexes.Min();
+            if (Min > 0)
+                foreach (VideoPlayerVM v in videoPlayerVMs)
+                    v.ZIndex -= Min;
+            Zindexes.Clear();
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+                Zindexes.Add(v.ZIndex);
+            int Max = Zindexes.Max();
+            videoPlayerVM.ZIndex = Max + 1;
+            //Теперь проставляем фокус
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+                v.Focus = false;
+            videoPlayerVM.Focus = true;
+
+            focusedPlayer = videoPlayerVM;
+        }
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double ScaleWidth = MainWindow.ActualWidth / oldMainWindowWidth;
+            double ScaleHeight = MainWindow.ActualHeight / oldMainWindowHeight;
+            AllVideoPlayersResize(ScaleWidth, ScaleHeight);
+            oldMainWindowWidth = MainWindow.ActualWidth;
+            oldMainWindowHeight = MainWindow.ActualHeight;
+        }
+
+        private void AllVideoPlayersResize(double ScaleWidth, double ScaleHeight)
+        {
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+            {
+                Rect oldArea = v.GetArea();
+                Rect newArea = new Rect(oldArea.Left * ScaleWidth, 
+                                        oldArea.Top * ScaleHeight, 
+                                        oldArea.Width * ScaleWidth, 
+                                        oldArea.Height * ScaleHeight);
+                v.Replace(newArea);
+            }
+        }
         #endregion
 
+
         #region КОМАНДЫ
-        private RelayCommand playCommand;
-        public RelayCommand PlayCommand
+        private RelayCommand playPauseCommand;
+        public RelayCommand PlayPauseCommand
         {
             get
             {
-                return playCommand ??
-                  (playCommand = new RelayCommand(obj =>
+                return playPauseCommand ??
+                  (playPauseCommand = new RelayCommand(obj =>
                   {
-                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                      if (FocusedPlayer == null) return;
+                      if (FocusedPlayer.IsPlaying)
                       {
-                          player.PlayCommand.Execute(null);
+                          foreach (VideoPlayerVM player in videoPlayerVMs)
+                          {
+                              player.PauseCommand.Execute(null);
+                          }
                       }
+                      else
+                      {
+                          foreach (VideoPlayerVM player in videoPlayerVMs)
+                          {
+                              player.PlayCommand.Execute(null);
+                          }
+                      }
+
                   }));
             }
         }
@@ -160,7 +245,10 @@ namespace MultiPlayerNIIES.ViewModel
                 return stopCommand ??
                   (stopCommand = new RelayCommand(obj =>
                   {
-
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                      {
+                          player.StopCommand.Execute(null);
+                      }
                   }));
             }
         }
@@ -202,7 +290,11 @@ namespace MultiPlayerNIIES.ViewModel
                 return rateIncreaceCommand ??
                   (rateIncreaceCommand = new RelayCommand(obj =>
                   {
-
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                      {
+                          player.RateIncreaceCommand.Execute(null);
+                      }
+                      OnPropertyChanged("Rate");
                   }));
             }
         }
@@ -215,7 +307,11 @@ namespace MultiPlayerNIIES.ViewModel
                 return rateDecreaceCommand ??
                   (rateDecreaceCommand = new RelayCommand(obj =>
                   {
-
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                      {
+                          player.RateDecreaceCommand.Execute(null);
+                      }
+                      OnPropertyChanged("Rate");
                   }));
             }
         }

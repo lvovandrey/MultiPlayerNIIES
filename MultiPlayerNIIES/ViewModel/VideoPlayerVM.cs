@@ -21,6 +21,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             Container = container;
             Body = new VideoPlayerView();
+            Body.DataContext = this;
             VM = vm;
             container.Children.Add(Body);
             Body.DragDropSwitchOn(Container, Body.Dragger);
@@ -28,6 +29,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.HorizontalAlignment = HorizontalAlignment.Left;
             Body.VerticalAlignment = VerticalAlignment.Top;
             Replace(AreaForPlacementInContainer);
+            Body.UpFocus += UpFocusX;
         }
 
 
@@ -42,6 +44,37 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 MessageBox.Show("Файл " + filename + " не найден.");
             }
+        }
+
+        public event EventHandler UpFocus;
+        public void UpFocusX()
+        {
+            UpFocus(this, null);
+        }
+
+        bool focus;
+        public bool Focus
+        {
+            get { return focus; }
+            set { focus = value; OnPropertyChanged("Focus"); }
+        }
+
+        public int ZIndex
+        {
+            set
+            {
+                Canvas.SetZIndex(Body, value);
+            }
+            get
+            {
+                return Canvas.GetZIndex(Body);
+            }
+        }
+
+        public Rect GetArea()
+        {
+            Rect r = new Rect(Body.Margin.Left, Body.Margin.Top, Body.ActualWidth, Body.ActualHeight);
+            return r;
         }
 
         public void Replace(Rect AreaForPlacementInContainer)
@@ -61,10 +94,66 @@ namespace MultiPlayerNIIES.ViewModel
                 return playCommand ??
                   (playCommand = new RelayCommand(obj =>
                   {
-
+                      Body.Play();
                   }));
             }
         }
+
+        private RelayCommand stopCommand;
+        public RelayCommand StopCommand
+        {
+            get
+            {
+                return stopCommand ??
+                  (stopCommand = new RelayCommand(obj =>
+                  {
+                      Body.Stop();
+                  }));
+            }
+        }
+        private RelayCommand pauseCommand;
+        public RelayCommand PauseCommand
+        {
+            get
+            {
+                return stopCommand ??
+                  (stopCommand = new RelayCommand(obj =>
+                  {
+                      Body.Pause();
+                  }));
+            }
+        }
+
+        private RelayCommand rateIncreaceCommand;
+        public RelayCommand RateIncreaceCommand
+        {
+            get
+            {
+                return rateIncreaceCommand ??
+                  (rateIncreaceCommand = new RelayCommand(obj =>
+                  {
+                      Body.RateIncreace();
+                  }));
+            }
+        }
+
+        private RelayCommand rateDecreaceCommand;
+        public RelayCommand RateDecreaceCommand
+        {
+            get
+            {
+                return rateDecreaceCommand ??
+                  (rateDecreaceCommand = new RelayCommand(obj =>
+                  {
+                      Body.RateDecreace();
+                  }));
+            }
+        }
+
+        public bool IsPlaying
+        { get { return Body.IsPlaying; } }
+
+        public double Rate { get {return Body.Rate; }  }
         #endregion
     }
 }

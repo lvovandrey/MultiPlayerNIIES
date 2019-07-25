@@ -7,9 +7,14 @@
              xmlns:vlc="clr-namespace:MultiPlayerNIIES.View.VLCPlayer"
              xmlns:mvlc="clr-namespace:MultiPlayerNIIES.View.MetaVLCPlayer"
              xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
+             xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"  BorderBrush="#FF1C1E49" BorderThickness="1">
-    <Grid Background="#FF252525" >
+             d:DesignHeight="450" d:DesignWidth="800"   PreviewMouseDown="UserControl_PreviewMouseDown"
+             >
+    <UserControl.Resources>
+        <converters:BoolFocusToColor x:Key="BoolFocusToColor"/>
+    </UserControl.Resources>
+    <Grid Background="{Binding Focus,Converter={StaticResource BoolFocusToColor} }" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition/>
