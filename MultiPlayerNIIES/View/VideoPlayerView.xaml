@@ -13,6 +13,7 @@
              >
     <UserControl.Resources>
         <converters:BoolFocusToColor x:Key="BoolFocusToColor"/>
+        <converters:BoolSyncLeaderToColor x:Key="BoolSyncLeaderToColor"/>
     </UserControl.Resources>
     <Grid Background="{Binding Focus,Converter={StaticResource BoolFocusToColor} }" >
         <Grid.ColumnDefinitions>
@@ -26,8 +27,17 @@
             <RowDefinition/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock Text="..." x:Name="TextBlockSubtitles" Background="#7FFFFFFF" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Panel.ZIndex="1" Grid.Row="1" Grid.Column="1"/>
+
+        <StackPanel Grid.Row="1" Margin="5" Grid.Column="1" HorizontalAlignment="Left" Panel.ZIndex="3" Orientation="Horizontal" >
+            <Grid MouseUp="SyncLeadIndicator_MouseUp" Cursor="Hand">
+                <TextBlock Foreground="White" FontSize="9" Margin="10,0,0,0" Panel.ZIndex="101"  >Sync</TextBlock>
+                <Rectangle x:Name="SyncLeadIndicator" Width="40" Stroke="DodgerBlue" StrokeThickness="1" 
+                       Margin="0,0,10,0" Fill="{Binding SyncronizeLeader, Converter={StaticResource BoolSyncLeaderToColor}, UpdateSourceTrigger=PropertyChanged}" 
+                       Panel.ZIndex="100" />
+            </Grid>
+            <TextBlock Text="..." x:Name="TextBlockSubtitles" Background="#7FFFFFFF" VerticalAlignment="Top" HorizontalAlignment="Left"  Panel.ZIndex="1" />
+
+        </StackPanel>
         <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Panel.ZIndex="3" Orientation="Horizontal" Height="20">
             <Button x:Name="Maximize">
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-Inout.png"   />

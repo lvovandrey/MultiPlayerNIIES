@@ -343,7 +343,12 @@ namespace MultiPlayerNIIES.View
         {
             
         }
-
-
+        #region СИНХРОНИЗАЦИЯ и все что с ней связано
+        public event EventHandler OnSyncLeaderSet;
+        private void SyncLeadIndicator_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            OnSyncLeaderSet(this, null);
+        }
+        #endregion
     }
 }

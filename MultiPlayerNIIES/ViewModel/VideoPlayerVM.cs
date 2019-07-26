@@ -17,6 +17,31 @@ namespace MultiPlayerNIIES.ViewModel
         Grid Container;
         VM VM;
 
+        public bool IsPlaying
+        {
+            get { return Body.IsPlaying; }
+        }
+
+        public double Rate
+        {
+            get { return Body.Rate; }
+        }
+
+        #region СИНХРОНИЗАЦИЯ и все что с ней связано
+        private bool syncronizeLeader;
+        public bool SyncronizeLeader
+        {
+            get { return syncronizeLeader; }
+            set { syncronizeLeader = value; OnPropertyChanged("SyncronizeLeader"); }
+        }//данный плеер - ведущий в синхронизации. С ним синхронизируются все остальные
+        public event EventHandler OnSyncLeaderSet;
+        private void Body_OnSyncLeaderSet(object sender, EventArgs e)
+        {
+            OnSyncLeaderSet(this, null);
+        }
+
+        #endregion
+
         public VideoPlayerVM(Grid container, VM vm, Rect AreaForPlacementInContainer)
         {
             Container = container;
@@ -30,7 +55,11 @@ namespace MultiPlayerNIIES.ViewModel
             Body.VerticalAlignment = VerticalAlignment.Top;
             Replace(AreaForPlacementInContainer);
             Body.UpFocus += UpFocusX;
+            Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
+            SyncronizeLeader = false;
         }
+
+
 
 
         #region Methods
@@ -150,10 +179,6 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        public bool IsPlaying
-        { get { return Body.IsPlaying; } }
-
-        public double Rate { get {return Body.Rate; }  }
         #endregion
     }
 }

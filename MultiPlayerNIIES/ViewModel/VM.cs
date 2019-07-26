@@ -54,7 +54,17 @@ namespace MultiPlayerNIIES.ViewModel
             videoPlayerVMs.Add(videoPlayerVM);
             videoPlayerVM.UpFocus += UpFocus;
             UpFocus(videoPlayerVM, null);
+            videoPlayerVM.OnSyncLeaderSet += VideoPlayerVM_OnSyncLeaderSet;
             return videoPlayerVM;
+        }
+
+        private void VideoPlayerVM_OnSyncLeaderSet(object sender, EventArgs e)
+        {
+            VideoPlayerVM videoPlayerVM = (VideoPlayerVM)sender;
+
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+                v.SyncronizeLeader = false;
+            videoPlayerVM.SyncronizeLeader = true;
         }
 
         /// <summary>
