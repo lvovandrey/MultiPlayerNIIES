@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
+    <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
     <Compile Include="View\VideoPlayerListView.xaml.cs">
       <DependentUpon>VideoPlayerListView.xaml</DependentUpon>

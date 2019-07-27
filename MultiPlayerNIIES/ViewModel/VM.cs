@@ -472,7 +472,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return copyTimeToClipBoardCommand ??
                   (copyTimeToClipBoardCommand = new RelayCommand(obj =>
                   {
-
+                      System.Windows.Forms.Clipboard.SetText((string)obj);
                   }));
             }
         }

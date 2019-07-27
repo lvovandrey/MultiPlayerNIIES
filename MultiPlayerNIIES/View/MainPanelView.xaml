@@ -9,6 +9,7 @@
               d:DesignWidth="1300">
     <UserControl.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
+        <converters:TimeSpanToString x:Key="TimeSpanToString"/>
         <Style  x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
             <Setter Property="Control.Margin" Value="3"/>
@@ -129,13 +130,14 @@
             </ToolBar>
         </ToolBarTray>
         <Label Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
+               x:Name="LabelCurTime"
                HorizontalAlignment="Right" VerticalAlignment="Center" 
                BorderThickness="1" BorderBrush="#FF948AC3" 
                Background="#FF050025" Foreground="#FFFFE677"
                FontSize="25" Width="140" HorizontalContentAlignment="Center">
             <Label.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Копировать" Command="{Binding CopyTimeToClipBoardCommand}"></MenuItem>
+                    <MenuItem Header="Копировать" Command="{Binding CopyTimeToClipBoardCommand}" CommandParameter="{Binding CurTime, Converter={StaticResource TimeSpanToString}}"></MenuItem>
                 </ContextMenu>
             </Label.ContextMenu>
         </Label>
