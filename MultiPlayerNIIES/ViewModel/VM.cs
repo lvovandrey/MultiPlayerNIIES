@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         VideoPlayerVM focusedPlayer;
         VideoPlayerVM FocusedPlayer
-        { 
+        {
             get { return focusedPlayer; }
             set
             {
@@ -31,7 +32,7 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         public double Rate { get { return FocusedPlayer.Rate; } }
-               
+
         double oldMainWindowWidth, oldMainWindowHeight;
 
         public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
@@ -55,6 +56,7 @@ namespace MultiPlayerNIIES.ViewModel
             videoPlayerVM.UpFocus += UpFocus;
             UpFocus(videoPlayerVM, null);
             videoPlayerVM.OnSyncLeaderSet += VideoPlayerVM_OnSyncLeaderSet;
+            if (videoPlayerVMs.Count == 1) VideoPlayerVM_OnSyncLeaderSet(videoPlayerVM, null);
             return videoPlayerVM;
         }
 
@@ -208,9 +210,9 @@ namespace MultiPlayerNIIES.ViewModel
             foreach (VideoPlayerVM v in videoPlayerVMs)
             {
                 Rect oldArea = v.GetArea();
-                Rect newArea = new Rect(oldArea.Left * ScaleWidth, 
-                                        oldArea.Top * ScaleHeight, 
-                                        oldArea.Width * ScaleWidth, 
+                Rect newArea = new Rect(oldArea.Left * ScaleWidth,
+                                        oldArea.Top * ScaleHeight,
+                                        oldArea.Width * ScaleWidth,
                                         oldArea.Height * ScaleHeight);
                 v.Replace(newArea);
             }
@@ -288,6 +290,8 @@ namespace MultiPlayerNIIES.ViewModel
                           var v = AddVideoPlayer(AreasForPlacement.Dequeue());
                           v.LoadFile(file);
                       }
+
+                      ReadSubitilesCommand.Execute(null);
                   }));
             }
         }
@@ -443,6 +447,73 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+
+        private RelayCommand readSubitilesCommand;
+        public RelayCommand ReadSubitilesCommand
+        {
+            get
+            {
+                return readSubitilesCommand ??
+                  (readSubitilesCommand = new RelayCommand(obj =>
+                  {
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                          v.ReadSubtitlesCommand.Execute(null);
+                      }
+                  }));
+            }
+        }
+
+
+        private RelayCommand syncronizationCommand;
+        public RelayCommand SyncronizationCommand
+        {
+            get
+            {
+                return syncronizationCommand ??
+                  (syncronizationCommand = new RelayCommand(obj =>
+                  {
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                          v.PauseCommand.Execute(null);
+                      }
+
+
+                      VideoPlayerVM SyncLead = videoPlayerVMs.Where(v => v.SyncronizeLeader == true).First();
+                      TimeSpan SyncTime = SyncLead.CurTime;
+                      TimeSpan SyncTitlesTime = SyncLead.GetSyncTimeFromTitles(SyncTime);
+
+                      Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                          if (!v.Equals(SyncLead))
+                          {
+                              SyncDictionary.Add(v, v.GetSmartSyncTime(SyncTime, SyncTitlesTime, SyncLead));
+                          }
+                      }
+
+
+                      foreach (KeyValuePair<VideoPlayerVM, TimeSpan> v in SyncDictionary)
+                      {
+                          v.Key.CurTime = v.Value;
+                      }
+
+                      ToolsTimer.Delay(() =>
+                      {
+                          foreach (VideoPlayerVM v in videoPlayerVMs)
+                          {
+                              v.PlayCommand.Execute(null);
+                          }
+                          ToolsTimer.Delay(() =>
+                          {
+                              //UnSyncs.Clear();
+                              //timer.Start();
+                          }, TimeSpan.FromSeconds(1));
+
+                      }, TimeSpan.FromSeconds(3));
+                  }));
+            }
+        }
 
         private RelayCommand closeAppCommand;
         public RelayCommand CloseAppCommand

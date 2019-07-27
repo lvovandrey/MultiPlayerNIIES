@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
 using System;
 using System.Collections.Generic;
@@ -27,17 +28,47 @@ namespace MultiPlayerNIIES.ViewModel
             get { return Body.Rate; }
         }
 
+        public TimeSpan CurTime
+        {
+            get { return Body.VLC.CurTime; }
+            set { Body.SetPosition(value); OnPropertyChanged("CurTime"); }
+        }
+
+        public SubtitleProcessor GetSubtitleProcessor()
+        {
+            return Body.subtitleProcessor;
+        }
+
+        public string SubtitlesFilename { get; private set; }
+        public string SourceFilename
+        {
+            get
+            { return Body.SourceFilename; }
+        }
+
         #region СИНХРОНИЗАЦИЯ и все что с ней связано
         private bool syncronizeLeader;
         public bool SyncronizeLeader
         {
             get { return syncronizeLeader; }
             set { syncronizeLeader = value; OnPropertyChanged("SyncronizeLeader"); }
-        }//данный плеер - ведущий в синхронизации. С ним синхронизируются все остальные
+        }        //данный плеер - ведущий в синхронизации. С ним синхронизируются все остальные
         public event EventHandler OnSyncLeaderSet;
         private void Body_OnSyncLeaderSet(object sender, EventArgs e)
         {
             OnSyncLeaderSet(this, null);
+        }
+
+        internal TimeSpan GetSyncTimeFromTitles(TimeSpan SyncTime)
+        {
+            return Body.subtitleProcessor.GetSubtitle(SyncTime).TimeFromTextBegin;
+        }
+
+        internal TimeSpan GetSmartSyncTime(TimeSpan SyncTime, TimeSpan SyncTitlesTime, VideoPlayerVM SyncLeadVideoPlayerVM)
+        {
+            int t = SearchAndTools.SmartSearchRecord(SyncTime, SyncLeadVideoPlayerVM.GetSubtitleProcessor(), GetSubtitleProcessor());
+            TimeSpan SyncTime2 = GetSubtitleProcessor().GetSyncTime(SyncTitlesTime, t);
+            return SyncTime2;
         }
 
         #endregion
@@ -112,6 +143,11 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Width = AreaForPlacementInContainer.Width;
             Body.Height = AreaForPlacementInContainer.Height;
         }
+
+
+      
+
+
         #endregion
 
         #region КОМАНДЫ
@@ -178,6 +214,22 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
             }
         }
+
+        private RelayCommand readSubtitlesCommand;
+        public RelayCommand ReadSubtitlesCommand
+        {
+            get
+            {
+                return readSubtitlesCommand ??
+                  (readSubtitlesCommand = new RelayCommand(obj =>
+                  {
+                      GetSubtitleProcessor().LoadSubtitles(SubtitlesFilename);
+                  }));
+            }
+        }
+
+
+
 
         #endregion
     }

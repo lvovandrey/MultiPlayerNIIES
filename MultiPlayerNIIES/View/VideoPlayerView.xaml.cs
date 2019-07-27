@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace MultiPlayerNIIES.View
 {
     /// <summary>
@@ -65,7 +66,7 @@ namespace MultiPlayerNIIES.View
             //    FFME.Position = TimeSpan.FromSeconds(4);
             //}, TimeSpan.FromSeconds(0.1));
 
-            
+
         }
 
 
@@ -74,7 +75,7 @@ namespace MultiPlayerNIIES.View
         {
             VLC.pause();
 
-            double pos = 1000* position.TotalSeconds / VLC.Duration.TotalSeconds;
+            double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
 
             Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
         }
@@ -84,7 +85,7 @@ namespace MultiPlayerNIIES.View
 
         private void CropBtn_Click(object sender, RoutedEventArgs e)
         {
-//            VLC.vlc.VlcMediaPlayer.CropGeometry = "1000x1000+300+200";
+            //            VLC.vlc.VlcMediaPlayer.CropGeometry = "1000x1000+300+200";
         }
 
         internal void Pause()
@@ -102,7 +103,7 @@ namespace MultiPlayerNIIES.View
 
         private void AspectRatioBtn_Click(object sender, RoutedEventArgs e)
         {
-//            VLC.vlc.VlcMediaPlayer.Video.AspectRatio = "10:10";
+            //            VLC.vlc.VlcMediaPlayer.Video.AspectRatio = "10:10";
         }
 
         #region Реализация Drag'n'Drop
@@ -117,14 +118,14 @@ namespace MultiPlayerNIIES.View
 
 
 
-        public void DragDropSwitchOn(UIElement container,UIElement dragger)
+        public void DragDropSwitchOn(UIElement container, UIElement dragger)
         {
             if (IsDragDrop) return;
             Container = container;
             DraggerArea = dragger;
             IsDragDrop = true;
             MouseLeftButtonDown += StartDrag;
-           
+
         }
 
         public void DragDropSwitchOff(UIElement container)
@@ -194,9 +195,13 @@ namespace MultiPlayerNIIES.View
         public UIElement ResizeContainer;
 
         public bool IsResize { get; private set; }
-        public bool IsPlaying { get { return VLC.IsPlaying; }  }
+        public bool IsPlaying { get { return VLC.IsPlaying; } }
 
-        public double Rate { get { return VLC.Rate;} }
+        public double Rate { get { return VLC.Rate; } }
+
+        public string SourceFilename { get { return VLC.Source.ToString(); } }
+
+        public string SubtitlesFilename { get { return System.IO.Path.ChangeExtension(SourceFilename, "srt"); } }
 
         Vector ResizeRelativeMousePos;
         Vector ResizeGlobalRelativeMousePos;
@@ -253,10 +258,10 @@ namespace MultiPlayerNIIES.View
             var point = e.GetPosition(Container);
             var newPos = point - ResizeRelativeMousePos;
             double newWidth = oldWidth;
-            double newHeight =oldHeight;
+            double newHeight = oldHeight;
             double newLeft = oldLeft;
             double newTop = oldTop;
-    
+
             if (Resizer.Equals(this.SizerRightBottom))
             {
                 newWidth = oldWidth + newPos.X - ResizedObject.Margin.Left;
@@ -341,7 +346,7 @@ namespace MultiPlayerNIIES.View
         #endregion
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
         #region СИНХРОНИЗАЦИЯ и все что с ней связано
         public event EventHandler OnSyncLeaderSet;
