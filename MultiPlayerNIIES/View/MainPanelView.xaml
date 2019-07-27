@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
+             xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
              mc:Ignorable="d" 
               d:DesignWidth="1000">
     <UserControl.Resources>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
         <Style  x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
             <Setter Property="Control.Margin" Value="3"/>
@@ -119,7 +121,7 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <Label Content="00:22:33,45" 
+        <Label Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
                HorizontalAlignment="Right" VerticalAlignment="Center" 
                BorderThickness="1" BorderBrush="#FF948AC3" 
                Background="#FF050025" Foreground="#FFFFE677"

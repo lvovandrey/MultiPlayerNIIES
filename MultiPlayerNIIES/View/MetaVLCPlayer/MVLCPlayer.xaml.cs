@@ -91,8 +91,11 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         }
 
 
-
-
+        public TimeSpan CurTimeEx
+        {
+            get { return vlc.VlcMediaPlayer.Time; }
+        }
+        
         System.Windows.Threading.DispatcherTimer timer;
 
         internal void RateIncreace()
@@ -126,6 +129,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             timer.Tick += new EventHandler(timerTick);
             timer.Interval = TimeSpan.FromSeconds(0.05);
             timer.Start();
+            
         }
         private void timerTick(object sender, EventArgs e)
         {

@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace MultiPlayerNIIES.ViewModel
 {
-    class VideoPlayerVM : INPCBase
+    public class VideoPlayerVM : INPCBase
     {
         VideoPlayerView Body; //Ну это не настоящая VM
         Grid Container;
@@ -30,7 +30,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         public TimeSpan CurTime
         {
-            get { return Body.VLC.CurTime; }
+            get { return Body.VLC.CurTimeEx; }
             set { Body.SetPosition(value); OnPropertyChanged("CurTime"); }
         }
 

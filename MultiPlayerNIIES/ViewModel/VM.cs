@@ -19,7 +19,7 @@ namespace MultiPlayerNIIES.ViewModel
         MainWindow MainWindow;
 
         VideoPlayerVM focusedPlayer;
-        VideoPlayerVM FocusedPlayer
+        public VideoPlayerVM FocusedPlayer
         {
             get { return focusedPlayer; }
             set
@@ -30,9 +30,27 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        public TimeSpan CurTime
+        {
+            get
+            {
+                if (FocusedPlayer != null)
+                    return FocusedPlayer.CurTime;
+                else return TimeSpan.Zero;
+            }
+            set
+            {
+                if (FocusedPlayer != null)
+                {
+                    FocusedPlayer.CurTime = value;
+                    OnPropertyChanged("CurTime");
+                }
+            }
+        }
 
         public double Rate { get { if (FocusedPlayer != null) return FocusedPlayer.Rate; else return 0; } }
 
+        System.Windows.Threading.DispatcherTimer MainTimer;
         double oldMainWindowWidth, oldMainWindowHeight;
 
         public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
@@ -43,6 +61,18 @@ namespace MultiPlayerNIIES.ViewModel
             MainWindow.SizeChanged += MainWindow_SizeChanged;
             oldMainWindowWidth = MainWindow.ActualWidth;
             oldMainWindowHeight = MainWindow.ActualHeight;
+
+
+            MainTimer = new System.Windows.Threading.DispatcherTimer();
+
+            MainTimer.Tick += new EventHandler(MainTimerTick);
+            MainTimer.Interval = TimeSpan.FromSeconds(0.05);
+            MainTimer.Start();
+        }
+
+        private void MainTimerTick(object sender, EventArgs e)
+        {
+            OnPropertyChanged("CurTime");
         }
 
 
