@@ -516,7 +516,7 @@ namespace MultiPlayerNIIES.ViewModel
                       Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
-                          if (!v.Equals(SyncLead))
+                       //   if (!v.Equals(SyncLead))
                           {
                               SyncDictionary.Add(v, v.GetSmartSyncTime(SyncTime, SyncTitlesTime, SyncLead));
                           }
@@ -527,20 +527,6 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           v.Key.CurTime = v.Value;
                       }
-
-                      ToolsTimer.Delay(() =>
-                      {
-                          foreach (VideoPlayerVM v in videoPlayerVMs)
-                          {
-                              v.PlayCommand.Execute(null);
-                          }
-                          ToolsTimer.Delay(() =>
-                          {
-                              //UnSyncs.Clear();
-                              //timer.Start();
-                          }, TimeSpan.FromSeconds(1));
-
-                      }, TimeSpan.FromSeconds(3));
                   }));
             }
         }

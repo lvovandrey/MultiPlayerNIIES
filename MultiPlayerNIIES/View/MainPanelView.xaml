@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
              mc:Ignorable="d" 
-              d:DesignWidth="1000">
+              d:DesignWidth="1300">
     <UserControl.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
         <Style  x:Key="ButtonMainPanel">
@@ -36,6 +36,13 @@
 
                 <Button  Command="{Binding OpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
+                </Button>
+            </ToolBar>
+
+            <ToolBar Height="60" VerticalAlignment="Top">
+
+                <Button Command="{Binding SyncronizationCommand}" Style="{StaticResource ButtonMainPanel}" >
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
                 </Button>
             </ToolBar>
 

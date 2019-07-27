@@ -325,6 +325,7 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\PNG\Synchronize-Blue-64.png" />
     <Resource Include="Images\PNG\Arrow-Inout.png" />
     <Resource Include="Images\PNG\Close_Window.png" />
     <Resource Include="Images\PNG\Maximize_Window.png" />

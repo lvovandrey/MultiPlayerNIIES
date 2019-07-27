@@ -149,8 +149,10 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Height = AreaForPlacementInContainer.Height;
         }
 
-
-      
+        internal void Play()
+        {
+            Body.Play();
+        }
 
 
         #endregion
@@ -232,6 +234,7 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
             }
         }
+
 
 
 

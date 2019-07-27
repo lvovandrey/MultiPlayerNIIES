@@ -131,7 +131,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch (Exception e)
             {
-                throw new Exception();
+                MessageBox.Show("Ошибка синхронизации");
             }
             return TS;
 
