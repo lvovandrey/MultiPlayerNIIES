@@ -85,7 +85,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch(Exception e)
             {
-                throw new Exception();
+                S.Text += "0;00;00;000 Не найден субтитр для текущего времени";
             }
             return S;
         }

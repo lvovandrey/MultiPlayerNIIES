@@ -31,7 +31,7 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        public double Rate { get { return FocusedPlayer.Rate; } }
+        public double Rate { get { if (FocusedPlayer != null) return FocusedPlayer.Rate; else return 0; } }
 
         double oldMainWindowWidth, oldMainWindowHeight;
 

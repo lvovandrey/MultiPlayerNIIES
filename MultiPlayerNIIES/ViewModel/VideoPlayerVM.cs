@@ -39,11 +39,15 @@ namespace MultiPlayerNIIES.ViewModel
             return Body.subtitleProcessor;
         }
 
-        public string SubtitlesFilename { get; private set; }
+        public string SubtitlesFilename
+        {
+            get { return System.IO.Path.ChangeExtension(SourceFilename, "srt"); }
+                
+        }
         public string SourceFilename
         {
             get
-            { return Body.SourceFilename; }
+            { return (new Uri(Body.SourceFilename)).AbsolutePath; }
         }
 
         #region СИНХРОНИЗАЦИЯ и все что с ней связано
@@ -88,6 +92,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.UpFocus += UpFocusX;
             Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
             SyncronizeLeader = false;
+            Body.subtitleProcessor = new SubtitleProcessor();
         }
 
 
