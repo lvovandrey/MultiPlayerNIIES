@@ -355,5 +355,43 @@ namespace MultiPlayerNIIES.View
             OnSyncLeaderSet(this, null);
         }
         #endregion
+
+        private void VLC_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            double w = VLC.vlc.ActualWidth;
+            double h = VLC.vlc.ActualHeight;
+
+            double deltaX = e.Delta > 0 ? 0.1*w: -0.1*w;
+            double deltaY = e.Delta > 0 ? 0.1 * h : -0.1 * h;
+
+            double curX = e.GetPosition(VLC.MainGrid).X;
+            double curY = e.GetPosition(VLC.MainGrid).Y;
+
+            double ML = -VLC.vlc.Margin.Left;
+            double MT = -VLC.vlc.Margin.Top;
+
+            double wnew = w + deltaX;
+            double hnew = h + deltaY;
+
+            double a = ML+curX;
+            double b = w - ML - curX;
+            double tau = a / b;
+            double MLnew = - (tau / (1 + tau)) * wnew + curX;
+
+            double c = MT + curY;
+            double d = h - MT - curY;
+            double kappa = c / d;
+            double MTnew = -(kappa / (1 + kappa)) * hnew + curY;
+
+
+            if (MLnew > 0) MLnew = 0;
+            if (wnew < VLC.MainGrid.ActualWidth) wnew = VLC.MainGrid.ActualWidth;
+            if (MTnew > 0) MTnew = 0;
+            if (hnew < VLC.MainGrid.ActualHeight) hnew = VLC.MainGrid.ActualHeight;
+
+            VLC.vlc.Width = wnew;
+            VLC.vlc.Height = hnew;
+            VLC.vlc.Margin = new Thickness(MLnew, MTnew, VLC.vlc.Margin.Right, VLC.vlc.Margin.Bottom);
+        }
     }
 }

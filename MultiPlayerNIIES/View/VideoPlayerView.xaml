@@ -15,7 +15,7 @@
         <converters:BoolFocusToColor x:Key="BoolFocusToColor"/>
         <converters:BoolSyncLeaderToColor x:Key="BoolSyncLeaderToColor"/>
     </UserControl.Resources>
-    <Grid Background="{Binding Focus,Converter={StaticResource BoolFocusToColor} }" >
+    <Grid Background="{Binding Focus,Converter={StaticResource BoolFocusToColor} }" x:Name="MainGrid" ClipToBounds="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition/>
@@ -46,7 +46,7 @@
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" />
             </Button>
         </StackPanel>
-        <mvlc:MVLCPlayer  x:Name="VLC" Grid.Row="2" Grid.Column="1"></mvlc:MVLCPlayer>
+        <mvlc:MVLCPlayer  x:Name="VLC" Grid.Row="2" Grid.Column="1" PreviewMouseWheel="VLC_PreviewMouseWheel" ></mvlc:MVLCPlayer>
         <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
