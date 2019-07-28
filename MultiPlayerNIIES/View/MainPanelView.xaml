@@ -43,7 +43,25 @@
             <ToolBar Height="60" VerticalAlignment="Top">
 
                 <Button Command="{Binding SyncronizationCommand}" Style="{StaticResource ButtonMainPanel}" >
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+                        <Label Content=".srt" FontSize="20" HorizontalAlignment="Right"   Foreground="#FF002485" VerticalAlignment="Bottom" Margin="0,0,-1,-5" >
+                            <Label.Effect>
+                                <DropShadowEffect BlurRadius="3" ShadowDepth="2"/>
+                            </Label.Effect>
+                        </Label>
+                    </Grid>
+                </Button>
+                
+                <Button Command="{Binding SyncronizationShiftCommand}" Style="{StaticResource ButtonMainPanel}" >
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Image.Effect>
+                                <DropShadowEffect BlurRadius="3" ShadowDepth="1.5" Color="#FF303030"/>
+                            </Image.Effect>
+                        </Image>
+                    </Grid>
                 </Button>
             </ToolBar>
 

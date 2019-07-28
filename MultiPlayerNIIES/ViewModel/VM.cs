@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -239,6 +240,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             foreach (VideoPlayerVM v in videoPlayerVMs)
             {
+                v.DefineOldVLCInnerPosition();
                 Rect oldArea = v.GetArea();
                 Rect newArea = new Rect(oldArea.Left * ScaleWidth,
                                         oldArea.Top * ScaleHeight,
@@ -246,6 +248,9 @@ namespace MultiPlayerNIIES.ViewModel
                                         oldArea.Height * ScaleHeight);
                 v.Replace(newArea);
             }
+            Thread.Sleep(50);
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+                v.UpdateVLCInnerPosition();
         }
         #endregion
 

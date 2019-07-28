@@ -235,6 +235,16 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        internal void DefineOldVLCInnerPosition()
+        {
+            Body.DefineOldVLCInnerPosition2();
+        }
+
+        internal void UpdateVLCInnerPosition()
+        {
+            Body.UpdateVLCInnerPosition2();
+        }
+
 
 
 

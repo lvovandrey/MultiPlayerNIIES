@@ -241,17 +241,24 @@ namespace MultiPlayerNIIES.View
             oldHeight = ResizedObject.ActualHeight;
             oldTop = ResizedObject.Margin.Top;
             oldLeft = ResizedObject.Margin.Left;
+            DefineOldVLCInnerPosition();
 
             ResizedObject.MouseMove += OnResizeMove;
             ResizedObject.LostMouseCapture += OnLostCaptureResize;
             ResizedObject.MouseUp += OnMouseUpResize;
             Mouse.Capture(ResizedObject);
+
+            
         }
+
+
 
         void OnResizeMove(object sender, MouseEventArgs e)
         {
             UpdateResizePosition(e);
+            UpdateVLCInnerPosition();
         }
+
 
         void UpdateResizePosition(MouseEventArgs e)
         {
@@ -332,9 +339,57 @@ namespace MultiPlayerNIIES.View
             UpdateResizePosition(e);
         }
 
-
         #endregion
 
+        #region РЕСАЙЗ ВНУТРЕННЕГО ПРОИГРЫВАТЕЛЯ
+        Thickness OldVLCMargin;
+        Size OldVLCSize;
+
+        public void DefineOldVLCInnerPosition()
+        {
+            OldVLCMargin = VLC.vlc.Margin;
+            OldVLCSize = new Size(VLC.vlc.ActualWidth, VLC.vlc.ActualHeight);
+        }
+
+
+        Size OldContainerSize;
+
+        public void DefineOldVLCInnerPosition2()
+        {
+            OldVLCMargin = VLC.vlc.Margin;
+            OldVLCSize = new Size(VLC.vlc.ActualWidth, VLC.vlc.ActualHeight);
+            OldContainerSize = new Size(this.Width, this.Height);
+        }
+        public void UpdateVLCInnerPosition2()
+        {
+            double kh, kw; //коэффициенты изменения размера по высоте и ширине
+            double newWidth = this.Width;
+            double newHeight = this.Height;
+            kw = newWidth / OldContainerSize.Width;
+            kh = newHeight / OldContainerSize.Height;
+            Thickness newVLCMargin = new Thickness(OldVLCMargin.Left * kw, OldVLCMargin.Top * kh, OldVLCMargin.Right * kw, OldVLCMargin.Bottom * kh);
+            Size newVLCSize = new Size(OldVLCSize.Width * kw, OldVLCSize.Height * kh);
+
+            VLC.vlc.Margin = newVLCMargin;
+            VLC.vlc.Height = newVLCSize.Height;
+            VLC.vlc.Width = newVLCSize.Width;
+        }
+
+        public void UpdateVLCInnerPosition()
+        {
+            double kh, kw; //коэффициенты изменения размера по высоте и ширине
+            double newWidth = this.Width;
+            double newHeight = this.Height;
+            kw = newWidth / oldWidth;
+            kh = newHeight / oldHeight;
+            Thickness newVLCMargin = new Thickness(OldVLCMargin.Left * kw, OldVLCMargin.Top * kh, OldVLCMargin.Right * kw, OldVLCMargin.Bottom * kh);
+            Size newVLCSize = new Size(OldVLCSize.Width * kw, OldVLCSize.Height * kh);
+
+            VLC.vlc.Margin = newVLCMargin;
+            VLC.vlc.Height = newVLCSize.Height;
+            VLC.vlc.Width = newVLCSize.Width;
+        }
+        #endregion
 
         #region Реализация Focused
         public event VoidDelegate UpFocus;
@@ -356,27 +411,36 @@ namespace MultiPlayerNIIES.View
         }
         #endregion
 
+
+        #region Реализация ЗУМА
         private void VLC_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            double w = VLC.vlc.ActualWidth;
-            double h = VLC.vlc.ActualHeight;
 
-            double deltaX = e.Delta > 0 ? 0.1*w: -0.1*w;
-            double deltaY = e.Delta > 0 ? 0.1 * h : -0.1 * h;
+            double k = e.Delta > 0 ? 0.1 : -0.1;
+            Zoom(k, VLC.vlc, e.GetPosition(VLC.MainGrid));
+        }
 
-            double curX = e.GetPosition(VLC.MainGrid).X;
-            double curY = e.GetPosition(VLC.MainGrid).Y;
+        public void Zoom(double ZoomKoef, FrameworkElement ZoomedElement, Point ZoomCenterPositionInContainer)
+        {
+            double w = ZoomedElement.ActualWidth;
+            double h = ZoomedElement.ActualHeight;
 
-            double ML = -VLC.vlc.Margin.Left;
-            double MT = -VLC.vlc.Margin.Top;
+            double deltaX = ZoomKoef * w;
+            double deltaY = ZoomKoef * h;
+
+            double curX = ZoomCenterPositionInContainer.X;
+            double curY = ZoomCenterPositionInContainer.Y;
+
+            double ML = -ZoomedElement.Margin.Left;
+            double MT = -ZoomedElement.Margin.Top;
 
             double wnew = w + deltaX;
             double hnew = h + deltaY;
 
-            double a = ML+curX;
+            double a = ML + curX;
             double b = w - ML - curX;
             double tau = a / b;
-            double MLnew = - (tau / (1 + tau)) * wnew + curX;
+            double MLnew = -(tau / (1 + tau)) * wnew + curX;
 
             double c = MT + curY;
             double d = h - MT - curY;
@@ -387,11 +451,13 @@ namespace MultiPlayerNIIES.View
             if (MLnew > 0) MLnew = 0;
             if (wnew < VLC.MainGrid.ActualWidth) wnew = VLC.MainGrid.ActualWidth;
             if (MTnew > 0) MTnew = 0;
-            if (hnew < VLC.MainGrid.ActualHeight) hnew = VLC.MainGrid.ActualHeight;
+            if (hnew < VLC.MainGrid.ActualHeight-25) hnew = VLC.MainGrid.ActualHeight-25;
 
-            VLC.vlc.Width = wnew;
-            VLC.vlc.Height = hnew;
-            VLC.vlc.Margin = new Thickness(MLnew, MTnew, VLC.vlc.Margin.Right, VLC.vlc.Margin.Bottom);
+            ZoomedElement.Width = wnew;
+            ZoomedElement.Height = hnew;
+            ZoomedElement.Margin = new Thickness(MLnew, MTnew, ZoomedElement.Margin.Right, ZoomedElement.Margin.Bottom);
         }
+
+        #endregion
     }
 }
