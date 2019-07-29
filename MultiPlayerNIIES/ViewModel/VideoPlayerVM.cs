@@ -17,6 +17,7 @@ namespace MultiPlayerNIIES.ViewModel
         VideoPlayerView Body; //Ну это не настоящая VM
         Grid Container;
         VM VM;
+        SyncronizationShiftVM SyncronizationShiftVM;
 
         public bool IsPlaying
         {
@@ -92,6 +93,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.UpFocus += UpFocusX;
             Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
             SyncronizeLeader = false;
+            SyncronizationShiftVM = new SyncronizationShiftVM();
             Body.subtitleProcessor = new SubtitleProcessor();
         }
 

@@ -137,9 +137,13 @@
     <Compile Include="Tools\Subtitles\Record.cs" />
     <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
+    <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Elements\SyncronizationShiftView.xaml.cs">
+      <DependentUpon>SyncronizationShiftView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
@@ -152,6 +156,7 @@
     </Compile>
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
+    <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
     <Compile Include="View\VideoPlayerListView.xaml.cs">
@@ -184,6 +189,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AreaVideoPlayersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\SyncronizationShiftView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -326,6 +335,8 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\PNG\Bullet-Arrow-Down.png" />
+    <Resource Include="Images\PNG\Hammer.png" />
     <Resource Include="Images\PNG\Synchronize-Blue-64.png" />
     <Resource Include="Images\PNG\Arrow-Inout.png" />
     <Resource Include="Images\PNG\Close_Window.png" />

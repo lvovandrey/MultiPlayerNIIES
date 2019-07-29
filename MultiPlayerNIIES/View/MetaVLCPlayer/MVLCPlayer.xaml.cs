@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -370,8 +371,14 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             draggedObject.MouseUp -= OnMouseUp;
             UpdatePosition(e);
         }
+
         #endregion
 
 
+        private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
+        {
+            if (InstrumentsRow.Height.Value > 15) InstrumentsRow.Height = new GridLength(0);
+            else InstrumentsRow.Height = new GridLength(20);
+        }
     }
 }

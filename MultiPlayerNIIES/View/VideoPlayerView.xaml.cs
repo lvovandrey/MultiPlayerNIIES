@@ -451,7 +451,7 @@ namespace MultiPlayerNIIES.View
             if (MLnew > 0) MLnew = 0;
             if (wnew < VLC.MainGrid.ActualWidth) wnew = VLC.MainGrid.ActualWidth;
             if (MTnew > 0) MTnew = 0;
-            if (hnew < VLC.MainGrid.ActualHeight-25) hnew = VLC.MainGrid.ActualHeight-25;
+            if (hnew < VLC.MainGrid.ActualHeight) hnew = VLC.MainGrid.ActualHeight;
 
             ZoomedElement.Width = wnew;
             ZoomedElement.Height = hnew;

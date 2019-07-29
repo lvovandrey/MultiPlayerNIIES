@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace MultiPlayerNIIES.View.ValueConverters
@@ -19,7 +20,7 @@ namespace MultiPlayerNIIES.View.ValueConverters
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return DependencyProperty.UnsetValue;
         }
 
     }

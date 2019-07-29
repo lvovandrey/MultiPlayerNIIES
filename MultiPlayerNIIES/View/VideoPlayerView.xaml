@@ -8,6 +8,7 @@
              xmlns:mvlc="clr-namespace:MultiPlayerNIIES.View.MetaVLCPlayer"
              xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
              xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
+             xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"   PreviewMouseDown="UserControl_PreviewMouseDown"
              >
@@ -23,22 +24,23 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="14"/>
             <RowDefinition/>
+            <RowDefinition Height="60" />
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Margin="5" Grid.Column="1" HorizontalAlignment="Left" Panel.ZIndex="3" Orientation="Horizontal" >
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalAlignment="Left" Panel.ZIndex="3" Orientation="Horizontal" >
             <Grid MouseUp="SyncLeadIndicator_MouseUp" Cursor="Hand">
-                <TextBlock Foreground="White" FontSize="9" Margin="10,0,0,0" Panel.ZIndex="101"  >Sync</TextBlock>
+                <TextBlock Foreground="White" FontSize="9" Margin="10,2,0,0" Panel.ZIndex="101"  >Sync</TextBlock>
                 <Rectangle x:Name="SyncLeadIndicator" Width="40" Stroke="DodgerBlue" StrokeThickness="1" 
                        Margin="0,0,10,0" Fill="{Binding SyncronizeLeader, Converter={StaticResource BoolSyncLeaderToColor}, UpdateSourceTrigger=PropertyChanged}" 
                        Panel.ZIndex="100" />
             </Grid>
-            <TextBlock Text="..." x:Name="TextBlockSubtitles" Background="#7FFFFFFF" VerticalAlignment="Top" HorizontalAlignment="Left"  Panel.ZIndex="1" />
+            <TextBlock Text="..." x:Name="TextBlockSubtitles" Background="#7FFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Left"  Panel.ZIndex="1" />
 
         </StackPanel>
-        <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Panel.ZIndex="3" Orientation="Horizontal" Height="20">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalAlignment="Right" Panel.ZIndex="3" Orientation="Horizontal" >
             <Button x:Name="Maximize">
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-Inout.png"   />
             </Button>
@@ -46,22 +48,26 @@
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" />
             </Button>
         </StackPanel>
-        <mvlc:MVLCPlayer  x:Name="VLC" Grid.Row="2" Grid.Column="1" PreviewMouseWheel="VLC_PreviewMouseWheel" ></mvlc:MVLCPlayer>
+
+
+        <mvlc:MVLCPlayer  x:Name="VLC" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" PreviewMouseWheel="VLC_PreviewMouseWheel" ></mvlc:MVLCPlayer>
+        <elements:SyncronizationShiftView VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" />
         <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
+        
 
-        <Rectangle x:Name="Dragger" Grid.Row="1" Grid.Column="1" Panel.ZIndex="2" Fill="#99000000" Cursor="SizeAll" />
+        <Rectangle x:Name="Dragger" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="1" Fill="#99000000" Cursor="SizeAll" />
 
-        <Rectangle x:Name="SizerRightBottom" Grid.Row="3" Grid.Column="2"  Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerLeftTop" Grid.Row="0" Grid.Column="0" Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerLeftBottom" Grid.Row="3" Grid.Column="0" Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerRightTop" Grid.Row="0" Grid.Column="2" Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerRightBottom" Grid.Row="3" Grid.Column="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerLeftTop" Grid.Row="0" Grid.Column="0" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerLeftBottom" Grid.Row="3" Grid.Column="0" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerRightTop" Grid.Row="0" Grid.Column="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
 
-        <Rectangle x:Name="SizerBottom" Grid.Row="3" Grid.Column="1"  Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerTop" Grid.Row="0" Grid.Column="1"  Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerLeft" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"  Fill="#00000000" Cursor="SizeWE"  MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerRight" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Fill="#00000000" Cursor="SizeWE" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerBottom" Grid.Row="3" Grid.Column="1" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerTop" Grid.Row="0" Grid.Column="1" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerLeft" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeWE"  MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerRight" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeWE" MouseDown="Sizer_MouseDown"/>
 
 
     </Grid>
