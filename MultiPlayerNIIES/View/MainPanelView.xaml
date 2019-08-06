@@ -42,7 +42,7 @@
 
             <ToolBar Height="60" VerticalAlignment="Top">
 
-                <Button Command="{Binding SyncronizationCommand}" Style="{StaticResource ButtonMainPanel}" >
+                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}" >
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
                         <Label Content=".srt" FontSize="20" HorizontalAlignment="Right"   Foreground="#FF002485" VerticalAlignment="Bottom" Margin="0,0,-1,-5" >

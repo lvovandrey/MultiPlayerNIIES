@@ -24,10 +24,11 @@
                     HorizontalAlignment="Stretch" VerticalAlignment="Center"
                     Value="{Binding SliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    />
-            <TextBlock Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-33,0,0" />
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"  Background="Gray" FontSize="8"/>
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}"   Background="Gray" FontSize="8"/>
+           
+            <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"  Background="Gray" FontSize="8"/>
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}"   Background="Gray" FontSize="8"/>-->
 
             <!--<TextBlock Text="00:00:00,00" VerticalAlignment="Top" HorizontalAlignment="Center"  Background="Gray" FontSize="8"/>-->
         </Grid>

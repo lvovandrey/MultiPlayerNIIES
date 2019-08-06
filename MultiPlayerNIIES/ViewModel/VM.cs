@@ -30,6 +30,26 @@ namespace MultiPlayerNIIES.ViewModel
                 OnPropertyChanged("Rate");
             }
         }
+        public VideoPlayerVM SyncLeadPlayer
+        {
+            get
+            {
+                VideoPlayerVM SyncLead = null;
+                if(videoPlayerVMs.Count>0)
+                    SyncLead = videoPlayerVMs.Where(v => v.SyncronizeLeader == true).First();
+                return SyncLead;
+            }
+            set
+            {
+                foreach (VideoPlayerVM v in videoPlayerVMs)
+                    v.SyncronizeLeader = false;
+                value.SyncronizeLeader = true;
+                OnPropertyChanged("SyncLeadPlayer");
+            }
+        }
+
+
+        #region СВОЙСТВА ДЛЯ БИНДИНГА
 
         public TimeSpan CurTime
         {
@@ -49,7 +69,20 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        public double Rate { get { if (FocusedPlayer != null) return FocusedPlayer.Rate; else return 0; } }
+        public double Rate
+        {
+            get
+            {
+                if (FocusedPlayer != null) return FocusedPlayer.Rate; else return 0;
+            }
+        }
+
+        public TimeSpan TimeSyncLead
+        {
+            get { return SyncLeadPlayer.CurTime; }
+        }
+        #endregion
+
 
         System.Windows.Threading.DispatcherTimer MainTimer;
         double oldMainWindowWidth, oldMainWindowHeight;
@@ -95,9 +128,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             VideoPlayerVM videoPlayerVM = (VideoPlayerVM)sender;
 
-            foreach (VideoPlayerVM v in videoPlayerVMs)
-                v.SyncronizeLeader = false;
-            videoPlayerVM.SyncronizeLeader = true;
+            SyncLeadPlayer = videoPlayerVM;
+
         }
 
         /// <summary>
@@ -500,13 +532,13 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        private RelayCommand syncronizationCommand;
-        public RelayCommand SyncronizationCommand
+        private RelayCommand syncronizationTitleCommand;
+        public RelayCommand SyncronizationTitleCommand
         {
             get
             {
-                return syncronizationCommand ??
-                  (syncronizationCommand = new RelayCommand(obj =>
+                return syncronizationTitleCommand ??
+                  (syncronizationTitleCommand = new RelayCommand(obj =>
                   {
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
@@ -514,14 +546,50 @@ namespace MultiPlayerNIIES.ViewModel
                       }
 
 
-                      VideoPlayerVM SyncLead = videoPlayerVMs.Where(v => v.SyncronizeLeader == true).First();
+                     
+                 
+                      TimeSpan SyncTitlesTime = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
+
+                      Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                       //   if (!v.Equals(SyncLead))
+                          {
+                              SyncDictionary.Add(v, v.GetSmartSyncTime(TimeSyncLead, SyncTitlesTime, SyncLeadPlayer));
+                          }
+                      }
+
+
+                      foreach (KeyValuePair<VideoPlayerVM, TimeSpan> v in SyncDictionary)
+                      {
+                          v.Key.CurTime = v.Value;
+                      }
+                  }));
+            }
+        }
+
+        private RelayCommand syncronizationShiftCommand;
+        public RelayCommand SyncronizationShiftCommand
+        {
+            get
+            {
+                return syncronizationShiftCommand ??
+                  (syncronizationShiftCommand = new RelayCommand(obj =>
+                  {
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                          v.PauseCommand.Execute(null);
+                      }
+
+
+                     
                       TimeSpan SyncTime = SyncLead.CurTime;
                       TimeSpan SyncTitlesTime = SyncLead.GetSyncTimeFromTitles(SyncTime);
 
                       Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
-                       //   if (!v.Equals(SyncLead))
+                          //   if (!v.Equals(SyncLead))
                           {
                               SyncDictionary.Add(v, v.GetSmartSyncTime(SyncTime, SyncTitlesTime, SyncLead));
                           }

@@ -33,7 +33,12 @@ namespace MultiPlayerNIIES.ViewModel
         public TimeSpan ShiftTime
         {
             get { return TimeSpan.FromSeconds((SliderPosition/SliderMaxPosition)*ShiftMaxTime.TotalSeconds); }
-            set { OnPropertyChanged("ShiftTime"); }
+            set
+            {
+                sliderPosition = (value.TotalSeconds/ShiftMaxTime.TotalSeconds)*SliderMaxPosition;
+                if (sliderPosition > SliderMaxPosition) sliderPosition = SliderMaxPosition;
+                if (sliderPosition < SliderMinPosition) sliderPosition = SliderMinPosition;
+                OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
 
        
@@ -43,12 +48,12 @@ namespace MultiPlayerNIIES.ViewModel
         public TimeSpan ShiftMaxTime
         {
             get { return shiftMaxTime; }
-            set { shiftMaxTime = value; OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); }
+            set { shiftMaxTime = value; OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
         public TimeSpan ShiftMinTime
         {
             get { return -shiftMaxTime; }
-            set { shiftMaxTime = -value; OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("ShiftMaxTime"); }
+            set { shiftMaxTime = -value; OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
 
         #region КОМАНДЫ
