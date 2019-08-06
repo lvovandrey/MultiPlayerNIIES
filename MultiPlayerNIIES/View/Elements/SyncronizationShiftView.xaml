@@ -17,14 +17,19 @@
             <ColumnDefinition x:Name="IntervalColumn" Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid >
-            <Rectangle Width="2" Height="10" Fill="#FFFF3434" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="2"></Rectangle>
-            <Slider x:Name="SyncronizationSliderMain" Maximum="1000" Minimum="-1000" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                    Value="{Binding SyncronizationSliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-            <TextBlock Text="{Binding SyncronizationSliderShiftTime, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-33,0,0" />
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="00:00:00,00"/>
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="00:00:00,00"/>
+            <Rectangle Width="2" Height="10" Fill="#FFFF3434" HorizontalAlignment="Center" VerticalAlignment="Bottom" Panel.ZIndex="2"></Rectangle>
+            <Slider x:Name="SyncronizationSliderMain" 
+                    Maximum="{Binding SliderMaxPosition, UpdateSourceTrigger=PropertyChanged}" 
+                    Minimum="{Binding SliderMinPosition, UpdateSourceTrigger=PropertyChanged}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    Value="{Binding SliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                   />
+            <TextBlock Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged}" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-33,0,0" />
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"  Background="Gray" FontSize="8"/>
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}"   Background="Gray" FontSize="8"/>
 
-            <TextBlock Text="00:00:00,00" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <!--<TextBlock Text="00:00:00,00" VerticalAlignment="Top" HorizontalAlignment="Center"  Background="Gray" FontSize="8"/>-->
         </Grid>
 
         <Image Grid.Column="1" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64.png" Panel.ZIndex="2"/>
@@ -54,7 +59,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="15"/>
-                
+
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="15"/>
@@ -62,9 +67,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Text="Интервал" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="10"/>
-            <TextBox Text="00:00:00" Grid.Row="1" Grid.RowSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1"/>
-            <Button Content="+" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10"/>
-            <Button Content="-" Grid.Row="2" Grid.Column="1" Margin="1" FontSize="10" />
+            <TextBox Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="1" Grid.RowSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1"/>
+            <Button Content="+" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10" Command="{Binding IncMaxTimeCommand}"/>
+            <Button Content="-" Grid.Row="2" Grid.Column="1" Margin="1" FontSize="10" Command="{Binding DecMaxTimeCommand}" />
         </Grid>
     </Grid>
 </UserControl>

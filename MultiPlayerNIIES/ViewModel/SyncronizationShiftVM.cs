@@ -13,15 +13,73 @@ namespace MultiPlayerNIIES.ViewModel
         public double SliderPosition
         {
             get { return sliderPosition; }
-            set { sliderPosition = value; OnPropertyChanged("SliderPosition"); }
+            set { sliderPosition = value; OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
 
-        private TimeSpan shiftTime;
+        private double sliderMaxPosition = 1000;
+        public double SliderMaxPosition
+        {
+            get { return sliderMaxPosition; }
+            set { sliderMaxPosition = value; OnPropertyChanged("SliderMaxPosition"); OnPropertyChanged("SliderMinPosition"); }
+        }
+        public double SliderMinPosition
+        {
+            get { return -sliderMaxPosition; }
+            set { sliderMaxPosition = -value; OnPropertyChanged("SliderMaxPosition"); OnPropertyChanged("SliderMinPosition"); }
+        }
+
+
+//        private TimeSpan shiftTime;
         public TimeSpan ShiftTime
         {
-            get { return shiftTime; }
-            set { shiftTime = value; OnPropertyChanged("ShiftTime"); }
+            get { return TimeSpan.FromSeconds((SliderPosition/SliderMaxPosition)*ShiftMaxTime.TotalSeconds); }
+            set { OnPropertyChanged("ShiftTime"); }
         }
+
+       
+
+
+        private TimeSpan shiftMaxTime;
+        public TimeSpan ShiftMaxTime
+        {
+            get { return shiftMaxTime; }
+            set { shiftMaxTime = value; OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); }
+        }
+        public TimeSpan ShiftMinTime
+        {
+            get { return -shiftMaxTime; }
+            set { shiftMaxTime = -value; OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("ShiftMaxTime"); }
+        }
+
+        #region КОМАНДЫ
+        private RelayCommand incMaxTimeCommand;
+        public RelayCommand IncMaxTimeCommand
+        {
+            get
+            {
+                return incMaxTimeCommand ??
+                  (incMaxTimeCommand = new RelayCommand(obj =>
+                  {
+                      ShiftMaxTime += TimeSpan.FromSeconds(1);
+                  }));
+            }
+        }
+
+        private RelayCommand decMaxTimeCommand;
+        public RelayCommand DecMaxTimeCommand
+        {
+            get
+            {
+                return decMaxTimeCommand ??
+                  (decMaxTimeCommand = new RelayCommand(obj =>
+                  {
+                      if(ShiftMaxTime>TimeSpan.FromSeconds(1))
+                      ShiftMaxTime -= TimeSpan.FromSeconds(1);
+                  }));
+            }
+        }
+        #endregion
+
 
     }
 }

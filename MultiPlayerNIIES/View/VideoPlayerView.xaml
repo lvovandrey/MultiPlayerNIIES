@@ -51,7 +51,7 @@
 
 
         <mvlc:MVLCPlayer  x:Name="VLC" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" PreviewMouseWheel="VLC_PreviewMouseWheel" ></mvlc:MVLCPlayer>
-        <elements:SyncronizationShiftView VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" />
+        <elements:SyncronizationShiftView VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" DataContext="{Binding SyncronizationShiftVM}" />
         <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
@@ -59,15 +59,15 @@
 
         <Rectangle x:Name="Dragger" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="1" Fill="#99000000" Cursor="SizeAll" />
 
-        <Rectangle x:Name="SizerRightBottom" Grid.Row="3" Grid.Column="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerRightBottom" Grid.Row="4" Grid.Column="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
         <Rectangle x:Name="SizerLeftTop" Grid.Row="0" Grid.Column="0" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNWSE" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerLeftBottom" Grid.Row="3" Grid.Column="0" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerLeftBottom" Grid.Row="4" Grid.Column="0" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
         <Rectangle x:Name="SizerRightTop" Grid.Row="0" Grid.Column="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeNESW" MouseDown="Sizer_MouseDown"/>
 
-        <Rectangle x:Name="SizerBottom" Grid.Row="3" Grid.Column="1" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerBottom" Grid.Row="4" Grid.Column="1" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
         <Rectangle x:Name="SizerTop" Grid.Row="0" Grid.Column="1" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeNS" MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerLeft" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeWE"  MouseDown="Sizer_MouseDown"/>
-        <Rectangle x:Name="SizerRight" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeWE" MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerLeft" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Panel.ZIndex="2"   Fill="#00000000" Cursor="SizeWE"  MouseDown="Sizer_MouseDown"/>
+        <Rectangle x:Name="SizerRight" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Panel.ZIndex="2"  Fill="#00000000" Cursor="SizeWE" MouseDown="Sizer_MouseDown"/>
 
 
     </Grid>

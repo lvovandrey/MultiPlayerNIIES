@@ -17,7 +17,15 @@ namespace MultiPlayerNIIES.ViewModel
         VideoPlayerView Body; //Ну это не настоящая VM
         Grid Container;
         VM VM;
-        SyncronizationShiftVM SyncronizationShiftVM;
+        SyncronizationShiftVM syncronizationShiftVM;
+
+        public SyncronizationShiftVM SyncronizationShiftVM
+        {
+            get
+            { return syncronizationShiftVM; }
+            set
+            { syncronizationShiftVM = value; OnPropertyChanged("SyncronizationShiftVM"); }
+        }
 
         public bool IsPlaying
         {
