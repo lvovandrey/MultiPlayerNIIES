@@ -51,6 +51,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             KeyBinding keyBinding = new KeyBinding(PlayPauseCommand, Key.Space, ModifierKeys.None);
             MainWindow.InputBindings.Add(keyBinding);
+
+
         }
 
         #endregion
@@ -114,7 +116,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         public TimeSpan TimeSyncLead
         {
-            get { return SyncLeadPlayer.CurTime; }
+            get { if (SyncLeadPlayer != null) return SyncLeadPlayer.CurTime; else return TimeSpan.Zero; }
         }
         #endregion
 

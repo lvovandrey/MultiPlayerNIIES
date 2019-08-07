@@ -36,5 +36,10 @@ namespace MultiPlayerNIIES
             vm.CloseAppCommand.Execute(null);
 
         }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Focus();
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace MultiPlayerNIIES.ViewModel
         public string SourceFilename
         {
             get
-            { return (new Uri(Body.SourceFilename)).AbsolutePath; }
+            { return (new Uri(Body.SourceFilename)).LocalPath; }
         }
 
         #region СИНХРОНИЗАЦИЯ и все что с ней связано

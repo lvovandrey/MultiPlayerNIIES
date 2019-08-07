@@ -10,7 +10,7 @@
     Title="MainWindow"
     Width="1200"
     Height="800"
-    mc:Ignorable="d" Closing="Window_Closing">
+    mc:Ignorable="d" Closing="Window_Closing" MouseDown="Window_MouseDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
