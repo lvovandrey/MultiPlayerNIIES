@@ -60,11 +60,11 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
         #region СИНХРОНИЗАЦИЯ и все что с ней связано
-        private bool syncronizeLeader;
-        public bool SyncronizeLeader
+        private bool isSyncronizeLeader;
+        public bool IsSyncronizeLeader
         {
-            get { return syncronizeLeader; }
-            set { syncronizeLeader = value; OnPropertyChanged("SyncronizeLeader"); }
+            get { return isSyncronizeLeader; }
+            set { isSyncronizeLeader = value; OnPropertyChanged("IsSyncronizeLeader"); }
         }        //данный плеер - ведущий в синхронизации. С ним синхронизируются все остальные
         public event EventHandler OnSyncLeaderSet;
         private void Body_OnSyncLeaderSet(object sender, EventArgs e)
@@ -100,7 +100,7 @@ namespace MultiPlayerNIIES.ViewModel
             Replace(AreaForPlacementInContainer);
             Body.UpFocus += UpFocusX;
             Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
-            SyncronizeLeader = false;
+            IsSyncronizeLeader = false;
             SyncronizationShiftVM = new SyncronizationShiftVM();
             Body.subtitleProcessor = new SubtitleProcessor();
         }

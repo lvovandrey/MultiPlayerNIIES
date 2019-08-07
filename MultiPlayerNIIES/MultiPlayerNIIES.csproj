@@ -155,6 +155,7 @@
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
+    <Compile Include="View\ValueConverters\BoolIsSyncLeaderToVisibility.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />

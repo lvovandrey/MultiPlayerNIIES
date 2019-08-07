@@ -12,12 +12,13 @@ using System.Windows.Forms;
 
 namespace MultiPlayerNIIES.ViewModel
 {
-    public class VM : INPCBase
+    public class VM : INPCBase                                          
     {
 
         List<VideoPlayerVM> videoPlayerVMs;
         Grid AreaVideoPlayersGrid;
         MainWindow MainWindow;
+
 
         VideoPlayerVM focusedPlayer;
         public VideoPlayerVM FocusedPlayer
@@ -36,14 +37,14 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 VideoPlayerVM SyncLead = null;
                 if(videoPlayerVMs.Count>0)
-                    SyncLead = videoPlayerVMs.Where(v => v.SyncronizeLeader == true).First();
+                    SyncLead = videoPlayerVMs.Where(v => v.IsSyncronizeLeader == true).First();
                 return SyncLead;
             }
             set
             {
                 foreach (VideoPlayerVM v in videoPlayerVMs)
-                    v.SyncronizeLeader = false;
-                value.SyncronizeLeader = true;
+                    v.IsSyncronizeLeader = false;
+                value.IsSyncronizeLeader = true;
                 OnPropertyChanged("SyncLeadPlayer");
             }
         }
@@ -84,7 +85,7 @@ namespace MultiPlayerNIIES.ViewModel
         #endregion
 
 
-        System.Windows.Threading.DispatcherTimer MainTimer;
+        private System.Windows.Threading.DispatcherTimer MainTimer;
         double oldMainWindowWidth, oldMainWindowHeight;
 
         public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
@@ -340,8 +341,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return openCommand ??
                   (openCommand = new RelayCommand(obj =>
                   {
-                      OpenFileDialog openFileDialog = new OpenFileDialog();
-                      openFileDialog.Multiselect = true;
+                      OpenFileDialog openFileDialog = new OpenFileDialog { Multiselect = true };
                       if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
                       Queue<Rect> AreasForPlacement = CalcAreasForPlacementVideoplayers(openFileDialog.FileNames.Count() + videoPlayerVMs.Count);
@@ -580,26 +580,9 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           v.PauseCommand.Execute(null);
                       }
-
-
-                     
-                      TimeSpan SyncTime = SyncLead.CurTime;
-                      TimeSpan SyncTitlesTime = SyncLead.GetSyncTimeFromTitles(SyncTime);
-
-                      Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
-                      {
-                          //   if (!v.Equals(SyncLead))
-                          {
-                              SyncDictionary.Add(v, v.GetSmartSyncTime(SyncTime, SyncTitlesTime, SyncLead));
-                          }
-                      }
+                          if (!v.IsSyncronizeLeader) v.CurTime = v.SyncronizationShiftVM.ShiftTime+ TimeSyncLead;
 
-
-                      foreach (KeyValuePair<VideoPlayerVM, TimeSpan> v in SyncDictionary)
-                      {
-                          v.Key.CurTime = v.Value;
-                      }
                   }));
             }
         }

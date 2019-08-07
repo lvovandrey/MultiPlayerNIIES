@@ -24,5 +24,7 @@ namespace MultiPlayerNIIES.View.Elements
         {
             InitializeComponent();
         }
+
+       
     }
 }
