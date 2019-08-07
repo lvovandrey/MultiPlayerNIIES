@@ -9,18 +9,54 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace MultiPlayerNIIES.ViewModel
 {
     public class VM : INPCBase                                          
     {
 
+        #region Поля
         List<VideoPlayerVM> videoPlayerVMs;
         Grid AreaVideoPlayersGrid;
         MainWindow MainWindow;
-
-
         VideoPlayerVM focusedPlayer;
+
+
+        private System.Windows.Threading.DispatcherTimer MainTimer;
+        double oldMainWindowWidth, oldMainWindowHeight;//Блядь что за мусор? почему она тут валяется?
+        #endregion
+
+        #region Конструкторы и вспомогательные методы
+        public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
+        {
+            videoPlayerVMs = new List<VideoPlayerVM>();
+            AreaVideoPlayersGrid = areaVideoPlayersGrid;
+            MainWindow = mainWindow;
+            MainWindow.SizeChanged += MainWindow_SizeChanged;
+            oldMainWindowWidth = MainWindow.ActualWidth;
+            oldMainWindowHeight = MainWindow.ActualHeight;
+
+
+            MainTimer = new System.Windows.Threading.DispatcherTimer();
+
+            MainTimer.Tick += new EventHandler(MainTimerTick);
+            MainTimer.Interval = TimeSpan.FromSeconds(0.05);
+            MainTimer.Start();
+
+            KeyCommandsBinding();
+        }   
+
+        private void KeyCommandsBinding()
+        {
+            KeyBinding keyBinding = new KeyBinding(PlayPauseCommand, Key.Space, ModifierKeys.None);
+            MainWindow.InputBindings.Add(keyBinding);
+        }
+
+        #endregion
+
+
+        #region СВОЙСТВА 
         public VideoPlayerVM FocusedPlayer
         {
             get { return focusedPlayer; }
@@ -36,7 +72,7 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 VideoPlayerVM SyncLead = null;
-                if(videoPlayerVMs.Count>0)
+                if (videoPlayerVMs.Count > 0)
                     SyncLead = videoPlayerVMs.Where(v => v.IsSyncronizeLeader == true).First();
                 return SyncLead;
             }
@@ -49,8 +85,6 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-
-        #region СВОЙСТВА ДЛЯ БИНДИНГА
 
         public TimeSpan CurTime
         {
@@ -85,35 +119,22 @@ namespace MultiPlayerNIIES.ViewModel
         #endregion
 
 
-        private System.Windows.Threading.DispatcherTimer MainTimer;
-        double oldMainWindowWidth, oldMainWindowHeight;
-
-        public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
-        {
-            videoPlayerVMs = new List<VideoPlayerVM>();
-            AreaVideoPlayersGrid = areaVideoPlayersGrid;
-            MainWindow = mainWindow;
-            MainWindow.SizeChanged += MainWindow_SizeChanged;
-            oldMainWindowWidth = MainWindow.ActualWidth;
-            oldMainWindowHeight = MainWindow.ActualHeight;
 
 
-            MainTimer = new System.Windows.Threading.DispatcherTimer();
 
-            MainTimer.Tick += new EventHandler(MainTimerTick);
-            MainTimer.Interval = TimeSpan.FromSeconds(0.05);
-            MainTimer.Start();
-        }
+
+
+
+
+
+
+        #region Methods
 
         private void MainTimerTick(object sender, EventArgs e)
         {
             OnPropertyChanged("CurTime");
         }
 
-
-
-
-        #region Methods
         private VideoPlayerVM AddVideoPlayer(Rect AreaForPlacement)
         {
             VideoPlayerVM videoPlayerVM = new VideoPlayerVM(AreaVideoPlayersGrid, this, AreaForPlacement);
@@ -296,7 +317,7 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return playPauseCommand ??
                   (playPauseCommand = new RelayCommand(obj =>
-                  {
+                   {
                       if (FocusedPlayer == null) return;
                       if (FocusedPlayer.IsPlaying)
                       {
@@ -576,14 +597,41 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationShiftCommand ??
                   (syncronizationShiftCommand = new RelayCommand(obj =>
                   {
+                      Dictionary<VideoPlayerVM,bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
-                          v.PauseCommand.Execute(null);
+                          PlayersStates.Add(v, v.IsPlaying);
                       }
                       foreach (VideoPlayerVM v in videoPlayerVMs)
-                          if (!v.IsSyncronizeLeader) v.CurTime = v.SyncronizationShiftVM.ShiftTime+ TimeSyncLead;
+                          if (!v.IsSyncronizeLeader) v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
+                          else v.CurTime = TimeSyncLead;
+
+
+
+                      System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+                      Timer.Tick += (s, _) =>
+                      {
+                          bool IsAllSyncronized = true;
+                          foreach (VideoPlayerVM v in videoPlayerVMs)
+                              if (!v.IsSyncronizeLeader)
+                                  if (v.CurTime != v.SyncronizationShiftVM.ShiftTime + TimeSyncLead) { IsAllSyncronized = false; break; }
+
+                          if (IsAllSyncronized)
+                          {
+                              Timer.Stop();
+                              ToolsTimer.Delay(() =>
+                              {
+                                  foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
+                                      if (pair.Value) pair.Key.Play();
+                              }, TimeSpan.FromSeconds(1));
+                          }
+                      };
+                      Timer.Interval = TimeSpan.FromSeconds(0.1);
+                      Timer.Start();
+
 
                   }));
+
             }
         }
 

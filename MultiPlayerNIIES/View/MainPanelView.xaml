@@ -1,24 +1,25 @@
-﻿<UserControl x:Class="MultiPlayerNIIES.View.MainPanelView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MultiPlayerNIIES.View"
-             xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
-             mc:Ignorable="d" 
-              d:DesignWidth="1300">
+﻿<UserControl
+    x:Class="MultiPlayerNIIES.View.MainPanelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MultiPlayerNIIES.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignWidth="1300"
+    mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
-        <converters:TimeSpanToString x:Key="TimeSpanToString"/>
-        <Style  x:Key="ButtonMainPanel">
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
+        <converters:TimeSpanToString x:Key="TimeSpanToString" />
+        <Style x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
-            <Setter Property="Control.Margin" Value="3"/>
+            <Setter Property="Control.Margin" Value="3" />
             <Setter Property="Control.Background">
                 <Setter.Value>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="White" Offset="0.594"/>
-                        <GradientStop Color="#FFC6C5E2" Offset="1"/>
-                        <GradientStop Color="#FFF1F1FF" Offset="0"/>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0.594" Color="White" />
+                        <GradientStop Offset="1" Color="#FFC6C5E2" />
+                        <GradientStop Offset="0" Color="#FFF1F1FF" />
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
@@ -28,37 +29,50 @@
         <ToolBarTray HorizontalAlignment="Left">
             <ToolBar Height="60" VerticalAlignment="Top">
 
-                <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource ButtonMainPanel}" >
+                <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
                 </Button>
                 <Button Command="{Binding StopCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Stop-64.png" />
                 </Button>
 
-                <Button  Command="{Binding OpenCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding OpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
                 </Button>
             </ToolBar>
 
             <ToolBar Height="60" VerticalAlignment="Top">
 
-                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}" >
+                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
-                        <Label Content=".srt" FontSize="20" HorizontalAlignment="Right"   Foreground="#FF002485" VerticalAlignment="Bottom" Margin="0,0,-1,-5" >
+                        <Label
+                            Margin="0,0,-1,-5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Content=".srt"
+                            FontSize="20"
+                            Foreground="#FF002485">
                             <Label.Effect>
-                                <DropShadowEffect BlurRadius="3" ShadowDepth="2"/>
+                                <DropShadowEffect BlurRadius="3" ShadowDepth="2" />
                             </Label.Effect>
                         </Label>
                     </Grid>
                 </Button>
-                
-                <Button Command="{Binding SyncronizationShiftCommand}" Style="{StaticResource ButtonMainPanel}" >
+
+                <Button Command="{Binding SyncronizationShiftCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" Width="20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <Image
+                            Width="20"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png">
                             <Image.Effect>
-                                <DropShadowEffect BlurRadius="3" ShadowDepth="1.5" Color="#FF303030"/>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    ShadowDepth="1.5"
+                                    Color="#FF303030" />
                             </Image.Effect>
                         </Image>
                     </Grid>
@@ -71,15 +85,15 @@
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Backward-64.png" />
                 </Button>
 
-                <Button  Command="{Binding RateDecreaceCommand}"  Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding RateDecreaceCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Forward-64.png" />
                 </Button>
                 <StackPanel>
-                    <Label Content="Скорость"/>
-                    <Label Content="{Binding Rate,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" FontSize="15"/>
+                    <Label Content="Скорость" />
+                    <Label Content="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="15" />
                 </StackPanel>
 
-                </ToolBar>
+            </ToolBar>
 
             <ToolBar Height="60">
 
@@ -87,23 +101,35 @@
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Backward-64.png" />
                 </Button>
 
-                <Button  Command="{Binding StepForwardCommand}"  Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding StepForwardCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Forward-64.png" />
                 </Button>
-                <Separator/>
+                <Separator />
                 <StackPanel>
                     <Label Content="Шаг" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Height="26" Width="50" VerticalContentAlignment="Center" FontSize="15">0,24</TextBox>
+                        <TextBox
+                            Width="50"
+                            Height="26"
+                            VerticalContentAlignment="Center"
+                            FontSize="15">
+                            0,24
+                        </TextBox>
                         <StackPanel>
-                            <Button Height="13" Width="20" Command="{Binding StepValueIncreaceCommand}">
+                            <Button
+                                Width="20"
+                                Height="13"
+                                Command="{Binding StepValueIncreaceCommand}">
                                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" />
                             </Button>
-                            <Button Height="13" Width="20" Command="{Binding StepValueDecreaceCommand}">
-                                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" RenderTransformOrigin="0.5,0.5" >
+                            <Button
+                                Width="20"
+                                Height="13"
+                                Command="{Binding StepValueDecreaceCommand}">
+                                <Image RenderTransformOrigin="0.5,0.5" Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png">
                                     <Image.RenderTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleY="-1"/>
+                                            <ScaleTransform ScaleY="-1" />
                                         </TransformGroup>
                                     </Image.RenderTransform>
                                 </Image>
@@ -115,25 +141,43 @@
             </ToolBar>
             <ToolBar Height="60">
 
-                <Button  Command="{Binding ExcelOpenCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding ExcelOpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" />
                 </Button>
-                <Button  Command="{Binding SendToExcelTime1Command}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding SendToExcelTime1Command}" Style="{StaticResource ButtonMainPanel}">
                     <Grid>
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" />
-                    <Label Content="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="20,5,0,0" Foreground="#FF09BD00" >
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" />
+                        <Label
+                            Margin="20,5,0,0"
+                            HorizontalAlignment="Left"
+                            Content="1"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="#FF09BD00">
                             <Label.Effect>
-                                <DropShadowEffect BlurRadius="3" ShadowDepth="1.5" Color="#FF303030"/>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    ShadowDepth="1.5"
+                                    Color="#FF303030" />
                             </Label.Effect>
                         </Label>
                     </Grid>
                 </Button>
-                <Button  Command="{Binding SendToExcelTime2Command}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding SendToExcelTime2Command}" Style="{StaticResource ButtonMainPanel}">
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png" />
-                        <Label Content="2" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" Margin="20,5,0,0" Foreground="#FFBD3400" >
+                        <Label
+                            Margin="20,5,0,0"
+                            HorizontalAlignment="Left"
+                            Content="2"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="#FFBD3400">
                             <Label.Effect>
-                                <DropShadowEffect BlurRadius="3" ShadowDepth="1.5" Color="#FF303030"/>
+                                <DropShadowEffect
+                                    BlurRadius="3"
+                                    ShadowDepth="1.5"
+                                    Color="#FF303030" />
                             </Label.Effect>
                         </Label>
                     </Grid>
@@ -142,20 +186,39 @@
             </ToolBar>
 
             <ToolBar Height="60">
-                <Button  Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" />
                 </Button>
             </ToolBar>
+
+
+            <ToolBar Height="60">
+                <Button
+                    Width="160"
+                    Height="60"
+                    Click="Button_Click">
+                    Постоянная синхронизация
+                </Button>
+            </ToolBar>
         </ToolBarTray>
-        <Label Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
-               x:Name="LabelCurTime"
-               HorizontalAlignment="Right" VerticalAlignment="Center" 
-               BorderThickness="1" BorderBrush="#FF948AC3" 
-               Background="#FF050025" Foreground="#FFFFE677"
-               FontSize="25" Width="140" HorizontalContentAlignment="Center">
+        <Label
+            x:Name="LabelCurTime"
+            Width="140"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Background="#FF050025"
+            BorderBrush="#FF948AC3"
+            BorderThickness="1"
+            Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
+            FontSize="25"
+            Foreground="#FFFFE677">
             <Label.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Копировать" Command="{Binding CopyTimeToClipBoardCommand}" CommandParameter="{Binding CurTime, Converter={StaticResource TimeSpanToString}}"></MenuItem>
+                    <MenuItem
+                        Command="{Binding CopyTimeToClipBoardCommand}"
+                        CommandParameter="{Binding CurTime, Converter={StaticResource TimeSpanToString}}"
+                        Header="Копировать" />
                 </ContextMenu>
             </Label.ContextMenu>
         </Label>

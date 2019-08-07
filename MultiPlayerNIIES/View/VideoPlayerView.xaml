@@ -10,30 +10,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvlc="clr-namespace:MultiPlayerNIIES.View.MetaVLCPlayer"
     xmlns:vlc="clr-namespace:MultiPlayerNIIES.View.VLCPlayer"
-    x:Name="This"
     d:DesignHeight="450"
     d:DesignWidth="800"
     PreviewMouseDown="UserControl_PreviewMouseDown"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="This">
     <UserControl.Resources>
         <converters:BoolFocusToColor x:Key="BoolFocusToColor" />
         <converters:BoolSyncLeaderToColor x:Key="BoolSyncLeaderToColor" />
         <converters:BoolIsSyncLeaderToVisibility x:Key="BoolIsSyncLeaderToVisibility" />
-        <Style x:Key="BtnStyle" TargetType="Button">
-            <Setter Property="Width" Value="15" />
-            <Setter Property="Height" Value="15" />
-            <Setter Property="Margin" Value="50,0,0,25" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Width" Value="25" />
-                    <Setter Property="Height" Value="25" />
-                    <Setter Property="Margin" Value="45,0,0,20" />
-                    <Setter Property="Background" Value="{x:Null}" />
-                </Trigger>
+            <Style x:Key="BtnStyle" TargetType="Button">
+                <Setter Property="Width" Value="15"/>
+                <Setter Property="Height" Value="15"/>
+            <Setter Property="Margin" Value="30,0,0,25"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Width" Value="25"/>
+                        <Setter Property="Height" Value="25"/>
+                        <Setter Property="Margin" Value="25,0,0,20"/>
+                        <Setter Property="Background" Value="{x:Null}"/>
+                    </Trigger>
 
 
-            </Style.Triggers>
-        </Style>
+                </Style.Triggers>
+            </Style>
     </UserControl.Resources>
     <Grid
         x:Name="MainGrid"
@@ -48,7 +48,7 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="14" />
             <RowDefinition />
-            <RowDefinition x:Name="SyncronizationInstrumentsRow" Height="60" />
+            <RowDefinition Height="60" x:Name="SyncronizationInstrumentsRow"/>
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
 
@@ -111,18 +111,13 @@
             PreviewMouseWheel="VLC_PreviewMouseWheel" />
 
 
-        <Button
-            x:Name="ButtonHideInstruments"
-            Grid.Row="2"
+        <Button x:Name="ButtonHideInstruments"  
+                 Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Background="{x:Null}"
-            Click="ButtonHideInstruments_Click"
-            Opacity="0.7"
-            Style="{StaticResource BtnStyle}">
-            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Vertical-64.png" />
+         
+            Opacity="0.7"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource BtnStyle}" Background="{x:Null}" Click="ButtonHideInstruments_Click">
+            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Vertical-64.png"/>
         </Button>
 
         <elements:SyncronizationShiftView
@@ -133,7 +128,8 @@
             Margin="5"
             VerticalAlignment="Bottom"
             DataContext="{Binding SyncronizationShiftVM}"
-            Visibility="{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
+            Visibility= "{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" 
+            />
 
         <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->

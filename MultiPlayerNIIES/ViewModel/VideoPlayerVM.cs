@@ -101,7 +101,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.UpFocus += UpFocusX;
             Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
             IsSyncronizeLeader = false;
-            SyncronizationShiftVM = new SyncronizationShiftVM();
+            SyncronizationShiftVM = new SyncronizationShiftVM() { ShiftMaxTime=TimeSpan.FromSeconds(10) };
             Body.subtitleProcessor = new SubtitleProcessor();
         }
 

@@ -15,7 +15,7 @@ namespace MultiPlayerNIIES.View.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if((bool)value == true)
-                return  new SolidColorBrush(Colors.Yellow);
+                return  new SolidColorBrush(Colors.LightSlateGray);
             else
                 return new SolidColorBrush(Colors.DimGray);
 
