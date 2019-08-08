@@ -47,7 +47,7 @@
 
             <TextBox  x:Name="TimeTextBox" Grid.Row="1" Grid.Column="8" FontSize="10"
                             TextAlignment="Center" VerticalAlignment="Center" MinHeight="10" 
-                            BorderBrush="{x:Null}" Text="{Binding ElementName=ThisPlayer, Path=CurTime, StringFormat=hh\\:mm\\:ss\\.ff }" />
+                            BorderBrush="{x:Null}" Text="{Binding  Path=CurTime, StringFormat=hh\\:mm\\:ss\\.ff }" />
 
 
 
