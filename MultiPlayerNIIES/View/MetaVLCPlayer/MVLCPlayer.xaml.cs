@@ -270,22 +270,18 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
         private void DecSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (vlc.VlcMediaPlayer.IsPlaying) vlc.VlcMediaPlayer.Rate = vlc.VlcMediaPlayer.Rate - 0.1f;
+            Rate+=0.1;
         }
 
         private void IncSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (vlc.VlcMediaPlayer.IsPlaying) vlc.VlcMediaPlayer.Rate = vlc.VlcMediaPlayer.Rate + 0.1f;
+            Rate -= 0.1;
         }
 
         private void FrameBackwardBtn_Click(object sender, RoutedEventArgs e)
         {
             pause();
             Position = Position - (0.1 * 1000 / Duration.TotalSeconds);
-
-
-
-
         }
 
         private void FrameForwardBtn_Click(object sender, RoutedEventArgs e)
@@ -299,7 +295,14 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             Position = Position + (step.TotalSeconds * 1000 / Duration.TotalSeconds);
         }
 
-        public double Rate { get {return (double)vlc.Rate;} }
+        public double Rate {
+            get {return (double)vlc.VlcMediaPlayer.Rate; }
+            set
+            {
+                if (vlc.VlcMediaPlayer.Length > TimeSpan.Zero)
+                    vlc.VlcMediaPlayer.Rate = (float)value;
+            }
+        }
 
 
 

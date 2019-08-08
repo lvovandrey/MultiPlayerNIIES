@@ -34,7 +34,8 @@ namespace MultiPlayerNIIES.ViewModel
 
         public double Rate
         {
-            get { return Body.Rate; }
+            get { return Body.Rate; } 
+            set { Body.Rate = value; OnPropertyChanged("Rate"); }
         }
 
         public TimeSpan CurTime
@@ -211,28 +212,19 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        private RelayCommand rateIncreaceCommand;
-        public RelayCommand RateIncreaceCommand
-        {
-            get
-            {
-                return rateIncreaceCommand ??
-                  (rateIncreaceCommand = new RelayCommand(obj =>
-                  {
-                      Body.RateIncreace();
-                  }));
-            }
-        }
+        
 
-        private RelayCommand rateDecreaceCommand;
-        public RelayCommand RateDecreaceCommand
+        private RelayCommand setRateCommand;
+        public RelayCommand SetRateCommand
         {
             get
             {
-                return rateDecreaceCommand ??
-                  (rateDecreaceCommand = new RelayCommand(obj =>
+                return setRateCommand ??
+                  (setRateCommand = new RelayCommand(obj =>
                   {
-                      Body.RateDecreace();
+                      if (!(obj is double)) return;
+                      Rate = (double)obj;
+                      OnPropertyChanged("Rate");
                   }));
             }
         }

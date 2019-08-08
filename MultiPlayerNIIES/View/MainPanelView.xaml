@@ -82,16 +82,16 @@
 
             <ToolBar Height="60">
 
-                <Button Command="{Binding RateIncreaceCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding RateDecreaceCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Backward-64.png" />
                 </Button>
 
-                <Button Command="{Binding RateDecreaceCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button Command="{Binding RateIncreaceCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Forward-64.png" />
                 </Button>
                 <StackPanel>
                     <Label Content="Скорость" />
-                    <Label Content="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="15" />
+                    <Label Content="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="15" ContentStringFormat="{}{0:F2} раз" />
                 </StackPanel>
 
             </ToolBar>

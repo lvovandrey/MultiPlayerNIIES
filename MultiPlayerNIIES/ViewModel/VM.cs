@@ -45,6 +45,9 @@ namespace MultiPlayerNIIES.ViewModel
             MainTimer.Start();
 
             Step = TimeSpan.FromMilliseconds(100);
+            RateShift = 0.1;
+            slowRate = 0.5;
+            fastRate = 2;
             MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
         }
 
@@ -62,6 +65,28 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 StepForwardCommand.Execute(null); e.Handled = true;
             }
+            if (e.Key == Key.Up && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                RateIncreaceCommand.Execute(null); e.Handled = true;
+            }
+            if (e.Key == Key.Down && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                RateDecreaceCommand.Execute(null); e.Handled = true;
+            }
+            if (e.Key == Key.A && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            {
+                SetRateCommand.Execute(SlowRate); e.Handled = true;
+            }
+            if (e.Key == Key.S && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            {
+                SetRateCommand.Execute(1.00); e.Handled = true;
+            }
+            if (e.Key == Key.D && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            {
+                SetRateCommand.Execute(FastRate); e.Handled = true;
+            }
+
+
         }
 
         #endregion
@@ -120,6 +145,41 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 if (FocusedPlayer != null) return FocusedPlayer.Rate; else return 0;
+            }
+        }
+        private double rateShift;
+        public double RateShift
+        {
+            get { return rateShift; }
+            set
+            {
+                if (value < 0) throw new Exception("Изменение скорости воспроизведения должно указываться как положительная величина");
+                rateShift = value;
+                OnPropertyChanged("RateShift");
+            }
+        }
+
+        private double slowRate;
+        public double SlowRate
+        {
+            get { return slowRate; }
+            set
+            {
+                if (value >= 1 || value <=0 ) throw new Exception("Медленная скорость должна быть от 0 до 1");
+                slowRate = value;
+                OnPropertyChanged("SlowRate");
+            }
+        }
+
+        private double fastRate;
+        public double FastRate
+        {
+            get { return fastRate; }
+            set
+            {
+                if (value <= 1 ) throw new Exception("Быстрая скорость должна быть более 1");
+                fastRate = value;
+                OnPropertyChanged("FastRate");
             }
         }
 
@@ -400,6 +460,7 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           var v = AddVideoPlayer(AreasForPlacement.Dequeue());
                           v.LoadFile(file);
+                          OnPropertyChanged("Rate"); //Ты же знаешь это ужасно!
                       }
 
                       ReadSubitilesCommand.Execute(null);
@@ -417,7 +478,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       foreach (VideoPlayerVM player in videoPlayerVMs)
                       {
-                          player.RateIncreaceCommand.Execute(null);
+                          player.SetRateCommand.Execute(Rate+RateShift);
                       }
                       OnPropertyChanged("Rate");
                   }));
@@ -434,7 +495,26 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       foreach (VideoPlayerVM player in videoPlayerVMs)
                       {
-                          player.RateDecreaceCommand.Execute(null);
+                          player.SetRateCommand.Execute(Rate-RateShift);
+                      }
+                      OnPropertyChanged("Rate");
+                  }));
+            }
+        }
+
+
+        private RelayCommand setRateCommand;
+        public RelayCommand SetRateCommand
+        {
+            get
+            {
+                return setRateCommand ??
+                  (setRateCommand = new RelayCommand(obj =>
+                  {
+                      if (!(obj is double)) return;
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                      {
+                          player.SetRateCommand.Execute((double)obj);
                       }
                       OnPropertyChanged("Rate");
                   }));
@@ -460,14 +540,6 @@ namespace MultiPlayerNIIES.ViewModel
                       foreach (VideoPlayerVM player in videoPlayerVMs)
                           player.StepCommand.Execute(-Step);
                       }, TimeSpan.FromSeconds(0.05));
-                      //ToolsTimer.Delay(() =>
-                      //{
-
-                      //foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
-                      //    if (pair.Value) pair.Key.Play();
-                      //}, TimeSpan.FromSeconds(0.15));
-
-
                   }));
             }
         }
