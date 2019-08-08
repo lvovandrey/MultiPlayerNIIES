@@ -164,6 +164,11 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Play();
         }
 
+        internal void Pause()
+        {
+            Body.Pause();
+        }
+
 
         #endregion
 
@@ -245,6 +250,22 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+
+        private RelayCommand stepCommand;
+        public RelayCommand StepCommand
+        {
+            get
+            {
+                return stepCommand ??
+                  (stepCommand = new RelayCommand(obj =>
+                  {
+                      if (!(obj is TimeSpan)) return;
+                      TimeSpan Step = (TimeSpan)obj;
+                      Body.Step(Step);
+                  }));
+            }
+        }
+
         internal void DefineOldVLCInnerPosition()
         {
             Body.DefineOldVLCInnerPosition2();
@@ -254,6 +275,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             Body.UpdateVLCInnerPosition2();
         }
+
 
 
 

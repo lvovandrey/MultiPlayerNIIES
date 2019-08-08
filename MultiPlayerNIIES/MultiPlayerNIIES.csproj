@@ -160,6 +160,7 @@
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
+    <Compile Include="View\ValueConverters\TimeSpanToTotalMiliseconds.cs" />
     <Compile Include="View\VideoPlayerListView.xaml.cs">
       <DependentUpon>VideoPlayerListView.xaml</DependentUpon>
     </Compile>

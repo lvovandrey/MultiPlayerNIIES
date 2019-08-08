@@ -11,6 +11,7 @@
     <UserControl.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
+        <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds"/>
         <Style x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
             <Setter Property="Control.Margin" Value="3" />
@@ -112,8 +113,9 @@
                             Width="50"
                             Height="26"
                             VerticalContentAlignment="Center"
-                            FontSize="15">
-                            0,24
+                            FontSize="15"
+                            Text="{Binding Step, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanToTotalMiliseconds}}">
+                            
                         </TextBox>
                         <StackPanel>
                             <Button

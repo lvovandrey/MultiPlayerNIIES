@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:MultiPlayerNIIES.View"
     xmlns:elementsview="clr-namespace:MultiPlayerNIIES.View.Elements"
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     Title="MainWindow"
     Width="1200"
     Height="800"
@@ -20,7 +21,6 @@
         <view:MenuView Grid.Row="0" />
         <Grid Grid.Row="1">
             <view:AreaVideoPlayersView Grid.Column="0"  x:Name="AreaVideoPlayers" />
-            
         </Grid>
         <view:MainPanelView Grid.Row="2" />
     </Grid>

@@ -223,6 +223,8 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             if (vlc.VlcMediaPlayer.IsPlaying) { vlc.VlcMediaPlayer.Pause(); timer.Stop(); }
         }
 
+
+
         private void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (!vlc.VlcMediaPlayer.IsPlaying)
@@ -290,8 +292,11 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         {
             pause();
             Position = Position + (0.1 * 1000 / Duration.TotalSeconds);
+        }
 
-
+        internal void Step(TimeSpan step)
+        {
+            Position = Position + (step.TotalSeconds * 1000 / Duration.TotalSeconds);
         }
 
         public double Rate { get {return (double)vlc.Rate;} }

@@ -259,6 +259,10 @@ namespace MultiPlayerNIIES.View
             UpdateVLCInnerPosition();
         }
 
+        internal void Step(TimeSpan step)
+        {
+            VLC.Step(step);
+        }
 
         void UpdateResizePosition(MouseEventArgs e)
         {

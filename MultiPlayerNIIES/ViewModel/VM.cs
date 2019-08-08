@@ -44,15 +44,24 @@ namespace MultiPlayerNIIES.ViewModel
             MainTimer.Interval = TimeSpan.FromSeconds(0.05);
             MainTimer.Start();
 
-            KeyCommandsBinding();
-        }   
+            Step = TimeSpan.FromMilliseconds(100);
+            MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
+        }
 
-        private void KeyCommandsBinding()
+        private void MainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            KeyBinding keyBinding = new KeyBinding(PlayPauseCommand, Key.Space, ModifierKeys.None);
-            MainWindow.InputBindings.Add(keyBinding);
-
-
+            if (e.Key == Key.Space)
+            {
+                PlayPauseCommand.Execute(null); e.Handled = true;
+            }
+            if (e.Key==Key.Left && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                StepBackwardCommand.Execute(null); e.Handled = true;
+            }
+            if (e.Key == Key.Right && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                StepForwardCommand.Execute(null); e.Handled = true;
+            }
         }
 
         #endregion
@@ -120,7 +129,19 @@ namespace MultiPlayerNIIES.ViewModel
         }
         #endregion
 
-
+        private TimeSpan step;
+        public TimeSpan Step
+        {
+            get
+            {
+                return step;
+            }
+            set
+            {
+                step = value;
+                OnPropertyChanged("Step");
+            }
+        }
 
 
 
@@ -428,6 +449,24 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepBackwardCommand ??
                   (stepBackwardCommand = new RelayCommand(obj =>
                   {
+                      Dictionary<VideoPlayerVM, bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                          PlayersStates.Add(v, v.IsPlaying);
+                          v.Pause();
+                      }
+                      ToolsTimer.Delay(() => 
+                      { 
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                          player.StepCommand.Execute(-Step);
+                      }, TimeSpan.FromSeconds(0.05));
+                      //ToolsTimer.Delay(() =>
+                      //{
+
+                      //foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
+                      //    if (pair.Value) pair.Key.Play();
+                      //}, TimeSpan.FromSeconds(0.15));
+
 
                   }));
             }
@@ -441,7 +480,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepForwardCommand ??
                   (stepForwardCommand = new RelayCommand(obj =>
                   {
-
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                          player.StepCommand.Execute(Step);
                   }));
             }
         }
@@ -454,7 +494,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepValueIncreaceCommand ??
                   (stepValueIncreaceCommand = new RelayCommand(obj =>
                   {
-
+                      Step += TimeSpan.FromMilliseconds(10);
                   }));
             }
         }
@@ -467,7 +507,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepValueDecreaceCommand ??
                   (stepValueDecreaceCommand = new RelayCommand(obj =>
                   {
-
+                      Step -= TimeSpan.FromMilliseconds(10);
                   }));
             }
         }
