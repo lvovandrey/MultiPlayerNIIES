@@ -467,8 +467,8 @@ namespace MultiPlayerNIIES.View
         //скрываем панель инструментов синхронизации
         private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
         {
-            if (SyncronizationInstrumentsRow.Height.Value > 50) { SyncronizationInstrumentsRow.Height = new GridLength(0); SyncronizationShiftViewer.Opacity = 0; }
-            else {SyncronizationInstrumentsRow.Height = new GridLength(60); SyncronizationShiftViewer.Opacity = 1; }
+            if (SyncronizationInstrumentsRow.Height.Value > 20) { SyncronizationInstrumentsRow.Height = new GridLength(0); SyncronizationShiftViewer.Opacity = 0; }
+            else {SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
         }
     }
 }

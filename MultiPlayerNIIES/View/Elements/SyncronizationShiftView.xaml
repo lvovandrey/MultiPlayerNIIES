@@ -7,71 +7,87 @@
              xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib" 
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="800">
-   <Grid>
+             d:DesignHeight="30" d:DesignWidth="800">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition x:Name="ShiftColumn" Width="50"/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="15"/>
             <ColumnDefinition x:Name="IntervalColumn" Width="100"/>
+
         </Grid.ColumnDefinitions>
         <Grid>
-            
+
+
             <Rectangle Width="2" Height="10" Fill="#FFFF3434" HorizontalAlignment="Center" VerticalAlignment="Bottom" Panel.ZIndex="2"></Rectangle>
             <Slider x:Name="SyncronizationSliderMain" 
                     Maximum="{Binding SliderMaxPosition, UpdateSourceTrigger=PropertyChanged}" 
                     Minimum="{Binding SliderMinPosition, UpdateSourceTrigger=PropertyChanged}"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Top"
                     Value="{Binding SliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    />
             <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-33,0,0" />
-           
-            <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"  Background="Gray" FontSize="8"/>
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}"   Background="Gray" FontSize="8"/>-->
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="440,0,145,0" Width="100" />
+
+            <Button Content="&lt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="-40,0,0,0" FontSize="8"/>
+            <Button Content="&lt;&lt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="-105,0,0,0" FontSize="8"/>
+
+            <Button Content="&gt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="40,0,0,0" FontSize="8"/>
+            <Button Content="&gt;&gt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="105,0,0,0" FontSize="8"/>
+
+            <!--<Button Content="-0.1" Grid.Row="2" Grid.Column="0" Margin="1" FontSize="10" />
+            <Button Content="+1" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10"/>
+            <Button Content="-1" Grid.Row="2" Grid.Column="1" Margin="1" FontSize="10" />-->
+
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"   FontSize="8"/>
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}" FontSize="8"/>
 
             <!--<TextBlock Text="00:00:00,00" VerticalAlignment="Top" HorizontalAlignment="Center"  Background="Gray" FontSize="8"/>-->
         </Grid>
 
         <Image Grid.Column="1" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64.png" Panel.ZIndex="2"/>
         <Rectangle Width="2" Grid.Column="1" Stroke="#FF3A3A3A" HorizontalAlignment="Left" />
+
+
+
+
         <Grid Grid.Column="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="12"/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="Точно" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="10"/>
-            <Button Content="+0.1" Grid.Row="1" Grid.Column="0" Margin="1" FontSize="10"/>
-            <Button Content="-0.1" Grid.Row="2" Grid.Column="0" Margin="1" FontSize="10" />
-            <Button Content="+1" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10"/>
-            <Button Content="-1" Grid.Row="2" Grid.Column="1" Margin="1" FontSize="10" />
-
-        </Grid>
-
-
-        <Image Grid.Column="3" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64.png" Panel.ZIndex="2" />
-        <Rectangle Width="2" Grid.Column="3" Stroke="#FF3A3A3A" HorizontalAlignment="Left" />
-        <Grid Grid.Column="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="15"/>
 
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="15"/>
+
+                <RowDefinition Height="9.5"/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Интервал" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="10"/>
+            <TextBlock Text="Интервал" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="8" Margin="32,0,17,0" Grid.RowSpan="2"/>
             <TextBox Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="1" Grid.RowSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1"/>
-            <Button Content="+" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10" Command="{Binding IncMaxTimeCommand}"/>
-            <Button Content="-" Grid.Row="2" Grid.Column="1" Margin="1" FontSize="10" Command="{Binding DecMaxTimeCommand}" />
+            <Button Grid.Row="1" Grid.Column="1" Margin="1"  Command="{Binding IncMaxTimeCommand}">
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.531">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="2.85" ScaleY="2.4"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Button>
+            <Button Grid.Row="3" Grid.Column="1" Margin="1" FontSize="10" Command="{Binding DecMaxTimeCommand}" >
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" Margin="0" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.531" HorizontalAlignment="Right" Width="4">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform  ScaleX="2.85" ScaleY="2.4"/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>
