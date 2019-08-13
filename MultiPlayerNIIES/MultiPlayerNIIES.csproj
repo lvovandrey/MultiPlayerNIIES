@@ -134,6 +134,7 @@
     <Compile Include="Abstract\INPCBase.cs" />
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
+    <Compile Include="Model\IUniversalPlayer.cs" />
     <Compile Include="Tools\Subtitles\Subtitle.cs" />
     <Compile Include="Tools\Subtitles\SubtitleProcessor.cs" />
     <Compile Include="Tools\Subtitles\Parser.cs" />
@@ -269,9 +270,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\PNG\Add.png" />
     <Resource Include="Images\PNG\Cross.png" />
