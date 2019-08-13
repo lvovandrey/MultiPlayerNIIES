@@ -40,7 +40,7 @@
                 Grid.Column="0"
                 Margin="2"
                 Command="{Binding PlayPauseCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png" />
+                <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png" Stretch="Fill" />
             </Button>
 
 
@@ -58,7 +58,7 @@
                 Grid.Column="2"
                 Margin="2"
                 Command="{Binding MuteCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/mute.png" />
+                <Image Source="/MultiPlayerNIIES;component/Images/mute.png" Stretch="Fill" />
             </Button>
 
             <Button

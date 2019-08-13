@@ -19,21 +19,33 @@
         <converters:BoolFocusToColor x:Key="BoolFocusToColor" />
         <converters:BoolSyncLeaderToColor x:Key="BoolSyncLeaderToColor" />
         <converters:BoolIsSyncLeaderToVisibility x:Key="BoolIsSyncLeaderToVisibility" />
-            <Style x:Key="BtnStyle" TargetType="Button">
-                <Setter Property="Width" Value="15"/>
-                <Setter Property="Height" Value="15"/>
-            <Setter Property="Margin" Value="30,0,0,25"/>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Width" Value="25"/>
-                        <Setter Property="Height" Value="25"/>
-                        <Setter Property="Margin" Value="25,0,0,20"/>
-                        <Setter Property="Background" Value="{x:Null}"/>
-                    </Trigger>
+        <Style x:Key="BtnStyle" TargetType="Button">
+            <Setter Property="Width" Value="14"/>
+            <Setter Property="Height" Value="14"/>
+            <Setter Property="Margin" Value="3,0,0,3"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Background" Value="{x:Null}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BtnStyle2" TargetType="Button">
+            <Setter Property="Width" Value="14"/>
+            <Setter Property="Height" Value="14"/>
+            <Setter Property="Margin" Value="20,0,0,3"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Margin" Value="17,0,0,0"/>
+                    <Setter Property="Background" Value="{x:Null}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-
-                </Style.Triggers>
-            </Style>
     </UserControl.Resources>
     <Grid
         x:Name="MainGrid"
@@ -48,6 +60,7 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="14" />
             <RowDefinition />
+            <RowDefinition Height="20" x:Name="PlayerPanelRow"/>
             <RowDefinition Height="30" x:Name="SyncronizationInstrumentsRow"/>
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
@@ -112,17 +125,33 @@
 
 
         <Button x:Name="ButtonHideInstruments"  
-                 Grid.Row="2"
+            Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-         
+            ToolTip="Скрыть/показать панель синхронизации"
             Opacity="0.7"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource BtnStyle}" Background="{x:Null}" Click="ButtonHideInstruments_Click">
-            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Vertical-64.png"/>
+            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png"/>
         </Button>
+        
+        <Button x:Name="ButtonHidePanel"  
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            ToolTip="Скрыть/показать панель управления проигрывателя"
+            Opacity="0.7"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource BtnStyle2}" Background="{x:Null}" Click="ButtonHidePanel_Click">
+            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png"/>
+            
+        </Button>
+
+        <elements:PlayerPanel      
+            x:Name="PlayerPanelViewer"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3" DataContext="{Binding PlayerPanelVM}"/>
 
         <elements:SyncronizationShiftView
             x:Name="SyncronizationShiftViewer"
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             Grid.ColumnSpan="3"
 
@@ -149,7 +178,7 @@
 
         <Rectangle
             x:Name="SizerRightBottom"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="2"
             Panel.ZIndex="2"
             Cursor="SizeNWSE"
@@ -165,7 +194,7 @@
             MouseDown="Sizer_MouseDown" />
         <Rectangle
             x:Name="SizerLeftBottom"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             Panel.ZIndex="2"
             Cursor="SizeNESW"
@@ -182,7 +211,7 @@
 
         <Rectangle
             x:Name="SizerBottom"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             Panel.ZIndex="2"
             Cursor="SizeNS"

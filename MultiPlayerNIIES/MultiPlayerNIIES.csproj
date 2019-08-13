@@ -348,6 +348,8 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\mute.png" />
+    <Resource Include="Images\play_pause.png" />
     <Resource Include="Images\PNG\Bullet-Arrow-Down.png" />
     <Resource Include="Images\PNG\Hammer.png" />
     <Resource Include="Images\PNG\Synchronize-Blue-64.png" />

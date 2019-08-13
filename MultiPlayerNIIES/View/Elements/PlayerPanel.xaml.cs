@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,11 +28,17 @@ namespace MultiPlayerNIIES.View.Elements
 
         private void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            PlayerPanelVM ppVM = DataContext as PlayerPanelVM; // да хуй с ним знаю что уродство
+            if (ppVM == null) return;
 
+            ppVM.Body.VLC.TimeSlider_PreviewMouseDown(sender, e);
         }
 
         private void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            PlayerPanelVM ppVM = DataContext as PlayerPanelVM; // да хуй с ним знаю что уродство
+            if (ppVM == null) return;
+            ppVM.Body.VLC.TimeSlider_PreviewMouseUp(sender, e);
 
         }
     }

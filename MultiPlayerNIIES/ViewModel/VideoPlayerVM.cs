@@ -18,6 +18,7 @@ namespace MultiPlayerNIIES.ViewModel
         Grid Container;
         VM VM;
         SyncronizationShiftVM syncronizationShiftVM;
+        PlayerPanelVM playerPanelVM;
 
         public SyncronizationShiftVM SyncronizationShiftVM
         {
@@ -25,6 +26,14 @@ namespace MultiPlayerNIIES.ViewModel
             { return syncronizationShiftVM; }
             set
             { syncronizationShiftVM = value; OnPropertyChanged("SyncronizationShiftVM"); }
+        }
+
+        public PlayerPanelVM PlayerPanelVM
+        {
+            get
+            { return playerPanelVM; }
+            set
+            { playerPanelVM = value; OnPropertyChanged("PlayerPanelVM"); }
         }
 
         public bool IsPlaying
@@ -105,6 +114,7 @@ namespace MultiPlayerNIIES.ViewModel
             IsSyncronizeLeader = false;
             SyncronizationShiftVM = new SyncronizationShiftVM() { ShiftMaxTime=TimeSpan.FromSeconds(10) };
             Body.subtitleProcessor = new SubtitleProcessor();
+            PlayerPanelVM = new PlayerPanelVM(Body);
         }
 
 

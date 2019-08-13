@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,27 +13,35 @@ namespace MultiPlayerNIIES.ViewModel
     {
 
         #region Поля 
-
+        public VideoPlayerView Body; //Ну это не настоящая VM
         #endregion
 
         #region Конструкторы
+        public PlayerPanelVM(VideoPlayerView body)
+        {
+            Body = body;
+            SubscriptedToEventsInPlayerDepPropChanges();
+        }
         #endregion
 
         #region Методы
+        private void SubscriptedToEventsInPlayerDepPropChanges()
+        {
+            Body.VLC.OnPositionChanged += (d, e) => { OnPropertyChanged("Position"); };
+            Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
+            Body.VLC.OnCurTimeChanged += (d, e) => { OnPropertyChanged("CurTime"); };
+        }
         #endregion
 
         #region Свойства
-        private double position { get; set; }
         [Magic]
-        public double Position { get { return position; } set { position = value; } }
+        public double Position { get { return Body.VLC.Position; } set { Body.VLC.Position = value; } }
 
-        public double volume { get; set; }
         [Magic]
-        public double Volume { get { return volume; } set { volume = value; } }
+        public double Volume { get { return Body.VLC.Volume; } set { Body.VLC.Volume = value; } }
 
-        public TimeSpan curTime { get; set; }
         [Magic]
-        public TimeSpan CurTime { get { return curTime; } set { curTime = value; } }
+        public TimeSpan CurTime { get { return Body.VLC.CurTime; } set { Body.VLC.CurTime = value; } }
         #endregion
 
 
@@ -49,7 +58,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return playPauseCommand ?? (playPauseCommand = new RelayCommand(obj =>
                 {
-
+                    if (Body.IsPlaying) Body.Pause();
+                    else Body.Play();
                 }));
             }
         }
@@ -62,6 +72,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return muteCommand ?? (muteCommand = new RelayCommand(obj =>
                 {
+                    if (Volume > 0) Volume = 0;
+                    else Volume = 50;
                 }));
             }
         }
@@ -72,6 +84,7 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 return decSpeedCommand ?? (decSpeedCommand = new RelayCommand(obj => {
+                    Body.Rate -= 0.1;
                 }));
             }
         }
@@ -82,6 +95,7 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 return incSpeedCommand ?? (incSpeedCommand = new RelayCommand(obj => {
+                    Body.Rate += 0.1;
                 }));
             }
         }
@@ -92,6 +106,8 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 return stepBackwardCommand ?? (stepBackwardCommand = new RelayCommand(obj => {
+                    Body.Pause();
+                    Position = Position - (0.1 * 1000 / Body.VLC.Duration.TotalSeconds);
                 }));
             }
         }
@@ -102,6 +118,8 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 return stepForwardCommand ?? (stepForwardCommand = new RelayCommand(obj => {
+                    Body.Pause();
+                    Position = Position + (0.1 * 1000 / Body.VLC.Duration.TotalSeconds);
                 }));
             }
         }

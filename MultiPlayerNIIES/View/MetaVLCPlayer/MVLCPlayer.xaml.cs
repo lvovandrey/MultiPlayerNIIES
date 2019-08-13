@@ -217,7 +217,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         public bool IsPlaying { get { return vlc.VlcMediaPlayer.IsPlaying; } }
         bool WasPlaing;
 
-        private void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WasPlaing = vlc.VlcMediaPlayer.IsPlaying;
             if (vlc.VlcMediaPlayer.IsPlaying) { vlc.VlcMediaPlayer.Pause(); timer.Stop(); }
@@ -225,7 +225,7 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
 
 
-        private void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        public void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (!vlc.VlcMediaPlayer.IsPlaying)
             {
@@ -383,10 +383,6 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
         #endregion
 
 
-        private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
-        {
-            if (InstrumentsRow.Height.Value > 15) InstrumentsRow.Height = new GridLength(0);
-            else InstrumentsRow.Height = new GridLength(20);
-        }
+
     }
 }

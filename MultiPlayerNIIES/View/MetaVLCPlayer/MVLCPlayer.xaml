@@ -8,28 +8,6 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="500" Name="ThisPlayer">
-    <UserControl.Resources>
-        <Style x:Key="BtnStyle" TargetType="Button">
-            <Setter Property="Width" Value="15"/>
-            <Setter Property="Height" Value="15"/>
-            <Setter Property="Margin" Value="5"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Width" Value="25"/>
-                    <Setter Property="Height" Value="25"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="Background" Value="{x:Null}"/>
-                </Trigger>
-
-
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="20" x:Name="InstrumentsRow"/>
-        </Grid.RowDefinitions>
         <Grid x:Name="MainGrid" ClipToBounds="True">
             <Grid.Resources>
                 <x:Array Type="{x:Type system:String}" x:Key="VlcOptions">
@@ -40,63 +18,12 @@
                     <system:String>--no-sub-autodetect-file</system:String>
                 </x:Array>
             </Grid.Resources>
-            <Grid Grid.Row="0" Grid.ColumnSpan="9" Background="Black"  >
+            <Grid Background="Black"  >
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-Multimedia-64.png" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
-            <wpf:VlcPlayer Grid.Row="0" Grid.ColumnSpan="9" x:Name="vlc"
+            <wpf:VlcPlayer x:Name="vlc"
                            VlcOption="{StaticResource VlcOptions}" LibVlcPath="C:\Program Files\VideoLAN\VLC"  
                            EndBehavior="Nothing"  ClipToBounds="True" Stretch="Fill"/>
-
-            <Button x:Name="ButtonHideInstruments"  Opacity="0.7"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource BtnStyle}" Background="{x:Null}" Click="ButtonHideInstruments_Click">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Vertical-64.png"/>
-            </Button>
         </Grid>
-        
-        
-        <Grid x:Name="GridPanel" Grid.Row="1">
-           
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition />
-                <ColumnDefinition Width="60"/>
 
-
-            </Grid.ColumnDefinitions>
-
-
-            <Slider Name="TimeSlider" HorizontalAlignment="Stretch"  Grid.Column="7"  
-                VerticalAlignment="Stretch" Maximum="1000" Value="{Binding ElementName=ThisPlayer,Path=Position, UpdateSourceTrigger=PropertyChanged}" 
-                PreviewMouseDown="TimeSlider_PreviewMouseDown" 
-                PreviewMouseUp="TimeSlider_PreviewMouseUp" />
-            <Button Name="PlayBtn" Grid.Column="0" Margin="2" Click="PlayBtn_Click_1" >
-                <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png"/>
-            </Button>
-
-
-            <Slider Name="VolumeSlider" HorizontalAlignment="Stretch" Margin="0" Grid.Column="1"  
-                VerticalAlignment="Stretch" Maximum="100" Value="{Binding ElementName=ThisPlayer, Path=Volume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-            <Button Name="MuteBtn"  Grid.Column="2" Margin="2" Click="MuteBtn_Click" >
-                <Image Source="/MultiPlayerNIIES;component/Images/mute.png"/>
-            </Button>
-
-            <Button Name="DecSpeedBtn" Content="x0.5" Grid.Row="1" Grid.Column="3" Margin="2" Click="DecSpeedBtn_Click" FontSize="8" />
-            <Button Name="IncSpeedBtn" Content="x2" Grid.Row="1" Grid.Column="4" Margin="2" Click="IncSpeedBtn_Click" FontSize="8" />
-            <Button Name="FrameBackwardBtn" Content="&lt;-" Grid.Row="1" Grid.Column="5" Margin="2" Click="FrameBackwardBtn_Click" FontSize="8" />
-            <Button Name="FrameForwardBtn" Content="-&gt;" Grid.Row="1" Grid.Column="6" Margin="2" Click="FrameForwardBtn_Click" FontSize="8" />
-
-            <TextBox  x:Name="TimeTextBox" Grid.Row="1" Grid.Column="8" FontSize="10"
-                            TextAlignment="Center" VerticalAlignment="Center" MinHeight="10" 
-                            BorderBrush="{x:Null}" Text="{Binding ElementName=ThisPlayer, Path=CurTime, StringFormat=hh\\:mm\\:ss\\.ff }" />
-
-
-
-        </Grid>
-    </Grid>
 </UserControl>

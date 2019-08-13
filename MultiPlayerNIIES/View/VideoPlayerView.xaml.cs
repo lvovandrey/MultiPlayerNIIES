@@ -471,6 +471,10 @@ namespace MultiPlayerNIIES.View
             else {SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
         }
 
-
+        private void ButtonHidePanel_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerPanelRow.Height.Value > 15) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
+            else { PlayerPanelRow.Height = new GridLength(20); PlayerPanelViewer.Opacity = 1; }
+        }
     }
 }
