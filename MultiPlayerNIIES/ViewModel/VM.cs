@@ -93,6 +93,12 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         #region СВОЙСТВА 
+
+        private bool isOnAutoSyncroinization;
+        [Magic]
+        public bool IsOnAutoSyncroinization { get { return isOnAutoSyncroinization; } set { isOnAutoSyncroinization = value; } }
+
+
         public VideoPlayerVM FocusedPlayer
         {
             get { return focusedPlayer; }

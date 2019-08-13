@@ -6,12 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MultiPlayerNIIES.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
     d:DesignWidth="1300"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
         <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds"/>
+        <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor "/>
+        <converters:BoolIsOnToColor x:Key="BoolIsOnToColor"/>
         <Style x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
             <Setter Property="Control.Margin" Value="3" />
@@ -76,6 +79,20 @@
                                     Color="#FF303030" />
                             </Image.Effect>
                         </Image>
+                    </Grid>
+                </Button>
+                
+                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация вкл/выкл" Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
+                    <Grid Height="43">
+                        <TextBlock Text="Автосинхронизация"  HorizontalAlignment="Center" Foreground="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}" />
+                        <ProgressBar Width="140" Margin="5,22,5,0" Value="10" 
+                                 Foreground="{Binding SyncDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                                 BorderBrush="#FF4F4F4F"/>
+                        <TextBlock Text="{Binding SyncDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat= {}{0:F1} мсек }"  
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
+                        <TextBlock Text="323мсек"  
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
+
                     </Grid>
                 </Button>
             </ToolBar>
@@ -195,12 +212,7 @@
 
 
             <ToolBar Height="60">
-                <Button
-                    Width="160"
-                    Height="60"
-                    Click="Button_Click">
-                    Постоянная синхронизация
-                </Button>
+              
             </ToolBar>
         </ToolBarTray>
         <Label

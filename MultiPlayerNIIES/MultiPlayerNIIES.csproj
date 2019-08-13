@@ -146,6 +146,9 @@
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Elements\PermanentSyncronizationSmartButton.xaml.cs">
+      <DependentUpon>PermanentSyncronizationSmartButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Elements\PlayerPanel.xaml.cs">
       <DependentUpon>PlayerPanel.xaml</DependentUpon>
     </Compile>
@@ -162,8 +165,10 @@
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
+    <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsSyncLeaderToVisibility.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
+    <Compile Include="View\ValueConverters\DoubleSyncDeltaToColorOfSliderIndicator.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
@@ -198,6 +203,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AreaVideoPlayersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\PermanentSyncronizationSmartButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
