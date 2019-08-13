@@ -48,7 +48,10 @@ namespace MultiPlayerNIIES.ViewModel
             RateShift = 0.1;
             slowRate = 0.5;
             fastRate = 2;
+            MaxSyncDelta = TimeSpan.FromSeconds(2);
             MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
+            SyncDelta = TimeSpan.FromSeconds(0);
+            SyncDeltasBuffer = new Queue<TimeSpan>();
         }
 
         private void MainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -95,9 +98,45 @@ namespace MultiPlayerNIIES.ViewModel
         #region СВОЙСТВА 
 
         private bool isOnAutoSyncroinization;
-        [Magic]
-        public bool IsOnAutoSyncroinization { get { return isOnAutoSyncroinization; } set { isOnAutoSyncroinization = value; } }
+        public bool IsOnAutoSyncronization
+        {
+            get { return isOnAutoSyncroinization; }
+            set
+            {
+                isOnAutoSyncroinization = value;
+                OnPropertyChanged("IsOnAutoSyncronization");
+            }
+        }
 
+        private TimeSpan maxSyncDelta;
+        public TimeSpan MaxSyncDelta
+        {
+            get { return maxSyncDelta; }
+            set
+            {
+                maxSyncDelta = value;
+                OnPropertyChanged("MaxSyncDelta");
+                OnPropertyChanged("SyncDeltaPercentage");
+            }
+        }
+
+        private TimeSpan syncDelta;
+        public TimeSpan SyncDelta
+        {
+            get { return syncDelta; }
+            set
+            {
+                syncDelta = value;
+                OnPropertyChanged("SyncDelta");
+                OnPropertyChanged("SyncDeltaTotalMiliseconds");
+                OnPropertyChanged("SyncDeltaPercentage");
+
+            }
+        }
+
+        public double SyncDeltaTotalMiliseconds { get { return SyncDelta.TotalMilliseconds; } }
+            
+        public double SyncDeltaPercentage { get { return 100 * (SyncDelta.TotalSeconds / MaxSyncDelta.TotalSeconds); } }
 
         public VideoPlayerVM FocusedPlayer
         {
@@ -222,6 +261,32 @@ namespace MultiPlayerNIIES.ViewModel
         private void MainTimerTick(object sender, EventArgs e)
         {
             OnPropertyChanged("CurTime");
+            SyncDelta = CalcSyncDelta();
+            if (IsOnAutoSyncronization) AutoSyncronization();
+        }
+
+        private void AutoSyncronization()
+        {
+            if (SyncDelta > MaxSyncDelta) SyncronizationShiftCommand.Execute(null);
+        }
+
+        Queue<TimeSpan> SyncDeltasBuffer;
+        private TimeSpan CalcSyncDelta()
+        {
+            if (videoPlayerVMs.Count < 2) return TimeSpan.Zero;
+            List<TimeSpan> deltas = new List<TimeSpan>();
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+            {
+                TimeSpan dt = (TimeSyncLead - v.CurTime + v.SyncronizationShiftVM.ShiftTime);
+                if (dt < TimeSpan.Zero) dt = -dt;
+                deltas.Add(dt);
+            }
+           
+
+            SyncDeltasBuffer.Enqueue(deltas.Max());
+            if (SyncDeltasBuffer.Count > 20) SyncDeltasBuffer.Dequeue();
+
+            return SyncDeltasBuffer.Max();
         }
 
         private VideoPlayerVM AddVideoPlayer(Rect AreaForPlacement)
@@ -399,6 +464,20 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         #region КОМАНДЫ
+
+        
+        private RelayCommand autoSyncOnOffCommand;
+        public RelayCommand AutoSyncOnOffCommand
+        {
+            get
+            {
+                return autoSyncOnOffCommand ??
+                  (autoSyncOnOffCommand = new RelayCommand(obj =>
+                  {
+                      IsOnAutoSyncronization = !IsOnAutoSyncronization; 
+                  }));
+            }
+        }
         private RelayCommand playPauseCommand;
         public RelayCommand PlayPauseCommand
         {

@@ -168,7 +168,7 @@
     <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsSyncLeaderToVisibility.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
-    <Compile Include="View\ValueConverters\DoubleSyncDeltaToColorOfSliderIndicator.cs" />
+    <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />

@@ -13,7 +13,7 @@
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
         <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds"/>
-        <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor "/>
+        <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor"/>
         <converters:BoolIsOnToColor x:Key="BoolIsOnToColor"/>
         <Style x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
@@ -82,16 +82,17 @@
                     </Grid>
                 </Button>
                 
-                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация вкл/выкл" Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация вкл/выкл" Command="{Binding AutoSyncOnOffCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Grid Height="43">
                         <TextBlock Text="Автосинхронизация"  HorizontalAlignment="Center" Foreground="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}" />
-                        <ProgressBar Width="140" Margin="5,22,5,0" Value="10" 
+                        <ProgressBar Width="140" Margin="5,22,5,0" Value="{Binding SyncDeltaPercentage,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" 
                                  Foreground="{Binding SyncDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                                 BorderBrush="#FF4F4F4F"/>
+                                 BorderBrush="#FF4F4F4F" Opacity="0.7"
+                                     Maximum="100" Minimum="0"/>
                         <TextBlock Text="{Binding SyncDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat= {}{0:F1} мсек }"  
                                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
-                        <TextBlock Text="323мсек"  
-                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
+                        <!--<TextBlock Text="323мсек"  
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>-->
 
                     </Grid>
                 </Button>

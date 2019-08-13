@@ -48,10 +48,10 @@ namespace MultiPlayerNIIES.View
 
         private void timerTick(object sender, EventArgs e)
         {
-           
+
             //if (!player1.subtitleProcessor.Ready || !player2.subtitleProcessor.Ready || !player3.subtitleProcessor.Ready || !player4.subtitleProcessor.Ready) return;
 
-            
+
             //try
             //{
             //    TimeSpan CurTime1 = player1.VLC.CurTime;
@@ -63,17 +63,17 @@ namespace MultiPlayerNIIES.View
             //    TimeSpan SyncTime2 = player2.subtitleProcessor.GetSyncTime(SyncTitlesTime, t2);
 
             //    TimeSpan uns = SyncTime2 - CurTime2;
-                
-            //    if (uns < TimeSpan.FromSeconds(5)) 
+
+            //    if (uns < TimeSpan.FromSeconds(5))
             //    {
-                   
+
             //        UnSyncs.Enqueue(uns);
             //        double sum = Math.Abs(UnSyncs.Sum(n => n.TotalSeconds));
             //        LabelUnSyncronize.Content = uns.ToString() + "   " + sum.ToString(); ;
             //        if (sum > 5)
             //        {
             //            if (EnableAutoSync)
-            //                Button_Click_6(null,null);
+            //                Button_Click_6(null, null);
             //        }
             //        if (UnSyncs.Count > 20) UnSyncs.Dequeue();
             //    }
@@ -82,7 +82,7 @@ namespace MultiPlayerNIIES.View
             //{
             //    LabelUnSyncronize.Content = "";
             //}
-            
+
         }
 
 

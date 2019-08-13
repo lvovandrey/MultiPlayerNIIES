@@ -9,8 +9,8 @@ using System.Windows.Data;
 using System.Windows.Media;
 
 namespace MultiPlayerNIIES.View.ValueConverters
-{
-    public class DoubleSyncDeltaToColor: IValueConverter
+{ 
+    public class DoubleSyncDeltaToColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -28,4 +28,3 @@ namespace MultiPlayerNIIES.View.ValueConverters
         }
     }
 }
-
