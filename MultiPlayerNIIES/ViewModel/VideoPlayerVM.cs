@@ -32,6 +32,7 @@ namespace MultiPlayerNIIES.ViewModel
             get { return Body.IsPlaying; }
         }
 
+
         public double Rate
         {
             get { return Body.Rate; } 

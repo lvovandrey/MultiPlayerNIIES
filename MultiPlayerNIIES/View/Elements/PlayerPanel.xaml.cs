@@ -24,5 +24,15 @@ namespace MultiPlayerNIIES.View.Elements
         {
             InitializeComponent();
         }
+
+        private void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

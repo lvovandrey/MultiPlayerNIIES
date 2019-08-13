@@ -470,5 +470,7 @@ namespace MultiPlayerNIIES.View
             if (SyncronizationInstrumentsRow.Height.Value > 20) { SyncronizationInstrumentsRow.Height = new GridLength(0); SyncronizationShiftViewer.Opacity = 0; }
             else {SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
         }
+
+
     }
 }
