@@ -86,19 +86,27 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 RateDecreaceCommand.Execute(null); e.Handled = true;
             }
-            if (e.Key == Key.A && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            if (e.Key == Key.Q && e.KeyboardDevice.Modifiers == ModifierKeys.None)
             {
                 SetRateCommand.Execute(SlowRate); e.Handled = true;
             }
-            if (e.Key == Key.S && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            if (e.Key == Key.W && e.KeyboardDevice.Modifiers == ModifierKeys.None)
             {
                 SetRateCommand.Execute(1.00); e.Handled = true;
             }
-            if (e.Key == Key.D && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            if (e.Key == Key.E && e.KeyboardDevice.Modifiers == ModifierKeys.None)
             {
                 SetRateCommand.Execute(FastRate); e.Handled = true;
             }
 
+            if (e.Key == Key.S && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            {
+                SyncronizationTitleCommand.Execute(FastRate); e.Handled = true;
+            }
+            if (e.Key == Key.S && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                SyncronizationShiftCommand.Execute(FastRate); e.Handled = true;
+            }
 
         }
 
