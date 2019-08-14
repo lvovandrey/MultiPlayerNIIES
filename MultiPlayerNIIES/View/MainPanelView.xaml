@@ -4,17 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
     xmlns:local="clr-namespace:MultiPlayerNIIES.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
     d:DesignWidth="1300"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
-        <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds"/>
-        <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor"/>
-        <converters:BoolIsOnToColor x:Key="BoolIsOnToColor"/>
+        <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds" />
+        <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor" />
+        <converters:BoolIsOnToColor x:Key="BoolIsOnToColor" />
         <Style x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
             <Setter Property="Control.Margin" Value="3" />
@@ -82,29 +82,59 @@
                     </Grid>
                 </Button>
 
-                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация по титрам вкл/выкл" Command="{Binding AutoSyncTitlesOnOffCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding AutoSyncTitlesOnOffCommand}"
+                    Style="{StaticResource ButtonMainPanel}"
+                    ToolTip="Постоянная синхронизация по титрам вкл/выкл">
                     <Grid Height="43">
-                        <TextBlock Text="SRT-Автосинхронизация"  HorizontalAlignment="Center" Foreground="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}" />
-                        <ProgressBar Width="140" Margin="5,22,5,0" Value="{Binding SyncTitlesDeltaPercentage,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" 
-                                 Foreground="{Binding SyncTitlesDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                                 BorderBrush="#FF4F4F4F" Opacity="0.7"
-                                     Maximum="100" Minimum="0"/>
-                        <TextBlock Text="{Binding SyncTitlesDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat= {}{0:F1} мсек }"  
-                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}"
+                            Text="SRT-Автосинхронизация" />
+                        <ProgressBar
+                            Width="140"
+                            Margin="5,22,5,0"
+                            BorderBrush="#FF4F4F4F"
+                            Foreground="{Binding SyncTitlesDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                            Maximum="100"
+                            Minimum="0"
+                            Opacity="0.7"
+                            Value="{Binding SyncTitlesDeltaPercentage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                        <TextBlock
+                            Margin="0,0,0,-19"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{Binding SyncTitlesDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F1} мсек}" />
 
                     </Grid>
                 </Button>
 
-                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация по смещению вкл/выкл" Command="{Binding AutoSyncOnOffCommand}" Style="{StaticResource ButtonMainPanel}">
+                <Button
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding AutoSyncOnOffCommand}"
+                    Style="{StaticResource ButtonMainPanel}"
+                    ToolTip="Постоянная синхронизация по смещению вкл/выкл">
                     <Grid Height="43">
-                        <TextBlock Text="Автосинхронизация"  HorizontalAlignment="Center" Foreground="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}" />
-                        <ProgressBar Width="140" Margin="5,22,5,0" Value="{Binding SyncDeltaPercentage,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" 
-                                 Foreground="{Binding SyncDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                                 BorderBrush="#FF4F4F4F" Opacity="0.7"
-                                     Maximum="100" Minimum="0"/>
-                        <TextBlock Text="{Binding SyncDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat= {}{0:F1} мсек }"  
-                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
-                     
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}"
+                            Text="Автосинхронизация" />
+                        <ProgressBar
+                            Width="140"
+                            Margin="5,22,5,0"
+                            BorderBrush="#FF4F4F4F"
+                            Foreground="{Binding SyncDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                            Maximum="100"
+                            Minimum="0"
+                            Opacity="0.7"
+                            Value="{Binding SyncDeltaPercentage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                        <TextBlock
+                            Margin="0,0,0,-19"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{Binding SyncDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F1} мсек}" />
+
                     </Grid>
                 </Button>
 
@@ -122,7 +152,10 @@
                 </Button>
                 <StackPanel>
                     <Label Content="Скорость" />
-                    <Label Content="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="15" ContentStringFormat="{}{0:F2} раз" />
+                    <Label
+                        Content="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                        ContentStringFormat="{}{0:F2} раз"
+                        FontSize="15" />
                 </StackPanel>
 
             </ToolBar>
@@ -145,9 +178,7 @@
                             Height="26"
                             VerticalContentAlignment="Center"
                             FontSize="15"
-                            Text="{Binding Step, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanToTotalMiliseconds}}">
-                            
-                        </TextBox>
+                            Text="{Binding Step, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanToTotalMiliseconds}}" />
                         <StackPanel>
                             <Button
                                 Width="20"
@@ -225,9 +256,7 @@
             </ToolBar>
 
 
-            <ToolBar Height="60">
-              
-            </ToolBar>
+            <ToolBar Height="60" />
         </ToolBarTray>
         <Label
             x:Name="LabelCurTime"
