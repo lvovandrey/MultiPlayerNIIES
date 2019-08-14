@@ -81,8 +81,21 @@
                         </Image>
                     </Grid>
                 </Button>
-                
-                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация вкл/выкл" Command="{Binding AutoSyncOnOffCommand}" Style="{StaticResource ButtonMainPanel}">
+
+                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация по титрам вкл/выкл" Command="{Binding AutoSyncTitlesOnOffCommand}" Style="{StaticResource ButtonMainPanel}">
+                    <Grid Height="43">
+                        <TextBlock Text="SRT-Автосинхронизация"  HorizontalAlignment="Center" Foreground="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}" />
+                        <ProgressBar Width="140" Margin="5,22,5,0" Value="{Binding SyncTitlesDeltaPercentage,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" 
+                                 Foreground="{Binding SyncTitlesDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                                 BorderBrush="#FF4F4F4F" Opacity="0.7"
+                                     Maximum="100" Minimum="0"/>
+                        <TextBlock Text="{Binding SyncTitlesDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat= {}{0:F1} мсек }"  
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
+
+                    </Grid>
+                </Button>
+
+                <Button HorizontalAlignment="Stretch" ToolTip="Постоянная синхронизация по смещению вкл/выкл" Command="{Binding AutoSyncOnOffCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Grid Height="43">
                         <TextBlock Text="Автосинхронизация"  HorizontalAlignment="Center" Foreground="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}" />
                         <ProgressBar Width="140" Margin="5,22,5,0" Value="{Binding SyncDeltaPercentage,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}" 
@@ -91,11 +104,11 @@
                                      Maximum="100" Minimum="0"/>
                         <TextBlock Text="{Binding SyncDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat= {}{0:F1} мсек }"  
                                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>
-                        <!--<TextBlock Text="323мсек"  
-                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-19"/>-->
-
+                     
                     </Grid>
                 </Button>
+
+
             </ToolBar>
 
             <ToolBar Height="60">

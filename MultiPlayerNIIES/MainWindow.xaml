@@ -20,7 +20,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <view:MenuView Grid.Row="0" />
+     
         <Grid Grid.Row="1">
             <view:AreaVideoPlayersView x:Name="AreaVideoPlayers" Grid.Column="0" />
         </Grid>

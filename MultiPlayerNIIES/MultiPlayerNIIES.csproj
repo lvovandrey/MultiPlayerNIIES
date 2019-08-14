@@ -146,9 +146,6 @@
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Elements\PermanentSyncronizationSmartButton.xaml.cs">
-      <DependentUpon>PermanentSyncronizationSmartButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Elements\PlayerPanel.xaml.cs">
       <DependentUpon>PlayerPanel.xaml</DependentUpon>
     </Compile>
@@ -203,10 +200,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AreaVideoPlayersView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Elements\PermanentSyncronizationSmartButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

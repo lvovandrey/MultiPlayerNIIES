@@ -25,6 +25,10 @@ namespace MultiPlayerNIIES.ViewModel
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         double oldMainWindowWidth, oldMainWindowHeight;//Блядь что за мусор? почему она тут валяется?
+
+
+        private Queue<TimeSpan> SyncTitlesDeltasBuffer;
+        private Queue<TimeSpan> SyncDeltasBuffer;
         #endregion
 
         #region Конструкторы и вспомогательные методы
@@ -48,10 +52,16 @@ namespace MultiPlayerNIIES.ViewModel
             RateShift = 0.1;
             slowRate = 0.5;
             fastRate = 2;
-            MaxSyncDelta = TimeSpan.FromSeconds(2);
+
             MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
+
+            MaxSyncDelta = TimeSpan.FromSeconds(2);
             SyncDelta = TimeSpan.FromSeconds(0);
             SyncDeltasBuffer = new Queue<TimeSpan>();
+
+            MaxSyncTitlesDelta = TimeSpan.FromSeconds(2);
+            SyncTitlesDelta = TimeSpan.FromSeconds(0);
+            SyncTitlesDeltasBuffer = new Queue<TimeSpan>();
         }
 
         private void MainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -137,6 +147,50 @@ namespace MultiPlayerNIIES.ViewModel
         public double SyncDeltaTotalMiliseconds { get { return SyncDelta.TotalMilliseconds; } }
             
         public double SyncDeltaPercentage { get { return 100 * (SyncDelta.TotalSeconds / MaxSyncDelta.TotalSeconds); } }
+
+
+        private bool isOnAutoSyncroinizationTitles;
+        public bool IsOnAutoSyncronizationTitles
+        {
+            get { return isOnAutoSyncroinizationTitles; }
+            set
+            {
+                isOnAutoSyncroinizationTitles = value;
+                OnPropertyChanged("IsOnAutoSyncronizationTitles");
+            }
+        }
+
+        private TimeSpan maxSyncTitlesDelta;
+        public TimeSpan MaxSyncTitlesDelta
+        {
+            get { return maxSyncTitlesDelta; }
+            set
+            {
+                maxSyncTitlesDelta = value;
+                OnPropertyChanged("MaxSyncTitlesDelta");
+                OnPropertyChanged("SyncTitlesDeltaPercentage");
+            }
+        }
+
+        private TimeSpan syncTitlesDelta;
+        public TimeSpan SyncTitlesDelta
+        {
+            get { return syncTitlesDelta; }
+            set
+            {
+                syncTitlesDelta = value;
+                OnPropertyChanged("SyncTitlesDelta");
+                OnPropertyChanged("SyncTitlesDeltaTotalMiliseconds");
+                OnPropertyChanged("SyncTitlesDeltaPercentage");
+
+            }
+        }
+
+        
+
+        public double SyncTitlesDeltaTotalMiliseconds { get { return SyncTitlesDelta.TotalMilliseconds; } }
+            
+        public double SyncTitlesDeltaPercentage { get { return 100 * (SyncTitlesDelta.TotalSeconds / MaxSyncTitlesDelta.TotalSeconds); } }
 
         public VideoPlayerVM FocusedPlayer
         {
@@ -262,7 +316,16 @@ namespace MultiPlayerNIIES.ViewModel
         {
             OnPropertyChanged("CurTime");
             SyncDelta = CalcSyncDelta();
+            SyncTitlesDelta = CalcSyncTitlesDelta();
             if (IsOnAutoSyncronization) AutoSyncronization();
+            else if (IsOnAutoSyncronizationTitles) AutoSyncronizationTitles();
+        }
+
+
+
+        private void AutoSyncronizationTitles()
+        {
+            if (SyncTitlesDelta > MaxSyncTitlesDelta) SyncronizationTitleCommand.Execute(null);
         }
 
         private void AutoSyncronization()
@@ -270,7 +333,6 @@ namespace MultiPlayerNIIES.ViewModel
             if (SyncDelta > MaxSyncDelta) SyncronizationShiftCommand.Execute(null);
         }
 
-        Queue<TimeSpan> SyncDeltasBuffer;
         private TimeSpan CalcSyncDelta()
         {
             if (videoPlayerVMs.Count < 2) return TimeSpan.Zero;
@@ -288,6 +350,30 @@ namespace MultiPlayerNIIES.ViewModel
 
             return SyncDeltasBuffer.Max();
         }
+
+        private TimeSpan CalcSyncTitlesDelta()
+        {
+            if (videoPlayerVMs.Count < 2) return TimeSpan.Zero;
+            List<TimeSpan> deltas = new List<TimeSpan>();
+
+         //   TimeSpan SyncTitlesTime = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
+            TimeSpan TL = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+            {
+                TimeSpan t =  v.GetSyncTimeFromTitles(v.CurTime);
+
+                TimeSpan dt = (t - TL);
+                if (dt < TimeSpan.Zero) dt = -dt;
+                deltas.Add(dt);
+            }
+
+
+            SyncTitlesDeltasBuffer.Enqueue(deltas.Max());
+            if (SyncTitlesDeltasBuffer.Count > 20) SyncTitlesDeltasBuffer.Dequeue();
+
+            return SyncTitlesDeltasBuffer.Max();
+        }
+
 
         private VideoPlayerVM AddVideoPlayer(Rect AreaForPlacement)
         {
@@ -464,8 +550,19 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         #region КОМАНДЫ
+        private RelayCommand autoSyncTitlesOnOffCommand;
+        public RelayCommand AutoSyncTitlesOnOffCommand
+        {
+            get
+            {
+                return autoSyncTitlesOnOffCommand ??
+                  (autoSyncTitlesOnOffCommand = new RelayCommand(obj =>
+                  {
+                      IsOnAutoSyncronizationTitles = !IsOnAutoSyncronizationTitles;
+                  }));
+            }
+        }
 
-        
         private RelayCommand autoSyncOnOffCommand;
         public RelayCommand AutoSyncOnOffCommand
         {
