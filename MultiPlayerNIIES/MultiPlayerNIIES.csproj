@@ -169,6 +169,7 @@
     <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsSyncLeaderToVisibility.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
+    <Compile Include="View\ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
@@ -354,6 +355,7 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\PNG\Accept.png" />
     <Resource Include="Images\mute.png" />
     <Resource Include="Images\play_pause.png" />
     <Resource Include="Images\PNG\Bullet-Arrow-Down.png" />

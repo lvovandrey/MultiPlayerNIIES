@@ -15,6 +15,8 @@
         <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds" />
         <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor" />
         <converters:BoolIsOnToColor x:Key="BoolIsOnToColor" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter"/>
         <Style x:Key="ButtonMainPanel">
             <Setter Property="Control.BorderBrush" Value="#FF9999BF" />
             <Setter Property="Control.Margin" Value="3" />
@@ -206,7 +208,19 @@
             <ToolBar Height="60">
 
                 <Button Command="{Binding ExcelOpenCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" />
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" />
+                        <Image Height="20" Width="20" 
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Bottom" 
+                               Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" 
+                               Visibility="{Binding IsExcelConnected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <Image Height="20" Width="20" 
+                               HorizontalAlignment="Right" 
+                               VerticalAlignment="Bottom" 
+                               Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" 
+                               Visibility="{Binding IsExcelConnected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityReverseConverter}}"/>
+                    </Grid>
                 </Button>
                 <Button Command="{Binding SendToExcelTime1Command}" Style="{StaticResource ButtonMainPanel}">
                     <Grid>

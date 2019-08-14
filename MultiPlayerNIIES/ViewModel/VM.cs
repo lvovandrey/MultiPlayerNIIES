@@ -415,6 +415,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             //Не совсем понял а что тут надо делать
             System.Windows.MessageBox.Show("Закрыт связанный файл Excel");
+            IsExcelConnected = false;
         }
 
         private void MainTimerTick(object sender, EventArgs e)
@@ -431,12 +432,12 @@ namespace MultiPlayerNIIES.ViewModel
         {
             try
             {
-                if (excel == null)
-                    IsExcelConnected = false;
-                else if (ExcelBook == null)
-                    IsExcelConnected = false;
-                else
-                    IsExcelConnected = true;
+                //if (excel == null)
+                //    IsExcelConnected = false;
+                //else if (ExcelBook == null)
+                //    IsExcelConnected = false;
+                //else
+                //    IsExcelConnected = true;
 
                 if (IsExcelConnected)
                 {
@@ -939,12 +940,19 @@ namespace MultiPlayerNIIES.ViewModel
                       };
                       if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-
-                      excel = new Excel.Application();
-                      excel.Visible = true;
-                      ExcelBooks = excel.Workbooks;
-                      ExcelBook = null;
-                      ExcelBook = ExcelBooks.Open(@openFileDialog.FileName);
+                      try
+                      {
+                          excel = new Excel.Application();
+                          excel.Visible = true;
+                          ExcelBooks = excel.Workbooks;
+                          ExcelBook = null;
+                          ExcelBook = ExcelBooks.Open(@openFileDialog.FileName);
+                          IsExcelConnected = true;
+                      }
+                      catch(Exception e)
+                      {
+                          System.Windows.MessageBox.Show("Ошибка при открытии Excel-файла: " + e.Message);
+                      }
 
                   }));
             }
@@ -1028,14 +1036,12 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationTitleCommand ??
                   (syncronizationTitleCommand = new RelayCommand(obj =>
                   {
+                      if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
                           v.PauseCommand.Execute(null);
                       }
 
-
-                     
-                 
                       TimeSpan SyncTitlesTime = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
 
                       Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
