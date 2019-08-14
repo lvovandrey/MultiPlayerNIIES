@@ -10,25 +10,32 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MultiPlayerNIIES.ViewModel
 {
     public class VM : INPCBase                                          
     {
-
         #region Поля
         List<VideoPlayerVM> videoPlayerVMs;
         Grid AreaVideoPlayersGrid;
         MainWindow MainWindow;
         VideoPlayerVM focusedPlayer;
-
+        Excel.Application excel;
+        Excel.Workbooks ExcelBooks;
+        Excel._Workbook ExcelBook;
+        HwndSource sourceOfPostMessages;
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
+        private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
         double oldMainWindowWidth, oldMainWindowHeight;//Блядь что за мусор? почему она тут валяется?
 
 
         private Queue<TimeSpan> SyncTitlesDeltasBuffer;
         private Queue<TimeSpan> SyncDeltasBuffer;
+
+
         #endregion
 
         #region Конструкторы и вспомогательные методы
@@ -43,10 +50,15 @@ namespace MultiPlayerNIIES.ViewModel
 
 
             MainTimer = new System.Windows.Threading.DispatcherTimer();
-
             MainTimer.Tick += new EventHandler(MainTimerTick);
             MainTimer.Interval = TimeSpan.FromSeconds(0.05);
             MainTimer.Start();
+
+            ExcelRefreshStateTimer = new System.Windows.Threading.DispatcherTimer();
+            ExcelRefreshStateTimer.Tick += new EventHandler(ExcelRefreshStateTimerTick);
+            ExcelRefreshStateTimer.Interval = TimeSpan.FromSeconds(0.2);
+            ExcelRefreshStateTimer.Start();
+
 
             Step = TimeSpan.FromMilliseconds(100);
             RateShift = 0.1;
@@ -62,7 +74,15 @@ namespace MultiPlayerNIIES.ViewModel
             MaxSyncTitlesDelta = TimeSpan.FromSeconds(2);
             SyncTitlesDelta = TimeSpan.FromSeconds(0);
             SyncTitlesDeltasBuffer = new Queue<TimeSpan>();
+            ToolsTimer.Delay(() =>
+            {
+                //подключаем обработку внешних сообщений PostMessage
+                sourceOfPostMessages = HwndSource.FromHwnd(new WindowInteropHelper(MainWindow).Handle);
+                sourceOfPostMessages.AddHook(new HwndSourceHook(PostMessagesRecieve));
+            }, TimeSpan.FromSeconds(4));
         }
+
+
 
         private void MainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -112,8 +132,26 @@ namespace MultiPlayerNIIES.ViewModel
 
         #endregion
 
-
         #region СВОЙСТВА 
+
+        public string  PlayerState
+        {
+            get
+            {
+                string playerState = "No video";
+                if (videoPlayerVMs.Count > 0)
+                {
+                    playerState = "Paused";
+                    foreach (VideoPlayerVM v in videoPlayerVMs)
+                        if (v.IsPlaying)
+                        {
+                            playerState = "Play";
+                            break;
+                        }
+                }
+                return playerState;
+            }
+        }   
 
         private bool isOnAutoSyncroinization;
         public bool IsOnAutoSyncronization
@@ -233,15 +271,15 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                if (FocusedPlayer != null)
-                    return FocusedPlayer.CurTime;
+                if (SyncLeadPlayer != null)
+                    return SyncLeadPlayer.CurTime;
                 else return TimeSpan.Zero;
             }
             set
             {
-                if (FocusedPlayer != null)
+                if (SyncLeadPlayer != null)
                 {
-                    FocusedPlayer.CurTime = value;
+                    SyncLeadPlayer.CurTime = value;
                     OnPropertyChanged("CurTime");
                 }
             }
@@ -294,7 +332,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get { if (SyncLeadPlayer != null) return SyncLeadPlayer.CurTime; else return TimeSpan.Zero; }
         }
-        #endregion
+
+
 
         private TimeSpan step;
         public TimeSpan Step
@@ -310,26 +349,137 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-
-
-
-
-
-
-
+        private bool isExcelConnected;
+        public bool IsExcelConnected
+        {
+            get
+            {
+                return isExcelConnected;
+            }
+            set
+            {
+                isExcelConnected = value;
+                OnPropertyChanged("IsExcelConnected");
+            }
+        }
+        #endregion
 
         #region Methods
+        //Обработчик сообщений окна Windows (сюда можно принять сообщение от PostMessage)
+        private IntPtr PostMessagesRecieve(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            //  do stuff
+            try
+            {
+                if(msg==1025)
+                {
+                    switch ((int)lParam)
+                    {
+                        case 34: PlayPauseCommand.Execute(null);  break;
+                        case 37: RateDecreaceCommand.Execute(null); break;
+                        case 38: RateIncreaceCommand.Execute(null); break;
+                        case 39: StepBackwardCommand.Execute(null); break;
+                        case 40: StepForwardCommand.Execute(null); break;
+                        case 41: OpenCommand.Execute(null); break;
+                        case 42: SendToExcelTime1Command.Execute(null); break;
+                        case 43: SendToExcelTime2Command.Execute(null); break;
+                        case 44: StepValueIncreaceCommand.Execute(null); break;
+                        case 45: StepValueIncreaceCommand.Execute(null); break;
+                        case 46: OnExcelClosing(); break;
+                        case 47:
+                            {
+                                TimeSpan time = TimeSpan.Zero;
+                                int seconds = wParam.ToInt32();
+                                if (seconds >= 0)
+                                {
+                                    time = TimeSpan.FromSeconds((double)seconds);
+                                    foreach (VideoPlayerVM v in videoPlayerVMs) v.PauseCommand.Execute(null);
+                                    SyncLeadPlayer.CurTime = time;
+                                }
+                                break;
+                            }
+                        default: break;
+                    }
+                }
+             //   Txt.Text += msg.ToString() + "/" + lParam.ToInt32().ToString() + "/" + wParam.ToInt32().ToString() + " - ";
+            }
+            catch
+            {
+
+            }
+            //        Thread.Sleep(50);
+            return IntPtr.Zero;
+        }
+
+        private void OnExcelClosing()
+        {
+            //Не совсем понял а что тут надо делать
+            System.Windows.MessageBox.Show("Закрыт связанный файл Excel");
+        }
 
         private void MainTimerTick(object sender, EventArgs e)
         {
             OnPropertyChanged("CurTime");
+
             SyncDelta = CalcSyncDelta();
             SyncTitlesDelta = CalcSyncTitlesDelta();
             if (IsOnAutoSyncronization) AutoSyncronization();
             else if (IsOnAutoSyncronizationTitles) AutoSyncronizationTitles();
         }
 
+        private void ExcelRefreshStateTimerTick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (excel == null)
+                    IsExcelConnected = false;
+                else if (ExcelBook == null)
+                    IsExcelConnected = false;
+                else
+                    IsExcelConnected = true;
 
+                if (IsExcelConnected)
+                {
+                    excel.Run((object)"CurModeReceive", (object)PlayerState);
+                    excel.Run((object)"CurTimeReceive", (object)TimeSyncLead.ToString(@"hh\:mm\:ss\,ff"));
+                    excel.Run((object)"CurTimePitchReceive", (object)Step.ToString(@"s\,ff"));
+                    excel.Run((object)"CurSpeedReceive", (object)Rate.ToString("F2").Replace(@".", @","));
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void SendTime1ToExcel()
+        { 
+            try
+            {
+                if (excel != null && IsExcelConnected && ExcelBook!= null)
+                { 
+                    excel.Run((object)"WriteTime", (object)TimeSyncLead.ToString(@"hh\:mm\:ss\,ff"));
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        private void SendTime2ToExcel()
+        {
+            try
+            {
+                if (excel != null && IsExcelConnected && ExcelBook != null)
+                {
+                    excel.Run((object)"WriteTime2", (object)TimeSyncLead.ToString(@"hh\:mm\:ss\,ff"));
+                }
+            }
+            catch
+            {
+
+            }
+        }
 
         private void AutoSyncronizationTitles()
         {
@@ -650,7 +800,7 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           var v = AddVideoPlayer(AreasForPlacement.Dequeue());
                           v.LoadFile(file);
-                          OnPropertyChanged("Rate"); //Ты же знаешь это ужасно!
+                          OnPropertyChanged("Rate"); //Ты же знаешь это ужасно! 
                       }
 
                       ReadSubitilesCommand.Execute(null);
@@ -782,6 +932,19 @@ namespace MultiPlayerNIIES.ViewModel
                 return excelOpenCommand ??
                   (excelOpenCommand = new RelayCommand(obj =>
                   {
+                      OpenFileDialog openFileDialog = new OpenFileDialog
+                      {
+                          Multiselect = false,
+                          Filter = "Файлы Excel c поддержкой макросов (*.xlsm)|*.xlsm"
+                      };
+                      if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+
+                      excel = new Excel.Application();
+                      excel.Visible = true;
+                      ExcelBooks = excel.Workbooks;
+                      ExcelBook = null;
+                      ExcelBook = ExcelBooks.Open(@openFileDialog.FileName);
 
                   }));
             }
@@ -795,7 +958,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return sendToExcelTime1Command ??
                   (sendToExcelTime1Command = new RelayCommand(obj =>
                   {
-
+                      SendTime1ToExcel();
                   }));
             }
         }
@@ -808,7 +971,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return sendToExcelTime2Command ??
                   (sendToExcelTime2Command = new RelayCommand(obj =>
                   {
-
+                      SendTime2ToExcel();
                   }));
             }
         }

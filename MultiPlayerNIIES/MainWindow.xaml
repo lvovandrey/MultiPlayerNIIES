@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:MultiPlayerNIIES.View"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    Title="MainWindow"
+    Title="Видеоплеер НИИЭС"
     Width="1200"
     Height="800"
     Closing="Window_Closing"

@@ -7,7 +7,7 @@
     xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
     xmlns:local="clr-namespace:MultiPlayerNIIES.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignWidth="1300"
+    d:DesignWidth="1500"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
@@ -255,8 +255,6 @@
                 </Button>
             </ToolBar>
 
-
-            <ToolBar Height="60" />
         </ToolBarTray>
         <Label
             x:Name="LabelCurTime"
