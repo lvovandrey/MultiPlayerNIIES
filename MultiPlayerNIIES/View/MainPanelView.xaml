@@ -34,7 +34,7 @@
     <Grid>
         <ToolBarTray HorizontalAlignment="Left">
             <ToolBar Height="60" VerticalAlignment="Top">
-
+                <Button Command="{Binding WebCamCommand}"  Style="{StaticResource ButtonMainPanel}" >WebCamPlay</Button>
                 <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
                 </Button>

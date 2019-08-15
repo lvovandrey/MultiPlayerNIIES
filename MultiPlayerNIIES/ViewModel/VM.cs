@@ -709,6 +709,24 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         #region КОМАНДЫ
+
+
+        
+        private RelayCommand webCamCommand;
+        public RelayCommand WebCamCommand
+        {
+            get
+            {
+                return webCamCommand ??
+                  (webCamCommand = new RelayCommand(obj =>
+                  {
+                      var v = AddVideoPlayer(new Rect(100,100,100,100));
+
+                      v.LoadWebcam();
+                  }));
+            }
+        }
+
         private RelayCommand autoSyncTitlesOnOffCommand;
         public RelayCommand AutoSyncTitlesOnOffCommand
         {

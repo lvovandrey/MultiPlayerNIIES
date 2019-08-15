@@ -279,6 +279,53 @@ namespace MultiPlayerNIIES.ViewModel
             Body.UpdateVLCInnerPosition2();
         }
 
+        internal void LoadWebcam()
+        {
+            string destination = @"C:\tmp\22.avi";
+            //     string source = @"C:\tmp\444.avi";
+            string source = @"rtsp://192.168.0.1:5000/qwe";
+       //      string source = @"screen://";
+            Uri u = new Uri(source);
+            var mediaOptions = new[]
+            {
+                ":sout=file{dst=" + destination + "}",
+                ":sout-keep"
+            };
+            var mediaOptions2 = new[] {
+
+                ":sout=#transcode{}:standard{access=file,mux=ts,dst=" + destination + "}"
+                , ":sout-keep"
+            };
+//            Body.VLC.vlc.LoadMediaWithOptions(u, mediaOptions2);
+            Body.VLC.vlc.LoadMedia(u);
+            Body.VLC.vlc.AddOption(mediaOptions2);
+            Body.VLC.vlc.Play();
+
+
+            //string lowQualityDestination = @"C:\tmp\17.avi";
+
+            //var lowQualityMediaOptions = new[]
+            //{
+            //":sout=#transcode{}:std{access=file,mux=ts,dst=" + lowQualityDestination + "}",
+            //":sout-all"
+            //};
+            ////string destination = @"C:\tmp\444.avi";
+
+
+
+
+
+
+            //string[] options = new string[3];
+
+            //options[0] = "config=\"~/Application Data/vlc/vlcrc\"";
+            //options[1] = ":file-caching=300 :sout-udp-caching=200";
+            //options[2] = ":sout =#transcode{vcodec=mp4v,scale=1}:duplicate{dst=display,dst=std{access=file,mux=ts,dst=\"" + lowQualityDestination + "\"}}";
+
+
+
+        }
+
 
 
 
