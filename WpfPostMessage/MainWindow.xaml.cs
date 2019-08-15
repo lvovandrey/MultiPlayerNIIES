@@ -38,13 +38,49 @@ namespace WpfPostMessage
             //  do stuff
             try
             {
-                Txt.Text += msg.ToString() + "/" + lParam.ToInt32().ToString() + "/" + wParam.ToInt32().ToString() + " - ";
+                MessageProcessingAsync(hwnd, msg, wParam, lParam, handled);
             }
-            catch
-            { }
+            catch(Exception e)
+            {
+                MessageBox.Show("Все такие серьезные, а у мен тут арифметическая ошиба вот такая: " + e.Message + "    StackTrace: " + e.StackTrace );
+            }
             //        Thread.Sleep(50);
             return IntPtr.Zero;
         }
+
+        void MessageProcessing(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, bool handled)
+        {
+            //  do stuff
+            try
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Txt.Text += msg.ToString() + "/" + lParam.ToInt64().ToString() + "/" + wParam.ToInt64().ToString() + " - ";
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Все такие серьезные, а у мен тут арифметическая ошиба вот такая: " + e.Message + "    StackTrace: " + e.StackTrace);
+            }
+            //        Thread.Sleep(50);
+       //     return IntPtr.Zero;
+        }
+        async void MessageProcessingAsync(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, bool handled)
+        {
+            await Task.Run(()=>MessageProcessing(hwnd, msg, wParam, lParam, handled));
+        }
+
+        private void RunAsync()
+        {
+            string param = "Hi";
+            Task.Run(() => MethodWithParameter(param));
+        }
+
+        private void MethodWithParameter(string param)
+        {
+            //Do stuff
+        }
+
         Excel.Application ex;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
