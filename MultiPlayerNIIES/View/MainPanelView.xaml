@@ -86,7 +86,7 @@
                 </Button>
 
                 <Button Command="{Binding SetCurrencyShiftsOfSyncronizationCommand}" Style="{StaticResource ButtonMainPanel}"
-                        ToolTip="Заменить смещения всех ">
+                        ToolTip="Заменить выставленные смещения на всех камерах текущим смещением (нынешним смещением от лидера)">
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
                         <Image
