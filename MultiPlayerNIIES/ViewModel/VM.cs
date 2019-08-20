@@ -67,11 +67,11 @@ namespace MultiPlayerNIIES.ViewModel
 
             MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
-            MaxSyncDelta = TimeSpan.FromSeconds(2);
+            MaxSyncDelta = TimeSpan.FromSeconds(1);
             SyncDelta = TimeSpan.FromSeconds(0);
             SyncDeltasBuffer = new Queue<TimeSpan>();
 
-            MaxSyncTitlesDelta = TimeSpan.FromSeconds(2);
+            MaxSyncTitlesDelta = TimeSpan.FromSeconds(1);
             SyncTitlesDelta = TimeSpan.FromSeconds(0);
             SyncTitlesDeltasBuffer = new Queue<TimeSpan>();
             ToolsTimer.Delay(() =>
@@ -505,7 +505,7 @@ namespace MultiPlayerNIIES.ViewModel
            
 
             SyncDeltasBuffer.Enqueue(deltas.Max());
-            if (SyncDeltasBuffer.Count > 20) SyncDeltasBuffer.Dequeue();
+            if (SyncDeltasBuffer.Count > 10) SyncDeltasBuffer.Dequeue();
 
             return SyncDeltasBuffer.Max();
         }
@@ -1105,6 +1105,24 @@ namespace MultiPlayerNIIES.ViewModel
 
                   }));
 
+            }
+        }
+
+        
+
+        private RelayCommand setCurrencyShiftsOfSyncronizationCommand;
+        public RelayCommand SetCurrencyShiftsOfSyncronizationCommand
+        {
+            get
+            {
+                return setCurrencyShiftsOfSyncronizationCommand ??
+                  (setCurrencyShiftsOfSyncronizationCommand = new RelayCommand(obj =>
+                  {
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                          if (!v.IsSyncronizeLeader)
+                              v.SyncronizationShiftVM.ShiftTime = v.CurTime - TimeSyncLead;
+                             
+                  }));
             }
         }
 

@@ -73,6 +73,7 @@
                             Width="20"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
+                        
                             Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-Soon-64.png">
                             <Image.Effect>
                                 <DropShadowEffect
@@ -80,6 +81,20 @@
                                     ShadowDepth="1.5"
                                     Color="#FF303030" />
                             </Image.Effect>
+                        </Image>
+                    </Grid>
+                </Button>
+
+                <Button Command="{Binding SetCurrencyShiftsOfSyncronizationCommand}" Style="{StaticResource ButtonMainPanel}"
+                        ToolTip="Заменить смещения всех ">
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+                        <Image
+                            Width="13"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" Margin="1,-1,0,0">
+
                         </Image>
                     </Grid>
                 </Button>
