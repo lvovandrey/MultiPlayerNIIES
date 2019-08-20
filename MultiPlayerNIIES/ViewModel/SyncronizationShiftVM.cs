@@ -76,7 +76,10 @@ namespace MultiPlayerNIIES.ViewModel
         public TimeSpan ShiftMaxTime
         {
             get { return shiftMaxTime; }
-            set { shiftMaxTime = value; OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
+            set {
+                SliderPosition = (ShiftTime.TotalSeconds / value.TotalSeconds) * SliderMaxPosition;
+                shiftMaxTime = value;
+                OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
         public TimeSpan ShiftMinTime
         {
