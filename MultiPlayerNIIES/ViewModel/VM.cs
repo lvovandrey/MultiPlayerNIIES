@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Tools;
+using MultiPlayerNIIES.View.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace MultiPlayerNIIES.ViewModel
         Excel.Workbooks ExcelBooks;
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
+        WaitProgressBar WaitIndicator;
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
@@ -43,6 +45,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             videoPlayerVMs = new List<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
+            WaitIndicator = mainWindow.AreaVideoPlayers.WaitProgressBar1;
             MainWindow = mainWindow;
             MainWindow.SizeChanged += MainWindow_SizeChanged;
             oldMainWindowWidth = MainWindow.ActualWidth;
@@ -1036,6 +1039,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationTitleCommand ??
                   (syncronizationTitleCommand = new RelayCommand(obj =>
                   {
+                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(2));
+
                       if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
@@ -1070,6 +1075,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationShiftCommand ??
                   (syncronizationShiftCommand = new RelayCommand(obj =>
                   {
+                      WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(2));
+
                       Dictionary<VideoPlayerVM,bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {

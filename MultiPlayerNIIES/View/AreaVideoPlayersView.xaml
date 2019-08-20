@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1200" >
@@ -37,6 +38,6 @@
         
         <local:VideoPlayerView Grid.Row="2" Grid.Column="2" x:Name="player5" Height="450" Width="600"  Margin="600,450,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <local:VideoPlayerView Grid.Row="2" Grid.Column="2" x:Name="player6" Height="450" Width="600"  Margin="600,450,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />-->
-
+        <elements:WaitProgressBar x:Name="WaitProgressBar1" Height="100" Width="250" Visibility="Hidden"/>
     </Grid>
 </UserControl>

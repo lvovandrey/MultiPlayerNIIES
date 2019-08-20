@@ -156,6 +156,9 @@
     <Compile Include="View\Elements\SyncronizationShiftView.xaml.cs">
       <DependentUpon>SyncronizationShiftView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Elements\WaitProgressBar.xaml.cs">
+      <DependentUpon>WaitProgressBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Elements\SyncronizationShiftView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\WaitProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
