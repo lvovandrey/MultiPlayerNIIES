@@ -12,6 +12,7 @@ using System.Windows.Controls;
 
 namespace MultiPlayerNIIES.ViewModel
 {
+    public delegate void PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e);
     public class VideoPlayerVM : INPCBase
     {
         VideoPlayerView Body; //Ну это не настоящая VM
@@ -52,6 +53,11 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get { return Body.VLC.CurTimeEx; }
             set { Body.SetPosition(value); OnPropertyChanged("CurTime"); }
+        }
+
+        public TimeSpan SyncLeaderCurTime
+        {
+            get { return VM.TimeSyncLead; }
         }
 
         public SubtitleProcessor GetSubtitleProcessor()
@@ -112,7 +118,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.UpFocus += UpFocusX;
             Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
             IsSyncronizeLeader = false;
-            SyncronizationShiftVM = new SyncronizationShiftVM() { ShiftMaxTime=TimeSpan.FromSeconds(10) };
+            SyncronizationShiftVM = new SyncronizationShiftVM(this) { ShiftMaxTime=TimeSpan.FromSeconds(10) };
             Body.subtitleProcessor = new SubtitleProcessor();
             PlayerPanelVM = new PlayerPanelVM(Body);
         }

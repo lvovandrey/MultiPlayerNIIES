@@ -3,12 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace MultiPlayerNIIES.ViewModel
 {
     public class SyncronizationShiftVM : INPCBase
     {
+        Timer MainTimer;
+
+        #region Constructor
+
+        public SyncronizationShiftVM(VideoPlayerVM _videoPlayerVM)
+        {
+            videoPlayerVM = _videoPlayerVM;
+            MainTimer = new Timer(MainTimerTick,null,0,100);
+        }
+
+        #endregion
+
+        void MainTimerTick(object state)
+        {
+            OnPropertyChanged("CurrentShiftTime");
+        }
+        #region Properties
+        private VideoPlayerVM videoPlayerVM;
+
+
         private double sliderPosition;
         public double SliderPosition
         {
@@ -41,7 +62,14 @@ namespace MultiPlayerNIIES.ViewModel
                 OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
 
-       
+        public TimeSpan CurrentShiftTime
+        {
+            get
+            {
+                if(videoPlayerVM== null) return TimeSpan.Zero;
+                return (videoPlayerVM.CurTime - videoPlayerVM.SyncLeaderCurTime);
+            }
+        }
 
 
         private TimeSpan shiftMaxTime;
@@ -55,6 +83,8 @@ namespace MultiPlayerNIIES.ViewModel
             get { return -shiftMaxTime; }
             set { shiftMaxTime = -value; OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
         }
+
+        #endregion
 
         #region КОМАНДЫ
         private RelayCommand incMaxTimeCommand;

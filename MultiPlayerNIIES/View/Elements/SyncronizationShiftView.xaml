@@ -25,13 +25,13 @@
                     HorizontalAlignment="Stretch" VerticalAlignment="Top"
                     Value="{Binding SliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    />
-            <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+            <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat=hh\\:mm\\:ss\\.ff}"
                        ToolTip="Заданное пользователем смещение"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-250,0,0,0" Width="100" />
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-250,0,0,0" Width="70" />
 
-            <TextBlock Text="{Binding CurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+            <TextBlock Text="{Binding CurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=hh\\:mm\\:ss\\.ff}"
                        ToolTip="Текущее реальное смещение данного видео от видео лидера синхронизации"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,0" Width="100" />
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,0" Width="70" />
             
             <Button Content="&lt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="-40,0,0,0" FontSize="8"/>
             <Button Content="&lt;&lt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="-105,0,0,0" FontSize="8"/>
