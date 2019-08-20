@@ -1118,6 +1118,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return setCurrencyShiftsOfSyncronizationCommand ??
                   (setCurrencyShiftsOfSyncronizationCommand = new RelayCommand(obj =>
                   {
+                      if (System.Windows.MessageBox.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на текущие смещения. Продолжить?", "Замена смещений на текущие", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                           if (!v.IsSyncronizeLeader)
                               v.SyncronizationShiftVM.ShiftTime = v.CurTime - TimeSyncLead;
