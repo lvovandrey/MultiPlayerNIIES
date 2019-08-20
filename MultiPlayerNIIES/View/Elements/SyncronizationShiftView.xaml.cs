@@ -25,6 +25,10 @@ namespace MultiPlayerNIIES.View.Elements
             InitializeComponent();
         }
 
-       
+        private void ShiftMaxTimeHidingImage_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (IntervalColumn.ActualWidth > 50) IntervalColumn.Width = new GridLength(0);
+            else IntervalColumn.Width = new GridLength(100);
+        }
     }
 }
