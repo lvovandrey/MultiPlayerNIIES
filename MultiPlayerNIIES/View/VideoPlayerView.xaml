@@ -113,7 +113,9 @@
             <Button x:Name="Maximize" Command="{Binding MaximizeCommand}">
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Maximize_Window.png" />
             </Button>
-
+            <Button x:Name="Restore" Command="{Binding RestoreCommand}">
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Restore-Window-64.png" />
+            </Button>
             <Button x:Name="Close" Command="{Binding CloseCommand}">
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Close_Window.png" />
             </Button>

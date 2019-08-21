@@ -273,6 +273,7 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
+
         public TimeSpan CurTime
         {
             get
@@ -548,6 +549,9 @@ namespace MultiPlayerNIIES.ViewModel
             UpFocus(videoPlayerVM, null);
             videoPlayerVM.OnSyncLeaderSet += VideoPlayerVM_OnSyncLeaderSet;
             if (videoPlayerVMs.Count == 1) VideoPlayerVM_OnSyncLeaderSet(videoPlayerVM, null);
+            ToolsTimer.Delay(() => {
+                videoPlayerVM.SetCurrentSizeForRestore();
+            }, TimeSpan.FromSeconds(3));
             return videoPlayerVM;
         }
 
@@ -709,7 +713,9 @@ namespace MultiPlayerNIIES.ViewModel
             }
             Thread.Sleep(50);
             foreach (VideoPlayerVM v in videoPlayerVMs)
+            {
                 v.UpdateVLCInnerPosition();
+            }
         }
 
         internal void ClosePlayer(VideoPlayerVM videoPlayerVM)
@@ -725,7 +731,12 @@ namespace MultiPlayerNIIES.ViewModel
             videoPlayerVM = null;
             if (videoPlayerVMs.Count > 0) videoPlayerVMs[0].UpFocusX();
         }
-            
+
+        internal void MaximizePlayer(VideoPlayerVM videoPlayerVM)
+        {
+            Rect r = new Rect(0, 0, AreaVideoPlayersGrid.ActualWidth, AreaVideoPlayersGrid.ActualHeight);
+            videoPlayerVM.Replace(r);
+        }
         #endregion
 
 

@@ -362,6 +362,7 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\PNG\Restore-Window-64.png" />
     <Resource Include="Images\PNG\Accept.png" />
     <Resource Include="Images\mute.png" />
     <Resource Include="Images\play_pause.png" />

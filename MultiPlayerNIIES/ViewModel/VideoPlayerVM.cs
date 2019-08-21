@@ -128,6 +128,13 @@ namespace MultiPlayerNIIES.ViewModel
 
         #region Methods
 
+
+        Rect restoreWindowRect = new Rect(0, 0, 500, 350);
+        public void SetCurrentSizeForRestore()
+        {
+            restoreWindowRect = new Rect(Body.Margin.Left, Body.Margin.Top, Body.ActualWidth, Body.ActualHeight);
+        }
+
         public void OnClose()
         {
             Body.VLC.OnClosing();
@@ -180,6 +187,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Margin = new Thickness(AreaForPlacementInContainer.Left, AreaForPlacementInContainer.Top, 0, 0);
             Body.Width = AreaForPlacementInContainer.Width;
             Body.Height = AreaForPlacementInContainer.Height;
+          
         }
 
         internal void Play()
@@ -295,6 +303,36 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
             }
         }
+
+
+
+        private RelayCommand maximizeCommand;
+        public RelayCommand MaximizeCommand
+        {
+            get
+            {
+                return maximizeCommand ??
+                  (maximizeCommand = new RelayCommand(obj =>
+                  {
+                      SetCurrentSizeForRestore();
+                      VM.MaximizePlayer(this);
+                  }));
+            }
+        }
+
+        private RelayCommand restoreCommand;
+        public RelayCommand RestoreCommand
+        {
+            get
+            {
+                return restoreCommand ??
+                  (restoreCommand = new RelayCommand(obj =>
+                  {
+                      Replace(restoreWindowRect);
+                  }));
+            }
+        }
+
 
         internal void DefineOldVLCInnerPosition()
         {
