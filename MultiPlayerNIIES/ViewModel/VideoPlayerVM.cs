@@ -130,9 +130,13 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         Rect restoreWindowRect = new Rect(0, 0, 500, 350);
+        bool IsAlreadyMax = false;
+        bool IsAlreadyMin = false;
         public void SetCurrentSizeForRestore()
         {
-            restoreWindowRect = new Rect(Body.Margin.Left, Body.Margin.Top, Body.ActualWidth, Body.ActualHeight);
+            Rect newR = new Rect(Body.Margin.Left, Body.Margin.Top, Body.ActualWidth, Body.ActualHeight);
+            if (!IsAlreadyMax && !IsAlreadyMin)
+                restoreWindowRect = newR;
         }
 
         public void OnClose()
@@ -316,10 +320,27 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       SetCurrentSizeForRestore();
                       VM.MaximizePlayer(this);
+                      IsAlreadyMax = true;
+                      IsAlreadyMin = false;
                   }));
             }
         }
 
+        private RelayCommand minimizeCommand;
+        public RelayCommand MinimizeCommand
+        {
+            get
+            {
+                return minimizeCommand ??
+                  (minimizeCommand = new RelayCommand(obj =>
+                  {
+                      SetCurrentSizeForRestore();
+                      VM.MinimizePlayer(this);
+                      IsAlreadyMax = false;
+                      IsAlreadyMin = true;
+                  }));
+            }
+        }
         private RelayCommand restoreCommand;
         public RelayCommand RestoreCommand
         {
@@ -328,6 +349,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return restoreCommand ??
                   (restoreCommand = new RelayCommand(obj =>
                   {
+                      IsAlreadyMax = false;
+                      IsAlreadyMin = false;
                       Replace(restoreWindowRect);
                   }));
             }

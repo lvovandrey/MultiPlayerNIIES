@@ -292,6 +292,8 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+
+
         public double Rate
         {
             get
@@ -715,6 +717,7 @@ namespace MultiPlayerNIIES.ViewModel
             foreach (VideoPlayerVM v in videoPlayerVMs)
             {
                 v.UpdateVLCInnerPosition();
+                ToolsTimer.Delay(() => { v.SetCurrentSizeForRestore(); }, TimeSpan.FromSeconds(1));
             }
         }
 
@@ -735,6 +738,12 @@ namespace MultiPlayerNIIES.ViewModel
         internal void MaximizePlayer(VideoPlayerVM videoPlayerVM)
         {
             Rect r = new Rect(0, 0, AreaVideoPlayersGrid.ActualWidth, AreaVideoPlayersGrid.ActualHeight);
+            videoPlayerVM.Replace(r);
+        }
+
+        internal void MinimizePlayer(VideoPlayerVM videoPlayerVM)
+        {
+            Rect r = new Rect(0, 0, 250, 100); 
             videoPlayerVM.Replace(r);
         }
         #endregion
