@@ -53,7 +53,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
                 MessageBox.Show("Ошибка считывания файлов титров: " + e.Message);
             }
             Parser.ParseRawTitles(RawSubtitles, out subtitles);
-            RawSubtitles = null;
+            RawSubtitles  = new List<string>();
             Parser.SegregateSubtitlesToRecords(subtitles, out records);
 
             Ready = true;
@@ -80,12 +80,12 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             try
             {
                 int N = SearchAndTools.BinarySearch(TimeVideo, subtitles);
-                if (N < 0 || N > subtitles.Count - 1) throw new Exception();
+                if (N < 0 || N > subtitles.Count - 1) { S.Text += "0;00;00;000 Не найден субтитр для текущего времени"; return S; }
                 S = subtitles[N];
             }
             catch(Exception e)
             {
-                S.Text += "0;00;00;000 Не найден субтитр для текущего времени";
+                MessageBox.Show("Ошибка при поиске субтитров: " + e.Message);
             }
             return S;
         }
