@@ -1,4 +1,5 @@
-﻿using MultiPlayerNIIES.Abstract;
+﻿using Meta.Vlc.Wpf;
+using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.View.Elements;
 using System;
@@ -240,6 +241,8 @@ namespace MultiPlayerNIIES.ViewModel
         public double SyncTitlesDeltaTotalMiliseconds { get { return SyncTitlesDelta.TotalMilliseconds; } }
             
         public double SyncTitlesDeltaPercentage { get { return 100 * (SyncTitlesDelta.TotalSeconds / MaxSyncTitlesDelta.TotalSeconds); } }
+
+
 
         public VideoPlayerVM FocusedPlayer
         {
@@ -708,6 +711,21 @@ namespace MultiPlayerNIIES.ViewModel
             foreach (VideoPlayerVM v in videoPlayerVMs)
                 v.UpdateVLCInnerPosition();
         }
+
+        internal void ClosePlayer(VideoPlayerVM videoPlayerVM)
+        {
+            videoPlayerVMs.Remove(videoPlayerVM);
+            if (videoPlayerVM.IsSyncronizeLeader && videoPlayerVMs.Count > 1)
+                VideoPlayerVM_OnSyncLeaderSet(videoPlayerVMs.Where(v => v.IsSyncronizeLeader != true).First(), null);
+            
+            Queue<Rect> AreasForPlacement = CalcAreasForPlacementVideoplayers(videoPlayerVMs.Count);
+
+            foreach (var v in videoPlayerVMs)
+                v.Replace(AreasForPlacement.Dequeue());
+            videoPlayerVM = null;
+            if (videoPlayerVMs.Count > 0) videoPlayerVMs[0].UpFocusX();
+        }
+            
         #endregion
 
 
@@ -1142,6 +1160,9 @@ namespace MultiPlayerNIIES.ViewModel
                 return closeAppCommand ??
                   (closeAppCommand = new RelayCommand(obj =>
                   {
+                      foreach (var v in videoPlayerVMs)
+                          v.OnClose();
+                      ApiManager.ReleaseAll();
 
                   }));
             }

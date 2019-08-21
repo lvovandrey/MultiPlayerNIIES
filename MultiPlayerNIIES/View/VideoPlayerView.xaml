@@ -10,38 +10,38 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvlc="clr-namespace:MultiPlayerNIIES.View.MetaVLCPlayer"
     xmlns:vlc="clr-namespace:MultiPlayerNIIES.View.VLCPlayer"
+    x:Name="This"
     d:DesignHeight="450"
     d:DesignWidth="800"
     PreviewMouseDown="UserControl_PreviewMouseDown"
-    mc:Ignorable="d"
-    x:Name="This">
+    mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BoolFocusToColor x:Key="BoolFocusToColor" />
         <converters:BoolSyncLeaderToColor x:Key="BoolSyncLeaderToColor" />
         <converters:BoolIsSyncLeaderToVisibility x:Key="BoolIsSyncLeaderToVisibility" />
         <Style x:Key="BtnStyle" TargetType="Button">
-            <Setter Property="Width" Value="14"/>
-            <Setter Property="Height" Value="14"/>
-            <Setter Property="Margin" Value="3,0,0,3"/>
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Height" Value="14" />
+            <Setter Property="Margin" Value="3,0,0,3" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Width" Value="20"/>
-                    <Setter Property="Height" Value="20"/>
-                    <Setter Property="Margin" Value="0,0,0,0"/>
-                    <Setter Property="Background" Value="{x:Null}"/>
+                    <Setter Property="Width" Value="20" />
+                    <Setter Property="Height" Value="20" />
+                    <Setter Property="Margin" Value="0,0,0,0" />
+                    <Setter Property="Background" Value="{x:Null}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="BtnStyle2" TargetType="Button">
-            <Setter Property="Width" Value="14"/>
-            <Setter Property="Height" Value="14"/>
-            <Setter Property="Margin" Value="20,0,0,3"/>
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Height" Value="14" />
+            <Setter Property="Margin" Value="20,0,0,3" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Width" Value="20"/>
-                    <Setter Property="Height" Value="20"/>
-                    <Setter Property="Margin" Value="17,0,0,0"/>
-                    <Setter Property="Background" Value="{x:Null}"/>
+                    <Setter Property="Width" Value="20" />
+                    <Setter Property="Height" Value="20" />
+                    <Setter Property="Margin" Value="17,0,0,0" />
+                    <Setter Property="Background" Value="{x:Null}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -60,8 +60,8 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="14" />
             <RowDefinition />
-            <RowDefinition Height="20" x:Name="PlayerPanelRow"/>
-            <RowDefinition Height="30" x:Name="SyncronizationInstrumentsRow"/>
+            <RowDefinition x:Name="PlayerPanelRow" Height="20" />
+            <RowDefinition x:Name="SyncronizationInstrumentsRow" Height="30" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
 
@@ -107,11 +107,15 @@
             HorizontalAlignment="Right"
             Panel.ZIndex="3"
             Orientation="Horizontal">
-            <Button x:Name="Maximize">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-Inout.png" />
+            <Button x:Name="Minimize" Command="{Binding MinimizeCommand}">
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Minimize_Window.png" />
             </Button>
-            <Button x:Name="Close" Click="Close_Click">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" />
+            <Button x:Name="Maximize" Command="{Binding MaximizeCommand}">
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Maximize_Window.png" />
+            </Button>
+
+            <Button x:Name="Close" Command="{Binding CloseCommand}">
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Close_Window.png" />
             </Button>
         </StackPanel>
 
@@ -124,47 +128,58 @@
             PreviewMouseWheel="VLC_PreviewMouseWheel" />
 
 
-        <Button x:Name="ButtonHideInstruments"  
+        <Button
+            x:Name="ButtonHideInstruments"
             Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-            ToolTip="Скрыть/показать панель синхронизации"
-            Opacity="0.7"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource BtnStyle}" Background="{x:Null}" Click="ButtonHideInstruments_Click">
-            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png"/>
-        </Button>
-        
-        <Button x:Name="ButtonHidePanel"  
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            ToolTip="Скрыть/показать панель управления проигрывателя"
-            Opacity="0.7"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource BtnStyle2}" Background="{x:Null}" Click="ButtonHidePanel_Click">
-            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png"/>
-            
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Background="{x:Null}"
+            Click="ButtonHideInstruments_Click"
+            Opacity="0.7"
+            Style="{StaticResource BtnStyle}"
+            ToolTip="Скрыть/показать панель синхронизации">
+            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
         </Button>
 
-        <elements:PlayerPanel      
+        <Button
+            x:Name="ButtonHidePanel"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Background="{x:Null}"
+            Click="ButtonHidePanel_Click"
+            Opacity="0.7"
+            Style="{StaticResource BtnStyle2}"
+            ToolTip="Скрыть/показать панель управления проигрывателя">
+            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png" />
+
+        </Button>
+
+        <elements:PlayerPanel
             x:Name="PlayerPanelViewer"
             Grid.Row="3"
             Grid.Column="0"
-            Grid.ColumnSpan="3" DataContext="{Binding PlayerPanelVM}"/>
+            Grid.ColumnSpan="3"
+            DataContext="{Binding PlayerPanelVM}" />
 
         <elements:SyncronizationShiftView
             x:Name="SyncronizationShiftViewer"
             Grid.Row="4"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-
             VerticalAlignment="Bottom"
             DataContext="{Binding SyncronizationShiftVM}"
-            Visibility= "{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" 
-            />
+            Visibility="{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
 
         <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
         <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
         <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
 
-    
+
 
         <Rectangle
             x:Name="Dragger"

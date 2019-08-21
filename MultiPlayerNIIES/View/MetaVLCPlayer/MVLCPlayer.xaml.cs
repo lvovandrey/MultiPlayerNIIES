@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Meta.Vlc.Wpf;
+using Microsoft.Win32;
 using MultiPlayerNIIES.Tools;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,11 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
         public TimeSpan CurTimeEx
         {
-            get { return vlc.VlcMediaPlayer.Time; }
+            get {
+                if (vlc == null) return TimeSpan.Zero;
+                if (vlc.VlcMediaPlayer == null) return TimeSpan.Zero;
+                return vlc.VlcMediaPlayer.Time;
+            }
         }
         
         System.Windows.Threading.DispatcherTimer timer;
@@ -306,7 +311,11 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
 
 
 
-
+        public void OnClosing()
+        {
+            vlc.Dispose();
+          
+        }
 
 
         #region Реализация Drag'n'Drop

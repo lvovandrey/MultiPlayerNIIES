@@ -127,6 +127,11 @@ namespace MultiPlayerNIIES.ViewModel
 
 
         #region Methods
+
+        public void OnClose()
+        {
+            Body.VLC.OnClosing();
+        }
         public void LoadFile(string filename)
         {
             if (File.Exists(filename))
@@ -271,6 +276,22 @@ namespace MultiPlayerNIIES.ViewModel
                       if (!(obj is TimeSpan)) return;
                       TimeSpan Step = (TimeSpan)obj;
                       Body.Step(Step);
+                  }));
+            }
+        }
+
+        private RelayCommand closeCommand;
+        public RelayCommand CloseCommand
+        {
+            get
+            {
+                return closeCommand ??
+                  (closeCommand = new RelayCommand(obj =>
+                  {
+                      Container.Children.Remove(Body);
+                    
+                      VM.ClosePlayer(this);
+                      OnClose();
                   }));
             }
         }
