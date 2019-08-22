@@ -210,6 +210,8 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        private bool IsSyncInProcess = false;
+
         private TimeSpan maxSyncTitlesDelta;
         public TimeSpan MaxSyncTitlesDelta
         {
@@ -493,12 +495,12 @@ namespace MultiPlayerNIIES.ViewModel
 
         private void AutoSyncronizationTitles()
         {
-            if (SyncTitlesDelta > MaxSyncTitlesDelta) SyncronizationTitleCommand.Execute(null);
+            if (SyncTitlesDelta > MaxSyncTitlesDelta && !IsSyncInProcess) SyncronizationTitleCommand.Execute(null);
         }
 
         private void AutoSyncronization()
         {
-            if (SyncDelta > MaxSyncDelta) SyncronizationShiftCommand.Execute(null);
+            if (SyncDelta > MaxSyncDelta && !IsSyncInProcess) SyncronizationShiftCommand.Execute(null);
         }
 
         private TimeSpan CalcSyncDelta()
@@ -1077,6 +1079,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationTitleCommand ??
                   (syncronizationTitleCommand = new RelayCommand(obj =>
                   {
+                      IsSyncInProcess = true;
+                      ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));
                       WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(2));
 
                       if (videoPlayerVMs.Count < 2) return;
@@ -1113,6 +1117,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationShiftCommand ??
                   (syncronizationShiftCommand = new RelayCommand(obj =>
                   {
+                      IsSyncInProcess = true;
+                      ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
                       WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(2));
 
                       Dictionary<VideoPlayerVM,bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
@@ -1173,6 +1179,8 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
         private RelayCommand closeAppCommand;
+
+
         public RelayCommand CloseAppCommand
         {
             get

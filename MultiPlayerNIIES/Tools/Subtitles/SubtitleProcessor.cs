@@ -36,6 +36,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         }
         public void LoadSubtitles(string filename)
         {
+            if (!File.Exists(filename)) { Ready = false; return; }
             try
             {
                 RawSubtitles.Clear();
@@ -50,7 +51,8 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch (Exception e)
             {
-                MessageBox.Show("Ошибка считывания файлов титров: " + e.Message);
+                Ready = false;
+                MessageBox.Show("Ошибка считывания файлов титров: " + e.Message);                
             }
             Parser.ParseRawTitles(RawSubtitles, out subtitles);
             RawSubtitles  = new List<string>();
@@ -77,6 +79,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         public Subtitle GetSubtitle(TimeSpan TimeVideo)
         {
             Subtitle S = new Subtitle();
+            if (!Ready) return S;
             try
             {
                 int N = SearchAndTools.BinarySearch(TimeVideo, subtitles);
@@ -98,6 +101,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         public Subtitle GetSubtitleOfTitlesTimeText(TimeSpan TimeTitles)
         {
             Subtitle S = new Subtitle();
+            if (!Ready) return S;
             try
             {
                 int N = SearchAndTools.BinarySearchInTimesFromTitles(TimeTitles, subtitles, 0, subtitles.FindLastIndex((x) => { return x.Begin > TimeSpan.FromSeconds(-1); }));

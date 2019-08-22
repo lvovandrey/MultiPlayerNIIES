@@ -28,6 +28,7 @@ namespace MultiPlayerNIIES.View
         {
             InitializeComponent();
             ToolsTimer.Timer(TimerTick, TimeSpan.FromSeconds(0.05));
+            ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null); ButtonHidePanel_Click(null, null); }, TimeSpan.FromSeconds(1));
         }
 
         private void TimerTick()
