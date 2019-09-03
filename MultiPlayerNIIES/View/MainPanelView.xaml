@@ -283,6 +283,12 @@
             </ToolBar>
 
             <ToolBar Height="60">
+                <Button Command="{Binding OpenStateCommand}" Style="{StaticResource ButtonMainPanel}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Document-Open-64.png" />
+                </Button>                
+                <Button Command="{Binding SaveStateCommand}" Style="{StaticResource ButtonMainPanel}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Document-Save-64.png" />
+                </Button>
                 <Button Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" />
                 </Button>

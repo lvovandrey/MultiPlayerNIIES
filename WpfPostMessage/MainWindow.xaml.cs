@@ -84,14 +84,18 @@ namespace WpfPostMessage
         Excel.Application ex;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-            source.AddHook(new HwndSourceHook(WndProc));
 
-            ex = new Excel.Application();
-            ex.Visible = true;
-            Excel.Workbooks books = ex.Workbooks;
-            Excel._Workbook book = null;
-            book = books.Open(Environment.CurrentDirectory + @"\test.xlsm");
+            double w = SystemParameters.PrimaryScreenWidth;
+            double h = SystemParameters.PrimaryScreenHeight;
+            this.Txt.Text += w.ToString("#") +"х" + h.ToString("#")+"\n";
+            //source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            //source.AddHook(new HwndSourceHook(WndProc));
+
+            //ex = new Excel.Application();
+            //ex.Visible = true;
+            //Excel.Workbooks books = ex.Workbooks;
+            //Excel._Workbook book = null;
+            //book = books.Open(Environment.CurrentDirectory + @"\test.xlsm");
 
         }
 

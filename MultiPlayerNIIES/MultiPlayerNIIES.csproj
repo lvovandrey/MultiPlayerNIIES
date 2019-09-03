@@ -138,6 +138,8 @@
     <Compile Include="Abstract\INPCBase.cs" />
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
+    <Compile Include="Tools\Serialization\ApplicationSettingsSerialized.cs" />
+    <Compile Include="Tools\Serialization\StateSaver.cs" />
     <Compile Include="Tools\Subtitles\Subtitle.cs" />
     <Compile Include="Tools\Subtitles\SubtitleProcessor.cs" />
     <Compile Include="Tools\Subtitles\Parser.cs" />
@@ -362,6 +364,8 @@
   <ItemGroup>
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Resource Include="Images\PNG\Gnome-Document-Save-64.png" />
+    <Resource Include="Images\PNG\Gnome-Document-Open-64.png" />
     <Resource Include="Images\PNG\Restore-Window-64.png" />
     <Resource Include="Images\PNG\Accept.png" />
     <Resource Include="Images\mute.png" />

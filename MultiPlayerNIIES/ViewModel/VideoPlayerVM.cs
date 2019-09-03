@@ -15,7 +15,7 @@ namespace MultiPlayerNIIES.ViewModel
     public delegate void PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e);
     public class VideoPlayerVM : INPCBase
     {
-        VideoPlayerView Body; //Ну это не настоящая VM
+        public VideoPlayerView Body; //Ну это не настоящая VM
         Grid Container;
         VM VM;
         SyncronizationShiftVM syncronizationShiftVM;
@@ -53,6 +53,11 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get { return Body.VLC.CurTimeEx; }
             set { Body.SetPosition(value); OnPropertyChanged("CurTime"); }
+        }
+
+        public TimeSpan Duration
+        {
+            get { return Body.VLC.Duration; }
         }
 
         public TimeSpan SyncLeaderCurTime
