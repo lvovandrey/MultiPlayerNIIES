@@ -81,6 +81,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\DirectShowLib-2005.dll</HintPath>
+    </Reference>
     <Reference Include="ffme.win, Version=4.1.300.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FFME.Windows.4.1.300\lib\net461\ffme.win.dll</HintPath>
     </Reference>
@@ -101,6 +105,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -151,6 +156,11 @@
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DSPlayer\Capture.cs" />
+    <Compile Include="View\DSPlayer\DSEngine.cs" />
+    <Compile Include="View\DSPlayer\DSPlayer.xaml.cs">
+      <DependentUpon>DSPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Elements\PlayerPanel.xaml.cs">
       <DependentUpon>PlayerPanel.xaml</DependentUpon>
@@ -210,6 +220,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AreaVideoPlayersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DSPlayer\DSPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -362,8 +376,12 @@
     <Resource Include="Images\PNG\Arrow-sans-up-32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dll\DirectShowLib-2005.dll" />
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
+    <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
+    <Content Include="dll\Microsoft.DirectX.dll" />
     <Resource Include="Images\PNG\Gnome-Document-Save-64.png" />
     <Resource Include="Images\PNG\Gnome-Document-Open-64.png" />
     <Resource Include="Images\PNG\Restore-Window-64.png" />

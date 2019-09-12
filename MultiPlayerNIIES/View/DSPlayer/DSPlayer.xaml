@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.DSPlayer.DSPlayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
+              xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <WindowsFormsHost>
+            <wf:Panel Name="VideoPanel" BackColor="Black"/>
+        </WindowsFormsHost>
+    </Grid>
+</UserControl>
