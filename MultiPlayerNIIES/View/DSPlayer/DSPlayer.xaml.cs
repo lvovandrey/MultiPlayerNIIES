@@ -22,13 +22,16 @@ namespace MultiPlayerNIIES.View.DSPlayer
     /// </summary>
     public partial class DSPlayer : UserControl
     {
+
+        DxPlay dxPlay;
+
         public DSPlayer()
         {
             InitializeComponent();
 
-         //   DragDropSwitchOn(MainGrid, vlc);
+            //   DragDropSwitchOn(MainGrid, vlc);
 
-
+            dxPlay = new DxPlay(this.VideoPanel);
 
             Tools.ToolsTimer.Delay(() => { pause(); }, TimeSpan.FromSeconds(0.1));
 
@@ -116,10 +119,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             get
             {
-                if (vlc == null) return TimeSpan.Zero;
-                if (vlc.VlcMediaPlayer == null)
-                    return TimeSpan.Zero;
-                return vlc.VlcMediaPlayer.Time;
+                if ( dxPlay == null) return TimeSpan.Zero;
+                return dxPlay.CurTime;
             }
         }
 
@@ -137,10 +138,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void timerTick(object sender, EventArgs e)
         {
-            if (vlc.Time > TimeSpan.FromSeconds(0.01))
+            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01))
             {
-                Duration = vlc.Length;
-                CurTime = vlc.Time;
+                Duration = dxPlay.Duration;
+                CurTime = dxPlay.CurTime;
                 Position = 1000 * CurTime.TotalMilliseconds / Duration.TotalMilliseconds;
             }
         }
@@ -148,27 +149,33 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void SetCurTime(TimeSpan time)
         {
             if (time < TimeSpan.FromSeconds(0)) return;
-            vlc.Time = time;
+            if (time > dxPlay.Duration) return;
+            dxPlay.CurTime = time;
         }
 
         private void VideoPlayer_OnPlayerSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (Source == null) return;
-            vlc.Stop();
-            vlc.LoadMedia(Source);
+            if (dxPlay != null)
+            {
+                dxPlay.Dispose();
+                dxPlay = null;
+            }
+            dxPlay.LoadMedia(Source);
 
             //vlc.Height = ActualHeight - 40;
             //vlc.Width = ActualWidth - 10;
 
-            vlc.Play();
+            dxPlay.Start();
             Volume = 20;
         }
 
+
         private void Player_OnPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((vlc.VlcMediaPlayer != null) && (!vlc.VlcMediaPlayer.IsPlaying))
+            if ((dxPlay != null) && (!dxPlay.IsPlaying))
             {
-                vlc.Position = (float)(Position / 1000);
+                dxPlay.Position = (float)(Position / 1000);
             }
         }
 
@@ -176,7 +183,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             // if ((vlc.VlcMediaPlayer.Audio != null))
             {
-                vlc.Volume = (int)Volume;
+                dxPlay.Volume = (int)Volume;
             }
         }
 

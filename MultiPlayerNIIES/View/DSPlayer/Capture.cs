@@ -28,7 +28,7 @@ using DirectShowLib;
 
 namespace MultiPlayerNIIES.View.DSPlayer
 {
-    internal class DxPlay : IDisposable
+    internal partial class DxPlay : IDisposable
     {
         enum GraphState
         {
@@ -53,6 +53,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Used to grab current snapshots
         ISampleGrabber m_sampGrabber = null;
+        IBasicAudio m_basicAudio = null;
 
         // Grab once.  Used to create bitmap
         private int m_videoWidth;
@@ -89,7 +90,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Play an avi file into a window.  Allow for snapshots.
         // (Control to show video in, Avi file to play
-        public DxPlay(Control hWin, string FileName)
+        private DxPlay(Control hWin, string FileName)
         {
             try
             {
@@ -126,6 +127,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 throw;
             }
         }
+
+
 
         // Wait for events to happen.  This approach uses waiting on an event handle.
         // The nice thing about doing it this way is that you aren't in the windows message
@@ -195,6 +198,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 }
             } while (true);
         }
+
 
         // Return the currently playing file name
         public string FileName
@@ -346,6 +350,17 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_mediaEvent = m_FilterGraph as IMediaEvent;
                 m_mediaCtrl = m_FilterGraph as IMediaControl;
                 m_mediaSeeking = m_FilterGraph as IMediaSeeking;
+
+                IBaseFilter pAudioRenderer = (IBaseFilter)new DSoundRender();
+                hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
+                DsError.ThrowExceptionForHR(hr);
+
+
+                hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
+                DsError.ThrowExceptionForHR(hr);
+
+                m_basicAudio = m_FilterGraph as IBasicAudio;
+
 
             }
             finally
