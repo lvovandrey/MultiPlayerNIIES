@@ -356,8 +356,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 // Grab some other interfaces
                 m_mediaEvent = m_FilterGraph as IMediaEvent;
                 m_mediaCtrl = m_FilterGraph as IMediaControl;
-
                 m_mediaSeeking = m_FilterGraph as IMediaSeeking;
+
 
                 try
                 { 
@@ -375,6 +375,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 {
                     
                 }
+
             }
             finally
             {

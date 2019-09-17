@@ -93,9 +93,11 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
             set
             {
+
                 if (m_mediaSeeking == null) return;
-                int hr = m_mediaSeeking.SetRate(value);
-                DsError.ThrowExceptionForHR(hr);
+                
+                int hr = m_mediaSeeking.SetRate(2);
+               // DsError.ThrowExceptionForHR(hr);
             }
         }
 

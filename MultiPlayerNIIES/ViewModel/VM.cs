@@ -66,7 +66,7 @@ namespace MultiPlayerNIIES.ViewModel
 
 
             Step = TimeSpan.FromMilliseconds(100);
-            RateShift = 0.1;
+            RateShift = 0.5;
             slowRate = 0.5;
             fastRate = 2;
 
