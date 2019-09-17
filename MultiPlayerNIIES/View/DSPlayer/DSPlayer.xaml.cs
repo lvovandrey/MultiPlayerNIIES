@@ -47,7 +47,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             timer = new System.Windows.Threading.DispatcherTimer();
 
             timer.Tick += new EventHandler(timerTick);
-            timer.Interval = TimeSpan.FromSeconds(2.05);
+            timer.Interval = TimeSpan.FromSeconds(0.05);
             timer.Start();
         }
 
@@ -381,18 +381,23 @@ namespace MultiPlayerNIIES.View.DSPlayer
             UpdatePosition(e);
         }
 
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Rect r = new Rect(0, 0, vlc.ActualWidth, vlc.ActualHeight);
+            dxPlay.SetWindowPosition(r);
+        }
     }
 }

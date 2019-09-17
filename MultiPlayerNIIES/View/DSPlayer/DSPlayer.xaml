@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
               xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" SizeChanged="UserControl_SizeChanged" >
     <Grid x:Name="MainGrid" ClipToBounds="True">
-        <WindowsFormsHost x:Name="vlc">
-            <wf:Panel x:Name="VideoPanel" BackColor="Black"/>
+        <WindowsFormsHost x:Name="vlc" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,50">
+            <wf:Panel x:Name="VideoPanel" BackColor="Black" Dock="Fill"/>
         </WindowsFormsHost>
     </Grid>
 </UserControl>

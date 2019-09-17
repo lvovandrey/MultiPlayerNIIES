@@ -24,6 +24,7 @@ using System.Threading;
 
 using DirectShowLib;
 using System.IO;
+using System.Windows;
 
 namespace MultiPlayerNIIES.View.DSPlayer
 {
@@ -47,6 +48,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private IMediaControl m_mediaCtrl;
         private IMediaEvent m_mediaEvent;
         private IMediaSeeking m_mediaSeeking;
+
+        IVideoWindow m_videoWindow;
+
 
         IBaseFilter pAudioRenderer;
 
@@ -346,8 +350,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 SaveSizeInfo(m_sampGrabber);
 
                 // Configure the Video Window
-                IVideoWindow videoWindow = m_FilterGraph as IVideoWindow;
-                ConfigureVideoWindow(videoWindow, hWin);
+                m_videoWindow = m_FilterGraph as IVideoWindow;
+                ConfigureVideoWindow(m_videoWindow, hWin);
 
                 // Grab some other interfaces
                 m_mediaEvent = m_FilterGraph as IMediaEvent;
@@ -369,7 +373,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 }
                 catch
                 {
-                    if (hr == -2147467259) MessageBox.Show("У видео " + Path.GetFileName(FileName) + " нет звука");
+                    if (hr == -2147467259) System.Windows.MessageBox.Show("У видео " + Path.GetFileName(FileName) + " нет звука");
                 }
             }
             finally
@@ -454,7 +458,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             DsError.ThrowExceptionForHR(hr);
 
             // Set the window style
-            hr = videoWindow.put_WindowStyle((WindowStyle.Child | WindowStyle.ClipChildren | WindowStyle.ClipSiblings));
+            hr = videoWindow.put_WindowStyle((DirectShowLib.WindowStyle.Child | DirectShowLib.WindowStyle.ClipChildren | DirectShowLib.WindowStyle.ClipSiblings));
             DsError.ThrowExceptionForHR(hr);
 
             // Make the window visible
@@ -466,6 +470,14 @@ namespace MultiPlayerNIIES.View.DSPlayer
             hr = videoWindow.SetWindowPosition(0, 0, rc.Right, rc.Bottom);
             DsError.ThrowExceptionForHR(hr);
         }
+
+        public void SetWindowPosition(Rect rc)
+        {
+            int hr = m_videoWindow.SetWindowPosition(0, 0, (int)rc.Right, (int)rc.Bottom);
+            DsError.ThrowExceptionForHR(hr);
+        }
+
+
 
         // Set the options on the sample grabber
         private void ConfigureSampleGrabber(ISampleGrabber sampGrabber)

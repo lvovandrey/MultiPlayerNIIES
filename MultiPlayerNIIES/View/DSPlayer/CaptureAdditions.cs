@@ -51,12 +51,12 @@ namespace MultiPlayerNIIES.View.DSPlayer
             get
             {
                 if (m_mediaSeeking == null) return 0;
-                return 1000 * CurTime.TotalMilliseconds / Duration.TotalMilliseconds;
+                return CurTime.TotalMilliseconds / Duration.TotalMilliseconds;
             }
             set
             {
                 if (m_mediaSeeking == null) return;
-                CurTime = TimeSpan.FromSeconds(Duration.TotalSeconds * value / 1000);  
+                CurTime = TimeSpan.FromSeconds(Duration.TotalSeconds * value);  
             }
         }
 
