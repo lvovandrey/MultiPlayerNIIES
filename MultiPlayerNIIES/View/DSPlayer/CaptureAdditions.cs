@@ -96,8 +96,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                 if (m_mediaSeeking == null) return;
                 
-                int hr = m_mediaSeeking.SetRate(2);
-               // DsError.ThrowExceptionForHR(hr);
+                int hr = m_mediaSeeking.SetRate(value);
+              //  DsError.ThrowExceptionForHR(hr); 
+              //TODO: снять отсюда комментарий
             }
         }
 
@@ -131,7 +132,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
             get; private set;
         }
 
-        
-
+        internal bool TryRate()
+        {
+            int hr = m_mediaSeeking.SetRate(0.5);
+            return hr == 0;
+        }
     }
 }

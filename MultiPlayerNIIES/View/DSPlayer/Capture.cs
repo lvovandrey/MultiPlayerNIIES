@@ -94,7 +94,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Play an avi file into a window.  Allow for snapshots.
         // (Control to show video in, Avi file to play
-        public  DxPlay(Control hWin, string FileName)
+        public  DxPlay(Control hWin, string FileName, bool RateOk)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_sFileName = FileName;
 
                 // Set up the graph
-                SetupGraph2(hWin, FileName);
+                SetupGraph2(hWin, FileName,  RateOk);
 
                 // Get the event handle the graph will use to signal
                 // when events occur
@@ -303,10 +303,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Build the capture graph for grabber and renderer.</summary>
         // (Control to show video in, Filename to play)
-        private void SetupGraph2(Control hWin, string FileName)
+        private void SetupGraph2(Control hWin, string FileName, bool RateOk)
         {
             int hr;
-
+          
             // Get the graphbuilder object
             m_FilterGraph = new FilterGraph() as IFilterGraph2;
 
@@ -333,6 +333,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_sampGrabber = (ISampleGrabber)new SampleGrabber();
                 IBaseFilter baseGrabFlt = (IBaseFilter)m_sampGrabber;
 
+              
+
                 // Configure the Sample Grabber
                 ConfigureSampleGrabber(m_sampGrabber);
 
@@ -344,9 +346,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                 // Connect the pieces together, use the default renderer
                 hr = icgb2.RenderStream(null, null, sourceFilter, baseGrabFlt, null);
+
                 DsError.ThrowExceptionForHR(hr);
 
-                // Now that the graph is built, read the dimensions of the bitmaps we'll be getting
+               // Now that the graph is built, read the dimensions of the bitmaps we'll be getting
                 SaveSizeInfo(m_sampGrabber);
 
                 // Configure the Video Window
@@ -360,16 +363,21 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
                 try
-                { 
-                IBaseFilter pAudioRenderer = (IBaseFilter)new DSoundRender();
-                hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
-                DsError.ThrowExceptionForHR(hr);
+                {
+                    if (RateOk)
+                    {
+                        IBaseFilter pAudioRenderer = (IBaseFilter)new DSoundRender();
+                        hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
+                        DsError.ThrowExceptionForHR(hr);
 
-                hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
-                DsError.ThrowExceptionForHR(hr);
+                        hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
+                        DsError.ThrowExceptionForHR(hr);
 
-                m_basicAudio = m_FilterGraph as IBasicAudio;
+                        m_basicAudio = m_FilterGraph as IBasicAudio;
 
+
+
+                    }
                 }
                 catch
                 {
@@ -392,6 +400,104 @@ namespace MultiPlayerNIIES.View.DSPlayer
             GC.WaitForPendingFinalizers();
 #endif
         }
+
+
+        private bool IsVideoHaveAudio (Control hWin, string FileName)
+        {
+            int hr = 0;
+
+            // Get the graphbuilder object
+            IFilterGraph2 m_FilterGraph = new FilterGraph() as IFilterGraph2;
+
+            // Get a ICaptureGraphBuilder2 to help build the graph
+            ICaptureGraphBuilder2 icgb2 = new CaptureGraphBuilder2() as ICaptureGraphBuilder2;
+
+            try
+            {
+                // Link the ICaptureGraphBuilder2 to the IFilterGraph2
+                hr = icgb2.SetFiltergraph(m_FilterGraph);
+                DsError.ThrowExceptionForHR(hr);
+
+//#if DEBUG
+//                // Allows you to view the graph with GraphEdit File/Connect
+//                m_DsRot = new DsROTEntry(m_FilterGraph);
+//#endif
+                // Add the filters necessary to render the file.  This function will
+                // work with a number of different file types.
+                IBaseFilter sourceFilter = null;
+                hr = m_FilterGraph.AddSourceFilter(FileName, FileName, out sourceFilter);
+                DsError.ThrowExceptionForHR(hr);
+
+                // Get the SampleGrabber interface
+                ISampleGrabber m_sampGrabber = (ISampleGrabber)new SampleGrabber();
+                IBaseFilter baseGrabFlt = (IBaseFilter)m_sampGrabber;
+
+
+
+                // Configure the Sample Grabber
+                ConfigureSampleGrabber(m_sampGrabber);
+
+                // Add it to the filter
+                hr = m_FilterGraph.AddFilter(baseGrabFlt, "Ds.NET Grabber");
+                DsError.ThrowExceptionForHR(hr);
+
+
+
+                // Connect the pieces together, use the default renderer
+                hr = icgb2.RenderStream(null, null, sourceFilter, baseGrabFlt, null);
+
+                DsError.ThrowExceptionForHR(hr);
+
+                // Now that the graph is built, read the dimensions of the bitmaps we'll be getting
+                SaveSizeInfo(m_sampGrabber);
+
+                // Configure the Video Window
+                IVideoWindow m_videoWindow = m_FilterGraph as IVideoWindow;
+                ConfigureVideoWindow(m_videoWindow, hWin);
+
+                // Grab some other interfaces
+                IMediaEvent m_mediaEvent = m_FilterGraph as IMediaEvent;
+                IMediaControl  m_mediaCtrl = m_FilterGraph as IMediaControl;
+                IMediaSeeking m_mediaSeeking = m_FilterGraph as IMediaSeeking;
+
+                try
+                {
+                    IBaseFilter pAudioRenderer = (IBaseFilter)new DSoundRender();
+                    hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
+                    DsError.ThrowExceptionForHR(hr);
+
+                    hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
+                    //     DsError.ThrowExceptionForHR(hr);
+                   // hr = m_mediaSeeking.SetRate(0.5);
+
+                }
+                catch
+                {
+
+                }
+
+            }
+            finally
+            {
+                if (icgb2 != null)
+                {
+                    Marshal.ReleaseComObject(icgb2);
+                    icgb2 = null;
+                }
+            }
+#if DEBUG
+            // Double check to make sure we aren't releasing something
+            // important.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+#endif
+
+            CloseInterfaces();
+            return (hr == 0);
+        }
+
+
+
 
         private void SetupGraph3(Control hWin, string FileName)
         {
@@ -539,7 +645,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
 
         // Shut down capture
-        private void CloseInterfaces()
+        public void CloseInterfaces()
         {
             int hr;
 
@@ -578,8 +684,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                 if (m_FilterGraph != null)
                 {
-                    Marshal.ReleaseComObject(m_FilterGraph);
-                    m_FilterGraph = null;
+                    try
+                    {
+                        Marshal.ReleaseComObject(m_FilterGraph);
+                    }
+                    catch { }
+                    finally
+                    {
+                        m_FilterGraph = null;
+                    }
                 }
             }
             GC.Collect();

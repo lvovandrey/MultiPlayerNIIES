@@ -122,7 +122,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             get
             {
-                if ( dxPlay == null) return TimeSpan.Zero;
+                if (dxPlay == null) return TimeSpan.Zero;
                 return dxPlay.CurTime;
             }
         }
@@ -165,13 +165,28 @@ namespace MultiPlayerNIIES.View.DSPlayer
             //    dxPlay.Dispose();
             //    dxPlay = null;
             //}
-            dxPlay = new DxPlay(VideoPanel,Source.LocalPath);
 
-            //vlc.Height = ActualHeight - 40;
-            //vlc.Width = ActualWidth - 10;
+            DxPlay testDx = new DxPlay(VideoPanel2, Source.LocalPath, true); // тестируем - открываем проверяем.... жуткий просто ужасный костыль
+            //TODO: Нет, братан, ну с этим надо реально что-то делать.....
+            testDx.Start();
+            //ToolsTimer.Delay(() =>
+           // {
+                bool RateOk = testDx.TryRate();
 
-            dxPlay.Start();
-            Volume = 20;
+              //  ToolsTimer.Delay(() =>
+             //   {
+
+                    dxPlay = new DxPlay(VideoPanel, Source.LocalPath,RateOk);
+
+                    //vlc.Height = ActualHeight - 40;
+                    //vlc.Width = ActualWidth - 10;
+
+                    dxPlay.Start();
+                    Volume = 20;
+            testDx.Stop();
+          //  testDx.CloseInterfaces();
+           //     }, TimeSpan.FromSeconds(0.5));
+           // }, TimeSpan.FromSeconds(0.5));
         }
 
 
@@ -185,7 +200,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void Player_OnVolumeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-                dxPlay.Volume = Volume;
+            dxPlay.Volume = Volume;
         }
 
         private void Player_OnCurTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
