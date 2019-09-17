@@ -373,7 +373,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 }
                 catch
                 {
-                    if (hr == -2147467259) System.Windows.MessageBox.Show("У видео " + Path.GetFileName(FileName) + " нет звука");
+                    
                 }
             }
             finally
