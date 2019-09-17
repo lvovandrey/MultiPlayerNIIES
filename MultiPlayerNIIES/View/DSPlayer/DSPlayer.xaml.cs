@@ -33,9 +33,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
             //   DragDropSwitchOn(MainGrid, vlc);
 
-            dxPlay = new DxPlay(this.VideoPanel);
+            //dxPlay = new DxPlay(this.VideoPanel, );
 
-            Tools.ToolsTimer.Delay(() => { pause(); }, TimeSpan.FromSeconds(0.1));
+            //Tools.ToolsTimer.Delay(() => { // pause(); 
+            //}, TimeSpan.FromSeconds(0.1));
 
             this.OnSourceChanged += VideoPlayer_OnPlayerSourceChanged;
             this.OnPositionChanged += Player_OnPositionChanged;
@@ -46,7 +47,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             timer = new System.Windows.Threading.DispatcherTimer();
 
             timer.Tick += new EventHandler(timerTick);
-            timer.Interval = TimeSpan.FromSeconds(0.05);
+            timer.Interval = TimeSpan.FromSeconds(2.05);
             timer.Start();
         }
 
@@ -140,7 +141,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void timerTick(object sender, EventArgs e)
         {
-            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01))
+            if (dxPlay == null) return;
+            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01) && dxPlay.IsPlaying)
             {
                 Duration = dxPlay.Duration;
                 CurTime = dxPlay.CurTime;
@@ -163,7 +165,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             //    dxPlay.Dispose();
             //    dxPlay = null;
             //}
-            dxPlay.LoadMedia(Source);
+            dxPlay = new DxPlay(VideoPanel,Source.LocalPath);
 
             //vlc.Height = ActualHeight - 40;
             //vlc.Width = ActualWidth - 10;
@@ -193,7 +195,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void pause()
         {
-            if (dxPlay.IsPlaying) dxPlay.Pause();
+            if (dxPlay.IsPlaying)
+                dxPlay.Pause();
+
         }
         public void play()
         {

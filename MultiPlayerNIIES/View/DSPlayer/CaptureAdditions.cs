@@ -73,7 +73,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
             set
             {
-                int hr;
+                if (m_basicAudio == null) return;
+                    int hr;
                 double db = 2325.5 * Math.Log(value); if (db <= -10000) db = -9999; if (db > 0) db = 0;
                 hr = m_basicAudio.put_Volume((int)Math.Round(db));
                 DsError.ThrowExceptionForHR(hr);
@@ -128,53 +129,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             get; private set;
         }
 
-        internal void LoadMedia(Uri source)
-        {
-            this.LoadMedia(source.LocalPath);
-        }
-
-        public DxPlay(Control videoPanel)
-        {
-            this.videoPanel = videoPanel;
-        }
-
-        public void LoadMedia(string FileName)
-        {
-            try
-            {
-                int hr;
-                IntPtr hEvent;
-
-                // Save off the file name
-                m_sFileName = FileName;
-
-                // Set up the graph
-                SetupGraph(videoPanel, FileName);
-
-                // Get the event handle the graph will use to signal
-                // when events occur
-                hr = m_mediaEvent.GetEventHandle(out hEvent);
-                DsError.ThrowExceptionForHR(hr);
-
-                // Wrap the graph event with a ManualResetEvent
-                m_mre = new ManualResetEvent(false);
-#if USING_NET11
-                m_mre.Handle = hEvent;
-#else
-                m_mre.SafeWaitHandle = new Microsoft.Win32.SafeHandles.SafeWaitHandle(hEvent, true);
-#endif
-
-                // Create a new thread to wait for events
-                Thread t = new Thread(new ThreadStart(this.EventWait));
-                t.Name = "Media Event Thread";
-                t.Start();
-            }
-            catch
-            {
-                Dispose();
-                throw;
-            }
-        }
+        
 
     }
 }

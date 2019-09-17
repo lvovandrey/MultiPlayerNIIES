@@ -83,7 +83,7 @@
   <ItemGroup>
     <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\DirectShowLib-2005.dll</HintPath>
+      <HintPath>dll\NewFolder1\DirectShowLib-2005.dll</HintPath>
     </Reference>
     <Reference Include="ffme.win, Version=4.1.300.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FFME.Windows.4.1.300\lib\net461\ffme.win.dll</HintPath>
@@ -300,6 +300,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="dll\NewFolder1\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
