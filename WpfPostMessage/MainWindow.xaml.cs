@@ -23,7 +23,7 @@ namespace WpfPostMessage
     /// </summary>
     public partial class MainWindow : Window
     {
-        HwndSource source;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -81,7 +81,7 @@ namespace WpfPostMessage
             //Do stuff
         }
 
-        Excel.Application ex;
+        Excel.Application ex = null;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 

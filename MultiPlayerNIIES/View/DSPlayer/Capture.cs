@@ -49,6 +49,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private IMediaEvent m_mediaEvent;
         private IMediaSeeking m_mediaSeeking;
 
+        IBaseFilter pAudioRenderer;
 
 
         // Used to grab current snapshots
@@ -335,6 +336,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 hr = m_FilterGraph.AddFilter(baseGrabFlt, "Ds.NET Grabber");
                 DsError.ThrowExceptionForHR(hr);
 
+                pAudioRenderer = (IBaseFilter)new DSoundRender();
+                hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
+                DsError.ThrowExceptionForHR(hr);
+                
                 // Connect the pieces together, use the default renderer
                 hr = icgb2.RenderStream(null, null, sourceFilter, baseGrabFlt, null);
                 DsError.ThrowExceptionForHR(hr);
@@ -351,12 +356,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_mediaCtrl = m_FilterGraph as IMediaControl;
                 m_mediaSeeking = m_FilterGraph as IMediaSeeking;
 
-                IBaseFilter pAudioRenderer = (IBaseFilter)new DSoundRender();
-                hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
-                DsError.ThrowExceptionForHR(hr);
 
 
-                hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
+
+               // hr = icgb2_2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
                 DsError.ThrowExceptionForHR(hr);
 
                 m_basicAudio = m_FilterGraph as IBasicAudio;

@@ -243,8 +243,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                return stopCommand ??
-                  (stopCommand = new RelayCommand(obj =>
+                return pauseCommand ??
+                  (pauseCommand = new RelayCommand(obj =>
                   {
                       Body.Pause();
                   }));

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
     {
 
         DxPlay dxPlay;
+
 
         public DSPlayer()
         {
@@ -156,11 +158,11 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private void VideoPlayer_OnPlayerSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (Source == null) return;
-            if (dxPlay != null)
-            {
-                dxPlay.Dispose();
-                dxPlay = null;
-            }
+            //if (dxPlay != null)
+            //{
+            //    dxPlay.Dispose();
+            //    dxPlay = null;
+            //}
             dxPlay.LoadMedia(Source);
 
             //vlc.Height = ActualHeight - 40;
@@ -181,10 +183,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void Player_OnVolumeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            // if ((vlc.VlcMediaPlayer.Audio != null))
-            {
-                dxPlay.Volume = (int)Volume;
-            }
+                dxPlay.Volume = Volume;
         }
 
         private void Player_OnCurTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -194,88 +193,75 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void pause()
         {
-            if (vlc.VlcMediaPlayer.IsPlaying) vlc.Pause();
+            if (dxPlay.IsPlaying) dxPlay.Pause();
         }
         public void play()
         {
-            vlc.Play();
+            dxPlay.Start();
         }
         public void stop()
         {
-            vlc.Stop();
+            dxPlay.Stop();
         }
 
 
         private void PlayBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            if (vlc.VlcMediaPlayer.IsPlaying) vlc.Pause();
-            else vlc.Play();
+            if (dxPlay.IsPlaying) dxPlay.Pause();
+            else dxPlay.Start();
         }
 
-        private void SplitBtn_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
         private void MuteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (vlc.Volume != 0) Volume = 0;
+            if (dxPlay.Volume != 0) Volume = 0;
             else Volume = 50;
 
         }
 
-        public bool IsPlaying { get { return vlc.VlcMediaPlayer.IsPlaying; } }
+        public bool IsPlaying { get { return dxPlay.IsPlaying; } }
         bool WasPlaing;
 
         public void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            WasPlaing = vlc.VlcMediaPlayer.IsPlaying;
-            if (vlc.VlcMediaPlayer.IsPlaying) { vlc.VlcMediaPlayer.Pause(); timer.Stop(); }
+            WasPlaing = IsPlaying;
+            if (IsPlaying) { pause(); timer.Stop(); }
         }
 
 
 
         public void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (!vlc.VlcMediaPlayer.IsPlaying)
+            if (!IsPlaying && WasPlaing)
             {
-                if (WasPlaing)
-                {
-                    vlc.Play(); timer.Start();
-                }
-                else
-                {
-
-                }
+                play(); timer.Start();
             }
         }
 
         public void SetPosition(double position)// ЧТО ЭТО ЗА ЖЕСТЬ?!!!!!!
         {
             timer.Stop();
-            if (vlc.VlcMediaPlayer.IsPlaying)
+            if (IsPlaying)
             {
-                vlc.Pause();
+                pause();
                 timer.Stop();
 
                 Position = position;
                 CurTime = TimeSpan.FromSeconds(Position / 1000 * Duration.TotalSeconds);
-                vlc.Position = (float)(Position / 1000);
+                dxPlay.Position = Position / 1000;
 
-                ToolsTimer.Delay(() => { vlc.Play(); }, TimeSpan.FromMilliseconds(1000));
+                ToolsTimer.Delay(() => { play(); }, TimeSpan.FromMilliseconds(1000));
             }
             else
             {
                 timer.Stop();
-
                 Position = position;
                 CurTime = TimeSpan.FromSeconds(Position / 1000 * Duration.TotalSeconds);
-                vlc.Position = (float)(Position / 1000);
-
+                dxPlay.Position = Position / 1000;
             }
 
             ToolsTimer.Delay(() => { timer.Start(); }, TimeSpan.FromMilliseconds(1000));
-
         }
 
         private void DecSpeedBtn_Click(object sender, RoutedEventArgs e)
@@ -307,19 +293,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public double Rate
         {
-            get { return (double)vlc.VlcMediaPlayer.Rate; }
-            set
-            {
-                if (vlc.VlcMediaPlayer.Length > TimeSpan.Zero)
-                    vlc.VlcMediaPlayer.Rate = (float)value;
-            }
+            get { return dxPlay.Rate; }
+            set { dxPlay.Rate = value; }
         }
 
 
 
         public void OnClosing()
         {
-            vlc.Dispose();
+            dxPlay.Dispose();
 
         }
 

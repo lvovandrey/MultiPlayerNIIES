@@ -7,9 +7,9 @@
               xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <WindowsFormsHost>
-            <wf:Panel Name="VideoPanel" BackColor="Black"/>
+    <Grid x:Name="MainGrid" ClipToBounds="True">
+        <WindowsFormsHost x:Name="vlc">
+            <wf:Panel x:Name="VideoPanel" BackColor="Black"/>
         </WindowsFormsHost>
     </Grid>
 </UserControl>
