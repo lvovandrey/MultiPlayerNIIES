@@ -31,7 +31,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             InitializeComponent();
 
-            //   DragDropSwitchOn(MainGrid, vlc);
+            DragDropSwitchOn(MainGrid, vlc);
 
             //dxPlay = new DxPlay(this.VideoPanel, );
 
@@ -409,10 +409,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         #endregion
 
-        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+
+        public void OnResize()
         {
-            Rect r = new Rect(0, 0, vlc.ActualWidth, vlc.ActualHeight);
+            Rect r = new Rect(0, 0, vlc.ActualWidth + 1000, vlc.ActualHeight + 1000);
             dxPlay.SetWindowPosition(r);
+        }
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
+        {
+            OnResize(); 
         }
     }
 }

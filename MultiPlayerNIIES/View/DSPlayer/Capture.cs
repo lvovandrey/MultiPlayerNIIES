@@ -81,6 +81,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         // Release everything.
         public void Dispose()
         {
+            
             CloseInterfaces();
         }
         ~DxPlay()
@@ -648,7 +649,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void CloseInterfaces()
         {
             int hr;
-
+            IsOnDeleting = true;
             lock (this)
             {
                 if (m_State != GraphState.Exiting)
@@ -662,13 +663,20 @@ namespace MultiPlayerNIIES.View.DSPlayer
                     }
                 }
 
-                if (m_mediaCtrl != null)
+
+
+                    if (m_mediaCtrl != null)
                 {
                     // Stop the graph
                     hr = m_mediaCtrl.Stop();
                     m_mediaCtrl = null;
                 }
 
+                if (m_mediaSeeking != null)
+                {
+                    Marshal.ReleaseComObject(m_mediaSeeking);
+                    m_mediaSeeking = null;
+                }
                 if (m_sampGrabber != null)
                 {
                     Marshal.ReleaseComObject(m_sampGrabber);

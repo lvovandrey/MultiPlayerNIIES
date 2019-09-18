@@ -393,6 +393,7 @@ namespace MultiPlayerNIIES.View
             VLC.vlc.Margin = newVLCMargin;
             VLC.vlc.Height = newVLCSize.Height;
             VLC.vlc.Width = newVLCSize.Width;
+            VLC.OnResize();
         }
         #endregion
 

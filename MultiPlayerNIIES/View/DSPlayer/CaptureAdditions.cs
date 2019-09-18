@@ -15,7 +15,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             get
             {
-                if (m_mediaSeeking == null) return TimeSpan.Zero;
+                if (m_mediaSeeking == null && IsOnDeleting) return TimeSpan.Zero;
                 long t = 0;
                 int hr;
                 hr = m_mediaSeeking.GetCurrentPosition(out t);
@@ -126,7 +126,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
         }
 
-        
+
+        public bool IsOnDeleting = false;
+
+
         public  Control videoPanel
         {
             get; private set;
