@@ -178,15 +178,18 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                     dxPlay = new DxPlay(VideoPanel, Source.LocalPath,RateOk);
 
+                    Duration = dxPlay.Duration;
                     //vlc.Height = ActualHeight - 40;
                     //vlc.Width = ActualWidth - 10;
 
                     dxPlay.Start();
                     Volume = 20;
             testDx.Stop();
+
+            dxPlay.Pause();
           //  testDx.CloseInterfaces();
-           //     }, TimeSpan.FromSeconds(0.5));
-           // }, TimeSpan.FromSeconds(0.5));
+          //     }, TimeSpan.FromSeconds(0.5));
+          // }, TimeSpan.FromSeconds(0.5));
         }
 
 
@@ -194,7 +197,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             if ((dxPlay != null) && (!dxPlay.IsPlaying))
             {
-                dxPlay.Position = (float)(Position / 1000);
+                dxPlay.Position = Position / 1000;
             }
         }
 

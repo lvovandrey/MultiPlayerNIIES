@@ -76,9 +76,15 @@ namespace MultiPlayerNIIES.View
         {
             VLC.pause();
 
-            double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
+            if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
+            {
 
-            Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
+                double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
+
+                Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
+
+
+            }, TimeSpan.FromSeconds(1));
         }
 
         public SubtitleProcessor subtitleProcessor;
@@ -249,7 +255,7 @@ namespace MultiPlayerNIIES.View
             ResizedObject.MouseUp += OnMouseUpResize;
             Mouse.Capture(ResizedObject);
 
-            
+
         }
 
 
@@ -470,7 +476,7 @@ namespace MultiPlayerNIIES.View
         private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
         {
             if (SyncronizationInstrumentsRow.Height.Value > 20) { SyncronizationInstrumentsRow.Height = new GridLength(0); SyncronizationShiftViewer.Opacity = 0; }
-            else {SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
+            else { SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
         }
 
         private void ButtonHidePanel_Click(object sender, RoutedEventArgs e)
