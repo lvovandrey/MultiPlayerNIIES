@@ -74,17 +74,22 @@ namespace MultiPlayerNIIES.View
 
         public void SetPosition(TimeSpan position)
         {
-            VLC.pause();
+
 
             if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
             {
-
+                VLC.pause();
                 double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
 
                 Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
 
 
             }, TimeSpan.FromSeconds(1));
+            else
+            {
+                double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
+                VLC.Position = pos;
+            }
         }
 
         public SubtitleProcessor subtitleProcessor;
