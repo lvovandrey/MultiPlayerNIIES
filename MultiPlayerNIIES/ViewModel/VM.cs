@@ -72,11 +72,11 @@ namespace MultiPlayerNIIES.ViewModel
 
             MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
-            MaxSyncDelta = TimeSpan.FromSeconds(1);
+            MaxSyncDelta = TimeSpan.FromSeconds(0.4);
             SyncDelta = TimeSpan.FromSeconds(0);
             SyncDeltasBuffer = new Queue<TimeSpan>();
 
-            MaxSyncTitlesDelta = TimeSpan.FromSeconds(1);
+            MaxSyncTitlesDelta = TimeSpan.FromSeconds(0.4);
             SyncTitlesDelta = TimeSpan.FromSeconds(0);
             SyncTitlesDeltasBuffer = new Queue<TimeSpan>();
             ToolsTimer.Delay(() =>
@@ -890,17 +890,38 @@ namespace MultiPlayerNIIES.ViewModel
                        if (FocusedPlayer == null) return;
                        if (FocusedPlayer.IsPlaying)
                        {
-                           foreach (VideoPlayerVM player in videoPlayerVMs)
-                           {
-                               player.PauseCommand.Execute(null);
+                          List<Task> tasks = new List<Task>();
+
+                          foreach (VideoPlayerVM player in videoPlayerVMs)
+                          {
+                               // player.PauseCommand.Execute(null);
+                               tasks.Add(new Task(() => { player.PauseCommand.Execute(null); })); 
                            }
+
+                           ToolsTimer.Delay(() =>
+                           {
+                               foreach (var t in tasks) t.Start();
+                               if (IsOnAutoSyncronization && SyncDeltaPercentage > 30) SyncronizationShiftCommand.Execute(null);
+                               if (IsOnAutoSyncronizationTitles && SyncTitlesDeltaPercentage > 30) SyncronizationTitleCommand.Execute(null);
+                           }, TimeSpan.FromSeconds(0.1));
                        }
                        else
                        {
+                           //foreach (VideoPlayerVM player in videoPlayerVMs)
+                           //{
+                           //    player.PlayCommand.Execute(null);
+                           //}
+                           List<Task> tasks = new List<Task>();
+
                            foreach (VideoPlayerVM player in videoPlayerVMs)
+                               tasks.Add(new Task(() => { player.PlayCommand.Execute(null); }));
+                       
+                           ToolsTimer.Delay(() =>
                            {
-                               player.PlayCommand.Execute(null);
-                           }
+                               foreach (var t in tasks) t.Start();
+                           }, TimeSpan.FromSeconds(0.1));
+
+
                        }
 
                    }));
@@ -1172,7 +1193,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));
-                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(2));
+                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
 
                       if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
@@ -1210,7 +1231,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
-                      WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(2));
+                      WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
 
                       Dictionary<VideoPlayerVM, bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
