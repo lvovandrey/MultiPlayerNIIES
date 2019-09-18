@@ -72,7 +72,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
         {
             int left = BinarySearch(SearchedIntervalTimeBegin,Subtitles);
             if (left == -1) return -1;
-            int right = BinarySearch(SearchedIntervalTimeEnd, Subtitles);
+            int right = BinarySearch(SearchedIntervalTimeEnd-TimeSpan.FromMilliseconds(200), Subtitles);
             if (right== -1) return -1;
             if (left > right) return -1;
 
