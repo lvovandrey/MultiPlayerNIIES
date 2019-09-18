@@ -412,7 +412,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void OnResize()
         {
-            Rect r = new Rect(0, 0, vlc.ActualWidth + 1000, vlc.ActualHeight + 1000);
+            Rect r = new Rect(0, 0, vlc.ActualWidth, vlc.ActualHeight); // TODO: преобразовать в пиксели - winforms пиксели понимает....
             dxPlay.SetWindowPosition(r);
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
