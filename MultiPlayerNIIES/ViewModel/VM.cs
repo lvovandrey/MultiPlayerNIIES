@@ -1,6 +1,7 @@
 ﻿using Meta.Vlc.Wpf;
 using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Tools;
+using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View.Elements;
 using System;
 using System.Collections.Generic;
@@ -208,6 +209,10 @@ namespace MultiPlayerNIIES.ViewModel
 
         public double SyncDeltaPercentage { get { return 100 * (SyncDelta.TotalSeconds / MaxSyncDelta.TotalSeconds); } }
 
+        private int syncErrorsCount = 0;
+        public int SyncErrorsCount { get { return syncErrorsCount; } set { syncErrorsCount = value; } }
+        public int SyncErrorsMaxCount { get; private set; } = 20;
+
 
         private bool isOnAutoSyncroinizationTitles;
         public bool IsOnAutoSyncronizationTitles
@@ -413,10 +418,10 @@ namespace MultiPlayerNIIES.ViewModel
                         case 47:
                             {
                                 TimeSpan time = TimeSpan.Zero;
-                                int seconds = wParam.ToInt32();
-                                if (seconds >= 0)
+                                int milliseconds = wParam.ToInt32();
+                                if (milliseconds >= 0)
                                 {
-                                    time = TimeSpan.FromSeconds((double)seconds);
+                                    time = TimeSpan.FromMilliseconds((double)milliseconds);
                                     foreach (VideoPlayerVM v in videoPlayerVMs) v.PauseCommand.Execute(null);
                                     SyncLeadPlayer.CurTime = time;
                                 }
@@ -901,8 +906,8 @@ namespace MultiPlayerNIIES.ViewModel
                            ToolsTimer.Delay(() =>
                            {
                                foreach (var t in tasks) t.Start();
-                               if (IsOnAutoSyncronization && SyncDeltaPercentage > 30) SyncronizationShiftCommand.Execute(null);
-                               if (IsOnAutoSyncronizationTitles && SyncTitlesDeltaPercentage > 30) SyncronizationTitleCommand.Execute(null);
+                               if (IsOnAutoSyncronization && SyncDeltaPercentage > 60) SyncronizationShiftCommand.Execute(null);
+                               if (IsOnAutoSyncronizationTitles && SyncTitlesDeltaPercentage > 60) SyncronizationTitleCommand.Execute(null);
                            }, TimeSpan.FromSeconds(0.1));
                        }
                        else
@@ -927,6 +932,46 @@ namespace MultiPlayerNIIES.ViewModel
                    }));
             }
         }
+
+        private RelayCommand allPauseCommand;
+        public RelayCommand AllPauseCommand
+        {
+            get
+            {
+                return allPauseCommand ??
+                  (allPauseCommand = new RelayCommand(obj =>
+                  {
+                          List<Task> tasks = new List<Task>();
+                          foreach (VideoPlayerVM player in videoPlayerVMs)
+                              tasks.Add(new Task(() => { player.Body.VLC.pause(); })); //TODO:НАРУШЕН ПРИНЦИП ИНКАПСУЛЯЦИИ
+                          ToolsTimer.Delay(() =>
+                          {
+                              foreach (var t in tasks) t.Start();
+                          }, TimeSpan.FromSeconds(0.1));
+
+                  }));
+            }
+        }
+
+        private RelayCommand allPlayCommand;
+        public RelayCommand AllPlayCommand
+        {
+            get
+            {
+                return allPlayCommand ??
+                  (allPlayCommand = new RelayCommand(obj =>
+                  {
+                      List<Task> tasks = new List<Task>();
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                          tasks.Add(new Task(() => { player.PlayCommand.Execute(null); }));
+                      ToolsTimer.Delay(() =>
+                      {
+                          foreach (var t in tasks) t.Start();
+                      }, TimeSpan.FromSeconds(0.1));
+                  }));
+            }
+        }
+
 
         private RelayCommand stopCommand;
         public RelayCommand StopCommand
@@ -956,8 +1001,6 @@ namespace MultiPlayerNIIES.ViewModel
                       if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
                       OpenVideos(openFileDialog.FileNames);
-
-
                   }));
             }
         }
@@ -972,11 +1015,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return rateIncreaceCommand ??
                   (rateIncreaceCommand = new RelayCommand(obj =>
                   {
-                      foreach (VideoPlayerVM player in videoPlayerVMs)
-                      {
-                          player.SetRateCommand.Execute(Rate + RateShift);
-                      }
-                      OnPropertyChanged("Rate");
+                       SetRateCommand.Execute(Rate + RateShift);
                   }));
             }
         }
@@ -989,11 +1028,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return rateDecreaceCommand ??
                   (rateDecreaceCommand = new RelayCommand(obj =>
                   {
-                      foreach (VideoPlayerVM player in videoPlayerVMs)
-                      {
-                          player.SetRateCommand.Execute(Rate - RateShift);
-                      }
-                      OnPropertyChanged("Rate");
+                      SetRateCommand.Execute(Rate - RateShift);
                   }));
             }
         }
@@ -1008,11 +1043,26 @@ namespace MultiPlayerNIIES.ViewModel
                   (setRateCommand = new RelayCommand(obj =>
                   {
                       if (!(obj is double)) return;
+                      Dictionary<VideoPlayerVM, bool> WasPlay = new Dictionary<VideoPlayerVM, bool>();
                       foreach (VideoPlayerVM player in videoPlayerVMs)
                       {
-                          player.SetRateCommand.Execute((double)obj);
+                          WasPlay.Add(player, player.IsPlaying);
+                          player.Body.VLC.pause();// 
                       }
-                      OnPropertyChanged("Rate");
+                      ToolsTimer.Delay(() =>
+                      {
+                          foreach (VideoPlayerVM player in videoPlayerVMs)
+                              player.SetRateCommand.Execute((double)obj);
+                          ToolsTimer.Delay(() =>
+                          {
+                              foreach (var PlayingStates in WasPlay)
+                                  if (PlayingStates.Value) PlayingStates.Key.PlayCommand.Execute(null);
+
+                              OnPropertyChanged("Rate");
+                          }, TimeSpan.FromSeconds(0.1));
+                      }, TimeSpan.FromSeconds(0.1));
+
+                     
                   }));
             }
         }
@@ -1192,30 +1242,48 @@ namespace MultiPlayerNIIES.ViewModel
                   (syncronizationTitleCommand = new RelayCommand(obj =>
                   {
                       IsSyncInProcess = true;
-                      ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));
-                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
+                      ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));//TODO: Очень бы тут пригодилась многопоточность
 
+                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
                           v.PauseCommand.Execute(null);
                       }
 
-                      TimeSpan SyncTitlesTime = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
-
-                      Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
-                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      try
                       {
-                          //   if (!v.Equals(SyncLead))
+                          TimeSpan SyncTitlesTime = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
+
+                          Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
+                          foreach (VideoPlayerVM v in videoPlayerVMs)
                           {
-                              SyncDictionary.Add(v, v.GetSmartSyncTime(TimeSyncLead, SyncTitlesTime, SyncLeadPlayer));
+                              //   if (!v.Equals(SyncLead))
+                              {
+                                  SyncDictionary.Add(v, v.GetSmartSyncTime(TimeSyncLead, SyncTitlesTime, SyncLeadPlayer));
+                              }
                           }
+
+                          foreach (KeyValuePair<VideoPlayerVM, TimeSpan> v in SyncDictionary)
+                              v.Key.CurTime = v.Value;
+                          SyncErrorsCount = 0;
                       }
-
-
-                      foreach (KeyValuePair<VideoPlayerVM, TimeSpan> v in SyncDictionary)
+                      catch (SyncException e)
                       {
-                          v.Key.CurTime = v.Value;
+                          
+                          IsOnAutoSyncronizationTitles = false;
+                          IsSyncInProcess = false;
+                          if (SyncErrorsCount < SyncErrorsMaxCount)
+                          {
+                              StepForwardCommand.Execute(null);
+                              ToolsTimer.Delay(() => { SyncronizationTitleCommand.Execute(null); }, TimeSpan.FromSeconds(1));
+                              SyncErrorsCount++;
+                          }
+                          else
+                          {
+                              System.Windows.MessageBox.Show(e.Message);
+                              SyncErrorsCount = 0;
+                          }
                       }
                   }));
             }
@@ -1307,6 +1375,8 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
             }
         }
+
+
         #endregion
     }
 }

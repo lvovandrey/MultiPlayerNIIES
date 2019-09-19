@@ -218,7 +218,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void Start()
         {
             // If we aren't already playing (or shutting down)
-            if (m_State == GraphState.Stopped || m_State == GraphState.Paused)
+          //  if (m_State == GraphState.Stopped || m_State == GraphState.Paused)
             {
                 int hr = m_mediaCtrl.Run();
                 DsError.ThrowExceptionForHR(hr);
@@ -244,7 +244,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void Stop()
         {
             // Can only Stop when playing or paused
-            if (m_State == GraphState.Running || m_State == GraphState.Paused)
+          //  if (m_State == GraphState.Running || m_State == GraphState.Paused)
             {
                 int hr = m_mediaCtrl.Stop();
                 DsError.ThrowExceptionForHR(hr);

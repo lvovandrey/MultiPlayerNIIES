@@ -28,6 +28,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 long t = (long)(value.TotalSeconds * 10_000_000);
                 long d = (long)(Duration.TotalSeconds * 10_000_000);
                 int hr;
+                if (t < 0 || d < 0 || t > d) return;
                 hr = m_mediaSeeking.SetPositions(t, DirectShowLib.AMSeekingSeekingFlags.AbsolutePositioning, d, DirectShowLib.AMSeekingSeekingFlags.NoPositioning);
                 DsError.ThrowExceptionForHR(hr);
             }

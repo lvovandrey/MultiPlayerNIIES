@@ -24,7 +24,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
     public partial class DSPlayer : UserControl
     {
 
-        DxPlay dxPlay;
+        DxPlay dxPlay; //TODO: нарушена инкапсуляция
 
 
         public DSPlayer()
@@ -219,6 +219,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
         public void play()
         {
+            if(!dxPlay.IsPlaying)
             dxPlay.Start();
         }
         public void stop()

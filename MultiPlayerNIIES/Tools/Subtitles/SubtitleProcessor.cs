@@ -135,14 +135,17 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch (Exception e)
             {
-                MessageBox.Show("Ошибка синхронизации " + e.Message);
+                throw new SyncException("Ошибка синхронизации - " + e.Message);
             }
             return TS;
 
         }
     }
 
-    
+    public class SyncException : Exception
+    {
+        public SyncException(string message) : base(message) { }
+    }
 
 
 
