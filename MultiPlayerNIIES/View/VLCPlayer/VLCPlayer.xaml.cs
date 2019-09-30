@@ -195,13 +195,13 @@ namespace MultiPlayerNIIES.View.VLCPlayer
         public bool IsPlaying { get { return vlc.MediaPlayer.IsPlaying; } }
         bool WasPlaing;
 
-        private void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WasPlaing = vlc.MediaPlayer.IsPlaying;
             if (vlc.MediaPlayer.IsPlaying) { vlc.MediaPlayer.Pause(); timer.Stop(); }
         }
 
-        private void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        public void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (!vlc.MediaPlayer.IsPlaying)
             {
@@ -271,6 +271,49 @@ namespace MultiPlayerNIIES.View.VLCPlayer
 
 
         }
+
+        internal void Step(TimeSpan step)
+        {
+            Position = Position + (step.TotalSeconds * 1000 / Duration.TotalSeconds);
+        }
+
+        public double Rate
+        {
+            get { return (double)vlc.MediaPlayer.Rate; }
+            set { vlc.MediaPlayer.Rate = (float)value; }
+        }
+
+
+        internal void RateIncreace()
+        {
+            IncSpeedBtn_Click(null, null);
+        }
+        internal void RateDecreace()
+        {
+            DecSpeedBtn_Click(null, null);
+        }
+
+        public void OnClosing()
+        {
+               
+
+        }
+
+        public TimeSpan CurTimeEx
+        {
+            get
+            {
+                if (vlc.MediaPlayer == null) return TimeSpan.Zero;
+                return CurTime;
+            }
+        }
+
+        public void stop()
+        {
+            vlc.MediaPlayer.Stop();
+        }
+        public void OnResize() { }
+
     }
 }
 
