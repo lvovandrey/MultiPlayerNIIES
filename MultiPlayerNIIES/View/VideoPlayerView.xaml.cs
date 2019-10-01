@@ -269,7 +269,7 @@ namespace MultiPlayerNIIES.View
         void OnResizeMove(object sender, MouseEventArgs e)
         {
             UpdateResizePosition(e);
-            UpdateVLCInnerPosition();
+      //      UpdateVLCInnerPosition();
         }
 
         internal void Step(TimeSpan step)
@@ -405,6 +405,10 @@ namespace MultiPlayerNIIES.View
             VLC.vlc.Margin = newVLCMargin;
             VLC.vlc.Height = newVLCSize.Height;
             VLC.vlc.Width = newVLCSize.Width;
+
+            TextBlockDebug.Text = OldVLCSize + "Inner " + (int)VLC.vlc.Width + "х" + (int)VLC.vlc.Height + " Container" + (int)ActualWidth + "x" + (int)ActualHeight+
+                " Container" + (int)(ActualWidth- VLC.vlc.Width)+ "x" + (int)(ActualHeight - VLC.vlc.Height);
+
             VLC.OnResize();
         }
         #endregion

@@ -105,8 +105,15 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Panel.ZIndex="1"
-                Background="#7FA80000"
+                Background="White"
                 Text="..." />
+            <TextBlock
+                x:Name="TextBlockDebug"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                Background="#FF6AB958"
+                Text="debug" />
 
         </StackPanel>
         <StackPanel
@@ -142,9 +149,11 @@
         <dsplayer:DSPlayer
             x:Name="VLC"
             Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            PreviewMouseWheel="VLC_PreviewMouseWheel" />
+            Grid.Column="1"
+
+            PreviewMouseWheel="VLC_PreviewMouseWheel"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"/>
         <!--<vlc:VLCPlayer 
             x:Name="VLC"
             Grid.Row="2"

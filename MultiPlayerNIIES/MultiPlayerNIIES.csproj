@@ -143,6 +143,7 @@
     <Compile Include="Abstract\INPCBase.cs" />
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
+    <Compile Include="Tools\Graphics\GraphicsTools.cs" />
     <Compile Include="Tools\Serialization\ApplicationSettingsSerialized.cs" />
     <Compile Include="Tools\Serialization\StateSaver.cs" />
     <Compile Include="Tools\Subtitles\Subtitle.cs" />
