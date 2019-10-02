@@ -2,9 +2,11 @@
 using MultiPlayerNIIES.Tools.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MultiPlayerNIIES.View.DSPlayer
 {
@@ -172,26 +175,26 @@ namespace MultiPlayerNIIES.View.DSPlayer
             //TODO: Нет, братан, ну с этим надо реально что-то делать.....
             testDx.Start();
             //ToolsTimer.Delay(() =>
-           // {
-                bool RateOk = testDx.TryRate();
+            // {
+            bool RateOk = testDx.TryRate();
 
-              //  ToolsTimer.Delay(() =>
-             //   {
+            //  ToolsTimer.Delay(() =>
+            //   {
 
-                    dxPlay = new DxPlay(VideoPanel, Source.LocalPath,RateOk);
+            dxPlay = new DxPlay(VideoPanel, Source.LocalPath, RateOk);
 
-                    Duration = dxPlay.Duration;
-                    //vlc.Height = ActualHeight - 40;
-                    //vlc.Width = ActualWidth - 10;
+            Duration = dxPlay.Duration;
+            //vlc.Height = ActualHeight - 40;
+            //vlc.Width = ActualWidth - 10;
 
-                    dxPlay.Start();
-                    Volume = 20;
+            dxPlay.Start();
+            Volume = 20;
             testDx.Stop();
 
             dxPlay.Pause();
-          //  testDx.CloseInterfaces();
-          //     }, TimeSpan.FromSeconds(0.5));
-          // }, TimeSpan.FromSeconds(0.5));
+            //  testDx.CloseInterfaces();
+            //     }, TimeSpan.FromSeconds(0.5));
+            // }, TimeSpan.FromSeconds(0.5));
         }
 
 
@@ -221,8 +224,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
         public void play()
         {
-            if(!dxPlay.IsPlaying)
-            dxPlay.Start();
+            if (!dxPlay.IsPlaying)
+                dxPlay.Start();
         }
         public void stop()
         {
@@ -424,7 +427,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
         {
-            OnResize(); 
+            OnResize();
         }
 
 
@@ -435,10 +438,14 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             IntPtr IP = dxPlay.SnapShot();
             Bitmap bmp = dxPlay.IPToBmp(IP);
             BitmapSource imgsrc = GraphicsTools.ToBitmapSource(bmp);
             IMG.Source = imgsrc;
+            sw.Stop();
+            txt.Text = sw.ElapsedMilliseconds.ToString();
         }
     }
 }

@@ -28,5 +28,6 @@
         </WindowsFormsHost>
         <Button Content="Button" HorizontalAlignment="Left" Margin="603,209,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Image x:Name="IMG" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-New-64.png" HorizontalAlignment="Left" Height="209" Margin="65,179,0,0" VerticalAlignment="Top" Width="384"/>
+        <TextBlock x:Name="txt" Width="100" Height="20" Margin="603,166,97,264"/>
     </Grid>
 </UserControl>
