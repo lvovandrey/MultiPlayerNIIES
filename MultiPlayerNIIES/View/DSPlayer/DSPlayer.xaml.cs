@@ -423,5 +423,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             OnResize(); 
         }
+
+        private void VideoPanel_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("123");
+        }
+
+        private void VideoPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            MessageBox.Show("123");
+        }
     }
 }

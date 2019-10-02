@@ -577,6 +577,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
             Rectangle rc = hWin.ClientRectangle;
             hr = videoWindow.SetWindowPosition(0, 0, rc.Right, rc.Bottom);
             DsError.ThrowExceptionForHR(hr);
+
+            hr = videoWindow.put_MessageDrain(hWin.Handle);
+            DsError.ThrowExceptionForHR(hr);
         }
 
         public void SetWindowPosition(Rect rc)
