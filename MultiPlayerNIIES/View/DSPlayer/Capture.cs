@@ -293,12 +293,19 @@ namespace MultiPlayerNIIES.View.DSPlayer
             // to be with sampGrabber.SetMediaType()
             int iBufSize = m_videoWidth * m_videoHeight * 3;
 
+            Int64 ipi = ip.ToInt64(); //.ToInt32();
+
+            long diff2 = ((long)ipi + (long)iBufSize - (long)m_stride);
+
+            Int64 diff = (ipi + iBufSize - m_stride);
+            
+
             return new Bitmap(
                 m_videoWidth,
                 m_videoHeight,
                 -m_stride,
                 PixelFormat.Format24bppRgb,
-                (IntPtr)(ip.ToInt32() + iBufSize - m_stride)
+                (IntPtr)(diff)
                 );
         }
 
@@ -500,61 +507,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
 
-        private void SetupGraph3(Control hWin, string FileName)
-        {
-            int hr;
-
-            // Get the graphbuilder object
-            m_FilterGraph = new FilterGraph() as IFilterGraph2;
-            ICaptureGraphBuilder2 icgb2 = (ICaptureGraphBuilder2)new CaptureGraphBuilder2();
-            try
-            {
-                // Link the ICaptureGraphBuilder2 to the IFilterGraph2
-                hr = icgb2.SetFiltergraph(m_FilterGraph);
-                DsError.ThrowExceptionForHR(hr);
-
-                // Add the filters necessary to render the file.  This function will
-                // work with a number of different file types.
-                IBaseFilter sourceFilter = null;
-                hr = m_FilterGraph.AddSourceFilter(FileName, FileName, out sourceFilter);
-                DsError.ThrowExceptionForHR(hr);
-
-                IBaseFilter pAudioRenderer = (IBaseFilter)new DSoundRender();
-                hr = m_FilterGraph.AddFilter(pAudioRenderer, "Audio Renderer");
-                DsError.ThrowExceptionForHR(hr);
-
-                // Connect the pieces together, use the default renderer
-                hr = icgb2.RenderStream(null, null, sourceFilter, null, null);
-                DsError.ThrowExceptionForHR(hr);
-
-                hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
-                DsError.ThrowExceptionForHR(hr);
-
-                // Configure the Video Window
-                IVideoWindow videoWindow = m_FilterGraph as IVideoWindow;
-                ConfigureVideoWindow(videoWindow, hWin);
-
-                // Grab some other interfaces
-                m_mediaEvent = m_FilterGraph as IMediaEvent;
-                m_mediaCtrl = m_FilterGraph as IMediaControl;
-                m_mediaSeeking = m_FilterGraph as IMediaSeeking;
-                m_basicAudio = m_FilterGraph as IBasicAudio;
-            }
-            finally
-            {
-                if (icgb2 != null)
-                {
-                    Marshal.ReleaseComObject(icgb2);
-                    icgb2 = null;
-                }
-            }
-#if DEBUG
-            // Double check to make sure we aren't releasing something
-            // important.
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-#endif
-        }
+   
 
         // Configure the video window
         private void ConfigureVideoWindow(IVideoWindow videoWindow, Control hWin)

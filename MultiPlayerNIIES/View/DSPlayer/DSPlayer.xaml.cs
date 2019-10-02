@@ -1,6 +1,8 @@
 ﻿using MultiPlayerNIIES.Tools;
+using MultiPlayerNIIES.Tools.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -335,6 +337,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
         public bool IsDragDrop { get; private set; }
+        public object GraphicTools { get; private set; }
 
         Vector relativeMousePos;
         FrameworkElement draggedObject;
@@ -361,7 +364,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         void StartDrag(object sender, MouseButtonEventArgs e)
         {
             if ((Container == null) || !IsDragDrop) return;
-            relativeMousePos = e.GetPosition(draggedObject) - new Point();
+            relativeMousePos = e.GetPosition(draggedObject) - new System.Windows.Point();
             draggedObject.MouseMove += OnDragMove;
             draggedObject.LostMouseCapture += OnLostCapture;
             draggedObject.MouseUp += OnMouseUp;
@@ -424,14 +427,18 @@ namespace MultiPlayerNIIES.View.DSPlayer
             OnResize(); 
         }
 
-        private void VideoPanel_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("123");
-        }
 
         private void VideoPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             MessageBox.Show("123");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            IntPtr IP = dxPlay.SnapShot();
+            Bitmap bmp = dxPlay.IPToBmp(IP);
+            BitmapSource imgsrc = GraphicsTools.ToBitmapSource(bmp);
+            IMG.Source = imgsrc;
         }
     }
 }
