@@ -438,8 +438,16 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            ToolsTimer.Timer(ShowSnap, TimeSpan.FromSeconds(0.0005));
+        }
+
+
+        Stopwatch sw = new Stopwatch();
+
+
+        public void ShowSnap()
+        {
+            sw.Restart();
             IntPtr IP = dxPlay.SnapShot();
             Bitmap bmp = dxPlay.IPToBmp(IP);
             BitmapSource imgsrc = GraphicsTools.ToBitmapSource(bmp);

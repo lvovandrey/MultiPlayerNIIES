@@ -19,7 +19,7 @@
             <RowDefinition Height="2"/>
         </Grid.RowDefinitions>-->
 
-        <WindowsFormsHost ClipToBounds="True" x:Name="vlc"  Grid.Row="1" Grid.Column="1" Background="Yellow"  VerticalAlignment="Top" Height="100"  HorizontalAlignment="Stretch"  >
+        <WindowsFormsHost ClipToBounds="True" x:Name="vlc" Background="Yellow"  VerticalAlignment="Top" Height="195"  HorizontalAlignment="Stretch" Margin="10,9,383,0"  >
             <wf:Panel x:Name="VideoPanel" BackColor="Black" Dock="Fill" MouseDown="VideoPanel_MouseDown" />
         </WindowsFormsHost>
 
@@ -27,7 +27,7 @@
             <wf:Panel x:Name="VideoPanel2" BackColor="Red" Dock="Fill"/>
         </WindowsFormsHost>
         <Button Content="Button" HorizontalAlignment="Left" Margin="603,209,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Image x:Name="IMG" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-New-64.png" HorizontalAlignment="Left" Height="209" Margin="65,179,0,0" VerticalAlignment="Top" Width="384"/>
+        <Image x:Name="IMG" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Appointment-New-64.png" HorizontalAlignment="Left" Height="209" Margin="10,209,0,0" VerticalAlignment="Top" Width="407"/>
         <TextBlock x:Name="txt" Width="100" Height="20" Margin="603,166,97,264"/>
     </Grid>
 </UserControl>

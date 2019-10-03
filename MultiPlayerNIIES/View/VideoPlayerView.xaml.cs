@@ -414,7 +414,7 @@ namespace MultiPlayerNIIES.View
         #endregion
 
         #region Реализация Focused
-        public event VoidDelegate UpFocus;
+        public event Action UpFocus;
 
         private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
