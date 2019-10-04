@@ -178,8 +178,6 @@ namespace MultiPlayerNIIES.View.DSPlayer
             // {
             bool RateOk = testDx.TryRate();
 
-            //  ToolsTimer.Delay(() =>
-            //   {
 
             dxPlay = new DxPlay(VideoPanel, Source.LocalPath, RateOk);
 
@@ -192,7 +190,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
             testDx.Stop();
 
             dxPlay.Pause();
-            //  testDx.CloseInterfaces();
+
+            //try
+            //{
+            //    testDx.CloseInterfaces();
+            //}
+            //catch
+            //{
+
+            //}
             //     }, TimeSpan.FromSeconds(0.5));
             // }, TimeSpan.FromSeconds(0.5));
         }
@@ -436,24 +442,5 @@ namespace MultiPlayerNIIES.View.DSPlayer
             MessageBox.Show("123");
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ToolsTimer.Timer(ShowSnap, TimeSpan.FromSeconds(0.0005));
-        }
-
-
-        Stopwatch sw = new Stopwatch();
-
-
-        public void ShowSnap()
-        {
-            sw.Restart();
-            IntPtr IP = dxPlay.SnapShot();
-            Bitmap bmp = dxPlay.IPToBmp(IP);
-            BitmapSource imgsrc = GraphicsTools.ToBitmapSource(bmp);
-            IMG.Source = imgsrc;
-            sw.Stop();
-            txt.Text = sw.ElapsedMilliseconds.ToString();
-        }
     }
 }

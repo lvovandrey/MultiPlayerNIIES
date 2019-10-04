@@ -24,6 +24,7 @@ using System.Threading;
 
 using DirectShowLib;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 
 namespace MultiPlayerNIIES.View.DSPlayer
@@ -537,7 +538,14 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void SetWindowPosition(Rect rc)
         {
-            int hr = m_videoWindow.SetWindowPosition(0, 0, (int)rc.Right, (int)rc.Bottom);
+            var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+            var dpiYProperty = typeof(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic | BindingFlags.Static);
+
+            var dpiX = (int)dpiXProperty.GetValue(null, null);
+            var dpiY = (int)dpiYProperty.GetValue(null, null);
+
+
+            int hr = m_videoWindow.SetWindowPosition(0, 0, (int)(rc.Right*dpiX/96), (int)(rc.Bottom * dpiY / 96));
             DsError.ThrowExceptionForHR(hr);
         }
 

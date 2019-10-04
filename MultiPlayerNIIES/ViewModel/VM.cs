@@ -763,6 +763,10 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        /// <summary>
+        /// Закрывает указанный плеер
+        /// </summary>
+        /// <param name="videoPlayerVM"></param>
         internal void ClosePlayer(VideoPlayerVM videoPlayerVM)
         {
             videoPlayerVMs.Remove(videoPlayerVM);
