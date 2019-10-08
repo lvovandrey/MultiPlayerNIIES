@@ -369,7 +369,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_mediaEvent = m_FilterGraph as IMediaEvent;
                 m_mediaCtrl = m_FilterGraph as IMediaControl;
                 m_mediaSeeking = m_FilterGraph as IMediaSeeking;
-
+                
 
                 try
                 {
@@ -534,6 +534,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
             hr = videoWindow.put_MessageDrain(hWin.Handle);
             DsError.ThrowExceptionForHR(hr);
+
         }
 
         public void SetWindowPosition(Rect rc)
@@ -545,7 +546,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             var dpiY = (int)dpiYProperty.GetValue(null, null);
 
 
-            int hr = m_videoWindow.SetWindowPosition(0, 0, (int)(rc.Right*dpiX/96), (int)(rc.Bottom * dpiY / 96));
+            int hr = m_videoWindow.SetWindowPosition((int)(rc.Left * dpiX / 96), (int)(rc.Top * dpiX / 96), (int)(rc.Width*dpiX/96), (int)(rc.Height * dpiY / 96));
             DsError.ThrowExceptionForHR(hr);
         }
 

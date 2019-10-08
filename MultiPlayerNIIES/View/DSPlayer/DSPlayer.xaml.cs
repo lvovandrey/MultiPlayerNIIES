@@ -442,5 +442,69 @@ namespace MultiPlayerNIIES.View.DSPlayer
             MessageBox.Show("123");
         }
 
+
+        #region Реализация ЗУМА
+        private void VLC_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+
+
+            
+        }
+        private void VideoPanel_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            double k = e.Delta > 0 ? 0.1 : -0.1;
+        //    MessageBox.Show(k.ToString());
+            Zoom(k, VideoPanel, e.Location);
+        }
+
+        public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
+        {
+            double w = ZoomedElement.Width;
+            double h = ZoomedElement.Height;
+
+
+            double deltaX = ZoomKoef * w;
+            double deltaY = ZoomKoef * h;
+
+            double curX = ZoomCenterPositionInContainer.X;
+            double curY = ZoomCenterPositionInContainer.Y;
+
+            double ML = -ZoomedElement.Margin.Left;
+            double MT = -ZoomedElement.Margin.Top;
+
+            double wnew = w + deltaX;
+            double hnew = h + deltaY;
+
+            double a = ML + curX;
+            double b = w - ML - curX;
+            double tau = a / b;
+            double MLnew = -(tau / (1 + tau)) * wnew + curX;
+
+            double c = MT + curY;
+            double d = h - MT - curY;
+            double kappa = c / d;
+            double MTnew = -(kappa / (1 + kappa)) * hnew + curY;
+
+
+            if (MLnew > 0) MLnew = 0;
+            if (wnew < MainGrid.ActualWidth) wnew = MainGrid.ActualWidth;
+            if (MTnew > 0) MTnew = 0;
+            if (hnew < MainGrid.ActualHeight) hnew = MainGrid.ActualHeight;
+
+            ZoomedElement.Dock = System.Windows.Forms.DockStyle.None;
+
+            ZoomedElement.Width = (int)wnew;
+            ZoomedElement.Height = (int)hnew;
+            ZoomedElement.Margin = new System.Windows.Forms.Padding((int)MLnew, (int)MTnew, ZoomedElement.Margin.Right, ZoomedElement.Margin.Bottom);
+
+            Rect r = new Rect((int)MLnew, (int)MTnew, ZoomedElement.Width, ZoomedElement.Height); // TODO: преобразовать в пиксели - winforms пиксели понимает....
+            dxPlay.SetWindowPosition(r);
+
+
+        }
+
+        #endregion
+
+
     }
 }
