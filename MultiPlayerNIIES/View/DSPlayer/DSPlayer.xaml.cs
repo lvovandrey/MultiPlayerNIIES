@@ -49,7 +49,6 @@ namespace MultiPlayerNIIES.View.DSPlayer
             this.OnVolumeChanged += Player_OnVolumeChanged;
 
 
-            VideoMMM.VideoPanel.MouseDown += VideoPanel1_MouseDown;
 
             timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -438,89 +437,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
             OnResize();
         }
 
-        private void VideoPanel1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            //VideoMMM.VideoPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top;
-            //VideoMMM.VideoPanel1.Location = new System.Drawing.Point(VideoMMM.VideoPanel1.Location.X- 20,0);
-            //VideoMMM.VideoPanel1.Width += 40;
-            //OnResize();
-            //Debug.WriteLine(VideoMMM.VideoPanel1.Location.ToString() + "  " + VideoMMM.VideoPanel1.Size.ToString() + "  " + e.Location.ToString());
-           
-        }
-        private void VideoPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-
-        }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Внимание тут Location - разный - если от от видео приходит - он тот что нам нужен, а если от синей подложки - то  нет
 
         #region Реализация ЗУМА
-        private void VLC_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
 
-
-            
-        }
         private void VideoPanel_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            //       double k = e.Delta > 0 ? 0.1 : -0.1;
-            //    MessageBox.Show(k.ToString());
-            //    Zoom(k, VideoMMM.VideoPanel, e.Location);
             OnResize();
         }
 
-        public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
-        {
-            Debug.WriteLine(" Loc =" + ZoomedElement.Location.ToString() + " Size =" + ZoomedElement.Size.ToString() + " Cursor=" + ZoomCenterPositionInContainer.ToString());
-
-            double w = (double)ZoomedElement.Width;
-            double h = (double)ZoomedElement.Height;
-
-
-            double deltaX = ZoomKoef * w;
-            double deltaY = ZoomKoef * h;
-
-            double curX = (double)ZoomCenterPositionInContainer.X;
-            double curY = (double)ZoomCenterPositionInContainer.Y;
-
-            double ML = -(double)ZoomedElement.Location.X;//-ZoomedElement.Margin.Left;
-            double MT = -(double)ZoomedElement.Location.Y;//-ZoomedElement.Margin.Top;
-
-            double wnew = (double)w + (double)deltaX;
-            double hnew = (double)h + (double)deltaY;
-
-            double a = curX;
-            double b = w - curX;
-            double tau = a / b;
-            double MLnew = -(tau / (1 + tau)) * deltaX - ML;
-
-            double c = curY;
-            double d = h - curY;
-            double kappa = c / d;
-            double MTnew = -(kappa / (1 + kappa)) * deltaY - MT;
-
-
-            if (MLnew > 0) MLnew = 0;
-            if (wnew < VideoMMM.Width) wnew = VideoMMM.Width;
-            if (MTnew > 0) MTnew = 0;
-            if (hnew < VideoMMM.Height) hnew = VideoMMM.Height;
-
-            //   ZoomedElement.Dock = System.Windows.Forms.DockStyle.None;
-
-
-            Debug.WriteLine(ZoomedElement.Location.ToString() + "  " + ZoomedElement.Size.ToString());
-
-            ZoomedElement.Width = (int)wnew;
-            ZoomedElement.Height = (int)hnew;
-            //ZoomedElement.Margin = new System.Windows.Forms.Padding((int)MLnew, (int)MTnew, ZoomedElement.Margin.Right, ZoomedElement.Margin.Bottom);
-            ZoomedElement.Location = new System.Drawing.Point( (int)MLnew, (int)MTnew);
-
-            OnResize();
-
-            //   Rect r = new Rect((int)MLnew, (int)MTnew, ZoomedElement.Width, ZoomedElement.Height); // TODO: преобразовать в пиксели - winforms пиксели понимает....
-            //  dxPlay.SetWindowPosition(r);
-            Debug.WriteLine(ZoomedElement.Location.ToString() + "  " + ZoomedElement.Size.ToString());
-
-        }
+    
 
         #endregion
 

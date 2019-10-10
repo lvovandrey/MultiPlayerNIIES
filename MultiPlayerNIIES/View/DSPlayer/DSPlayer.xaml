@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>-->
 
         <WindowsFormsHost ClipToBounds="True" x:Name="vlc" Background="#FF5A5A5A"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"   >
-            <mywf:VideoContainer1 x:Name="VideoMMM" Dock="Fill" MouseDown="VideoPanel_MouseDown" MouseWheel="VideoPanel_MouseWheel"  />
+            <mywf:VideoContainer1 x:Name="VideoMMM" Dock="Fill"  MouseWheel="VideoPanel_MouseWheel"  />
             <!--<wf:PictureBox x:Name="VideoPanel" BackColor="Green"  Dock="Left" MouseDown="VideoPanel_MouseDown" Height="100" Width="100" MouseWheel="VideoPanel_MouseWheel" Anchor="None"  />-->
         </WindowsFormsHost>
 
