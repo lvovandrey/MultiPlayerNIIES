@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows;
+using System.Threading;
 
 namespace WindowsFormsVideoControl
 {
@@ -17,8 +19,10 @@ namespace WindowsFormsVideoControl
         {
             InitializeComponent();
             this.VideoPanel.MouseWheel += VideoPanel_MouseWheel;
+            DragDropSwitchOn(this, VideoPanel);
         }
 
+        #region Реализация Zoom
         private void VideoPanel_MouseWheel(object sender, MouseEventArgs e)
         {
             double k = e.Delta > 0 ? 0.1 : -0.1;
@@ -29,8 +33,6 @@ namespace WindowsFormsVideoControl
         public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
         {
             
-            Debug.WriteLine(" Loc =" + ZoomedElement.Location.ToString() + " Size =" + ZoomedElement.Size.ToString() + " Cursor=" + ZoomCenterPositionInContainer.ToString());
-
             double w = (double)ZoomedElement.Width;
             double h = (double)ZoomedElement.Height;
 
@@ -41,8 +43,8 @@ namespace WindowsFormsVideoControl
             double curX = (double)ZoomCenterPositionInContainer.X;
             double curY = (double)ZoomCenterPositionInContainer.Y;
 
-            double ML = -(double)ZoomedElement.Location.X;//-ZoomedElement.Margin.Left;
-            double MT = -(double)ZoomedElement.Location.Y;//-ZoomedElement.Margin.Top;
+            double ML = -(double)ZoomedElement.Location.X;
+            double MT = -(double)ZoomedElement.Location.Y;
 
             double wnew = (double)w + (double)deltaX;
             double hnew = (double)h + (double)deltaY;
@@ -63,23 +65,100 @@ namespace WindowsFormsVideoControl
             if (MTnew > 0) MTnew = 0;
             if (hnew < this.Height) hnew = this.Height;
 
-            //   ZoomedElement.Dock = System.Windows.Forms.DockStyle.None;
-
-
-            Debug.WriteLine(ZoomedElement.Location.ToString() + "  " + ZoomedElement.Size.ToString());
-
             ZoomedElement.Width = (int)wnew;
             ZoomedElement.Height = (int)hnew;
-            //ZoomedElement.Margin = new System.Windows.Forms.Padding((int)MLnew, (int)MTnew, ZoomedElement.Margin.Right, ZoomedElement.Margin.Bottom);
             ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
 
-      
 
-            //   Rect r = new Rect((int)MLnew, (int)MTnew, ZoomedElement.Width, ZoomedElement.Height); // TODO: преобразовать в пиксели - winforms пиксели понимает....
-            //  dxPlay.SetWindowPosition(r);
-            Debug.WriteLine(ZoomedElement.Location.ToString() + "  " + ZoomedElement.Size.ToString());
 
         }
+
+        #endregion
+
+        #region Реализация Drag'n'Drop
+
+        public Control Container;
+
+
+        public bool IsDragDrop { get; private set; }
+
+        System.Drawing.Point relativeMousePos;
+        Control draggedObject;
+
+        public void DragDropSwitchOn(Control container, Control DraggedElement)
+        {
+            if (IsDragDrop) return;
+            Container = container;
+            IsDragDrop = true;
+            draggedObject = DraggedElement;
+            draggedObject.MouseDown += StartDrag;
+        }
+
+
+
+        public void DragDropSwitchOff()
+        {
+            if (!IsDragDrop) return;
+            Container = null;
+            IsDragDrop = false;
+            draggedObject.MouseDown -= StartDrag;
+            draggedObject = null;
+        }
+
+        void StartDrag(object sender, MouseEventArgs e)
+        {
+            if ((Container == null) || !IsDragDrop) return;
+            relativeMousePos = e.Location;
+            draggedObject.MouseMove += OnDragMove;
+            draggedObject.Leave += OnLostCapture;
+            draggedObject.MouseUp += OnMouseUp;
+            Debug.WriteLine("StartDrag");
+        }
+
+        void OnDragMove(object sender, MouseEventArgs e)
+        {
+           UpdatePosition(e);          
+        }
+        int i;
+        bool flag;
+        void UpdatePosition(MouseEventArgs e)
+        {
+            var posFromForm = Cursor.Position;
+            var point = this.PointToClient(posFromForm);
+            var newPos = new System.Drawing.Point(point.X - relativeMousePos.X, point.Y - relativeMousePos.Y);
+            draggedObject.Location = new System.Drawing.Point(newPos.X, newPos.Y);
+
+            Debug.WriteLine("UpdatePosition"+ i++ + "  Loc= " + draggedObject.Location.ToString() + "   point" + point.ToString() + "   relativeMousePos" + relativeMousePos.ToString());
+        }
+
+        
+
+        void OnMouseUp(object sender, MouseEventArgs e)
+        {
+            FinishDrag(sender, e);
+
+        }
+
+        void OnLostCapture(object sender, EventArgs e)
+        {            
+            FinishDrag(sender, null);
+        }
+
+        void FinishDrag(object sender, MouseEventArgs e)
+        {
+            
+            draggedObject.MouseMove -= OnDragMove;
+            draggedObject.Leave -= OnLostCapture;
+            draggedObject.MouseUp -= OnMouseUp;
+            
+        }
+
+        internal void OnResize()
+        {
+            //Тут ничего нет и не должно быть
+        }
+
+        #endregion
 
 
 
