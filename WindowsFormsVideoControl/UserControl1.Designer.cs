@@ -41,9 +41,9 @@
             this.VideoPanel.Margin = new System.Windows.Forms.Padding(0);
             this.VideoPanel.Name = "VideoPanel";
             this.VideoPanel.Size = new System.Drawing.Size(400, 300);
+            this.VideoPanel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.VideoPanel.TabIndex = 0;
             this.VideoPanel.TabStop = false;
-            this.VideoPanel.Click += new System.EventHandler(this.VideoPanel_Click);
             // 
             // VideoContainer1
             // 
@@ -53,7 +53,6 @@
             this.Controls.Add(this.VideoPanel);
             this.Name = "VideoContainer1";
             this.Size = new System.Drawing.Size(405, 305);
-            this.Load += new System.EventHandler(this.VideoContainer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.VideoPanel)).EndInit();
             this.ResumeLayout(false);
 

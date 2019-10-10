@@ -75,6 +75,14 @@
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.ButtonLoad_Click);
             // 
+            // VideoContainer1
+            // 
+            this.VideoContainer1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.VideoContainer1.Location = new System.Drawing.Point(0, 0);
+            this.VideoContainer1.Name = "VideoContainer1";
+            this.VideoContainer1.Size = new System.Drawing.Size(405, 305);
+            this.VideoContainer1.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
