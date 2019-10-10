@@ -462,9 +462,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
         private void VideoPanel_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            double k = e.Delta > 0 ? 0.1 : -0.1;
-        //    MessageBox.Show(k.ToString());
-            Zoom(k, VideoMMM.VideoPanel, e.Location);
+            //       double k = e.Delta > 0 ? 0.1 : -0.1;
+            //    MessageBox.Show(k.ToString());
+            //    Zoom(k, VideoMMM.VideoPanel, e.Location);
+            OnResize();
         }
 
         public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
