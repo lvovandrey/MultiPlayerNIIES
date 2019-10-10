@@ -520,7 +520,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             DsError.ThrowExceptionForHR(hr);
 
             // Set the window style
-            hr = videoWindow.put_WindowStyle((DirectShowLib.WindowStyle.Child | DirectShowLib.WindowStyle.ClipChildren | DirectShowLib.WindowStyle.ClipSiblings));
+            hr = videoWindow.put_WindowStyle((DirectShowLib.WindowStyle.Child |  DirectShowLib.WindowStyle.ClipSiblings));
             DsError.ThrowExceptionForHR(hr);
 
             // Make the window visible
@@ -550,6 +550,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
             DsError.ThrowExceptionForHR(hr);
         }
 
+        public void FillWindowPosition(Control hWin)
+        {
+            Rectangle rc = hWin.ClientRectangle;
+            int hr = m_videoWindow.SetWindowPosition(0, 0, rc.Right, rc.Bottom);
+            DsError.ThrowExceptionForHR(hr);
+        }
+
+
+        //    public void 
 
 
         // Set the options on the sample grabber

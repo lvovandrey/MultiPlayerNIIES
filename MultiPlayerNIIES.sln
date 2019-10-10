@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfPostMessage", "WpfPostMe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{A95C3D4E-A7F8-428F-AB92-DB78D8F7C988}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsVideoControl", "WindowsFormsVideoControl\WindowsFormsVideoControl.csproj", "{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{A95C3D4E-A7F8-428F-AB92-DB78D8F7C988}.Release|x64.Build.0 = Release|Any CPU
 		{A95C3D4E-A7F8-428F-AB92-DB78D8F7C988}.Release|x86.ActiveCfg = Release|Any CPU
 		{A95C3D4E-A7F8-428F-AB92-DB78D8F7C988}.Release|x86.Build.0 = Release|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Debug|x64.Build.0 = Debug|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x64.Build.0 = Release|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

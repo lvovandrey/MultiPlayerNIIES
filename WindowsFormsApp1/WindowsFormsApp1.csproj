@@ -86,5 +86,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsFormsVideoControl\WindowsFormsVideoControl.csproj">
+      <Project>{f2acb569-e6d0-4752-ad17-8d87d63c7ffb}</Project>
+      <Name>WindowsFormsVideoControl</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

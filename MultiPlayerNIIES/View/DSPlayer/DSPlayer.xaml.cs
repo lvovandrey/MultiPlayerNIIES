@@ -49,12 +49,15 @@ namespace MultiPlayerNIIES.View.DSPlayer
             this.OnVolumeChanged += Player_OnVolumeChanged;
 
 
+            VideoMMM.VideoPanel1.MouseDown += VideoPanel1_MouseDown;
+
             timer = new System.Windows.Threading.DispatcherTimer();
 
             timer.Tick += new EventHandler(timerTick);
             timer.Interval = TimeSpan.FromSeconds(0.05);
             timer.Start();
         }
+
 
 
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position",
@@ -179,7 +182,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             bool RateOk = testDx.TryRate();
 
 
-            dxPlay = new DxPlay(VideoPanel, Source.LocalPath, RateOk);
+            dxPlay = new DxPlay(VideoMMM.VideoPanel1, Source.LocalPath, RateOk);
 
             Duration = dxPlay.Duration;
             //vlc.Height = ActualHeight - 40;
@@ -428,18 +431,24 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void OnResize()
         {
-            Rect r = new Rect(0, 0, vlc.ActualWidth, vlc.ActualHeight); // TODO: преобразовать в пиксели - winforms пиксели понимает....
-            dxPlay.SetWindowPosition(r);
+            dxPlay.FillWindowPosition(VideoMMM.VideoPanel1);
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
         {
             OnResize();
         }
 
-
+        private void VideoPanel1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            VideoPanel_MouseDown(sender, e);
+        }
         private void VideoPanel_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            MessageBox.Show("123");
+            VideoMMM.VideoPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top;
+            VideoMMM.VideoPanel1.Location = new System.Drawing.Point(VideoMMM.VideoPanel1.Location.X- 20,0);
+            VideoMMM.VideoPanel1.Width += 40;
+            OnResize();
+            Debug.WriteLine(VideoMMM.VideoPanel1.Location.ToString() + "  " + VideoMMM.VideoPanel1.Size.ToString());
         }
 
 
@@ -454,7 +463,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             double k = e.Delta > 0 ? 0.1 : -0.1;
         //    MessageBox.Show(k.ToString());
-            Zoom(k, VideoPanel, e.Location);
+            Zoom(k, VideoMMM.VideoPanel1, e.Location);
         }
 
         public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
@@ -469,8 +478,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
             double curX = ZoomCenterPositionInContainer.X;
             double curY = ZoomCenterPositionInContainer.Y;
 
-            double ML = -ZoomedElement.Margin.Left;
-            double MT = -ZoomedElement.Margin.Top;
+            double ML = ZoomedElement.Location.X;//-ZoomedElement.Margin.Left;
+            double MT = ZoomedElement.Location.Y;//-ZoomedElement.Margin.Top;
 
             double wnew = w + deltaX;
             double hnew = h + deltaY;
@@ -491,15 +500,21 @@ namespace MultiPlayerNIIES.View.DSPlayer
             if (MTnew > 0) MTnew = 0;
             if (hnew < MainGrid.ActualHeight) hnew = MainGrid.ActualHeight;
 
-            ZoomedElement.Dock = System.Windows.Forms.DockStyle.None;
+            //   ZoomedElement.Dock = System.Windows.Forms.DockStyle.None;
+
+
+            Debug.WriteLine(ZoomedElement.Location.ToString() + "  " + ZoomedElement.Size.ToString());
 
             ZoomedElement.Width = (int)wnew;
             ZoomedElement.Height = (int)hnew;
-            ZoomedElement.Margin = new System.Windows.Forms.Padding((int)MLnew, (int)MTnew, ZoomedElement.Margin.Right, ZoomedElement.Margin.Bottom);
+            //ZoomedElement.Margin = new System.Windows.Forms.Padding((int)MLnew, (int)MTnew, ZoomedElement.Margin.Right, ZoomedElement.Margin.Bottom);
+            ZoomedElement.Location = new System.Drawing.Point( (int)MLnew, (int)MTnew);
 
-            Rect r = new Rect((int)MLnew, (int)MTnew, ZoomedElement.Width, ZoomedElement.Height); // TODO: преобразовать в пиксели - winforms пиксели понимает....
-            dxPlay.SetWindowPosition(r);
 
+
+         //   Rect r = new Rect((int)MLnew, (int)MTnew, ZoomedElement.Width, ZoomedElement.Height); // TODO: преобразовать в пиксели - winforms пиксели понимает....
+          //  dxPlay.SetWindowPosition(r);
+            Debug.WriteLine(ZoomedElement.Location.ToString() + "  " + ZoomedElement.Size.ToString());
 
         }
 

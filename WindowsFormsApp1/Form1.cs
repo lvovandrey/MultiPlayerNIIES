@@ -21,12 +21,12 @@ namespace WindowsFormsApp1
         private void ButtonLoad_Click(object sender, EventArgs e)
         {
             dxPlays = new DxPlay[6];
-            dxPlays[0]  = new DxPlay(panel1, @"C:\tmp\test1.avi", false);
-            dxPlays[1] = new DxPlay(panel2, @"C:\tmp\test1.avi", false);
-            dxPlays[2] = new DxPlay(panel3, @"C:\tmp\test1.avi", false);
-            dxPlays[3] = new DxPlay(panel4, @"C:\tmp\test1.avi", false);
-            dxPlays[4] = new DxPlay(panel5, @"C:\tmp\test4.avi", false);
-            dxPlays[5] = new DxPlay(panel6, @"C:\tmp\test6.avi", false);
+            //dxPlays[0]  = new DxPlay(panel1, @"C:\tmp\test1.avi", false);
+            //dxPlays[1] = new DxPlay(panel2, @"C:\tmp\test1.avi", false);
+            //dxPlays[2] = new DxPlay(panel3, @"C:\tmp\test1.avi", false);
+            //dxPlays[3] = new DxPlay(panel4, @"C:\tmp\test1.avi", false);
+            //dxPlays[4] = new DxPlay(panel5, @"C:\tmp\test4.avi", false);
+            //dxPlays[5] = new DxPlay(panel6, @"C:\tmp\test6.avi", false);
         }
 
         private void ButtonPlay_Click(object sender, EventArgs e)
@@ -38,13 +38,24 @@ namespace WindowsFormsApp1
         private void ButtonStop_Click(object sender, EventArgs e)
         {
             foreach (DxPlay p in dxPlays)
+
+
+
+
+                        
+
+
                 p.Pause();
         }
 
         private void ButtonX2_Click(object sender, EventArgs e)
         {
-            foreach (DxPlay p in dxPlays)
-                p.Rate*=2;
+            //foreach (DxPlay p in dxPlays)
+            //p.Rate*=2;
+
+            VideoContainer1.Size = new Size(200, 200);
+            VideoContainer1.Location = new Point(0, 0);
+            VideoContainer1.Show();
         }
     }
 }

@@ -31,13 +31,8 @@
             this.buttonPlay = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonX2 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.buttonLoad = new System.Windows.Forms.Button();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
+            this.VideoContainer1 = new WindowsFormsVideoControl.VideoContainer1();
             this.SuspendLayout();
             // 
             // buttonPlay
@@ -70,34 +65,6 @@
             this.buttonX2.UseVisualStyleBackColor = true;
             this.buttonX2.Click += new System.EventHandler(this.ButtonX2_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(13, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(609, 212);
-            this.panel1.TabIndex = 3;
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(628, 5);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(579, 212);
-            this.panel2.TabIndex = 4;
-            // 
-            // panel3
-            // 
-            this.panel3.Location = new System.Drawing.Point(13, 223);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(609, 221);
-            this.panel3.TabIndex = 5;
-            // 
-            // panel4
-            // 
-            this.panel4.Location = new System.Drawing.Point(628, 223);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(579, 221);
-            this.panel4.TabIndex = 6;
-            // 
             // buttonLoad
             // 
             this.buttonLoad.Location = new System.Drawing.Point(1131, 616);
@@ -108,35 +75,16 @@
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.ButtonLoad_Click);
             // 
-            // panel5
-            // 
-            this.panel5.Location = new System.Drawing.Point(13, 450);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(609, 160);
-            this.panel5.TabIndex = 8;
-            // 
-            // panel6
-            // 
-            this.panel6.Location = new System.Drawing.Point(628, 450);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(579, 160);
-            this.panel6.TabIndex = 9;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1219, 651);
-            this.Controls.Add(this.panel6);
-            this.Controls.Add(this.panel5);
             this.Controls.Add(this.buttonLoad);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonX2);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonPlay);
+            this.Controls.Add(this.VideoContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -148,13 +96,8 @@
         private System.Windows.Forms.Button buttonPlay;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Button buttonX2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
+        private WindowsFormsVideoControl.VideoContainer1 VideoContainer1;
         private System.Windows.Forms.Button buttonLoad;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel6;
     }
 }
 
