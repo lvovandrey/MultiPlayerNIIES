@@ -18,18 +18,25 @@ namespace WindowsFormsVideoControl
         public VideoContainer1()
         {
             InitializeComponent();
-            this.VideoPanel.MouseWheel += VideoPanel_MouseWheel;
-            DragDropSwitchOn(this, VideoPanel);
+
+            DragDropSwitchOn(this, SelectablePictureBox1);
         }
+
+        private void VideoContainer1_Load(object sender, EventArgs e)
+        {
+            this.SelectablePictureBox1.Width = this.Width;
+            this.SelectablePictureBox1.Height = this.Height;
+            this.SelectablePictureBox1.MouseWheel += MouseWheelHandler;
+        }
+
+        private void MouseWheelHandler(object sender, MouseEventArgs e)
+        {
+            double k = e.Delta >= 0 ? 0.1 : -0.1;
+            Zoom(k, this.SelectablePictureBox1, e.Location);
+        }
+
 
         #region Реализация Zoom
-        private void VideoPanel_MouseWheel(object sender, MouseEventArgs e)
-        {
-            double k = e.Delta > 0 ? 0.1 : -0.1;
-            Zoom(k, this.VideoPanel, e.Location);
-        }
-
-
         public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
         {
             
@@ -158,8 +165,9 @@ namespace WindowsFormsVideoControl
             //Тут ничего нет и не должно быть
         }
 
-        #endregion
 
+
+        #endregion
 
 
     }

@@ -29,37 +29,39 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VideoContainer1));
-            this.VideoPanel = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.VideoPanel)).BeginInit();
+            this.SelectablePictureBox1 = new WindowsFormsVideoControl.SelectablePictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.SelectablePictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // VideoPanel
+            // SelectablePictureBox1
             // 
-            this.VideoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.VideoPanel.Image = ((System.Drawing.Image)(resources.GetObject("VideoPanel.Image")));
-            this.VideoPanel.Location = new System.Drawing.Point(0, 0);
-            this.VideoPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.VideoPanel.Name = "VideoPanel";
-            this.VideoPanel.Size = new System.Drawing.Size(400, 300);
-            this.VideoPanel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.VideoPanel.TabIndex = 0;
-            this.VideoPanel.TabStop = false;
+            this.SelectablePictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.SelectablePictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("SelectablePictureBox1.Image")));
+            this.SelectablePictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.SelectablePictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.SelectablePictureBox1.Name = "SelectablePictureBox1";
+            this.SelectablePictureBox1.Size = new System.Drawing.Size(400, 300);
+            this.SelectablePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.SelectablePictureBox1.TabIndex = 0;
             // 
             // VideoContainer1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Controls.Add(this.VideoPanel);
+            this.Controls.Add(this.SelectablePictureBox1);
             this.Name = "VideoContainer1";
-            this.Size = new System.Drawing.Size(405, 305);
-            ((System.ComponentModel.ISupportInitialize)(this.VideoPanel)).EndInit();
+            this.Size = new System.Drawing.Size(888, 549);
+            this.Load += new System.EventHandler(this.VideoContainer1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.SelectablePictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        public System.Windows.Forms.PictureBox VideoPanel;
+       // public System.Windows.Forms.PictureBox VideoPanel;
+
+        public SelectablePictureBox SelectablePictureBox1;
     }
 }
