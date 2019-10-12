@@ -317,23 +317,7 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        public double CurPosition
-        {
-            get
-            {
-                if (SyncLeadPlayer != null)
-                    return SyncLeadPlayer.CurTime;
-                else return TimeSpan.Zero;
-            }
-            set
-            {
-                if (SyncLeadPlayer != null)
-                {
-                    SyncLeadPlayer.CurTime = value;
-                    OnPropertyChanged("CurTime");
-                }
-            }
-        }
+       
 
 
         public double Rate
