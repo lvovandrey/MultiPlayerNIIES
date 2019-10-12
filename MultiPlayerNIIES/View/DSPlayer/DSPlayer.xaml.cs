@@ -30,7 +30,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
     {
 
         DxPlay dxPlay; //TODO: нарушена инкапсуляция
-
+        DxPlay testDx;
 
         public DSPlayer()
         {
@@ -173,7 +173,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             //    dxPlay = null;
             //}
 
-            DxPlay testDx = new DxPlay(VideoPanel2, Source.LocalPath, true); // тестируем - открываем проверяем.... жуткий просто ужасный костыль
+            testDx = new DxPlay(VideoPanel2, Source.LocalPath, true); // тестируем - открываем проверяем.... жуткий просто ужасный костыль
             //TODO: Нет, братан, ну с этим надо реально что-то делать.....
             testDx.Start();
             //ToolsTimer.Delay(() =>
@@ -190,19 +190,12 @@ namespace MultiPlayerNIIES.View.DSPlayer
             dxPlay.Start();
             Volume = 20;
             testDx.Stop();
-
+            
             dxPlay.Pause();
 
 
             OnResize();
-            //try
-            //{
-            //    testDx.CloseInterfaces();
-            //}
-            //catch
-            //{
 
-            //}
             //     }, TimeSpan.FromSeconds(0.5));
             // }, TimeSpan.FromSeconds(0.5));
         }
@@ -339,8 +332,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void OnClosing()
         {
+            
             dxPlay.Dispose();
-
+            testDx.Dispose();
         }
 
 

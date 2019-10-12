@@ -317,6 +317,24 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
+        public double CurPosition
+        {
+            get
+            {
+                if (SyncLeadPlayer != null)
+                    return SyncLeadPlayer.CurTime;
+                else return TimeSpan.Zero;
+            }
+            set
+            {
+                if (SyncLeadPlayer != null)
+                {
+                    SyncLeadPlayer.CurTime = value;
+                    OnPropertyChanged("CurTime");
+                }
+            }
+        }
+
 
         public double Rate
         {
@@ -1311,12 +1329,21 @@ namespace MultiPlayerNIIES.ViewModel
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
                       WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
+                      if (videoPlayerVMs.Count < 2) return;
+
+
 
                       Dictionary<VideoPlayerVM, bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
                           PlayersStates.Add(v, v.IsPlaying);
                       }
+
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      {
+                          v.PauseCommand.Execute(null);
+                      }
+
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                           if (!v.IsSyncronizeLeader) v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
                           else v.CurTime = TimeSyncLead;
@@ -1381,7 +1408,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
-                      ApiManager.ReleaseAll();
+                     ApiManager.ReleaseAll(); 
 
                   }));
             }
