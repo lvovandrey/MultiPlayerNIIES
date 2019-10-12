@@ -181,7 +181,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             bool RateOk = testDx.TryRate();
 
 
-            dxPlay = new DxPlay(VideoMMM.VideoPanel, Source.LocalPath, RateOk);
+            dxPlay = new DxPlay(VideoMMM.SelectablePictureBox1, Source.LocalPath, RateOk);
 
             Duration = dxPlay.Duration;
             //vlc.Height = ActualHeight - 40;
@@ -430,7 +430,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void OnResize()
         {
-            dxPlay.FillWindowPosition(VideoMMM.VideoPanel);
+            dxPlay.FillWindowPosition(VideoMMM.SelectablePictureBox1);
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
         {
