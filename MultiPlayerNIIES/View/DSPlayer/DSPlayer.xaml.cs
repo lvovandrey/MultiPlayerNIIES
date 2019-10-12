@@ -193,6 +193,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
             dxPlay.Pause();
 
+
+            OnResize();
             //try
             //{
             //    testDx.CloseInterfaces();

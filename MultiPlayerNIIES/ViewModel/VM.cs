@@ -276,8 +276,15 @@ namespace MultiPlayerNIIES.ViewModel
             get
             {
                 VideoPlayerVM SyncLead = null;
+                var SyncLeads = videoPlayerVMs.Where(v => v.IsSyncronizeLeader == true);
                 if (videoPlayerVMs.Count > 0)
-                    SyncLead = videoPlayerVMs.Where(v => v.IsSyncronizeLeader == true).First();
+                    if (SyncLeads.Count() > 0)
+                        SyncLead = SyncLeads.First();
+                    else
+                    {
+                        SyncLeadPlayer = videoPlayerVMs.First();
+                        SyncLead = videoPlayerVMs.First();
+                    }
                 return SyncLead;
             }
             set
