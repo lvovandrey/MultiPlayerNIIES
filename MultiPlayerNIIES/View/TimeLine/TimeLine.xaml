@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.TimeLine.TimeLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeLine"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="820" Name="THIS">
+
+    <Grid Margin="0,0,-20,0" Background="#FF83FBF0" >
+        <Grid x:Name="GridMain"  Height="35" VerticalAlignment="Top" >
+
+        </Grid>
+        <Grid VerticalAlignment="Bottom" Height="25">
+            <Grid  Height="25" VerticalAlignment="Bottom" Margin="0,0,20,0" PreviewMouseDown="Grid_PreviewMouseDown">
+                <local:ScaleTime x:Name="T1" ></local:ScaleTime>
+                <local:ScaleTime x:Name="T2" ></local:ScaleTime>
+                <local:ScaleTime x:Name="T10" ></local:ScaleTime>
+            </Grid>
+        </Grid>
+        <local:Cursor x:Name="Cursor1" Margin="100,-5,0,-5" HorizontalAlignment="Left" Panel.ZIndex="10" Width="13" 
+                      ClipToBounds="False"  ><!--CRPosition="{Binding POS,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"-->
+            <local:Cursor.Effect>
+                <DropShadowEffect BlurRadius="0" ShadowDepth="1" Direction="315" Color="White"/>
+            </local:Cursor.Effect>
+        </local:Cursor>
+     
+    </Grid>
+</UserControl>
+

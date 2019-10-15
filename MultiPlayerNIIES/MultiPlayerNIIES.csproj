@@ -184,6 +184,18 @@
     <Compile Include="View\MetaVLCPlayer\MVLCPlayer.xaml.cs">
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TimeLine\Cursor.xaml.cs">
+      <DependentUpon>Cursor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\Dash.xaml.cs">
+      <DependentUpon>Dash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\ScaleTime.xaml.cs">
+      <DependentUpon>ScaleTime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\TimeLine.xaml.cs">
+      <DependentUpon>TimeLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsSyncLeaderToVisibility.cs" />
@@ -256,6 +268,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MetaVLCPlayer\MVLCPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\Cursor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\Dash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\ScaleTime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\TimeLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

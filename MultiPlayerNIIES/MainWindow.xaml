@@ -9,6 +9,7 @@
     xmlns:view="clr-namespace:MultiPlayerNIIES.View"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     xmlns:dshow ="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
+    xmlns:timeline="clr-namespace:MultiPlayerNIIES.View.TimeLine"
     Title="Видеоплеер НИИЭС"
     Width="1200"
     Height="800"
@@ -28,6 +29,9 @@
         </Grid>
         
         <view:MainPanelView Grid.Row="3" />
-        <view:MainSlider x:Name="MainSlider"  Grid.Row="2"/>
+        <StackPanel Orientation="Vertical" Grid.Row="2">
+            <view:MainSlider x:Name="MainSlider"  />
+            <timeline:TimeLine Height="40" x:Name="TimeLine1" ></timeline:TimeLine>
+        </StackPanel>
     </Grid>
 </Window>
