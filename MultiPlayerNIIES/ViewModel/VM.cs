@@ -31,7 +31,6 @@ namespace MultiPlayerNIIES.ViewModel
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
         WaitProgressBar WaitIndicator;
-        MainSliderVM mainSliderVM;
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
@@ -48,7 +47,6 @@ namespace MultiPlayerNIIES.ViewModel
         public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
         {
             videoPlayerVMs = new List<VideoPlayerVM>();
-            mainSliderVM = new MainSliderVM(mainWindow.MainSlider);
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
             WaitIndicator = mainWindow.AreaVideoPlayers.WaitProgressBar1;
             MainWindow = mainWindow;
@@ -257,6 +255,7 @@ namespace MultiPlayerNIIES.ViewModel
 
 
 
+
         public double SyncTitlesDeltaTotalMiliseconds { get { return SyncTitlesDelta.TotalMilliseconds; } }
 
         public double SyncTitlesDeltaPercentage { get { return 100 * (SyncTitlesDelta.TotalSeconds / MaxSyncTitlesDelta.TotalSeconds); } }
@@ -298,14 +297,6 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        public MainSliderVM MainSliderVM
-        {
-            get
-            { return mainSliderVM; }
-            set
-            { mainSliderVM = value; OnPropertyChanged("MainSliderVM"); }
-        }
-
         public TimeSpan CurTime
         {
             get
@@ -323,9 +314,25 @@ namespace MultiPlayerNIIES.ViewModel
                 }
             }
         }
+        public double SyncLeadSliderPosition
+        {
+            get
+            {
+                if (SyncLeadPlayer != null)
+                    return SyncLeadPlayer.SliderPosition;
+                else return 0;
+            }
+            set
+            {
+                if (SyncLeadPlayer != null)
+                {
+                    SyncLeadPlayer.SliderPosition = value;
+                    OnPropertyChanged("SliderPosition");
+                }
+            }
+        }
 
 
-       
 
 
         public double Rate
@@ -467,7 +474,7 @@ namespace MultiPlayerNIIES.ViewModel
         private void MainTimerTick(object sender, EventArgs e)
         {
             OnPropertyChanged("CurTime");
-
+            OnPropertyChanged("SyncLeadSliderPosition");
             SyncDelta = CalcSyncDelta();
             SyncTitlesDelta = CalcSyncTitlesDelta();
             if (IsOnAutoSyncronization) AutoSyncronization();

@@ -52,7 +52,13 @@ namespace MultiPlayerNIIES.ViewModel
         public TimeSpan CurTime
         {
             get { return Body.VLC.CurTimeEx; }
-            set { Body.SetPosition(value); OnPropertyChanged("CurTime"); }
+            set { Body.SetPosition(value); OnPropertyChanged("CurTime"); OnPropertyChanged("SliderPosition"); }
+        }
+
+        public double SliderPosition
+        {
+            get { return Body.VLC.Position; }
+            set { Body.SetSliderPosition(value); OnPropertyChanged("CurTime"); OnPropertyChanged("SliderPosition"); }
         }
 
         public TimeSpan Duration

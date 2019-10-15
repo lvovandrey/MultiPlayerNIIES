@@ -10,7 +10,7 @@
         <Slider x:Name="SliderMain"  Maximum="1000"
                 PreviewMouseDown="TimeSlider_PreviewMouseDown"
                 PreviewMouseUp="TimeSlider_PreviewMouseUp"
-                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                Value="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
     </Grid>
 </UserControl>
