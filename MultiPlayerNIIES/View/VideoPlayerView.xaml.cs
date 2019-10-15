@@ -43,48 +43,19 @@ namespace MultiPlayerNIIES.View
 
         public void Load(string filepath)
         {
-
-            //--------------------------------------
-            //VLC
             VLC.Source = new Uri(@filepath);
-
-            //--------------------------------------
-            //MediaELEMENT
-            //ME.Source = new Uri(@filepath);
-            //ME.Play();
-            //Tools.ToolsTimer.Delay(() =>
-            //{
-            //    ME.Pause();
-            //    ME.Position = TimeSpan.FromSeconds(4);
-            //}, TimeSpan.FromSeconds(0.1));
-
-            //--------------------------------------
-            //FFME
-            //FFME.Source = new Uri(@filepath);
-            //FFME.Play();
-            //Tools.ToolsTimer.Delay(() =>
-            //{
-            //    FFME.Pause();
-            //    FFME.Position = TimeSpan.FromSeconds(4);
-            //}, TimeSpan.FromSeconds(0.1));
-
-
         }
 
 
 
         public void SetPosition(TimeSpan position)
         {
-
-
             if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
             {
                 VLC.pause();
                 double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
 
                 Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
-
-
             }, TimeSpan.FromSeconds(1));
             else
             {

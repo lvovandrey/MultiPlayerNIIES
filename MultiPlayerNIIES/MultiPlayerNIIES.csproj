@@ -152,6 +152,7 @@
     <Compile Include="Tools\Subtitles\Record.cs" />
     <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
+    <Compile Include="ViewModel\MainSliderVM.cs" />
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
     <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />

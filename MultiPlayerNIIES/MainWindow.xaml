@@ -28,6 +28,6 @@
         </Grid>
         
         <view:MainPanelView Grid.Row="3" />
-        <view:MainSlider Grid.Row="2"/>
+        <view:MainSlider x:Name="MainSlider" Grid.Row="2"/>
     </Grid>
 </Window>

@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Slider x:Name="MainSlider"  Maximum="1000"
+        <Slider x:Name="SliderMain"  Maximum="1000"
                 PreviewMouseDown="TimeSlider_PreviewMouseDown"
                 PreviewMouseUp="TimeSlider_PreviewMouseUp"
-                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged}" />
+                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
     </Grid>
 </UserControl>

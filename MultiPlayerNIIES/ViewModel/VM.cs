@@ -31,6 +31,7 @@ namespace MultiPlayerNIIES.ViewModel
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
         WaitProgressBar WaitIndicator;
+        MainSliderVM mainSliderVM;
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
@@ -47,6 +48,7 @@ namespace MultiPlayerNIIES.ViewModel
         public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
         {
             videoPlayerVMs = new List<VideoPlayerVM>();
+            mainSliderVM = new MainSliderVM(mainWindow.MainSlider);
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
             WaitIndicator = mainWindow.AreaVideoPlayers.WaitProgressBar1;
             MainWindow = mainWindow;
@@ -296,7 +298,13 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-
+        public MainSliderVM MainSliderVM
+        {
+            get
+            { return mainSliderVM; }
+            set
+            { mainSliderVM = value; OnPropertyChanged("MainSliderVM"); }
+        }
 
         public TimeSpan CurTime
         {
