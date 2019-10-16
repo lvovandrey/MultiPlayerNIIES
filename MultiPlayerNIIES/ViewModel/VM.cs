@@ -3,6 +3,7 @@ using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View.Elements;
+using MultiPlayerNIIES.View.TimeLine;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -291,12 +292,14 @@ namespace MultiPlayerNIIES.ViewModel
             }
             set
             {
+                if (value == null) return;
+
                 foreach (VideoPlayerVM v in videoPlayerVMs)
                     v.IsSyncronizeLeader = false;
                 value.IsSyncronizeLeader = true;
                 OnPropertyChanged("SyncLeadPlayer");
                 OnPropertyChanged("SyncLeadSliderDuration");
-                
+                MainWindow.TimeLine1.FullTime = value.Duration;
             }
         }
 
