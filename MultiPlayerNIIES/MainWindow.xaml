@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:elementsview="clr-namespace:MultiPlayerNIIES.View.Elements"
+    xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
     xmlns:local="clr-namespace:MultiPlayerNIIES"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:MultiPlayerNIIES.View"
@@ -16,22 +17,57 @@
     Closing="Window_Closing"
     MouseDown="Window_MouseDown"
     mc:Ignorable="d">
+    <Window.Resources>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
+        <converters:TimeSpanToString x:Key="TimeSpanToString" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-     
+
         <Grid Grid.Row="1">
             <view:AreaVideoPlayersView x:Name="AreaVideoPlayers" Grid.Column="0" />
         </Grid>
-        
+
         <view:MainPanelView Grid.Row="3" />
+       
         <StackPanel Orientation="Vertical" Grid.Row="2">
-            <view:MainSlider x:Name="MainSlider"  />
-            <timeline:TimeLine Height="40" x:Name="TimeLine1" ></timeline:TimeLine>
+             <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <timeline:TimeLine POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                    
+                                   Height="40" Grid.Column="0" x:Name="TimeLine1"  Margin="0,0,0.471,-0.471" />
+                <Label
+            x:Name="LabelCurTime"
+            Width="160"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Background="#FF050025"
+            BorderBrush="#FF948AC3"
+            BorderThickness="1"
+                    Grid.Column="1"
+            Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
+            FontSize="25"
+            Foreground="#FFFFE677" >
+                    <Label.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem
+                        Command="{Binding CopyTimeToClipBoardCommand}"
+                        CommandParameter="{Binding CurTime, Converter={StaticResource TimeSpanToString}}"
+                        Header="Копировать" />
+                        </ContextMenu>
+                    </Label.ContextMenu>
+                </Label>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>

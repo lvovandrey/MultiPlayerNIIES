@@ -5,6 +5,7 @@ using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View.Elements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -294,6 +295,8 @@ namespace MultiPlayerNIIES.ViewModel
                     v.IsSyncronizeLeader = false;
                 value.IsSyncronizeLeader = true;
                 OnPropertyChanged("SyncLeadPlayer");
+                OnPropertyChanged("SyncLeadSliderDuration");
+                
             }
         }
 
@@ -318,8 +321,12 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
+
                 if (SyncLeadPlayer != null)
+                {
+                    Debug.WriteLine("SyncLeadPlayer.SliderPosition PROP=" + SyncLeadPlayer.SliderPosition.ToString());
                     return SyncLeadPlayer.SliderPosition;
+                }
                 else return 0;
             }
             set
@@ -327,8 +334,18 @@ namespace MultiPlayerNIIES.ViewModel
                 if (SyncLeadPlayer != null)
                 {
                     SyncLeadPlayer.SliderPosition = value;
-                    OnPropertyChanged("SliderPosition");
+                    OnPropertyChanged("SyncLeadSliderPosition");
                 }
+            }
+        }
+
+        public TimeSpan SyncLeadSliderDuration
+        {
+            get
+            {
+                if (SyncLeadPlayer != null)
+                    return SyncLeadPlayer.Duration;
+                else return TimeSpan.Zero;
             }
         }
 
@@ -475,6 +492,10 @@ namespace MultiPlayerNIIES.ViewModel
         {
             OnPropertyChanged("CurTime");
             OnPropertyChanged("SyncLeadSliderPosition");
+            if (SyncLeadPlayer != null)
+            {
+                SyncLeadSliderPosition = SyncLeadPlayer.SliderPosition;
+            }
             SyncDelta = CalcSyncDelta();
             SyncTitlesDelta = CalcSyncTitlesDelta();
             if (IsOnAutoSyncronization) AutoSyncronization();

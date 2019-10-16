@@ -257,7 +257,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             WasPlaing = IsPlaying;
-            if (IsPlaying) { pause(); timer.Stop(); }
+            if (IsPlaying)
+            { pause(); timer.Stop(); }
         }
 
 

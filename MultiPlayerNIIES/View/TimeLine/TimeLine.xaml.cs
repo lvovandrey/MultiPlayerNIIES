@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MultiPlayerNIIES.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +24,15 @@ namespace MultiPlayerNIIES.View.TimeLine
     /// </summary>
     public partial class TimeLine : UserControl, INotifyPropertyChanged
     {
+//        VideoPlayerVM VideoPlayerVM;
       
         public TimeLine()
         {
            
 
             InitializeComponent();
-            DataContext = this;
+            //DataContext = this;
+
             FullTime = TimeSpan.FromSeconds(450);
 
             T1.T_full = FullTime;
@@ -64,12 +68,15 @@ namespace MultiPlayerNIIES.View.TimeLine
         bool wasplayed = false;
         private void Cursor1_OnStartDrag()
         {
-
-            //if (videoPlayer != null) { wasplayed = videoPlayer.IsPlaying; videoPlayer.pause(); }
+            VM vm = DataContext as VM; // да хуй с ним знаю что уродство
+            if (vm == null) return;
+            vm.SyncLeadPlayer.Body.VLC.TimeSlider_PreviewMouseDown(this, null);
         }
         private void Cursor1_OnEndDrag()
         {
-            //if ((videoPlayer != null) && (wasplayed)) { videoPlayer.play(); }
+            VM vm = DataContext as VM; // да хуй с ним знаю что уродство
+            if (vm == null) return;
+            vm.SyncLeadPlayer.Body.VLC.TimeSlider_PreviewMouseUp(this, null);
         }
 
         bool PosSelf = false;
@@ -81,8 +88,10 @@ namespace MultiPlayerNIIES.View.TimeLine
 
         private void TimeLine_OnPOSChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            Debug.WriteLine("POS=" + POS.ToString());
             if (PosSelf) { PosSelf = false; return; }
             if (POS > -0.1) Cursor1.CRPosition = POS / 1000;
+
         }
         #endregion
 
@@ -108,6 +117,7 @@ namespace MultiPlayerNIIES.View.TimeLine
             if (((TimeLine)d).OnPOSChanged != null)
                 ((TimeLine)d).OnPOSChanged(d, e);
         }
+
         #endregion
 
 
