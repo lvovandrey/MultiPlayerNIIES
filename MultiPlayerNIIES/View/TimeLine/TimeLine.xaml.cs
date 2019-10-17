@@ -33,7 +33,7 @@ namespace MultiPlayerNIIES.View.TimeLine
             InitializeComponent();
             //DataContext = this;
 
-            FullTime = TimeSpan.FromSeconds(450);
+            FullTime = TimeSpan.FromSeconds(600);
 
             T1.T_full = FullTime;
             T1.T_el = TimeSpan.FromSeconds(60);
@@ -69,13 +69,13 @@ namespace MultiPlayerNIIES.View.TimeLine
         private void Cursor1_OnStartDrag()
         {
             VM vm = DataContext as VM; // да хуй с ним знаю что уродство
-            if (vm == null) return;
+            if (vm == null) return; if (vm.SyncLeadPlayer == null) return;
             vm.SyncLeadPlayer.Body.VLC.TimeSlider_PreviewMouseDown(this, null);
         }
         private void Cursor1_OnEndDrag()
         {
             VM vm = DataContext as VM; // да хуй с ним знаю что уродство
-            if (vm == null) return;
+            if (vm == null) return; if (vm.SyncLeadPlayer == null) return;
             vm.SyncLeadPlayer.Body.VLC.TimeSlider_PreviewMouseUp(this, null);
         }
 
@@ -90,7 +90,7 @@ namespace MultiPlayerNIIES.View.TimeLine
         {
             Debug.WriteLine("POS=" + POS.ToString());
             if (PosSelf) { PosSelf = false; return; }
-            if (POS > -0.1) Cursor1.CRPosition = POS / 1000;
+            if (POS > -0.1) { Cursor1.CRPosition = POS / 1000;  }
 
         }
         #endregion
@@ -181,13 +181,13 @@ namespace MultiPlayerNIIES.View.TimeLine
                 T2.TimeLabelVisibility = Visibility.Visible;
                 T10.TimeLabelVisibility = Visibility.Hidden;
             }
-            else if (FullTime < TimeSpan.FromMinutes(20))
+            else if (FullTime < TimeSpan.FromMinutes(60))
             {
                 T1.TimeLabelVisibility = Visibility.Visible;
                 T2.TimeLabelVisibility = Visibility.Hidden;
                 T10.TimeLabelVisibility = Visibility.Hidden;
             }
-            else if (FullTime >= TimeSpan.FromMinutes(20))
+            else if (FullTime >= TimeSpan.FromMinutes(60))
             {
                 T1.TimeLabelVisibility = Visibility.Hidden;
                 T2.TimeLabelVisibility = Visibility.Hidden;

@@ -7,17 +7,22 @@
              mc:Ignorable="d" 
            d:DesignHeight="90" d:DesignWidth="10" MinHeight="30" MouseEnter="Cursor_MouseEnter" MouseLeave="Cursor_MouseLeave" ClipToBounds="False" >
     <Grid VerticalAlignment="Stretch" ClipToBounds="False"  Margin="-5,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="*" Name="Row2"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <Label x:Name="PosLabel" Content="000" Margin="-10,-20,-10,0" FontSize="12" HorizontalAlignment="Center"></Label>
-        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="3" Fill="#00F3FF00"  />
-        <Path Data="M0,0 L5,5 10,0" Grid.Row="0"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="1.5" />
-        <Path Data="M5,0 L5,1000" Grid.Row="1"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="2" />
-        <Path Data="M0,5 L5,0 10,5" Grid.Row="2"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}"  StrokeThickness="1.5"/>
+       
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="3" Fill="#00F3FF00" Grid.ColumnSpan="3"  />
+        <Path Data="M0,0 L5,5 10,0" Grid.Row="0"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="1.5" Grid.ColumnSpan="3" />
+        <Path Data="M5,0 L5,1000" Grid.Row="1"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="2" Grid.ColumnSpan="3" />
+        <Path Data="M0,5 L5,0 10,5" Grid.Row="2"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}"  StrokeThickness="1.5" Grid.ColumnSpan="3"/>
 
 
 

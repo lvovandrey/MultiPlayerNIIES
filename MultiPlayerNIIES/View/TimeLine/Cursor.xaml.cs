@@ -22,6 +22,7 @@ namespace MultiPlayerNIIES.View.TimeLine
     /// </summary>
     public partial class Cursor : UserControl, INotifyPropertyChanged
     {
+      
         public Cursor()
         {
             InitializeComponent();
@@ -35,11 +36,11 @@ namespace MultiPlayerNIIES.View.TimeLine
         private void Cursor_OnCRPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             double newPos = Container.ActualWidth * CRPosition;
-
+           
             if (newPos < 0) Margin = new Thickness(0, -5, 0, -5);
             else if (newPos > Container.ActualWidth) Margin = new Thickness(Container.ActualWidth, -5, 0, -5);
             else Margin = new Thickness(newPos, -5, 0, -5);
-            PosLabel.Content = ((int)newPos).ToString();
+
         }
 
         SolidColorBrush _CursorColor { get; set; }
@@ -53,16 +54,6 @@ namespace MultiPlayerNIIES.View.TimeLine
             }
         }
 
-        TimeSpan _Time { get; set; }
-        public TimeSpan Time
-        {
-            get { return TimeSpan.FromSeconds(222); } //TODO:Заменить на нормальное свойство //_Time; }
-            set
-            {
-                _Time = value;
-                OnPropertyChanged("Time");
-            }
-        }
 
 
 
@@ -122,7 +113,9 @@ namespace MultiPlayerNIIES.View.TimeLine
             if (newPos.X < 0) draggedObject.Margin = new Thickness(0, -5, 0, -5);
             else if (newPos.X > Container.ActualWidth) draggedObject.Margin = new Thickness(Container.ActualWidth, -5, 0, -5);
             else draggedObject.Margin = new Thickness(newPos.X, -5, 0, -5);
-            PosLabel.Content = ((int)newPos.X).ToString();
+
+           
+         
 
             CRPosition = draggedObject.Margin.Left / Container.ActualWidth;
             OnCRPChanged();
@@ -159,7 +152,7 @@ namespace MultiPlayerNIIES.View.TimeLine
             if (newPos.X < 0) draggedObject.Margin = new Thickness(0, -5, 0, -5);
             else if (newPos.X > Container.ActualWidth) draggedObject.Margin = new Thickness(Container.ActualWidth, -5, 0, -5);
             else draggedObject.Margin = new Thickness(newPos.X, -5, 0, -5);
-            PosLabel.Content = ((int)newPos.X).ToString();
+
 
             Tools.ToolsTimer.Delay(() =>
             {
