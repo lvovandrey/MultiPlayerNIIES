@@ -619,6 +619,9 @@ namespace MultiPlayerNIIES.ViewModel
             }
 
             ReadSubitilesCommand.Execute(null);
+
+            OnPropertyChanged("SyncLeadSliderDuration");
+            MainWindow.TimeLine1.FullTime = SyncLeadPlayer.Duration;
         }
 
         public void OpenVideos(string[] fileNames, Rect[] AreasForPlacement)
