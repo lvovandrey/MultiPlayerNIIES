@@ -327,7 +327,7 @@ namespace MultiPlayerNIIES.ViewModel
 
                 if (SyncLeadPlayer != null)
                 {
-                    Debug.WriteLine("SyncLeadPlayer.SliderPosition PROP=" + SyncLeadPlayer.SliderPosition.ToString());
+                  //  Debug.WriteLine("SyncLeadPlayer.SliderPosition PROP=" + SyncLeadPlayer.SliderPosition.ToString());
                     return SyncLeadPlayer.SliderPosition;
                 }
                 else return 0;

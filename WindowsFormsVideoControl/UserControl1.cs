@@ -15,6 +15,22 @@ namespace WindowsFormsVideoControl
 {
     public partial class VideoContainer1: UserControl
     {
+        public double CurZoomKoefX
+        {
+            get
+            {
+                return this.SelectablePictureBox1.Width / this.Width;
+            }
+        }
+        public double CurZoomKoefY
+        {
+            get
+            {
+                return this.SelectablePictureBox1.Height / this.Height;
+            }
+        }
+
+
         public VideoContainer1()
         {
             InitializeComponent();
@@ -32,6 +48,11 @@ namespace WindowsFormsVideoControl
         private void MouseWheelHandler(object sender, MouseEventArgs e)
         {
             double k = e.Delta >= 0 ? 0.1 : -0.1;
+            System.Drawing.Point curWinPos = this.PointToScreen(new System.Drawing.Point(0, 0));
+            System.Drawing.Point Pos = new System.Drawing.Point(-curWinPos.X + Cursor.Position.X, -curWinPos.Y + Cursor.Position.Y);
+            if (Pos.X < -2 || Pos.Y < -2 || Pos.X > this.Width + 2 || Pos.Y > this.Height + 2)
+                return; // если зум за пределами окна - не делаем его
+
             Zoom(k, this.SelectablePictureBox1, e.Location);
         }
 
@@ -75,9 +96,15 @@ namespace WindowsFormsVideoControl
             ZoomedElement.Width = (int)wnew;
             ZoomedElement.Height = (int)hnew;
             ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
+        }
 
+        public void FitToFill()
+        {
+            Zoom(-1,SelectablePictureBox1, new System.Drawing.Point(0, 0));
 
-
+            //SelectablePictureBox1.Width = this.Width;
+            //SelectablePictureBox1.Height = this.Height;
+            //SelectablePictureBox1.Location = new System.Drawing.Point(0, 0);
         }
 
         #endregion
@@ -164,6 +191,8 @@ namespace WindowsFormsVideoControl
         {
             //Тут ничего нет и не должно быть
         }
+
+
 
 
 

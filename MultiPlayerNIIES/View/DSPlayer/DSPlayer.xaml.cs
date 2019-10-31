@@ -194,10 +194,12 @@ namespace MultiPlayerNIIES.View.DSPlayer
             dxPlay.Pause();
 
 
-            OnResize();
-
-            //     }, TimeSpan.FromSeconds(0.5));
-            // }, TimeSpan.FromSeconds(0.5));
+            ToolsTimer.Delay(() =>
+             {
+                 VideoMMM.FitToFill();
+                 OnResize();
+             }, TimeSpan.FromSeconds(1.5));
+        
         }
 
 
