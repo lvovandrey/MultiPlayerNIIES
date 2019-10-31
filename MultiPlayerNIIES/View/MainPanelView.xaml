@@ -10,8 +10,6 @@
     d:DesignWidth="1500"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
-        <converters:TimeSpanToString x:Key="TimeSpanToString" />
         <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds" />
         <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor" />
         <converters:BoolIsOnToColor x:Key="BoolIsOnToColor" />
@@ -295,26 +293,6 @@
             </ToolBar>
 
         </ToolBarTray>
-        <Label
-            x:Name="LabelCurTime"
-            Width="140"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Background="#FF050025"
-            BorderBrush="#FF948AC3"
-            BorderThickness="1"
-            Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
-            FontSize="25"
-            Foreground="#FFFFE677">
-            <Label.ContextMenu>
-                <ContextMenu>
-                    <MenuItem
-                        Command="{Binding CopyTimeToClipBoardCommand}"
-                        CommandParameter="{Binding CurTime, Converter={StaticResource TimeSpanToString}}"
-                        Header="Копировать" />
-                </ContextMenu>
-            </Label.ContextMenu>
-        </Label>
+        
     </Grid>
 </UserControl>

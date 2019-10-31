@@ -19,7 +19,7 @@
                 <local:ScaleTime x:Name="T10" ></local:ScaleTime>
             </Grid>
         </Grid>
-        <local:Cursor x:Name="Cursor1" Margin="100,-5,0,-5" HorizontalAlignment="Left" Panel.ZIndex="10" Width="13" 
+        <local:Cursor x:Name="Cursor1" Margin="0,-5,0,-5" HorizontalAlignment="Left" Panel.ZIndex="10" Width="13" 
                       ClipToBounds="False"  ><!--CRPosition="{Binding POS,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"-->
             <local:Cursor.Effect>
                 <DropShadowEffect BlurRadius="0" ShadowDepth="1" Direction="315" Color="White"/>

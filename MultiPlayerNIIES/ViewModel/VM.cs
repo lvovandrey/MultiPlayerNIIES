@@ -298,8 +298,7 @@ namespace MultiPlayerNIIES.ViewModel
                     v.IsSyncronizeLeader = false;
                 value.IsSyncronizeLeader = true;
                 OnPropertyChanged("SyncLeadPlayer");
-                OnPropertyChanged("SyncLeadSliderDuration");
-                MainWindow.TimeLine1.FullTime = value.Duration;
+                RefreshTimeLineView();
             }
         }
 
@@ -436,7 +435,30 @@ namespace MultiPlayerNIIES.ViewModel
 
         #region Methods
 
+        private void RefreshTimeLineView()
+        {
+            if (SyncLeadPlayer != null)
+            {
+                MainWindow.TimeLine1.FullTime = SyncLeadPlayer.Duration;
+                SyncLeadSliderPosition = SyncLeadPlayer.SliderPosition;
+                MainWindow.TimeLine1.POS = SyncLeadPlayer.SliderPosition;
+                MainWindow.TimeLine1.Cursor1.CRPosition = SyncLeadPlayer.SliderPosition;
+                OnPropertyChanged("SyncLeadSliderDuration");
+                OnPropertyChanged("SyncLeadSliderPosition");
 
+            }
+            else
+            {
+                SyncLeadSliderPosition = 0;
+                MainWindow.TimeLine1.POS = 0;
+                MainWindow.TimeLine1.Cursor1.CRPosition = 0;
+                OnPropertyChanged("SyncLeadSliderDuration");
+                OnPropertyChanged("SyncLeadSliderPosition");
+
+            }
+
+
+        }
 
         //Обработчик сообщений окна Windows (сюда можно принять сообщение от PostMessage)
         private IntPtr PostMessagesRecieve(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -499,6 +521,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 SyncLeadSliderPosition = SyncLeadPlayer.SliderPosition;
             }
+            else
+                SyncLeadSliderPosition = 0;
             SyncDelta = CalcSyncDelta();
             SyncTitlesDelta = CalcSyncTitlesDelta();
             if (IsOnAutoSyncronization) AutoSyncronization();
@@ -619,7 +643,11 @@ namespace MultiPlayerNIIES.ViewModel
             }
 
             ReadSubitilesCommand.Execute(null);
+            RefreshTimeLineView();
+
         }
+
+
 
         public void OpenVideos(string[] fileNames, Rect[] AreasForPlacement)
         {
