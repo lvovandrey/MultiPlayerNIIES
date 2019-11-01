@@ -39,10 +39,10 @@ namespace MultiPlayerNIIES.View.TimeLine
             T1.T_el = TimeSpan.FromSeconds(60);
             T1.ChangeDashesHeight(12);
             T1.ChangeDashesWidth(1);
-
-            T2.T_full = FullTime;
-            T2.T_el = TimeSpan.FromSeconds(10);
-            T2.ChangeDashesHeight(6);
+                        
+            T_tenSec.T_full = FullTime;
+            T_tenSec.T_el = TimeSpan.FromSeconds(10);
+            T_tenSec.ChangeDashesHeight(6);
 
             Cursor1.Container = this;
 
@@ -142,11 +142,13 @@ namespace MultiPlayerNIIES.View.TimeLine
         {
 
             T1.T_full = FullTime;
-            T2.T_full = FullTime;
+            T_tenSec.T_full = FullTime;
+            T_Sec.T_full = FullTime;
             T10.T_full = FullTime;
 
             T1.T_el = TimeSpan.FromSeconds(60);
-            T2.T_el = TimeSpan.FromSeconds(10);
+            T_tenSec.T_el = TimeSpan.FromSeconds(10);
+            T_Sec.T_el = TimeSpan.FromSeconds(1);
             T10.T_el = TimeSpan.FromSeconds(600);
 
 
@@ -154,46 +156,65 @@ namespace MultiPlayerNIIES.View.TimeLine
             T1.ClearDashes();
             T1.FillDashes(N);
 
-            N = (int)Math.Round((FullTime.TotalSeconds / T2.T_el.TotalSeconds)) + 1;
-            T2.ClearDashes();
-            T2.FillDashes(N);
+            N = (int)Math.Round((FullTime.TotalSeconds / T_tenSec.T_el.TotalSeconds)) + 1;
+            T_tenSec.ClearDashes();
+            T_tenSec.FillDashes(N);
+
+            if (FullTime.TotalSeconds < 60)
+            {
+                N = (int)Math.Round((FullTime.TotalSeconds / T_Sec.T_el.TotalSeconds)) + 1;
+                T_Sec.ClearDashes();
+                T_Sec.FillDashes(N);
+            }
 
             N = (int)Math.Round((FullTime.TotalSeconds / T10.T_el.TotalSeconds)) + 1;
             T10.ClearDashes();
             T10.FillDashes(N);
 
 
-            T1.ChangeDashesHeight(12);
+            T1.ChangeDashesHeight(15);
             T1.ChangeDashesWidth(1);
 
-            T2.ChangeDashesHeight(6);
+            T_tenSec.ChangeDashesHeight(10);
 
-            T10.ChangeDashesHeight(18);
+            T_Sec.ChangeDashesHeight(6);
+
+            T10.ChangeDashesHeight(22);
             T10.ChangeDashesWidth(2);
 
             T1.Visibility = Visibility.Visible;
-            T2.Visibility = Visibility.Visible;
+            T_tenSec.Visibility = Visibility.Visible;
+            T_Sec.Visibility = Visibility.Visible;
             T10.Visibility = Visibility.Visible;
 
             if (FullTime < TimeSpan.FromMinutes(1))
             {
                 T1.TimeLabelVisibility = Visibility.Hidden;
-                T2.TimeLabelVisibility = Visibility.Visible;
+                T_tenSec.TimeLabelVisibility = Visibility.Visible;
+                T_Sec.TimeLabelVisibility = Visibility.Visible;
                 T10.TimeLabelVisibility = Visibility.Hidden;
             }
             else if (FullTime < TimeSpan.FromMinutes(60))
             {
                 T1.TimeLabelVisibility = Visibility.Visible;
-                T2.TimeLabelVisibility = Visibility.Hidden;
-                T10.TimeLabelVisibility = Visibility.Hidden;
+                T_tenSec.TimeLabelVisibility = Visibility.Hidden;
+                T_Sec.TimeLabelVisibility = Visibility.Hidden;
+                T10.TimeLabelVisibility = Visibility.Visible;
+                T_Sec.Visibility = Visibility.Hidden;
             }
             else if (FullTime >= TimeSpan.FromMinutes(60))
             {
                 T1.TimeLabelVisibility = Visibility.Hidden;
-                T2.TimeLabelVisibility = Visibility.Hidden;
+                T_tenSec.TimeLabelVisibility = Visibility.Hidden;
+                T_Sec.TimeLabelVisibility = Visibility.Hidden;
                 T10.TimeLabelVisibility = Visibility.Visible;
-                T2.Visibility = Visibility.Hidden;
+                T_tenSec.Visibility = Visibility.Hidden;
+                T_Sec.Visibility = Visibility.Hidden;
             }
+
+            T_Sec.HideRepeatedDashes(T_tenSec.Dashes);
+            T_tenSec.HideRepeatedDashes(T1.Dashes);
+            T1.HideRepeatedDashes(T10.Dashes);
 
         }
 
@@ -201,12 +222,12 @@ namespace MultiPlayerNIIES.View.TimeLine
 
 
 
- 
+
         #endregion
 
 
 
- 
+
 
 
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)

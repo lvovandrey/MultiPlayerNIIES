@@ -44,7 +44,7 @@
                 </Grid.ColumnDefinitions>
                 <timeline:TimeLine POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                     
-                                   Height="40" Grid.Column="0" x:Name="TimeLine1"  Margin="0,0,0.471,-0.471" />
+                                   Height="50" Grid.Column="0" x:Name="TimeLine1"  Margin="10 0 10 0"  />
                 <Label
             x:Name="LabelCurTime"
             Width="160"

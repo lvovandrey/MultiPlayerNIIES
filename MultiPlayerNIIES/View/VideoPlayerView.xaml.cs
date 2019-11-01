@@ -412,7 +412,9 @@ namespace MultiPlayerNIIES.View
         public event EventHandler OnSyncLeaderSet;
         private void SyncLeadIndicator_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            OnSyncLeaderSet(this, null);
+            var res =  MessageBox.Show("Вы уверены что хотите сменить плеер-лидер синхронизации?", "Смена плеера-лидера синхронизации", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (res == MessageBoxResult.OK)
+                OnSyncLeaderSet(this, null);
         }
         #endregion
 

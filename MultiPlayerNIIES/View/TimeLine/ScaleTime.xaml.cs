@@ -180,11 +180,20 @@ namespace MultiPlayerNIIES.View.TimeLine
             }
         }
 
+        public void HideRepeatedDashes(IEnumerable<Dash> AlreadyCreatedDashes)
+        {
+            foreach (Dash d in Dashes)
+                foreach (Dash oldD in AlreadyCreatedDashes)
+                    if (d.Time == oldD.Time)
+                        d.Opacity = 0;
+        }
+
         public void addDash(int i)
         {
             Dash d = new Dash();
             d.Time = TimeSpan.FromSeconds(T_el.TotalSeconds * ((double)(i - 1)));
             RefreshBinding(d);
+            Dashes.Add(d);
             MainStack.Children.Add(d);
 
         }
