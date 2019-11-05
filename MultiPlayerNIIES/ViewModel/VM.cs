@@ -553,7 +553,7 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 if (excel != null && IsExcelConnected && ExcelBook != null)
                 {
-                    excel.Run((object)"WriteTime", (object)(TimeSyncLead.ToString(@"mm\:ss\,f")));
+                    excel.Run((object)"WriteTime", (object)(TimeSyncLead.ToString(@"h\:mm\:ss\.fff")));
                 }
             }
             catch
@@ -567,7 +567,7 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 if (excel != null && IsExcelConnected && ExcelBook != null)
                 {
-                    excel.Run((object)"WriteTime2", (object)(TimeSyncLead.ToString(@"mm\:ss\,f")));
+                    excel.Run((object)"WriteTime2", (object)(TimeSyncLead.ToString(@"h\:mm\:ss\.fff")));
                 }
             }
             catch
