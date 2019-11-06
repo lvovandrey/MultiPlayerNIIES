@@ -606,15 +606,21 @@ namespace MultiPlayerNIIES.ViewModel
 
         private TimeSpan CalcSyncTitlesDelta()
         {
-            if (videoPlayerVMs.Count < 2) return TimeSpan.Zero;
-            List<TimeSpan> deltas = new List<TimeSpan>();
 
-            //   TimeSpan SyncTitlesTime = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
-            TimeSpan TL = SyncLeadPlayer.GetSyncTimeFromTitles(TimeSyncLead);
+
+            if (videoPlayerVMs.Count < 2) return TimeSpan.Zero;
+
+            List<VideoPlayerVM> videoPlayers = new List<VideoPlayerVM>();
             foreach (VideoPlayerVM v in videoPlayerVMs)
             {
-                TimeSpan t = v.GetSyncTimeFromTitles(v.CurTime);
+                if (v.HaveSubtitles) videoPlayers.Add(v);
+            }
 
+            List<TimeSpan> deltas = new List<TimeSpan>();
+            TimeSpan TL =  videoPlayers[0].GetSyncTimeFromTitles(TimeSyncLead); 
+            foreach (VideoPlayerVM v in videoPlayers)
+            {
+                TimeSpan t = v.GetSyncTimeFromTitles(v.CurTime);
                 TimeSpan dt = (t - TL);
                 if (dt < TimeSpan.Zero) dt = -dt;
                 deltas.Add(dt);
@@ -622,7 +628,7 @@ namespace MultiPlayerNIIES.ViewModel
 
 
             SyncTitlesDeltasBuffer.Enqueue(deltas.Max());
-            if (SyncTitlesDeltasBuffer.Count > 20) SyncTitlesDeltasBuffer.Dequeue();
+            if (SyncTitlesDeltasBuffer.Count > 10) SyncTitlesDeltasBuffer.Dequeue();
 
             return SyncTitlesDeltasBuffer.Max();
         }
