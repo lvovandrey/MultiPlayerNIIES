@@ -64,12 +64,12 @@ namespace MultiPlayerNIIES.ViewModel
 
             ExcelRefreshStateTimer = new System.Windows.Threading.DispatcherTimer();
             ExcelRefreshStateTimer.Tick += new EventHandler(ExcelRefreshStateTimerTick);
-            ExcelRefreshStateTimer.Interval = TimeSpan.FromSeconds(0.2);
+            ExcelRefreshStateTimer.Interval = TimeSpan.FromSeconds(0.5);
             ExcelRefreshStateTimer.Start();
 
 
             Step = TimeSpan.FromMilliseconds(100);
-            RateShift = 0.5;
+            RateShift = 0.1;
             slowRate = 0.5;
             fastRate = 2;
 
@@ -213,7 +213,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         private int syncErrorsCount = 0;
         public int SyncErrorsCount { get { return syncErrorsCount; } set { syncErrorsCount = value; } }
-        public int SyncErrorsMaxCount { get; private set; } = 20;
+        public int SyncErrorsMaxCount { get; private set; } = 5;
 
 
         private bool isOnAutoSyncroinizationTitles;
@@ -1338,7 +1338,8 @@ namespace MultiPlayerNIIES.ViewModel
                           Dictionary<VideoPlayerVM, TimeSpan> SyncDictionary = new Dictionary<VideoPlayerVM, TimeSpan>();
                           foreach (VideoPlayerVM v in videoPlayerVMs)
                           {
-                              //   if (!v.Equals(SyncLead))
+
+                              if (v.HaveSubtitles)
                               {
                                   SyncDictionary.Add(v, v.GetSmartSyncTime(TimeSyncLead, SyncTitlesTime, SyncLeadPlayer));
                               }

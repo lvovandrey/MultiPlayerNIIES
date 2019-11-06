@@ -81,11 +81,21 @@ namespace MultiPlayerNIIES.ViewModel
             get { return System.IO.Path.ChangeExtension(SourceFilename, "srt"); }
                 
         }
+
+        public bool HaveSubtitles
+        {
+            get { return GetSubtitleProcessor().Ready;  }
+           
+        }
+
+
         public string SourceFilename
         {
             get
             { return (new Uri(Body.SourceFilename)).LocalPath; }
         }
+
+
 
         #region СИНХРОНИЗАЦИЯ и все что с ней связано
         private bool isSyncronizeLeader;
