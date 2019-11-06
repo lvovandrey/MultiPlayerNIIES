@@ -17,14 +17,14 @@
                         <GradientStop Color="White" Offset="1"/>
                     </LinearGradientBrush>
                 </Grid.Background>
-                <local:ScaleTime x:Name="T1" ></local:ScaleTime>
-                <local:ScaleTime x:Name="T_Sec" ></local:ScaleTime>
-                <local:ScaleTime x:Name="T_tenSec" ></local:ScaleTime>
-                <local:ScaleTime x:Name="T10" ></local:ScaleTime>
+                <local:ScaleTime x:Name="T1" Height="44" ></local:ScaleTime>
+                <local:ScaleTime x:Name="T_Sec" Height="44"></local:ScaleTime>
+                <local:ScaleTime x:Name="T_tenSec" Height="44"></local:ScaleTime>
+                <local:ScaleTime x:Name="T10" Height="44"></local:ScaleTime>
             </Grid>
 
             <Rectangle HorizontalAlignment="Stretch" Height="1"  VerticalAlignment="Bottom" Margin="0 0 20 10" Fill="Black" />
-            <Rectangle HorizontalAlignment="Stretch" Height="70"  VerticalAlignment="Stretch" Margin="0 -10 20 0" Stroke="#FF323232" />
+            <Rectangle HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Margin="0 0 20 0" Stroke="#FF323232" />
 
         </Grid>
         <!--<Grid VerticalAlignment="Bottom" Height="25">
