@@ -15,7 +15,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
         public static void Save(string filename, VM vm)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(ApplicationSettingsSerialized));
-            ApplicationSettingsSerialized sets = new ApplicationSettingsSerialized(vm);
+            ApplicationSettingsSerialized sets = new ApplicationSettingsSerialized(vm, filename);
 
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {

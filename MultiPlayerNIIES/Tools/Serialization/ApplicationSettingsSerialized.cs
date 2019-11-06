@@ -1,8 +1,10 @@
 ﻿using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
+
 
 namespace MultiPlayerNIIES.Tools.Serialization
 {
@@ -17,7 +19,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
         public ApplicationSettingsSerialized()
         {}
 
-        public ApplicationSettingsSerialized(VM vm)
+        public ApplicationSettingsSerialized(VM vm, string targetFilename)
         {
             Position = new Rect(vm.MainWindow.Left, vm.MainWindow.Top, vm.MainWindow.ActualWidth, vm.MainWindow.ActualHeight);
             IsExcelConnected = vm.IsExcelConnected;
@@ -27,14 +29,28 @@ namespace MultiPlayerNIIES.Tools.Serialization
             {
                 Players.Add(new PlayerStateSerialized()
                 {
-                    filename=v.SourceFilename,
-                    CurTime = v.CurTime, 
-                    TimeShift=v.SyncronizationShiftVM.ShiftTime,
+                    filename = v.SourceFilename,
+                    relativeFilename = GetRelativePath(v.SourceFilename, Path.GetDirectoryName(targetFilename)),
+                    CurTime = v.CurTime,
+                    TimeShift = v.SyncronizationShiftVM.ShiftTime,
                     IsSyncLeader = v.IsSyncronizeLeader,
-                    Position = new Rect(v.Body.Margin.Left,v.Body.Margin.Top,v.Body.ActualWidth,v.Body.ActualHeight),
+                    Position = new Rect(v.Body.Margin.Left, v.Body.Margin.Top, v.Body.ActualWidth, v.Body.ActualHeight),
                     Duration = v.Duration
-                });
+                }); ;
             }    
+        }
+
+
+        string GetRelativePath(string filespec, string folder)
+        {
+            Uri pathUri = new Uri(filespec);
+            // Folders must end in a slash
+            if (!folder.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                folder += Path.DirectorySeparatorChar;
+            }
+            Uri folderUri = new Uri(folder);
+            return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
         }
     }
 
@@ -42,6 +58,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
     public class PlayerStateSerialized
     {
         public string filename;
+        public string relativeFilename;
         [XmlIgnore]
         public TimeSpan CurTime;
         [XmlIgnore]
