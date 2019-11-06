@@ -13,8 +13,8 @@
             <Grid  Height="50" VerticalAlignment="Top" Margin="0,0,20,0" PreviewMouseDown="Grid_PreviewMouseDown">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="DarkGray" Offset="0"/>
-                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Color="#FF1B1B1B" Offset="0"/>
+                        <GradientStop Color="Black" Offset="1"/>
                     </LinearGradientBrush>
                 </Grid.Background>
                 <local:ScaleTime x:Name="T1" Height="44" ></local:ScaleTime>
@@ -23,7 +23,7 @@
                 <local:ScaleTime x:Name="T10" Height="44"></local:ScaleTime>
             </Grid>
 
-            <Rectangle HorizontalAlignment="Stretch" Height="1"  VerticalAlignment="Bottom" Margin="0 0 20 10" Fill="Black" />
+            <Rectangle HorizontalAlignment="Stretch" Height="1"  VerticalAlignment="Bottom" Margin="0 0 20 10" Fill="#FFB07220" />
             <Rectangle HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Margin="0 0 20 0" Stroke="#FF323232" />
 
         </Grid>

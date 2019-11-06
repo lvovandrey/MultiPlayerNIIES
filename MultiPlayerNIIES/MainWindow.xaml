@@ -21,7 +21,7 @@
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
     </Window.Resources>
-    <Grid>
+    <Grid Background="#FF161616">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -35,9 +35,9 @@
         </Grid>
 
         <view:MainPanelView Grid.Row="3" />
-       
+
         <StackPanel Orientation="Vertical" Grid.Row="2">
-             <Grid >
+            <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto"/>
@@ -51,13 +51,13 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             HorizontalContentAlignment="Center"
-            Background="#FF050025"
-            BorderBrush="#FF948AC3"
+            Background="#FF101010"
+            BorderBrush="#FFB07220"
             BorderThickness="1"
                     Grid.Column="1"
             Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
             FontSize="25"
-            Foreground="#FFFFE677" >
+            Foreground="#FFB07220" >
                     <Label.ContextMenu>
                         <ContextMenu>
                             <MenuItem

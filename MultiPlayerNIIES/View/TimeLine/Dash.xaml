@@ -11,8 +11,9 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Name="col1" Width="*"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Fill="Black" Width="{Binding LineWidth}" Height="{Binding LineHeight}" Name="DashLine" Grid.Column="0" VerticalAlignment="Bottom"  Margin="0,0,0,7" />
+        <Rectangle Fill="#FFB07220" Width="{Binding LineWidth}" Height="{Binding LineHeight}" Name="DashLine" Grid.Column="0" VerticalAlignment="Bottom"  Margin="0,0,0,7" />
         <Rectangle Fill="#00FAEBD7" Width="{Binding ElementName=col1, Path=Width}" Name="DashInterval" Grid.Column="1"/>
-        <TextBlock x:Name="TimeLabel"  Text="{Binding Time, UpdateSourceTrigger=PropertyChanged, StringFormat=mm\\:ss}" FontSize="7" Margin="-10,0,0,-2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Visibility="{Binding TimeLabelVisibility, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock x:Name="TimeLabel"  Text="{Binding Time, UpdateSourceTrigger=PropertyChanged, StringFormat=mm\\:ss}" FontSize="7" Margin="-10,0,0,-2" 
+                   VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Visibility="{Binding TimeLabelVisibility, UpdateSourceTrigger=PropertyChanged}" Foreground="#FFB07220" />
     </Grid>
 </UserControl>
