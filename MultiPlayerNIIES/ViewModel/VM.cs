@@ -2,6 +2,7 @@
 using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
+using MultiPlayerNIIES.View;
 using MultiPlayerNIIES.View.Elements;
 using MultiPlayerNIIES.View.TimeLine;
 using System;
@@ -33,6 +34,9 @@ namespace MultiPlayerNIIES.ViewModel
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
         WaitProgressBar WaitIndicator;
+        SettingsWindowView settingsWindowView;
+        SettingsWindowVM settingsWindowVM;
+
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
@@ -48,6 +52,11 @@ namespace MultiPlayerNIIES.ViewModel
         #region Конструкторы и вспомогательные методы
         public VM(Grid areaVideoPlayersGrid, MainWindow mainWindow)
         {
+            settingsWindowView = new SettingsWindowView();
+            settingsWindowView.Visibility = Visibility.Hidden;
+            settingsWindowVM = new SettingsWindowVM(settingsWindowView);
+
+
             videoPlayerVMs = new List<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
             WaitIndicator = mainWindow.AreaVideoPlayers.WaitProgressBar1;
@@ -1283,7 +1292,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return settingsOpenCommand ??
                   (settingsOpenCommand = new RelayCommand(obj =>
                   {
-
+                      settingsWindowView.Show();
                   }));
             }
         }

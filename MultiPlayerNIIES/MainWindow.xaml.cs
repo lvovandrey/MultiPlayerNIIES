@@ -31,6 +31,7 @@ namespace MultiPlayerNIIES
 
             vm = new VM(AreaVideoPlayers.GridMain, this);
             DataContext = vm;
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

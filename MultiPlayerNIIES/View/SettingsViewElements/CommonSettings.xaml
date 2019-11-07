@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.SettingsViewElements.CommonSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="RadioButton">
+            <Setter Property="Background" Value="#FF343434" />
+            <Setter Property="Foreground" Value="#FFB07220" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+            <GroupBox.Header>
+                Как будем открывать файлы
+            </GroupBox.Header>
+            <StackPanel>
+                <RadioButton GroupName="OpenStatePathType" Margin="5" 
+                             IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >По абсолютному пути</RadioButton>
+                <RadioButton GroupName="OpenStatePathType" Margin="5"
+                             IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">По относительному пути</RadioButton>
+            </StackPanel>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

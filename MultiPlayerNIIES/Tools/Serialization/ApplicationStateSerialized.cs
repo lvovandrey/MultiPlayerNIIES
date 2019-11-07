@@ -9,18 +9,23 @@ using System.Xml.Serialization;
 namespace MultiPlayerNIIES.Tools.Serialization
 {
     [Serializable]
-    public class ApplicationSettingsSerialized
+    public class ApplicationStateSerialized
     {
         public Rect Position;
         public List<PlayerStateSerialized> Players;
         public bool IsExcelConnected;
         public string ExcelBookFilename;
+        public string TargetFilename;
+        public string TargetDirectory;
 
-        public ApplicationSettingsSerialized()
+
+        public ApplicationStateSerialized()
         {}
 
-        public ApplicationSettingsSerialized(VM vm, string targetFilename)
+        public ApplicationStateSerialized(VM vm, string targetFilename)
         {
+            TargetFilename = targetFilename;
+            TargetDirectory = Path.GetDirectoryName(targetFilename);
             Position = new Rect(vm.MainWindow.Left, vm.MainWindow.Top, vm.MainWindow.ActualWidth, vm.MainWindow.ActualHeight);
             IsExcelConnected = vm.IsExcelConnected;
             if (IsExcelConnected) ExcelBookFilename = vm.ExcelBookFilename;

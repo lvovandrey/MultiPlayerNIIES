@@ -14,8 +14,8 @@ namespace MultiPlayerNIIES.Tools.Serialization
     {
         public static void Save(string filename, VM vm)
         {
-            XmlSerializer formatter = new XmlSerializer(typeof(ApplicationSettingsSerialized));
-            ApplicationSettingsSerialized sets = new ApplicationSettingsSerialized(vm, filename);
+            XmlSerializer formatter = new XmlSerializer(typeof(ApplicationStateSerialized));
+            ApplicationStateSerialized sets = new ApplicationStateSerialized(vm, filename);
 
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
@@ -25,13 +25,13 @@ namespace MultiPlayerNIIES.Tools.Serialization
 
         public static void Restore(string filename, VM vm)
         {
-            XmlSerializer formatter = new XmlSerializer(typeof(ApplicationSettingsSerialized));
-            ApplicationSettingsSerialized sets;
+            XmlSerializer formatter = new XmlSerializer(typeof(ApplicationStateSerialized));
+            ApplicationStateSerialized sets;
 
             if (!File.Exists(filename)) { MessageBox.Show("Файл настроек " + filename + " не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); return; }
             using (FileStream fs = new FileStream(filename, FileMode.Open))
             {
-                sets = (ApplicationSettingsSerialized)formatter.Deserialize(fs);
+                sets = (ApplicationStateSerialized)formatter.Deserialize(fs);
             }
             if (sets == null) { MessageBox.Show("Ошибка открытия файла настроек. Десериализатор вернул null."); return; }
 
@@ -42,7 +42,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
 
         }
 
-        private static void ValidateSets(ApplicationSettingsSerialized sets)
+        private static void ValidateSets(ApplicationStateSerialized sets)
         {
             string ErrorsReport = "";
             //удалим видео которые не найдены
@@ -102,7 +102,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
             }
         }
 
-        private static void RestoreViewModel(ApplicationSettingsSerialized sets, VM vm)
+        private static void RestoreViewModel(ApplicationStateSerialized sets, VM vm)
         {
             vm.MainWindow.Left = sets.Position.Left;
             vm.MainWindow.Top = sets.Position.Top;

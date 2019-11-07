@@ -107,6 +107,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
@@ -146,8 +147,10 @@
     <Compile Include="Abstract\INPCBase.cs" />
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="Tools\Graphics\GraphicsTools.cs" />
-    <Compile Include="Tools\Serialization\ApplicationSettingsSerialized.cs" />
+    <Compile Include="Tools\Serialization\ApplicationStateSerialized.cs" />
+    <Compile Include="Tools\Serialization\ConfigurationTools.cs" />
     <Compile Include="Tools\Serialization\StateSaver.cs" />
     <Compile Include="Tools\Subtitles\Subtitle.cs" />
     <Compile Include="Tools\Subtitles\SubtitleProcessor.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
+    <Compile Include="ViewModel\SettingsWindowVM.cs" />
     <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
@@ -186,6 +190,12 @@
     </Compile>
     <Compile Include="View\MetaVLCPlayer\MVLCPlayer.xaml.cs">
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsViewElements\CommonSettings.xaml.cs">
+      <DependentUpon>CommonSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsWindowView.xaml.cs">
+      <DependentUpon>SettingsWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TimeLine\Cursor.xaml.cs">
       <DependentUpon>Cursor.xaml</DependentUpon>
@@ -274,6 +284,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SettingsViewElements\CommonSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TimeLine\Cursor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -340,7 +358,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dll\NewFolder1\" />
-    <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\PNG\Add.png" />
