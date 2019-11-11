@@ -155,8 +155,12 @@ namespace MultiPlayerNIIES.ViewModel
             SyncronizationShiftVM = new SyncronizationShiftVM(this) { ShiftMaxTime=TimeSpan.FromSeconds(10) };
             Body.subtitleProcessor = new SubtitleProcessor();
             PlayerPanelVM = new PlayerPanelVM(Body);
+
+            Settings.SettingsChanged += Settings_SettingsChanged;
+
         }
 
+        
 
 
 
@@ -239,6 +243,10 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Pause();
         }
 
+        private void Settings_SettingsChanged()
+        {
+            OnPropertyChanged("FilenameForTitle");
+        }
 
         #endregion
 

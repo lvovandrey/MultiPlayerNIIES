@@ -1,4 +1,5 @@
-﻿using MultiPlayerNIIES.Tools;
+﻿using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace MultiPlayerNIIES.View
             ToolsTimer.Timer(TimerTick, TimeSpan.FromSeconds(0.05));
             ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null); ButtonHidePanel_Click(null, null); }, TimeSpan.FromSeconds(1));
         }
+
+
 
         private void TimerTick()
         {
