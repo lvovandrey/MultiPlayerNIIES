@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
 using System;
@@ -92,7 +93,19 @@ namespace MultiPlayerNIIES.ViewModel
         public string SourceFilename
         {
             get
-            { return (new Uri(Body.SourceFilename)).LocalPath; }
+            {
+                return (new Uri(Body.SourceFilename)).LocalPath;
+            }
+        }
+        public string FilenameForTitle
+        {
+            get
+            {
+                if (Settings.ShowFullNameInPlayerHeader)
+                    return SourceFilename;
+                else
+                    return Path.GetFileName(SourceFilename);
+            }
         }
 
 
@@ -169,6 +182,7 @@ namespace MultiPlayerNIIES.ViewModel
             if (File.Exists(filename))
             {
                 Body.Load(filename);
+                OnPropertyChanged("SourceFilename");
             }
             else
             {

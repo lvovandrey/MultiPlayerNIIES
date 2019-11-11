@@ -624,7 +624,7 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 if (v.HaveSubtitles) videoPlayers.Add(v);
             }
-
+            if (videoPlayers.Count < 2) return TimeSpan.Zero;
             List<TimeSpan> deltas = new List<TimeSpan>();
             TimeSpan TL =  videoPlayers[0].GetSyncTimeFromTitles(TimeSyncLead); 
             foreach (VideoPlayerVM v in videoPlayers)

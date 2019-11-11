@@ -35,6 +35,21 @@ namespace MultiPlayerNIIES.ViewModel
             set { IsStateFilesRestorePathTypeAbsolute = !value; }
         }
 
+        public bool ShowFullNameInPlayerHeader
+        {
+            get
+            {
+                if (Settings.showFullNameInPlayerHeader == "True")
+                    return true;
+                else return false;
+            }
+            set
+            {
+                if (value == true) Settings.showFullNameInPlayerHeader = "True";
+                else Settings.showFullNameInPlayerHeader = "False";
+                OnPropertyChanged("ShowFullNameInPlayerHeader");
+            }
+        }
 
         public SettingsWindowVM(SettingsWindowView _settingsWindowView)
         {
@@ -81,6 +96,7 @@ namespace MultiPlayerNIIES.ViewModel
                       Settings.RestoreAllSettings();
                       OnPropertyChanged("IsStateFilesRestorePathTypeAbsolute");
                       OnPropertyChanged("IsStateFilesRestorePathTypeRelative");
+                      OnPropertyChanged("ShowFullNameInPlayerHeader");
                   }));
             }
         }

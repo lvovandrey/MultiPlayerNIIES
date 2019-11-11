@@ -37,7 +37,8 @@ namespace MultiPlayerNIIES.View
             {
                 TextBlockSubtitles.Text = subtitleProcessor.GetSubtitle(VLC.CurTime).Text;
             }
-            TextBlockRate.Text = VLC.Rate.ToString("0.0");
+           // ((dynamic)DataContext).OnPropertyChanged("SourceFilename");
+
         }
 
 

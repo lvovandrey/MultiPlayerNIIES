@@ -7,24 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style TargetType="RadioButton">
-            <Setter Property="Background" Value="#FF343434" />
-            <Setter Property="Foreground" Value="#FFB07220" />
-            <Setter Property="Margin" Value="5" />
+        <Style x:Key="TextStyle">
+            <Setter Property="Control.Background" Value="#FFA27B54" />
+            <Setter Property="Control.Foreground" Value="#FFB07220" />
+            <Setter Property="Control.Margin" Value="5" />
         </Style>
+
+        
     </UserControl.Resources>
     <Grid>
-        <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
-            <GroupBox.Header>
-                Как будем открывать файлы
-            </GroupBox.Header>
-            <StackPanel>
-                <RadioButton GroupName="OpenStatePathType" Margin="5" 
-                             IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >По абсолютному пути</RadioButton>
-                <RadioButton GroupName="OpenStatePathType" Margin="5"
-                             IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">По относительному пути</RadioButton>
-            </StackPanel>
-        </GroupBox>
+        <StackPanel>
+            <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                <GroupBox.Header>
+                    Как будем открывать файлы
+                </GroupBox.Header>
+                <StackPanel>
+                    <RadioButton GroupName="OpenStatePathType" Margin="5" 
+                             IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                             Style="{StaticResource TextStyle}">По абсолютному пути</RadioButton>
+                    <RadioButton GroupName="OpenStatePathType" Margin="5"
+                             IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                             Style="{StaticResource TextStyle}">По относительному пути</RadioButton>
 
+                </StackPanel>
+            </GroupBox>
+            <CheckBox Margin="5"
+                             IsChecked="{Binding ShowFullNameInPlayerHeader, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                             Style="{StaticResource TextStyle}">Отображать полный путь к файлу в шапке плеера</CheckBox>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -100,20 +100,15 @@
                 Background="#7FFFFFFF"
                 Text="..." />
 
-            <TextBlock
-                x:Name="TextBlockRate"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Panel.ZIndex="1"
-                Background="White"
-                Text="..." />
-            <TextBlock
+
+            <TextBox
                 x:Name="TextBlockDebug"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Panel.ZIndex="1"
-                Background="#FF6AB958"
-                Text="debug" />
+                Margin="20 0 0 0"
+                Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                Foreground="#FF2EFF00" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FF8D8D8D"  />
 
         </StackPanel>
         <StackPanel

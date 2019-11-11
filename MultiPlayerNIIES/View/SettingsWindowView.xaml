@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MultiPlayerNIIES.View"
         xmlns:elements="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
         mc:Ignorable="d"
-        Title="Настройки" Height="300" Width="500" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" 
+        Title="Настройки" Height="300" Width="600" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" 
         BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing"   >
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -56,8 +56,8 @@
             <TextBlock  Text="Разделы настроек" />
             <ListBox VerticalAlignment="Stretch" Background="{x:Null}" BorderBrush="#FFB07220">
                 <ListBoxItem >Общее</ListBoxItem>
-                <ListBoxItem >Вид</ListBoxItem>
-                <ListBoxItem >Сохранение файлов</ListBoxItem>
+                <ListBoxItem Focusable="False" Foreground="Gray">Вид</ListBoxItem>
+                <ListBoxItem Focusable="False" Foreground="Gray">Сохранение файлов</ListBoxItem>
             
         </ListBox>
         </StackPanel>
