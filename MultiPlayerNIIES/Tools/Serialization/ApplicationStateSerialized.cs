@@ -11,11 +11,29 @@ namespace MultiPlayerNIIES.Tools.Serialization
     [Serializable]
     public class ApplicationStateSerialized
     {
+        /// <summary>
+        /// Позиция всего плеера относительно левого верхнего угла экрана и его размеры
+        /// </summary>
         public Rect Position;
+        /// <summary>
+        /// Окна плееров, открытые в момент сохранения файла 
+        /// </summary>
         public List<PlayerStateSerialized> Players;
+        /// <summary>
+        /// Состояние связанности с файлом Excel 
+        /// </summary>
         public bool IsExcelConnected;
+        /// <summary>
+        /// Путь к текущей книге Excel
+        /// </summary>
         public string ExcelBookFilename;
+        /// <summary>
+        /// Путь к файлу, хранящему состояние
+        /// </summary>
         public string TargetFilename;
+        /// <summary>
+        /// Директория в которой размещается файл хранящий состояние
+        /// </summary>
         public string TargetDirectory;
 
 

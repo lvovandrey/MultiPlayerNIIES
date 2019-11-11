@@ -1,4 +1,5 @@
-﻿using MultiPlayerNIIES.ViewModel;
+﻿using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -112,7 +113,15 @@ namespace MultiPlayerNIIES.Tools.Serialization
             //готовим перечень файлов...
             string[] filenames = new string[sets.Players.Count];
             for (int i = 0; i < sets.Players.Count; i++)
-                filenames[i] = sets.Players[i].filename;
+                if (Settings.stateFilesRestorePathType=="Absolute")
+                {
+                    filenames[i] = sets.Players[i].filename;
+                }
+                else
+                {
+                   filenames[i] = Path.GetFullPath(Path.Combine(sets.TargetDirectory, sets.Players[i].relativeFilename)); //преобразование относительного пути в абсолютный
+                }
+                
             //... и зон размещения проигрывателей для ...
             Rect[] areas = new Rect[sets.Players.Count];
             for (int i = 0; i < sets.Players.Count; i++)
