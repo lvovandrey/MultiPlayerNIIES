@@ -10,6 +10,9 @@ namespace MultiPlayerNIIES.Model
 
     public static class Settings
     {
+        /// <summary>
+        /// Событие возникает когда изменяются настройки. На него рекомендуется вешать все изменения которые завязаны с настройками.
+        /// </summary>
         public static event Action SettingsChanged;
 
         public static string stateFilesRestorePathType = "Absolute";
