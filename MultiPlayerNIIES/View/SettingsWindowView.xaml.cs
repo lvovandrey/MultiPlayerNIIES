@@ -39,5 +39,7 @@ namespace MultiPlayerNIIES.View
         {
             Hide();
         }
+
+
     }
 }

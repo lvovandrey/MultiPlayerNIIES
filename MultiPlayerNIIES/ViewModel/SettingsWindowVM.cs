@@ -26,6 +26,7 @@ namespace MultiPlayerNIIES.ViewModel
                 if (value == true) Settings.stateFilesRestorePathType = "Absolute";
                 else Settings.stateFilesRestorePathType = "Relative";
                 OnPropertyChanged("IsStateFilesRestorePathTypeAbsolute");
+                OnPropertyChanged("IsStateFilesRestorePathTypeRelative");
             }
         }
         public bool IsStateFilesRestorePathTypeRelative
@@ -41,9 +42,20 @@ namespace MultiPlayerNIIES.ViewModel
             RestoreSettingsCommand.Execute(null);
             settingsWindowView.DataContext = this;
 
+            settingsWindowView.Loaded += SettingsWindowView_Loaded;
+            settingsWindowView.Activated += SettingsWindowView_Activated;
+
         }
 
+        private void SettingsWindowView_Activated(object sender, EventArgs e)
+        {
+            RestoreSettingsCommand.Execute(null);
+        }
 
+        private void SettingsWindowView_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            RestoreSettingsCommand.Execute(null);
+        }
 
         private RelayCommand saveSettingsCommand;
         public RelayCommand SaveSettingsCommand
@@ -67,6 +79,8 @@ namespace MultiPlayerNIIES.ViewModel
                   (restoreSettingsCommand = new RelayCommand(obj =>
                   {
                       Settings.RestoreAllSettings();
+                      OnPropertyChanged("IsStateFilesRestorePathTypeAbsolute");
+                      OnPropertyChanged("IsStateFilesRestorePathTypeRelative");
                   }));
             }
         }
