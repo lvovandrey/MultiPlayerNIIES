@@ -471,6 +471,13 @@ namespace MultiPlayerNIIES.View.DSPlayer
         #endregion
 
 
+        public void OnResize(SizeChangedEventArgs e)
+        {
+            if (dxPlay == null) return;
+            OnResize();  
+            if(e.PreviousSize.Width>0 && e.PreviousSize.Height>0)
+                VideoMMM.ResizeZoom(e.NewSize.Width/e.PreviousSize.Width, e.NewSize.Height/e.PreviousSize.Height, VideoMMM.SelectablePictureBox1);
+        }
         public void OnResize()
         {
             if (dxPlay == null) return;
@@ -479,7 +486,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
         {
             if (dxPlay == null) return;
-            OnResize();
+            OnResize(e);
         }
 
 

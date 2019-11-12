@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace WindowsFormsVideoControl
 {
-    public partial class VideoContainer1: UserControl
+    public partial class VideoContainer1 : UserControl
     {
         public double CurZoomKoefX
         {
@@ -52,18 +52,21 @@ namespace WindowsFormsVideoControl
             System.Drawing.Point Pos = new System.Drawing.Point(-curWinPos.X + Cursor.Position.X, -curWinPos.Y + Cursor.Position.Y);
             if (Pos.X < -2 || Pos.Y < -2 || Pos.X > this.Width + 2 || Pos.Y > this.Height + 2)
                 return; // если зум за пределами окна - не делаем его
-
             Zoom(k, this.SelectablePictureBox1, e.Location);
         }
 
 
         #region Реализация Zoom
+        public double OldZoomKoef = 1;
+        public double CurZoomKoef = 1;
+
         public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
         {
-            
+
             double w = (double)ZoomedElement.Width;
             double h = (double)ZoomedElement.Height;
 
+            OldZoomKoef = (double)ZoomedElement.Width / (double)Width; Debug.WriteLine(OldZoomKoef.ToString());
 
             double deltaX = ZoomKoef * w;
             double deltaY = ZoomKoef * h;
@@ -98,9 +101,67 @@ namespace WindowsFormsVideoControl
             ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
         }
 
+        public void Zoom(double ZoomKoefX, double ZoomKoefY, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
+        {
+
+            double w = (double)ZoomedElement.Width;
+            double h = (double)ZoomedElement.Height;
+
+            OldZoomKoef = (double)ZoomedElement.Width / (double)Width; Debug.WriteLine(OldZoomKoef.ToString());
+
+            double deltaX = ZoomKoefX * w;
+            double deltaY = ZoomKoefY * h;
+
+            double curX = (double)ZoomCenterPositionInContainer.X;
+            double curY = (double)ZoomCenterPositionInContainer.Y;
+
+            double ML = -(double)ZoomedElement.Location.X;
+            double MT = -(double)ZoomedElement.Location.Y;
+
+            double wnew = (double)w + (double)deltaX;
+            double hnew = (double)h + (double)deltaY;
+
+            double a = curX;
+            double b = w - curX;
+            double tau = a / b;
+            double MLnew = -(tau / (1 + tau)) * deltaX - ML;
+
+            double c = curY;
+            double d = h - curY;
+            double kappa = c / d;
+            double MTnew = -(kappa / (1 + kappa)) * deltaY - MT;
+
+
+            if (MLnew > 0) MLnew = 0;
+            if (wnew < this.Width) wnew = this.Width;
+            if (MTnew > 0) MTnew = 0;
+            if (hnew < this.Height) hnew = this.Height;
+
+            ZoomedElement.Width = (int)wnew;
+            ZoomedElement.Height = (int)hnew;
+            ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
+        }
+
+
+        double oldW = 0;
+        public void ResizeZoom(double kx, double ky, System.Windows.Forms.Control ZoomedElement)
+        {
+
+            double wa = (double)ZoomedElement.Width;
+            double wxa = (double)ZoomedElement.Location.X;
+
+            double ha = (double)ZoomedElement.Height;
+            double hya = (double)ZoomedElement.Location.Y;
+
+
+            ZoomedElement.Width = (int)(wa * kx);
+            ZoomedElement.Height = (int)(ha * ky);
+            ZoomedElement.Location = new System.Drawing.Point((int)(wxa * kx), (int)(hya * ky));
+        }
+
         public void FitToFill()
         {
-            Zoom(-1,SelectablePictureBox1, new System.Drawing.Point(0, 0));
+            Zoom(-1, SelectablePictureBox1, new System.Drawing.Point(0, 0));
 
             //SelectablePictureBox1.Width = this.Width;
             //SelectablePictureBox1.Height = this.Height;
@@ -146,12 +207,11 @@ namespace WindowsFormsVideoControl
             draggedObject.MouseMove += OnDragMove;
             draggedObject.Leave += OnLostCapture;
             draggedObject.MouseUp += OnMouseUp;
-            Debug.WriteLine("StartDrag");
         }
 
         void OnDragMove(object sender, MouseEventArgs e)
         {
-           UpdatePosition(e);          
+            UpdatePosition(e);
         }
         int i;
         bool flag;
@@ -161,11 +221,9 @@ namespace WindowsFormsVideoControl
             var point = this.PointToClient(posFromForm);
             var newPos = new System.Drawing.Point(point.X - relativeMousePos.X, point.Y - relativeMousePos.Y);
             draggedObject.Location = new System.Drawing.Point(newPos.X, newPos.Y);
-
-            Debug.WriteLine("UpdatePosition"+ i++ + "  Loc= " + draggedObject.Location.ToString() + "   point" + point.ToString() + "   relativeMousePos" + relativeMousePos.ToString());
         }
 
-        
+
 
         void OnMouseUp(object sender, MouseEventArgs e)
         {
@@ -174,17 +232,17 @@ namespace WindowsFormsVideoControl
         }
 
         void OnLostCapture(object sender, EventArgs e)
-        {            
+        {
             FinishDrag(sender, null);
         }
 
         void FinishDrag(object sender, MouseEventArgs e)
         {
-            
+
             draggedObject.MouseMove -= OnDragMove;
             draggedObject.Leave -= OnLostCapture;
             draggedObject.MouseUp -= OnMouseUp;
-            
+
         }
 
         internal void OnResize()

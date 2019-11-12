@@ -849,7 +849,6 @@ namespace MultiPlayerNIIES.ViewModel
             Thread.Sleep(50);
             foreach (VideoPlayerVM v in videoPlayerVMs)
             {
-                v.UpdateVLCInnerPosition();
                 ToolsTimer.Delay(() => { v.SetCurrentSizeForRestore(); }, TimeSpan.FromSeconds(1));
             }
         }

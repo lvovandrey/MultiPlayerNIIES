@@ -88,7 +88,6 @@ namespace MultiPlayerNIIES.View.TimeLine
 
         private void TimeLine_OnPOSChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Debug.WriteLine("POS=" + POS.ToString());
             if (PosSelf) { PosSelf = false; return; }
             if (POS > -0.1) { Cursor1.CRPosition = POS / 1000;  }
 

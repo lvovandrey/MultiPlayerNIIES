@@ -21,6 +21,28 @@ namespace MultiPlayerNIIES.ViewModel
         VM VM;
         SyncronizationShiftVM syncronizationShiftVM;
         PlayerPanelVM playerPanelVM;
+        public VideoPlayerVM(Grid container, VM vm, Rect AreaForPlacementInContainer)
+        {
+            Container = container;
+            Body = new VideoPlayerView();
+            Body.DataContext = this;
+            VM = vm;
+            container.Children.Add(Body);
+            Body.DragDropSwitchOn(Container, Body.Dragger);
+            Body.ResizeSwitchOn(Container);
+            Body.HorizontalAlignment = HorizontalAlignment.Left;
+            Body.VerticalAlignment = VerticalAlignment.Top;
+            Replace(AreaForPlacementInContainer);
+            Body.UpFocus += UpFocusX;
+            Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
+            IsSyncronizeLeader = false;
+            SyncronizationShiftVM = new SyncronizationShiftVM(this) { ShiftMaxTime=TimeSpan.FromSeconds(10) };
+            Body.subtitleProcessor = new SubtitleProcessor();
+            PlayerPanelVM = new PlayerPanelVM(Body);
+
+            Settings.SettingsChanged += Settings_SettingsChanged;
+            Body.SizeChanged += (s, e) => { UpdateVLCInnerPosition(); };
+        }
 
         public SyncronizationShiftVM SyncronizationShiftVM
         {
@@ -136,34 +158,7 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
         #endregion
-
-        public VideoPlayerVM(Grid container, VM vm, Rect AreaForPlacementInContainer)
-        {
-            Container = container;
-            Body = new VideoPlayerView();
-            Body.DataContext = this;
-            VM = vm;
-            container.Children.Add(Body);
-            Body.DragDropSwitchOn(Container, Body.Dragger);
-            Body.ResizeSwitchOn(Container);
-            Body.HorizontalAlignment = HorizontalAlignment.Left;
-            Body.VerticalAlignment = VerticalAlignment.Top;
-            Replace(AreaForPlacementInContainer);
-            Body.UpFocus += UpFocusX;
-            Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
-            IsSyncronizeLeader = false;
-            SyncronizationShiftVM = new SyncronizationShiftVM(this) { ShiftMaxTime=TimeSpan.FromSeconds(10) };
-            Body.subtitleProcessor = new SubtitleProcessor();
-            PlayerPanelVM = new PlayerPanelVM(Body);
-
-            Settings.SettingsChanged += Settings_SettingsChanged;
-
-        }
-
         
-
-
-
         #region Methods
 
 
