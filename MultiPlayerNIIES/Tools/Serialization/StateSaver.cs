@@ -146,7 +146,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
                     v.CurTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].CurTime;
                     v.SyncronizationShiftVM.ShiftTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].TimeShift;
                 }
-            }, TimeSpan.FromSeconds(5));
+            }, TimeSpan.FromSeconds(2));
         }
 
 

@@ -285,7 +285,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 CurTime = TimeSpan.FromSeconds(Position / 1000 * Duration.TotalSeconds);
                 dxPlay.Position = Position / 1000;
 
-                ToolsTimer.Delay(() => { play(); }, TimeSpan.FromMilliseconds(1000));
+                ToolsTimer.Delay(() => { play(); }, TimeSpan.FromMilliseconds(300));
             }
             else
             {
@@ -295,7 +295,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 dxPlay.Position = Position / 1000;
             }
 
-            ToolsTimer.Delay(() => { timer.Start(); }, TimeSpan.FromMilliseconds(1000));
+            ToolsTimer.Delay(() => { timer.Start(); }, TimeSpan.FromMilliseconds(300));
         }
 
         private void DecSpeedBtn_Click(object sender, RoutedEventArgs e)

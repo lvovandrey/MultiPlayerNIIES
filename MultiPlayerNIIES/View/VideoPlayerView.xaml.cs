@@ -69,14 +69,15 @@ namespace MultiPlayerNIIES.View
         }
         public void SetSliderPosition(double sl_position)
         {
-            if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
-            {
+            if (VLC.Duration <= TimeSpan.Zero)
+                Tools.ToolsTimer.Delay(() =>
+                {
                 VLC.pause();
                 Tools.ToolsTimer.Delay(() => 
-                {
-                    VLC.Position = sl_position;
-                }, TimeSpan.FromSeconds(2));
-            }, TimeSpan.FromSeconds(1));
+                    {
+                        VLC.Position = sl_position;
+                    }, TimeSpan.FromSeconds(0.2));
+                }, TimeSpan.FromSeconds(0.1));
             else
             {
                 VLC.Position = sl_position;
