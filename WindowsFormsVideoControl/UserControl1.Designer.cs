@@ -53,6 +53,7 @@
             this.Name = "VideoContainer1";
             this.Size = new System.Drawing.Size(888, 549);
             this.Load += new System.EventHandler(this.VideoContainer1_Load);
+            this.Resize += new System.EventHandler(this.VideoContainer1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.SelectablePictureBox1)).EndInit();
             this.ResumeLayout(false);
 

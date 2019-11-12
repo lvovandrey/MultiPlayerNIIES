@@ -38,11 +38,15 @@ namespace WindowsFormsVideoControl
             DragDropSwitchOn(this, SelectablePictureBox1);
         }
 
+        double oldW = 0;
+        double oldH = 0;
         private void VideoContainer1_Load(object sender, EventArgs e)
         {
             this.SelectablePictureBox1.Width = this.Width;
             this.SelectablePictureBox1.Height = this.Height;
             this.SelectablePictureBox1.MouseWheel += MouseWheelHandler;
+            oldW = Width;
+            oldH = Height;
         }
 
         private void MouseWheelHandler(object sender, MouseEventArgs e)
@@ -101,71 +105,12 @@ namespace WindowsFormsVideoControl
             ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
         }
 
-        public void Zoom(double ZoomKoefX, double ZoomKoefY, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
-        {
-
-            double w = (double)ZoomedElement.Width;
-            double h = (double)ZoomedElement.Height;
-
-            OldZoomKoef = (double)ZoomedElement.Width / (double)Width; Debug.WriteLine(OldZoomKoef.ToString());
-
-            double deltaX = ZoomKoefX * w;
-            double deltaY = ZoomKoefY * h;
-
-            double curX = (double)ZoomCenterPositionInContainer.X;
-            double curY = (double)ZoomCenterPositionInContainer.Y;
-
-            double ML = -(double)ZoomedElement.Location.X;
-            double MT = -(double)ZoomedElement.Location.Y;
-
-            double wnew = (double)w + (double)deltaX;
-            double hnew = (double)h + (double)deltaY;
-
-            double a = curX;
-            double b = w - curX;
-            double tau = a / b;
-            double MLnew = -(tau / (1 + tau)) * deltaX - ML;
-
-            double c = curY;
-            double d = h - curY;
-            double kappa = c / d;
-            double MTnew = -(kappa / (1 + kappa)) * deltaY - MT;
-
-
-            if (MLnew > 0) MLnew = 0;
-            if (wnew < this.Width) wnew = this.Width;
-            if (MTnew > 0) MTnew = 0;
-            if (hnew < this.Height) hnew = this.Height;
-
-            ZoomedElement.Width = (int)wnew;
-            ZoomedElement.Height = (int)hnew;
-            ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
-        }
-
-
-        double oldW = 0;
-        public void ResizeZoom(double kx, double ky, System.Windows.Forms.Control ZoomedElement)
-        {
-
-            double wa = (double)ZoomedElement.Width;
-            double wxa = (double)ZoomedElement.Location.X;
-
-            double ha = (double)ZoomedElement.Height;
-            double hya = (double)ZoomedElement.Location.Y;
-
-
-            ZoomedElement.Width = (int)(wa * kx);
-            ZoomedElement.Height = (int)(ha * ky);
-            ZoomedElement.Location = new System.Drawing.Point((int)(wxa * kx), (int)(hya * ky));
-        }
-
         public void FitToFill()
         {
             Zoom(-1, SelectablePictureBox1, new System.Drawing.Point(0, 0));
 
-            //SelectablePictureBox1.Width = this.Width;
-            //SelectablePictureBox1.Height = this.Height;
-            //SelectablePictureBox1.Location = new System.Drawing.Point(0, 0);
+            oldW = Width;
+            oldH = Height;
         }
 
         #endregion
@@ -254,8 +199,28 @@ namespace WindowsFormsVideoControl
 
 
 
+
         #endregion
 
+        private void VideoContainer1_Resize(object sender, EventArgs e)
+        {
+            if (oldH > 0 && oldW > 0)
+            {
+                double kx = (double)Width / (double)oldW;
+                double ky = (double)Height / (double)oldH;
 
+                double wa = (double)SelectablePictureBox1.Width;
+                double wxa = (double)SelectablePictureBox1.Location.X;
+
+                double ha = (double)SelectablePictureBox1.Height;
+                double hya = (double)SelectablePictureBox1.Location.Y;
+
+                SelectablePictureBox1.Width = (int)Math.Round(wa * kx);
+                SelectablePictureBox1.Height = (int)Math.Round(ha * ky);
+                SelectablePictureBox1.Location = new System.Drawing.Point((int)Math.Round(wxa * kx), (int)Math.Round(hya * ky));
+            }
+            oldW = Width;
+            oldH = Height;
+        }
     }
 }

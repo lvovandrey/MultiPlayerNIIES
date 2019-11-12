@@ -475,8 +475,6 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             if (dxPlay == null) return;
             OnResize();  
-            if(e.PreviousSize.Width>0 && e.PreviousSize.Height>0)
-                VideoMMM.ResizeZoom(e.NewSize.Width/e.PreviousSize.Width, e.NewSize.Height/e.PreviousSize.Height, VideoMMM.SelectablePictureBox1);
         }
         public void OnResize()
         {
