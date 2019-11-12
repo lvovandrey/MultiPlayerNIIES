@@ -946,8 +946,17 @@ namespace MultiPlayerNIIES.ViewModel
                 return closeAllCommand ??
                   (closeAllCommand = new RelayCommand(obj =>
                   {
+                      if (videoPlayerVMs.Count == 0) return;
+                      MessageBoxResult res = System.Windows.MessageBox.Show("Все видео-окна будут закрыты. Продолжить?", "Закрыть все видео", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        if (res == MessageBoxResult.No) return;
+
+                      VideoPlayerVM[] vs = new VideoPlayerVM[videoPlayerVMs.Count];
+                      int i = 0; int Count = videoPlayerVMs.Count;
                       foreach (var v in videoPlayerVMs)
-                          v.CloseCommand.Execute(null);
+                      { vs[i] = v; i++; }
+
+                      for(i=0;i< Count; i++)
+                          vs[i].CloseCommand.Execute(null);
                   }));
             }
         }

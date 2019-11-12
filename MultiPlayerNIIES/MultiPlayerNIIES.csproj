@@ -454,6 +454,9 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Gnome-Process-Stop-64.png" />
+    <Resource Include="Images\PNG\Gnome-Folder-Open-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Floppy-64.png" />
     <Resource Include="Gnome-Video-X-Generic-64.ico" />
     <Resource Include="Images\PNG\Gnome-Document-Save-64.png" />
     <Resource Include="Images\PNG\Gnome-Document-Open-64.png" />
