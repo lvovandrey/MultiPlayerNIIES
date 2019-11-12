@@ -96,7 +96,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Play an avi file into a window.  Allow for snapshots.
         // (Control to show video in, Avi file to play
-        public  DxPlay(Control hWin, string FileName, bool RateOk)
+        public  DxPlay(Control hWin, string FileName, ref bool Ok)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_sFileName = FileName;
 
                 // Set up the graph
-                SetupGraph2(hWin, FileName,  RateOk);
+                SetupGraph2(hWin, FileName, ref Ok);
 
                 // Get the event handle the graph will use to signal
                 // when events occur
@@ -130,7 +130,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             catch
             {
                 Dispose();
-                throw;
+                Ok = false;
             }
         }
 
@@ -312,7 +312,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Build the capture graph for grabber and renderer.</summary>
         // (Control to show video in, Filename to play)
-        private void SetupGraph2(Control hWin, string FileName, bool RateOk)
+        private void SetupGraph2(Control hWin, string FileName, ref bool RateOk)
         {
             int hr;
           

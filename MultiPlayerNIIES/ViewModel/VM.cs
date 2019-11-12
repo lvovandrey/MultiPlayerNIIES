@@ -1428,11 +1428,12 @@ namespace MultiPlayerNIIES.ViewModel
                           if (IsAllSyncronized)
                           {
                               Timer.Stop();
-                              ToolsTimer.Delay(() =>
-                              {
-                                  foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
-                                      if (pair.Value) pair.Key.Play();
-                              }, TimeSpan.FromSeconds(1));
+                              if(IsAllPlayerStatesEquals(PlayersStates))
+                                ToolsTimer.Delay(() =>
+                                {
+                                    foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
+                                        if (pair.Value) pair.Key.Play();
+                                }, TimeSpan.FromSeconds(1));
                           }
                       };
                       Timer.Interval = TimeSpan.FromSeconds(0.1);
@@ -1442,6 +1443,15 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
 
             }
+        }
+
+        private bool IsAllPlayerStatesEquals(Dictionary<VideoPlayerVM, bool> PlayersStates)
+        {
+            bool flag = true;
+            bool firstval = PlayersStates.First().Value;
+            foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
+                if (firstval != pair.Value) flag = false;
+            return flag;
         }
 
 

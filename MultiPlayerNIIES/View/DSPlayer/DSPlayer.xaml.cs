@@ -138,10 +138,12 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         internal void RateIncreace()
         {
+            if (dxPlay == null) return;
             IncSpeedBtn_Click(null, null);
         }
         internal void RateDecreace()
         {
+            if (dxPlay == null) return;
             DecSpeedBtn_Click(null, null);
         }
 
@@ -172,16 +174,18 @@ namespace MultiPlayerNIIES.View.DSPlayer
             //    dxPlay.Dispose();
             //    dxPlay = null;
             //}
-
-            testDx = new DxPlay(VideoPanel2, Source.LocalPath, true); // тестируем - открываем проверяем.... жуткий просто ужасный костыль
-            //TODO: Нет, братан, ну с этим надо реально что-то делать.....
+            bool Ok = true;
+            testDx = new DxPlay(VideoPanel2, Source.LocalPath, ref Ok); // тестируем - открываем проверяем.... жуткий просто ужасный костыль
+                                                                        //TODO: Нет, братан, ну с этим надо реально что-то делать.....
+            if (!Ok) return;
             testDx.Start();
             //ToolsTimer.Delay(() =>
             // {
             bool RateOk = testDx.TryRate();
 
-
-            dxPlay = new DxPlay(VideoMMM.SelectablePictureBox1, Source.LocalPath, RateOk);
+            bool AllOk = Ok && RateOk;
+            if (!Ok) return;
+            dxPlay = new DxPlay(VideoMMM.SelectablePictureBox1, Source.LocalPath, ref RateOk);
 
             Duration = dxPlay.Duration;
             //vlc.Height = ActualHeight - 40;
@@ -190,7 +194,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             dxPlay.Start();
             Volume = 20;
             testDx.Stop();
-            
+
             dxPlay.Pause();
 
 
@@ -199,7 +203,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                  VideoMMM.FitToFill();
                  OnResize();
              }, TimeSpan.FromSeconds(1.5));
-        
+
         }
 
 
@@ -213,7 +217,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void Player_OnVolumeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            dxPlay.Volume = Volume;
+            if (dxPlay != null)
+                dxPlay.Volume = Volume;
         }
 
         private void Player_OnCurTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -223,41 +228,55 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void pause()
         {
-            if (dxPlay.IsPlaying)
-                dxPlay.Pause();
+            if (dxPlay != null)
+                if (dxPlay.IsPlaying)
+                    dxPlay.Pause();
 
         }
         public void play()
         {
-            if (!dxPlay.IsPlaying)
-                dxPlay.Start();
+            if (dxPlay != null)
+                if (!dxPlay.IsPlaying)
+                    dxPlay.Start();
         }
         public void stop()
         {
-            dxPlay.Stop();
+            if (dxPlay != null)
+                dxPlay.Stop();
         }
 
 
         private void PlayBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            if (dxPlay.IsPlaying) dxPlay.Pause();
-            else dxPlay.Start();
+            if (dxPlay != null)
+                if (dxPlay.IsPlaying) dxPlay.Pause();
+                else dxPlay.Start();
         }
 
 
 
         private void MuteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (dxPlay.Volume != 0) Volume = 0;
-            else Volume = 50;
+            if (dxPlay != null)
+                if (dxPlay.Volume != 0) Volume = 0;
+                else Volume = 50;
 
         }
 
-        public bool IsPlaying { get { return dxPlay.IsPlaying; } }
+        public bool IsPlaying
+        {
+            get
+            {
+                if (dxPlay != null)
+                    return dxPlay.IsPlaying;
+                else return false;
+            }
+        }
         bool WasPlaing;
 
         public void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (dxPlay == null) return;
             WasPlaing = IsPlaying;
             if (IsPlaying)
             { pause(); timer.Stop(); }
@@ -267,6 +286,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (dxPlay == null) return;
             if (!IsPlaying && WasPlaing)
             {
                 play(); timer.Start();
@@ -275,6 +295,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void SetPosition(double position)// ЧТО ЭТО ЗА ЖЕСТЬ?!!!!!!
         {
+            if (dxPlay == null) return;
+
             timer.Stop();
             if (IsPlaying)
             {
@@ -300,42 +322,56 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void DecSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (dxPlay == null) return;
             Rate += 0.1;
         }
 
         private void IncSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (dxPlay == null) return;
             Rate -= 0.1;
         }
 
         private void FrameBackwardBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (dxPlay == null) return;
             pause();
             Position = Position - (0.1 * 1000 / Duration.TotalSeconds);
         }
 
         private void FrameForwardBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (dxPlay == null) return;
             pause();
             Position = Position + (0.1 * 1000 / Duration.TotalSeconds);
         }
 
         internal void Step(TimeSpan step)
         {
+            if (dxPlay == null) return;
             Position = Position + (step.TotalSeconds * 1000 / Duration.TotalSeconds);
         }
 
         public double Rate
         {
-            get { return dxPlay.Rate; }
-            set { dxPlay.Rate = value; }
+            get
+            {
+                if (dxPlay != null)
+                    return dxPlay.Rate;
+                else return 0;
+            }
+            set
+            {
+                if (dxPlay != null)
+                    dxPlay.Rate = value;
+            }
         }
 
 
 
         public void OnClosing()
         {
-            
+            if (dxPlay == null) return;
             dxPlay.Dispose();
             testDx.Dispose();
         }
@@ -354,6 +390,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void DragDropSwitchOn(UIElement container, FrameworkElement DraggedElement)
         {
+            if (dxPlay == null) return;
             if (IsDragDrop) return;
             Container = container;
             IsDragDrop = true;
@@ -364,6 +401,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void DragDropSwitchOff()
         {
+            if (dxPlay == null) return;
             if (!IsDragDrop) return;
             Container = null;
             IsDragDrop = false;
@@ -373,6 +411,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         void StartDrag(object sender, MouseButtonEventArgs e)
         {
+            if (dxPlay == null) return;
             if ((Container == null) || !IsDragDrop) return;
             relativeMousePos = e.GetPosition(draggedObject) - new System.Windows.Point();
             draggedObject.MouseMove += OnDragMove;
@@ -384,11 +423,13 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         void OnDragMove(object sender, MouseEventArgs e)
         {
+            if (dxPlay == null) return;
             UpdatePosition(e);
         }
 
         void UpdatePosition(MouseEventArgs e)
         {
+            if (dxPlay == null) return;
             var point = e.GetPosition(Container);
             var newPos = point - relativeMousePos;
             draggedObject.Margin = new Thickness(newPos.X, newPos.Y, 0, 0);
@@ -396,17 +437,20 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (dxPlay == null) return;
             FinishDrag(sender, e);
             Mouse.Capture(null);
         }
 
         void OnLostCapture(object sender, MouseEventArgs e)
         {
+            if (dxPlay == null) return;
             FinishDrag(sender, e);
         }
 
         void FinishDrag(object sender, MouseEventArgs e)
         {
+            if (dxPlay == null) return;
             draggedObject.MouseMove -= OnDragMove;
             draggedObject.LostMouseCapture -= OnLostCapture;
             draggedObject.MouseUp -= OnMouseUp;
@@ -429,10 +473,12 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void OnResize()
         {
+            if (dxPlay == null) return;
             dxPlay.FillWindowPosition(VideoMMM.SelectablePictureBox1);
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e) // TODO: какой-то тупой стиль
         {
+            if (dxPlay == null) return;
             OnResize();
         }
 
@@ -441,10 +487,11 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         private void VideoPanel_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            if (dxPlay == null) return;
             OnResize();
         }
 
-    
+
 
         #endregion
 
