@@ -151,22 +151,22 @@ namespace MultiPlayerNIIES.View.TimeLine
             T10.T_el = TimeSpan.FromSeconds(600);
 
 
-            int N = (int)Math.Round((FullTime.TotalSeconds / T1.T_el.TotalSeconds)) + 1;
+            int N = (int)Math.Round((FullTime.TotalSeconds / T1.T_el.TotalSeconds)) + 2;
             T1.ClearDashes();
             T1.FillDashes(N);
 
-            N = (int)Math.Round((FullTime.TotalSeconds / T_tenSec.T_el.TotalSeconds)) + 1;
+            N = (int)Math.Round((FullTime.TotalSeconds / T_tenSec.T_el.TotalSeconds)) + 2;
             T_tenSec.ClearDashes();
             T_tenSec.FillDashes(N);
 
             if (FullTime.TotalSeconds < 60)
             {
-                N = (int)Math.Round((FullTime.TotalSeconds / T_Sec.T_el.TotalSeconds)) + 1;
+                N = (int)Math.Round((FullTime.TotalSeconds / T_Sec.T_el.TotalSeconds)) + 2;
                 T_Sec.ClearDashes();
                 T_Sec.FillDashes(N);
             }
 
-            N = (int)Math.Round((FullTime.TotalSeconds / T10.T_el.TotalSeconds)) + 1;
+            N = (int)Math.Round((FullTime.TotalSeconds / T10.T_el.TotalSeconds)) + 2;
             T10.ClearDashes();
             T10.FillDashes(N);
 
