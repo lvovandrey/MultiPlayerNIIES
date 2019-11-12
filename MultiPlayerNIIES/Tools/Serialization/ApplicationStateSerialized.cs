@@ -35,6 +35,10 @@ namespace MultiPlayerNIIES.Tools.Serialization
         /// Директория в которой размещается файл хранящий состояние
         /// </summary>
         public string TargetDirectory;
+        /// <summary>
+        /// Состояние окна  - развернуто/свернуто/восстановлено
+        /// </summary>
+        public WindowState WindowState;
 
 
         public ApplicationStateSerialized()
@@ -45,6 +49,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
             TargetFilename = targetFilename;
             TargetDirectory = Path.GetDirectoryName(targetFilename);
             Position = new Rect(vm.MainWindow.Left, vm.MainWindow.Top, vm.MainWindow.ActualWidth, vm.MainWindow.ActualHeight);
+            WindowState = vm.MainWindow.WindowState;
             IsExcelConnected = vm.IsExcelConnected;
             if (IsExcelConnected) ExcelBookFilename = vm.ExcelBookFilename;
             Players = new List<PlayerStateSerialized>();

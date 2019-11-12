@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Style x:Key="TextStyle">
-            <Setter Property="Control.Background" Value="#FFA27B54" />
+            <Setter Property="Control.Background" Value="#FFBEBEBE" />
             <Setter Property="Control.Foreground" Value="#FFB07220" />
             <Setter Property="Control.Margin" Value="5" />
         </Style>

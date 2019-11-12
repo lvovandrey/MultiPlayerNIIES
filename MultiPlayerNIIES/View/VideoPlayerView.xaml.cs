@@ -72,7 +72,10 @@ namespace MultiPlayerNIIES.View
             if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
             {
                 VLC.pause();
-                Tools.ToolsTimer.Delay(() => { VLC.Position = sl_position; }, TimeSpan.FromSeconds(2));
+                Tools.ToolsTimer.Delay(() => 
+                {
+                    VLC.Position = sl_position;
+                }, TimeSpan.FromSeconds(2));
             }, TimeSpan.FromSeconds(1));
             else
             {

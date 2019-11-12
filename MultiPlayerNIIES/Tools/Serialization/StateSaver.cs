@@ -109,7 +109,8 @@ namespace MultiPlayerNIIES.Tools.Serialization
             vm.MainWindow.Top = sets.Position.Top;
             vm.MainWindow.Width = sets.Position.Width;
             vm.MainWindow.Height = sets.Position.Height;
-
+            vm.MainWindow.WindowState = sets.WindowState;
+            
             //готовим перечень файлов...
             string[] filenames = new string[sets.Players.Count];
             for (int i = 0; i < sets.Players.Count; i++)
@@ -135,12 +136,17 @@ namespace MultiPlayerNIIES.Tools.Serialization
                 if (v.IsSyncLeader) SyncLeadId = sets.Players.IndexOf(v);
             vm.SyncLeadPlayer = vm.videoPlayerVMs[SyncLeadId];
 
-            //переводим все видео на нужный момент
-            foreach (VideoPlayerVM v in vm.videoPlayerVMs)
+
+
+            ToolsTimer.Delay(() =>
             {
-                v.CurTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].CurTime;
-                v.SyncronizationShiftVM.ShiftTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].TimeShift;
-            }
+                //переводим все видео на нужный момент
+                foreach (VideoPlayerVM v in vm.videoPlayerVMs)
+                {
+                    v.CurTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].CurTime;
+                    v.SyncronizationShiftVM.ShiftTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].TimeShift;
+                }
+            }, TimeSpan.FromSeconds(5));
         }
 
 
