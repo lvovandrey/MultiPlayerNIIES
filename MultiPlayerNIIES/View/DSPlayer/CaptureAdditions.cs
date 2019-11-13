@@ -1,6 +1,7 @@
 ﻿using DirectShowLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -68,7 +69,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 if (m_basicAudio == null) return 0;
                 int p,hr;
                 hr = m_basicAudio.get_Volume(out p);
-                double vol = Math.Pow(Math.E, ((double)p / 2325.5));
+                double vol = Math.Pow(Math.E, ((double)(p+10709) / 2325.5)); 
                 DsError.ThrowExceptionForHR(hr);
                 return vol;
             }
@@ -76,12 +77,24 @@ namespace MultiPlayerNIIES.View.DSPlayer
             {
                 if (m_basicAudio == null) return;
                     int hr;
-                double db = 2325.5 * Math.Log(value); if (db <= -10000) db = -9999; if (db > 0) db = 0;
+                double db = 2325.5 * Math.Log(value) - 10709;
+                Debug.WriteLine("value=" + value.ToString() + "  db=" + db.ToString());
+                if (db <= -10000) db = -9999; if (db > 0) db = 0;
                 hr = m_basicAudio.put_Volume((int)Math.Round(db));
                 DsError.ThrowExceptionForHR(hr);
             }
         }
 
+
+        //public void SetVol(double value)
+        //{
+        
+        //plVolume:= (65535 * value * 5) div 100;
+        ////íîðìèðóåì õàðàêòåðèñòèêó óðîâíÿ ãðîìêîñòè
+        //db:= trunc(33.22 * 100 * ln((plVolume + 1e-6) / 65535) / ln(10));
+        //    if db < -10000 then db:= -9999;
+        //    pBasicAudio.put_Volume(db);
+        //}
         public double Rate
         {
             get

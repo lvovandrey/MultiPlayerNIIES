@@ -254,15 +254,6 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
 
 
-
-        private void MuteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (dxPlay != null)
-                if (dxPlay.Volume != 0) Volume = 0;
-                else Volume = 50;
-
-        }
-
         public bool IsPlaying
         {
             get
