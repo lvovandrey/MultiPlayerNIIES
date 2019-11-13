@@ -2,6 +2,7 @@
 using MultiPlayerNIIES.View;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,11 @@ namespace MultiPlayerNIIES.ViewModel
         public double Position { get { return Body.VLC.Position; } set { Body.VLC.Position = value; } }
 
         [Magic]
-        public double Volume { get { return Body.VLC.Volume; } set { Body.VLC.Volume = value; } }
+        public double Volume
+        {
+            get { return Body.VLC.Volume; }
+            set { Body.VLC.Volume = value; }
+        }
 
         [Magic]
         public TimeSpan CurTime { get { return Body.VLC.CurTime; } set { Body.VLC.CurTime = value; } }
@@ -83,7 +88,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                return decSpeedCommand ?? (decSpeedCommand = new RelayCommand(obj => {
+                return decSpeedCommand ?? (decSpeedCommand = new RelayCommand(obj =>
+                {
                     Body.Rate -= 0.1;
                 }));
             }
@@ -94,7 +100,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                return incSpeedCommand ?? (incSpeedCommand = new RelayCommand(obj => {
+                return incSpeedCommand ?? (incSpeedCommand = new RelayCommand(obj =>
+                {
                     Body.Rate += 0.1;
                 }));
             }
@@ -105,7 +112,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                return stepBackwardCommand ?? (stepBackwardCommand = new RelayCommand(obj => {
+                return stepBackwardCommand ?? (stepBackwardCommand = new RelayCommand(obj =>
+                {
                     Body.Pause();
                     Position = Position - (0.1 * 1000 / Body.VLC.Duration.TotalSeconds);
                 }));
@@ -117,7 +125,8 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                return stepForwardCommand ?? (stepForwardCommand = new RelayCommand(obj => {
+                return stepForwardCommand ?? (stepForwardCommand = new RelayCommand(obj =>
+                {
                     Body.Pause();
                     Position = Position + (0.1 * 1000 / Body.VLC.Duration.TotalSeconds);
                 }));

@@ -4,6 +4,7 @@ using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,8 @@ namespace MultiPlayerNIIES.ViewModel
 
             Settings.SettingsChanged += Settings_SettingsChanged;
             Body.SizeChanged += (s, e) => { UpdateVLCInnerPosition(); };
+
+            Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
         }
 
         public SyncronizationShiftVM SyncronizationShiftVM
@@ -82,6 +85,12 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get { return Body.VLC.Position; }
             set { Body.SetSliderPosition(value); OnPropertyChanged("CurTime"); OnPropertyChanged("SliderPosition"); }
+        }
+
+        public double Volume
+        {
+            get { return Body.VLC.Volume; }
+            set { Body.VLC.Volume = value; OnPropertyChanged("Volume"); }
         }
 
         public TimeSpan Duration

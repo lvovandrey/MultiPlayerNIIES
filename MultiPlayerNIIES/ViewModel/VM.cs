@@ -440,6 +440,29 @@ namespace MultiPlayerNIIES.ViewModel
                 OnPropertyChanged("IsExcelConnected");
             }
         }
+
+
+        private double volumeShift;
+        /// <summary>
+        /// Подрегулировка уровня звука
+        /// </summary>
+        public double VolumeShift
+        {
+            get
+            {
+                return volumeShift;
+            }
+            set
+            {
+                volumeShift = value;
+                OnPropertyChanged("VolumeShift ");
+                foreach (var v in videoPlayerVMs)
+                {
+                    v.Volume = v.Volume;
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
