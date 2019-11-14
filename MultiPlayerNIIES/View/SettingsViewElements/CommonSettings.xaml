@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
+             xmlns:el="clr-namespace:MultiPlayerNIIES.View.Elements"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -18,20 +19,30 @@
     <Grid>
         <GroupBox Header="Общее" BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
             <StackPanel>
+
                 <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
                     <GroupBox.Header>
-                        Как будем открывать файлы
+                        Скорость воспроизведения
                     </GroupBox.Header>
                     <StackPanel>
-                        <RadioButton GroupName="OpenStatePathType" Margin="5" 
-                             IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                             Style="{StaticResource TextStyle}">По абсолютному пути</RadioButton>
-                        <RadioButton GroupName="OpenStatePathType" Margin="5"
-                             IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             Style="{StaticResource TextStyle}">По относительному пути</RadioButton>
-
+                        <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding SlowRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Медленная скорость по умолчанию (клавиша Q)" Margin="5"/>
+                        <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding FastRate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Быстрая скорость воспроизведения по умолчанию (клавиша E)" Margin="5"/>
+                        <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding RateShift, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Шаг изменения скорости (Ctrl+Up, Ctrl+Down)" Margin="5"/>
                     </StackPanel>
                 </GroupBox>
+                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                    <GroupBox.Header>
+                        Звук
+                    </GroupBox.Header>
+                    <StackPanel>
+                        <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding DefaultVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Громкость по умолчанию" Margin="5"/>
+                    </StackPanel>
+                </GroupBox>
+
+
+
+
+
             </StackPanel>
         </GroupBox>
     </Grid>

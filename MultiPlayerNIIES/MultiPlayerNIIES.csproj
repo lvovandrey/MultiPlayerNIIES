@@ -188,6 +188,12 @@
     <Compile Include="View\Elements\PlayerPanel.xaml.cs">
       <DependentUpon>PlayerPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Elements\PropertyViewer.xaml.cs">
+      <DependentUpon>PropertyViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Elements\PropertyViewer_DoubleNums_UpDown.xaml.cs">
+      <DependentUpon>PropertyViewer_DoubleNums_UpDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Elements\SyncronizationShiftView.xaml.cs">
       <DependentUpon>SyncronizationShiftView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +214,9 @@
     </Compile>
     <Compile Include="View\SettingsViewElements\CommonSettings.xaml.cs">
       <DependentUpon>CommonSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsViewElements\FilesOpenSettings.xaml.cs">
+      <DependentUpon>FilesOpenSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsViewElements\ViewSettings.xaml.cs">
       <DependentUpon>ViewSettings.xaml</DependentUpon>
@@ -278,6 +287,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Elements\PropertyViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\PropertyViewer_DoubleNums_UpDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Elements\SyncronizationShiftView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -303,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingsViewElements\CommonSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsViewElements\FilesOpenSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

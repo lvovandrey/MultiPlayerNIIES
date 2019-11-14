@@ -41,7 +41,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.subtitleProcessor = new SubtitleProcessor();
             PlayerPanelVM = new PlayerPanelVM(Body, this);
 
-            ConfigurationTools.ReadSetting
+            Settings.SettingsChanged += Settings_SettingsChanged;
             Body.SizeChanged += (s, e) => { UpdateVLCInnerPosition(); };
 
             Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
@@ -111,7 +111,7 @@ namespace MultiPlayerNIIES.ViewModel
             set { shiftVolume = value; Volume = (shiftVolume/100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume"); Console.WriteLine("shiftV=" + shiftVolume); }
         }
 
-        private double selfVolume=50;
+        private double selfVolume=Settings.DefaultVolume;
         public double SelfVolume
         {
             get { return selfVolume; }

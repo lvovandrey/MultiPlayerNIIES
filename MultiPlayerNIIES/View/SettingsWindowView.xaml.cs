@@ -59,6 +59,8 @@ namespace MultiPlayerNIIES.View
         {
             SettingsElements.Add("Общее", CommonSettins);
             SettingsElements.Add("Вид", ViewSettings);
+            SettingsElements.Add("Сохранение файлов", FilesOpenSettings);
+            
         }
     }
 }

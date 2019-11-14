@@ -13,6 +13,20 @@ namespace MultiPlayerNIIES.ViewModel
     public class SettingsWindowVM : INPCBase
     {
         SettingsWindowView settingsWindowView;
+        #region CONSTRUCTOR
+        public SettingsWindowVM(SettingsWindowView _settingsWindowView)
+        {
+            settingsWindowView = _settingsWindowView;
+            RestoreSettingsCommand.Execute(null);
+            settingsWindowView.DataContext = this;
+
+            settingsWindowView.Loaded += SettingsWindowView_Loaded;
+            settingsWindowView.Activated += SettingsWindowView_Activated;
+
+        }
+        #endregion
+
+        #region PROPERTIES
         public bool IsStateFilesRestorePathTypeAbsolute
         {
             get
@@ -51,27 +65,50 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        public SettingsWindowVM(SettingsWindowView _settingsWindowView)
+        public double SlowRate
         {
-            settingsWindowView = _settingsWindowView;
-            RestoreSettingsCommand.Execute(null);
-            settingsWindowView.DataContext = this;
-
-            settingsWindowView.Loaded += SettingsWindowView_Loaded;
-            settingsWindowView.Activated += SettingsWindowView_Activated;
-
+            get { return Settings.SlowRate; }
+            set { Settings.SlowRate = value; OnPropertyChanged("SlowRate"); }
         }
 
+        public  double FastRate
+        {
+            get { return Settings.FastRate; }
+            set { Settings.FastRate = value; OnPropertyChanged("FastRate"); }
+        }
+
+        public  double RateShift
+        {
+            get { return Settings.RateShift; }
+            set { Settings.RateShift = value; OnPropertyChanged("RateShift"); }
+        }
+
+        public  double Step
+        {
+            get { return Settings.Step; }
+            set { Settings.Step = value; OnPropertyChanged("Step"); }
+        }
+
+        public double DefaultVolume
+        {
+            get { return Settings.DefaultVolume; }
+            set { Settings.DefaultVolume = value; OnPropertyChanged("DefaultVolume"); }
+        }
+        #endregion
+
+        #region METHODS
         private void SettingsWindowView_Activated(object sender, EventArgs e)
         {
-            RestoreSettingsCommand.Execute(null);
+ //           RestoreSettingsCommand.Execute(null);
         }
 
         private void SettingsWindowView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             RestoreSettingsCommand.Execute(null);
         }
+        #endregion
 
+        #region COMMANDS
         private RelayCommand saveSettingsCommand;
         public RelayCommand SaveSettingsCommand
         {
@@ -97,9 +134,15 @@ namespace MultiPlayerNIIES.ViewModel
                       OnPropertyChanged("IsStateFilesRestorePathTypeAbsolute");
                       OnPropertyChanged("IsStateFilesRestorePathTypeRelative");
                       OnPropertyChanged("ShowFullNameInPlayerHeader");
+                      OnPropertyChanged("SlowRate");
+                      OnPropertyChanged("FastRate");
+                      OnPropertyChanged("RateShift");
+                      OnPropertyChanged("Step");
+                      OnPropertyChanged("DefaultVolume");
                   }));
             }
         }
+        #endregion
 
     }
 

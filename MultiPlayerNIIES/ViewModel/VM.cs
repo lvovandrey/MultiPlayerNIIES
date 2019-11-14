@@ -1,5 +1,6 @@
 ﻿using Meta.Vlc.Wpf;
 using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
@@ -55,7 +56,8 @@ namespace MultiPlayerNIIES.ViewModel
             settingsWindowView = new SettingsWindowView();
             settingsWindowView.Visibility = Visibility.Hidden;
             settingsWindowVM = new SettingsWindowVM(settingsWindowView);
-
+            Settings.SettingsChanged += Settings_SettingsChanged;
+            Settings.RestoreAllSettings();
 
             videoPlayerVMs = new List<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
@@ -77,10 +79,7 @@ namespace MultiPlayerNIIES.ViewModel
             ExcelRefreshStateTimer.Start();
 
 
-            Step = TimeSpan.FromMilliseconds(100);
-            RateShift = 0.1;
-            slowRate = 0.5;
-            fastRate = 2;
+
 
             MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
@@ -99,7 +98,13 @@ namespace MultiPlayerNIIES.ViewModel
             }, TimeSpan.FromSeconds(4));
         }
 
-
+        private void Settings_SettingsChanged()
+        {
+            Step = TimeSpan.FromMilliseconds(Settings.Step);
+            RateShift = Settings.RateShift;
+            slowRate = Settings.SlowRate;
+            fastRate = Settings.FastRate;
+        }
 
         private void MainWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
