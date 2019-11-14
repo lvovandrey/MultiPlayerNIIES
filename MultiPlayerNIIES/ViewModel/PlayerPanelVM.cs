@@ -15,12 +15,14 @@ namespace MultiPlayerNIIES.ViewModel
 
         #region Поля 
         public VideoPlayerView Body; //Ну это не настоящая VM
+        private VideoPlayerVM VideoPlayerVM;
         #endregion
 
         #region Конструкторы
-        public PlayerPanelVM(VideoPlayerView body)
+        public PlayerPanelVM(VideoPlayerView body, VideoPlayerVM videoPlayerVM)
         {
             Body = body;
+            VideoPlayerVM = videoPlayerVM;
             SubscriptedToEventsInPlayerDepPropChanges();
         }
         #endregion
@@ -29,7 +31,7 @@ namespace MultiPlayerNIIES.ViewModel
         private void SubscriptedToEventsInPlayerDepPropChanges()
         {
             Body.VLC.OnPositionChanged += (d, e) => { OnPropertyChanged("Position"); };
-            Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
+            Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("RealVolume"); OnPropertyChanged("SelfVolume"); };
             Body.VLC.OnCurTimeChanged += (d, e) => { OnPropertyChanged("CurTime"); };
         }
         #endregion
@@ -39,10 +41,17 @@ namespace MultiPlayerNIIES.ViewModel
         public double Position { get { return Body.VLC.Position; } set { Body.VLC.Position = value; } }
 
         [Magic]
-        public double Volume
+        public double SelfVolume
         {
-            get { return Body.VLC.Volume; }
-            set { Body.VLC.Volume = value; }
+            get { return VideoPlayerVM.SelfVolume; }
+            set { VideoPlayerVM.SelfVolume = value; }
+        }
+
+        [Magic]
+        public double RealVolume
+        {
+            get { return VideoPlayerVM.Volume; }
+            set { VideoPlayerVM.Volume = value; }
         }
 
         [Magic]
@@ -77,8 +86,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return muteCommand ?? (muteCommand = new RelayCommand(obj =>
                 {
-                    if (Volume > 0) Volume = 0;
-                    else Volume = 50;
+                    if (SelfVolume > 0) SelfVolume = 0;
+                    else SelfVolume = 50;
                 }));
             }
         }

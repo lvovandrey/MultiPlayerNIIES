@@ -442,24 +442,25 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        private double volumeShift;
+        private double shiftVolume=100;
         /// <summary>
         /// Подрегулировка уровня звука
         /// </summary>
-        public double VolumeShift
+        public double ShiftVolume
         {
             get
             {
-                return volumeShift;
+                return shiftVolume;
             }
             set
             {
-                volumeShift = value;
-                OnPropertyChanged("VolumeShift ");
+                shiftVolume = value;
+                OnPropertyChanged("ShiftVolume");
                 foreach (var v in videoPlayerVMs)
                 {
-                    v.Volume = v.Volume;
+                   v.ShiftVolume = value;
                 }
+                Console.WriteLine("VMShiftVol="+ shiftVolume);
             }
         }
 

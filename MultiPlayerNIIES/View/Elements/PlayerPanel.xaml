@@ -14,6 +14,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="25" />
@@ -26,15 +27,6 @@
             </Grid.ColumnDefinitions>
 
 
-            <Slider
-                Name="TimeSlider"
-                Grid.Column="7"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Maximum="1000"
-                PreviewMouseDown="TimeSlider_PreviewMouseDown"
-                PreviewMouseUp="TimeSlider_PreviewMouseUp"
-                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 Name="PlayBtn"
                 Grid.Column="0"
@@ -51,11 +43,20 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Maximum="100"
-                Value="{Binding Volume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
+                Value="{Binding SelfVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <Label
+                Name="RealVolumeLabel"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="{Binding RealVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                FontSize="8"
+                Margin="-5 0 -5 0"
+                ContentStringFormat="{}{0:N0}"/>
+            <!---->
             <Button
                 Name="MuteBtn"
-                Grid.Column="2"
+                Grid.Column="3"
                 Margin="2"
                 Command="{Binding MuteCommand}">
                 <Image Source="/MultiPlayerNIIES;component/Images/mute.png" Stretch="Fill" />
@@ -64,7 +65,7 @@
             <Button
                 Name="DecSpeedBtn"
                 Grid.Row="1"
-                Grid.Column="3"
+                Grid.Column="4"
                 Margin="2"
                 Command="{Binding DecSpeedCommand}"
                 Content="x0.5"
@@ -72,7 +73,7 @@
             <Button
                 Name="IncSpeedBtn"
                 Grid.Row="1"
-                Grid.Column="4"
+                Grid.Column="5"
                 Margin="2"
                 Command="{Binding IncSpeedCommand}"
                 Content="x2"
@@ -80,7 +81,7 @@
             <Button
                 Name="FrameBackwardBtn"
                 Grid.Row="1"
-                Grid.Column="5"
+                Grid.Column="6"
                 Margin="2"
                 Command="{Binding StepBackwardCommand}"
                 Content="&lt;-"
@@ -88,16 +89,26 @@
             <Button
                 Name="FrameForwardBtn"
                 Grid.Row="1"
-                Grid.Column="6"
+                Grid.Column="7"
                 Margin="2"
                 Command="{Binding StepForwardCommand}"
                 Content="-&gt;"
                 FontSize="8" />
 
+            <Slider
+                Name="TimeSlider"
+                Grid.Column="8"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Maximum="1000"
+                PreviewMouseDown="TimeSlider_PreviewMouseDown"
+                PreviewMouseUp="TimeSlider_PreviewMouseUp"
+                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged}" />
+
             <TextBox
                 x:Name="TimeTextBox"
                 Grid.Row="1"
-                Grid.Column="8"
+                Grid.Column="9"
                 MinHeight="10"
                 VerticalAlignment="Center"
                 BorderBrush="{x:Null}"

@@ -192,7 +192,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             //vlc.Width = ActualWidth - 10;
 
             dxPlay.Start();
-            Volume = 20;
+            Volume = 50;
             testDx.Stop();
 
             dxPlay.Pause();
