@@ -38,6 +38,14 @@
                         <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding DefaultVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Громкость по умолчанию" Margin="5"/>
                     </StackPanel>
                 </GroupBox>
+                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                    <GroupBox.Header>
+                        Навигация по видео
+                    </GroupBox.Header>
+                    <StackPanel>
+                        <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding Step, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Шаг смещения (Ctrl+Left, Ctrl+Right)" Margin="5"/>
+                    </StackPanel>
+                </GroupBox>
 
 
 
