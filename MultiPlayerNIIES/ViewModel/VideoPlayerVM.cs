@@ -41,7 +41,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.subtitleProcessor = new SubtitleProcessor();
             PlayerPanelVM = new PlayerPanelVM(Body, this);
 
-            Settings.SettingsChanged += Settings_SettingsChanged;
+            ConfigurationTools.ReadSetting
             Body.SizeChanged += (s, e) => { UpdateVLCInnerPosition(); };
 
             Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
