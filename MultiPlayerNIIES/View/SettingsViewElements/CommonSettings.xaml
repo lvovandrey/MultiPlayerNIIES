@@ -16,24 +16,23 @@
         
     </UserControl.Resources>
     <Grid>
-        <StackPanel>
-            <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
-                <GroupBox.Header>
-                    Как будем открывать файлы
-                </GroupBox.Header>
-                <StackPanel>
-                    <RadioButton GroupName="OpenStatePathType" Margin="5" 
+        <GroupBox Header="Общее" BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+            <StackPanel>
+                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                    <GroupBox.Header>
+                        Как будем открывать файлы
+                    </GroupBox.Header>
+                    <StackPanel>
+                        <RadioButton GroupName="OpenStatePathType" Margin="5" 
                              IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                              Style="{StaticResource TextStyle}">По абсолютному пути</RadioButton>
-                    <RadioButton GroupName="OpenStatePathType" Margin="5"
+                        <RadioButton GroupName="OpenStatePathType" Margin="5"
                              IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                              Style="{StaticResource TextStyle}">По относительному пути</RadioButton>
 
-                </StackPanel>
-            </GroupBox>
-            <CheckBox Margin="5"
-                             IsChecked="{Binding ShowFullNameInPlayerHeader, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             Style="{StaticResource TextStyle}">Отображать полный путь к файлу в шапке плеера</CheckBox>
-        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

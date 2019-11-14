@@ -209,6 +209,9 @@
     <Compile Include="View\SettingsViewElements\CommonSettings.xaml.cs">
       <DependentUpon>CommonSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SettingsViewElements\ViewSettings.xaml.cs">
+      <DependentUpon>ViewSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingsWindowView.xaml.cs">
       <DependentUpon>SettingsWindowView.xaml</DependentUpon>
     </Compile>
@@ -300,6 +303,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingsViewElements\CommonSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsViewElements\ViewSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

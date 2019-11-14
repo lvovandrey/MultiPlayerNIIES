@@ -19,9 +19,11 @@ namespace MultiPlayerNIIES.View
     /// </summary>
     public partial class SettingsWindowView : Window
     {
+        Dictionary<string, UserControl> SettingsElements;
         public SettingsWindowView()
         {
             InitializeComponent();
+            SettingsElements = new Dictionary<string, UserControl>();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +42,23 @@ namespace MultiPlayerNIIES.View
             Hide();
         }
 
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string ElementUsefulName = ((ListBoxItem)e.AddedItems[0]).Content.ToString();
+            SettingsElementShow(ElementUsefulName);
+        }
 
+        private void SettingsElementShow(string ElementUsefulName)
+        {
+            foreach (var element in SettingsElements)
+                element.Value.Visibility = Visibility.Collapsed;
+            SettingsElements[ElementUsefulName].Visibility = Visibility.Visible;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SettingsElements.Add("Общее", CommonSettins);
+            SettingsElements.Add("Вид", ViewSettings);
+        }
     }
 }

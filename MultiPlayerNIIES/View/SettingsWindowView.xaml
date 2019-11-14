@@ -7,7 +7,7 @@
         xmlns:elements="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
         mc:Ignorable="d"
         Title="Настройки" Height="300" Width="600" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" 
-        BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing"   >
+        BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing"  Loaded="Window_Loaded" >
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FFB07220" />
@@ -54,18 +54,15 @@
        
         <StackPanel VerticalAlignment="Stretch" Grid.Row="0" Margin="5">
             <TextBlock  Text="Разделы настроек" />
-            <ListBox VerticalAlignment="Stretch" Background="{x:Null}" BorderBrush="#FFB07220">
+            <ListBox VerticalAlignment="Stretch" Background="{x:Null}" BorderBrush="#FFB07220" SelectionChanged="ListBox_SelectionChanged">
                 <ListBoxItem >Общее</ListBoxItem>
-                <ListBoxItem Focusable="False" Foreground="Gray">Вид</ListBoxItem>
+                <ListBoxItem >Вид</ListBoxItem>
                 <ListBoxItem Focusable="False" Foreground="Gray">Сохранение файлов</ListBoxItem>
             
         </ListBox>
         </StackPanel>
-        <GroupBox Grid.Row="0" Grid.Column="1" Header="Общее" BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
-            <StackPanel>
-                <elements:CommonSettings x:Name="CommonSettinsView1"></elements:CommonSettings>
-            </StackPanel>
-        </GroupBox>
+            <elements:CommonSettings  Grid.Row="0" Grid.Column="1" x:Name="CommonSettins"/>
+            <elements:ViewSettings Grid.Row="0" Grid.Column="1" Visibility="Collapsed" x:Name="ViewSettings" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="0 0 10 0">
             <Button Command="{Binding SaveSettingsCommand}" Click="Button_Click_1">Применить</Button>
