@@ -13,6 +13,7 @@
         <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds" />
         <converters:DoubleSyncDeltaToColor x:Key="DoubleSyncDeltaToColor" />
         <converters:BoolIsOnToColor x:Key="BoolIsOnToColor" />
+        <converters:SyncOnOffWordConverter x:Key="SyncOnOffWordConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter" />
         <Style x:Key="ButtonMainPanel">
@@ -133,11 +134,11 @@
                     Command="{Binding AutoSyncOnOffCommand}"
                     Style="{StaticResource ButtonMainPanel}"
                     ToolTip="Постоянная синхронизация по смещению вкл/выкл">
-                    <Grid Height="33">
+                    <Grid Height="33" Background="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}">
                         <TextBlock
                             HorizontalAlignment="Center"
-                            Foreground="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}"
-                            Text="Автосинхронизация" />
+                            Foreground="Black"
+                            Text="{Binding IsOnAutoSyncronization, Converter={StaticResource SyncOnOffWordConverter}, UpdateSourceTrigger=PropertyChanged}" /> 
                         <ProgressBar
                             Width="140"
                              Margin="5,16,5,0"

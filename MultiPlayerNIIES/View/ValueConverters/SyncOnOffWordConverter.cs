@@ -10,14 +10,15 @@ using System.Windows.Media;
 
 namespace MultiPlayerNIIES.View.ValueConverters
 {
-    class BoolIsOnToColor : IValueConverter
+
+    public class SyncOnOffWordConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((bool)value == true)
-                return new SolidColorBrush(Colors.Green);
+                return "Автосинхронизация вкл";
             else
-                return new SolidColorBrush(Colors.LightGray);
+                return "Автосинхронизация выкл";
 
         }
 
@@ -27,7 +28,4 @@ namespace MultiPlayerNIIES.View.ValueConverters
         }
     }
 
-
-
-  
 }
