@@ -28,4 +28,21 @@ namespace MultiPlayerNIIES.View.ValueConverters
         }
     }
 
+
+    public class SyncSRTOnOffWordConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((bool)value == true)
+                return "SRT-автосинхронизация вкл";
+            else
+                return "STR-автосинхронизация выкл";
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
+        }
+    }
 }
