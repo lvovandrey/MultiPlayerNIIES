@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.TimeLine.Cursor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeLine"
+             mc:Ignorable="d" 
+           d:DesignHeight="90" d:DesignWidth="10" MinHeight="30" MouseEnter="Cursor_MouseEnter" MouseLeave="Cursor_MouseLeave" ClipToBounds="False" >
+    <Grid VerticalAlignment="Stretch" ClipToBounds="False"  Margin="-5,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*" Name="Row2"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+       
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="3" Fill="#00F3FF00" Grid.ColumnSpan="3"  />
+        <Path Data="M0,0 L5,5 10,0" Grid.Row="0"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="1.5" Grid.ColumnSpan="3" />
+        <Path Data="M5,0 L5,1000" Grid.Row="1"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="2" Grid.ColumnSpan="3" />
+        <Path Data="M0,5 L5,0 10,5" Grid.Row="2"  Stroke="{Binding CursorColor, UpdateSourceTrigger=PropertyChanged}"  StrokeThickness="1.5" Grid.ColumnSpan="3"/>
+
+
+
+
+    </Grid>
+</UserControl>

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dsplayer="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
     xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
     xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
     xmlns:local="clr-namespace:MultiPlayerNIIES.View"
@@ -60,6 +61,7 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="14" />
             <RowDefinition />
+            <RowDefinition x:Name="ButtonsShowerPanelRow" Height="20" />
             <RowDefinition x:Name="PlayerPanelRow" Height="20" />
             <RowDefinition x:Name="SyncronizationInstrumentsRow" Height="30" />
             <RowDefinition Height="5" />
@@ -98,6 +100,16 @@
                 Background="#7FFFFFFF"
                 Text="..." />
 
+
+            <TextBox
+                x:Name="TextBlockDebug"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                Margin="20 0 0 0"
+                Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                Foreground="#FF2EFF00" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FF8D8D8D"  />
+
         </StackPanel>
         <StackPanel
             Grid.Row="0"
@@ -122,17 +134,31 @@
         </StackPanel>
 
 
-        <mvlc:MVLCPlayer
+        <!--<mvlc:MVLCPlayer
             x:Name="VLC"
             Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-            PreviewMouseWheel="VLC_PreviewMouseWheel" />
+            PreviewMouseWheel="VLC_PreviewMouseWheel" />-->
 
+        <dsplayer:DSPlayer
+            x:Name="VLC"
+            Grid.Row="2"
+            Grid.Column="1"
 
+            PreviewMouseWheel="VLC_PreviewMouseWheel"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"/>
+        <!--<vlc:VLCPlayer 
+            x:Name="VLC"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            PreviewMouseWheel="VLC_PreviewMouseWheel" />-->
+        
         <Button
             x:Name="ButtonHideInstruments"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Left"
@@ -147,7 +173,7 @@
 
         <Button
             x:Name="ButtonHidePanel"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Left"
@@ -160,17 +186,17 @@
             <Image Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png" />
 
         </Button>
-
-        <elements:PlayerPanel
+        
+          <elements:PlayerPanel
             x:Name="PlayerPanelViewer"
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             DataContext="{Binding PlayerPanelVM}" />
 
         <elements:SyncronizationShiftView
             x:Name="SyncronizationShiftViewer"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             VerticalAlignment="Bottom"
@@ -195,7 +221,7 @@
 
         <Rectangle
             x:Name="SizerRightBottom"
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="2"
             Panel.ZIndex="2"
             Cursor="SizeNWSE"
@@ -211,7 +237,7 @@
             MouseDown="Sizer_MouseDown" />
         <Rectangle
             x:Name="SizerLeftBottom"
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="0"
             Panel.ZIndex="2"
             Cursor="SizeNESW"
@@ -228,7 +254,7 @@
 
         <Rectangle
             x:Name="SizerBottom"
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="1"
             Panel.ZIndex="2"
             Cursor="SizeNS"
@@ -245,7 +271,7 @@
         <Rectangle
             x:Name="SizerLeft"
             Grid.Row="1"
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="0"
             Panel.ZIndex="2"
             Cursor="SizeWE"
@@ -254,7 +280,7 @@
         <Rectangle
             x:Name="SizerRight"
             Grid.Row="1"
-            Grid.RowSpan="3"
+            Grid.RowSpan="4"
             Grid.Column="2"
             Panel.ZIndex="2"
             Cursor="SizeWE"

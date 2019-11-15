@@ -16,6 +16,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -80,7 +95,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Gnome-Video-X-Generic-64.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\NewFolder1\DirectShowLib-2005.dll</HintPath>
+    </Reference>
     <Reference Include="ffme.win, Version=4.1.300.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FFME.Windows.4.1.300\lib\net461\ffme.win.dll</HintPath>
     </Reference>
@@ -100,7 +122,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -138,6 +162,11 @@
     <Compile Include="Abstract\INPCBase.cs" />
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
+    <Compile Include="Model\Settings.cs" />
+    <Compile Include="Tools\Graphics\GraphicsTools.cs" />
+    <Compile Include="Tools\Serialization\ApplicationStateSerialized.cs" />
+    <Compile Include="Tools\Serialization\ConfigurationTools.cs" />
+    <Compile Include="Tools\Serialization\StateSaver.cs" />
     <Compile Include="Tools\Subtitles\Subtitle.cs" />
     <Compile Include="Tools\Subtitles\SubtitleProcessor.cs" />
     <Compile Include="Tools\Subtitles\Parser.cs" />
@@ -145,13 +174,25 @@
     <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
+    <Compile Include="ViewModel\SettingsWindowVM.cs" />
     <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DSPlayer\Capture.cs" />
+    <Compile Include="View\DSPlayer\CaptureAdditions.cs" />
+    <Compile Include="View\DSPlayer\DSPlayer.xaml.cs">
+      <DependentUpon>DSPlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Elements\PlayerPanel.xaml.cs">
       <DependentUpon>PlayerPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Elements\PropertyViewer.xaml.cs">
+      <DependentUpon>PropertyViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Elements\PropertyViewer_DoubleNums_UpDown.xaml.cs">
+      <DependentUpon>PropertyViewer_DoubleNums_UpDown.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Elements\SyncronizationShiftView.xaml.cs">
       <DependentUpon>SyncronizationShiftView.xaml</DependentUpon>
@@ -162,11 +203,38 @@
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MainSlider.xaml.cs">
+      <DependentUpon>MainSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MetaVLCPlayer\MVLCPlayer.xaml.cs">
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsViewElements\CommonSettings.xaml.cs">
+      <DependentUpon>CommonSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsViewElements\FilesOpenSettings.xaml.cs">
+      <DependentUpon>FilesOpenSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsViewElements\ViewSettings.xaml.cs">
+      <DependentUpon>ViewSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsWindowView.xaml.cs">
+      <DependentUpon>SettingsWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\Cursor.xaml.cs">
+      <DependentUpon>Cursor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\Dash.xaml.cs">
+      <DependentUpon>Dash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\ScaleTime.xaml.cs">
+      <DependentUpon>ScaleTime.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeLine\TimeLine.xaml.cs">
+      <DependentUpon>TimeLine.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
@@ -211,7 +279,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DSPlayer\DSPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Elements\PlayerPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\PropertyViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\PropertyViewer_DoubleNums_UpDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,11 +307,47 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MainSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MetaVLCPlayer\MVLCPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsViewElements\CommonSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsViewElements\FilesOpenSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsViewElements\ViewSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\Cursor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\Dash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\ScaleTime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeLine\TimeLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,7 +400,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="dll\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\PNG\Add.png" />
@@ -360,8 +476,18 @@
     <Resource Include="Images\PNG\Arrow-sans-up-32.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dll\DirectShowLib-2005.dll" />
     <Content Include="dll\Meta.Vlc.dll" />
     <Content Include="dll\Meta.Vlc.Wpf.dll" />
+    <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
+    <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
+    <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Gnome-Process-Stop-64.png" />
+    <Resource Include="Images\PNG\Gnome-Folder-Open-64.png" />
+    <Resource Include="Images\PNG\Gnome-Media-Floppy-64.png" />
+    <Resource Include="Gnome-Video-X-Generic-64.ico" />
+    <Resource Include="Images\PNG\Gnome-Document-Save-64.png" />
+    <Resource Include="Images\PNG\Gnome-Document-Open-64.png" />
     <Resource Include="Images\PNG\Restore-Window-64.png" />
     <Resource Include="Images\PNG\Accept.png" />
     <Resource Include="Images\mute.png" />
@@ -373,6 +499,24 @@
     <Resource Include="Images\PNG\Close_Window.png" />
     <Resource Include="Images\PNG\Maximize_Window.png" />
     <Resource Include="Images\PNG\Minimize_Window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsFormsVideoControl\WindowsFormsVideoControl.csproj">
+      <Project>{f2acb569-e6d0-4752-ad17-8d87d63c7ffb}</Project>
+      <Name>WindowsFormsVideoControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\KindOfMagic.1.3.1\build\KindOfMagic.targets" Condition="Exists('..\packages\KindOfMagic.1.3.1\build\KindOfMagic.targets')" />

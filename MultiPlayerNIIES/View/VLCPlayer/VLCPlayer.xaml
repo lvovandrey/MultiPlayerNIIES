@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300" BorderBrush="Black" Margin="2,2,2,3"
              x:Name="ThisPlayer">
-    <Grid x:Name="GridMain">
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="25"/>

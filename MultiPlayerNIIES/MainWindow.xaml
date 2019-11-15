@@ -4,26 +4,74 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:elementsview="clr-namespace:MultiPlayerNIIES.View.Elements"
+    xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
     xmlns:local="clr-namespace:MultiPlayerNIIES"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:MultiPlayerNIIES.View"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+    xmlns:dshow ="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
+    xmlns:timeline="clr-namespace:MultiPlayerNIIES.View.TimeLine"
     Title="Видеоплеер НИИЭС"
     Width="1200"
     Height="800"
     Closing="Window_Closing"
     MouseDown="Window_MouseDown"
     mc:Ignorable="d">
-    <Grid>
+    <Window.Resources>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
+        <converters:TimeSpanToString x:Key="TimeSpanToString" />
+    </Window.Resources>
+    <Grid Background="#FF161616">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-     
+
         <Grid Grid.Row="1">
             <view:AreaVideoPlayersView x:Name="AreaVideoPlayers" Grid.Column="0" />
         </Grid>
-        <view:MainPanelView Grid.Row="2" />
+
+        <view:MainPanelView Grid.Row="3" />
+
+        <StackPanel Orientation="Vertical" Grid.Row="2">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Slider Width="70" VerticalAlignment="Center" Minimum="0" Maximum="500"  
+                        Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                        Foreground="#FFB07220" Background="#7F7C7C7C" LargeChange="0"/>
+                <timeline:TimeLine POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                    
+                                   Height="50" Grid.Column="1" x:Name="TimeLine1"  Margin="10 0 10 0"  />
+                <Label
+            x:Name="LabelCurTime"
+            Width="160"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Background="#FF101010"
+            BorderBrush="#FFB07220"
+            BorderThickness="1"
+                    Grid.Column="2"
+            Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
+            FontSize="25"
+            Foreground="#FFB07220" >
+                    <Label.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem
+                        Command="{Binding CopyTimeToClipBoardCommand}"
+                        CommandParameter="{Binding CurTime, Converter={StaticResource TimeSpanToString}}"
+                        Header="Копировать" />
+                        </ContextMenu>
+                    </Label.ContextMenu>
+                </Label>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>

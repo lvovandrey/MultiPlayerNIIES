@@ -102,7 +102,6 @@ namespace MultiPlayerNIIES.Tools.Subtitles
                 TimeStr = RawSubtitles[nextRecStrNumber + 2];
                 TextStr = RawSubtitles[nextRecStrNumber + 3];
                 Subtitle titleInfo = new Subtitle();
-                string text = "";
                 GetTimeInterval(TimeStr, out titleInfo);
                 GetSubtitleText(TextStr, ref titleInfo);
                 OuterSubtitles.Add(titleInfo);

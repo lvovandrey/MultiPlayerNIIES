@@ -1,8 +1,10 @@
 ﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,11 +17,35 @@ namespace MultiPlayerNIIES.ViewModel
     public delegate void PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e);
     public class VideoPlayerVM : INPCBase
     {
-        VideoPlayerView Body; //Ну это не настоящая VM
+        public VideoPlayerView Body; //Ну это не настоящая VM
         Grid Container;
         VM VM;
         SyncronizationShiftVM syncronizationShiftVM;
         PlayerPanelVM playerPanelVM;
+        public VideoPlayerVM(Grid container, VM vm, Rect AreaForPlacementInContainer)
+        {
+            Container = container;
+            Body = new VideoPlayerView();
+            Body.DataContext = this;
+            VM = vm;
+            container.Children.Add(Body);
+            Body.DragDropSwitchOn(Container, Body.Dragger);
+            Body.ResizeSwitchOn(Container);
+            Body.HorizontalAlignment = HorizontalAlignment.Left;
+            Body.VerticalAlignment = VerticalAlignment.Top;
+            Replace(AreaForPlacementInContainer);
+            Body.UpFocus += UpFocusX;
+            Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
+            IsSyncronizeLeader = false;
+            SyncronizationShiftVM = new SyncronizationShiftVM(this) { ShiftMaxTime = TimeSpan.FromSeconds(10) };
+            Body.subtitleProcessor = new SubtitleProcessor();
+            PlayerPanelVM = new PlayerPanelVM(Body, this);
+
+            Settings.SettingsChanged += Settings_SettingsChanged;
+            Body.SizeChanged += (s, e) => { UpdateVLCInnerPosition(); };
+
+            Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
+        }
 
         public SyncronizationShiftVM SyncronizationShiftVM
         {
@@ -42,17 +68,60 @@ namespace MultiPlayerNIIES.ViewModel
             get { return Body.IsPlaying; }
         }
 
-
         public double Rate
         {
-            get { return Body.Rate; } 
+            get { return Body.Rate; }
             set { Body.Rate = value; OnPropertyChanged("Rate"); }
         }
 
         public TimeSpan CurTime
         {
             get { return Body.VLC.CurTimeEx; }
-            set { Body.SetPosition(value); OnPropertyChanged("CurTime"); }
+            set { Body.SetPosition(value); OnPropertyChanged("CurTime"); OnPropertyChanged("SliderPosition"); }
+        }
+
+        public double SliderPosition
+        {
+            get { return Body.VLC.Position; }
+            set { Body.SetSliderPosition(value); OnPropertyChanged("CurTime"); OnPropertyChanged("SliderPosition"); }
+        }
+
+        private double volume;
+        public double Volume
+        {
+            get
+            {
+                volume = Body.VLC.Volume;
+                return volume;
+            }
+            set
+            {
+                volume = value;
+                if (volume < 0) Body.VLC.Volume = 0;
+                else if (volume > 100) Body.VLC.Volume = 100;
+                else Body.VLC.Volume = volume;
+                OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); Console.WriteLine("V=" + Volume);
+            }
+        }
+
+        private double shiftVolume=100;
+        public double ShiftVolume
+        {
+            get { return shiftVolume; }
+            set { shiftVolume = value; Volume = (shiftVolume/100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume"); Console.WriteLine("shiftV=" + shiftVolume); }
+        }
+
+        private double selfVolume=Settings.DefaultVolume;
+        public double SelfVolume
+        {
+            get { return selfVolume; }
+            set { selfVolume = value;  Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); Console.WriteLine("selfV=" +selfVolume); }
+        }
+
+
+        public TimeSpan Duration
+        {
+            get { return Body.VLC.Duration; }
         }
 
         public TimeSpan SyncLeaderCurTime
@@ -68,13 +137,35 @@ namespace MultiPlayerNIIES.ViewModel
         public string SubtitlesFilename
         {
             get { return System.IO.Path.ChangeExtension(SourceFilename, "srt"); }
-                
+
         }
+
+        public bool HaveSubtitles
+        {
+            get { return GetSubtitleProcessor().Ready; }
+
+        }
+
+
         public string SourceFilename
         {
             get
-            { return (new Uri(Body.SourceFilename)).LocalPath; }
+            {
+                return (new Uri(Body.SourceFilename)).LocalPath;
+            }
         }
+        public string FilenameForTitle
+        {
+            get
+            {
+                if (Settings.ShowFullNameInPlayerHeader)
+                    return SourceFilename;
+                else
+                    return Path.GetFileName(SourceFilename);
+            }
+        }
+
+
 
         #region СИНХРОНИЗАЦИЯ и все что с ней связано
         private bool isSyncronizeLeader;
@@ -103,29 +194,6 @@ namespace MultiPlayerNIIES.ViewModel
 
         #endregion
 
-        public VideoPlayerVM(Grid container, VM vm, Rect AreaForPlacementInContainer)
-        {
-            Container = container;
-            Body = new VideoPlayerView();
-            Body.DataContext = this;
-            VM = vm;
-            container.Children.Add(Body);
-            Body.DragDropSwitchOn(Container, Body.Dragger);
-            Body.ResizeSwitchOn(Container);
-            Body.HorizontalAlignment = HorizontalAlignment.Left;
-            Body.VerticalAlignment = VerticalAlignment.Top;
-            Replace(AreaForPlacementInContainer);
-            Body.UpFocus += UpFocusX;
-            Body.OnSyncLeaderSet += Body_OnSyncLeaderSet;
-            IsSyncronizeLeader = false;
-            SyncronizationShiftVM = new SyncronizationShiftVM(this) { ShiftMaxTime=TimeSpan.FromSeconds(10) };
-            Body.subtitleProcessor = new SubtitleProcessor();
-            PlayerPanelVM = new PlayerPanelVM(Body);
-        }
-
-
-
-
         #region Methods
 
 
@@ -148,6 +216,7 @@ namespace MultiPlayerNIIES.ViewModel
             if (File.Exists(filename))
             {
                 Body.Load(filename);
+                OnPropertyChanged("SourceFilename");
             }
             else
             {
@@ -191,7 +260,7 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Margin = new Thickness(AreaForPlacementInContainer.Left, AreaForPlacementInContainer.Top, 0, 0);
             Body.Width = AreaForPlacementInContainer.Width;
             Body.Height = AreaForPlacementInContainer.Height;
-          
+
         }
 
         internal void Play()
@@ -204,6 +273,10 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Pause();
         }
 
+        private void Settings_SettingsChanged()
+        {
+            OnPropertyChanged("FilenameForTitle");
+        }
 
         #endregion
 
@@ -238,15 +311,15 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                return stopCommand ??
-                  (stopCommand = new RelayCommand(obj =>
+                return pauseCommand ??
+                  (pauseCommand = new RelayCommand(obj =>
                   {
                       Body.Pause();
                   }));
             }
         }
 
-        
+
 
         private RelayCommand setRateCommand;
         public RelayCommand SetRateCommand
@@ -301,7 +374,7 @@ namespace MultiPlayerNIIES.ViewModel
                   (closeCommand = new RelayCommand(obj =>
                   {
                       Container.Children.Remove(Body);
-                    
+
                       VM.ClosePlayer(this);
                       OnClose();
                   }));
@@ -359,12 +432,12 @@ namespace MultiPlayerNIIES.ViewModel
 
         internal void DefineOldVLCInnerPosition()
         {
-            Body.DefineOldVLCInnerPosition2();
+            // Body.DefineOldVLCInnerPosition2();
         }
 
         internal void UpdateVLCInnerPosition()
         {
-            Body.UpdateVLCInnerPosition2();
+            //  Body.UpdateVLCInnerPosition2();
         }
 
 

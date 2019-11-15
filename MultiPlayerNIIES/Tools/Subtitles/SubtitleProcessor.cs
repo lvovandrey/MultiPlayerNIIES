@@ -110,7 +110,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch (Exception e)
             {
-                throw new Exception();
+                MessageBox.Show("Ошибка синхронизации " + e.Message);
             }
             return S;
            // return subtitles[SearchAndTools.BinarySearchInTimesFromTitles(TimeTitles, subtitles,0, subtitles.FindLastIndex((x)=> {return x.Begin > TimeSpan.FromSeconds(-1); } ))];
@@ -135,14 +135,17 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch (Exception e)
             {
-                MessageBox.Show("Ошибка синхронизации");
+                throw new SyncException("Ошибка синхронизации - " + e.Message);
             }
             return TS;
 
         }
     }
 
-    
+    public class SyncException : Exception
+    {
+        public SyncException(string message) : base(message) { }
+    }
 
 
 

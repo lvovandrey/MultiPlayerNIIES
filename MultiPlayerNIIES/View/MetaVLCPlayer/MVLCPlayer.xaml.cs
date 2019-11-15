@@ -389,6 +389,11 @@ namespace MultiPlayerNIIES.View.MetaVLCPlayer
             UpdatePosition(e);
         }
 
+        internal void OnResize()
+        {
+           //Тут ничего нет и не должно быть
+        }
+
         #endregion
 
 

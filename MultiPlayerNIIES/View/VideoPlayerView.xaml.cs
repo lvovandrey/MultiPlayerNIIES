@@ -1,4 +1,5 @@
-﻿using MultiPlayerNIIES.Tools;
+﻿using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using System;
 using System.Collections.Generic;
@@ -31,54 +32,56 @@ namespace MultiPlayerNIIES.View
             ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null); ButtonHidePanel_Click(null, null); }, TimeSpan.FromSeconds(1));
         }
 
+
+
         private void TimerTick()
         {
             if (subtitleProcessor != null && subtitleProcessor.Ready)
             {
                 TextBlockSubtitles.Text = subtitleProcessor.GetSubtitle(VLC.CurTime).Text;
             }
+            // ((dynamic)DataContext).OnPropertyChanged("SourceFilename");
+
         }
 
 
         public void Load(string filepath)
         {
-
-            //--------------------------------------
-            //VLC
             VLC.Source = new Uri(@filepath);
-
-            //--------------------------------------
-            //MediaELEMENT
-            //ME.Source = new Uri(@filepath);
-            //ME.Play();
-            //Tools.ToolsTimer.Delay(() =>
-            //{
-            //    ME.Pause();
-            //    ME.Position = TimeSpan.FromSeconds(4);
-            //}, TimeSpan.FromSeconds(0.1));
-
-            //--------------------------------------
-            //FFME
-            //FFME.Source = new Uri(@filepath);
-            //FFME.Play();
-            //Tools.ToolsTimer.Delay(() =>
-            //{
-            //    FFME.Pause();
-            //    FFME.Position = TimeSpan.FromSeconds(4);
-            //}, TimeSpan.FromSeconds(0.1));
-
-
         }
 
 
 
         public void SetPosition(TimeSpan position)
         {
-            VLC.pause();
+            if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
+            {
+                VLC.pause();
+                double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
 
-            double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
-
-            Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
+                Tools.ToolsTimer.Delay(() => { VLC.Position = pos; }, TimeSpan.FromSeconds(2));
+            }, TimeSpan.FromSeconds(1));
+            else
+            {
+                double pos = 1000 * position.TotalSeconds / VLC.Duration.TotalSeconds;
+                VLC.Position = pos;
+            }
+        }
+        public void SetSliderPosition(double sl_position)
+        {
+            if (VLC.Duration <= TimeSpan.Zero)
+                Tools.ToolsTimer.Delay(() =>
+                {
+                    VLC.pause();
+                    Tools.ToolsTimer.Delay(() =>
+                        {
+                            VLC.Position = sl_position;
+                        }, TimeSpan.FromSeconds(0.2));
+                }, TimeSpan.FromSeconds(0.1));
+            else
+            {
+                VLC.Position = sl_position;
+            }
         }
 
         public SubtitleProcessor subtitleProcessor;
@@ -249,7 +252,7 @@ namespace MultiPlayerNIIES.View
             ResizedObject.MouseUp += OnMouseUpResize;
             Mouse.Capture(ResizedObject);
 
-            
+
         }
 
 
@@ -257,7 +260,7 @@ namespace MultiPlayerNIIES.View
         void OnResizeMove(object sender, MouseEventArgs e)
         {
             UpdateResizePosition(e);
-            UpdateVLCInnerPosition();
+            //      UpdateVLCInnerPosition();
         }
 
         internal void Step(TimeSpan step)
@@ -393,11 +396,16 @@ namespace MultiPlayerNIIES.View
             VLC.vlc.Margin = newVLCMargin;
             VLC.vlc.Height = newVLCSize.Height;
             VLC.vlc.Width = newVLCSize.Width;
+
+            TextBlockDebug.Text = OldVLCSize + "Inner " + (int)VLC.vlc.Width + "х" + (int)VLC.vlc.Height + " Container" + (int)ActualWidth + "x" + (int)ActualHeight +
+                " Container" + (int)(ActualWidth - VLC.vlc.Width) + "x" + (int)(ActualHeight - VLC.vlc.Height);
+
+            VLC.OnResize();
         }
         #endregion
 
         #region Реализация Focused
-        public event VoidDelegate UpFocus;
+        public event Action UpFocus;
 
         private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -412,12 +420,17 @@ namespace MultiPlayerNIIES.View
         public event EventHandler OnSyncLeaderSet;
         private void SyncLeadIndicator_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            OnSyncLeaderSet(this, null);
+            var res = MessageBox.Show("Вы уверены что хотите сменить плеер-лидер синхронизации?", "Смена плеера-лидера синхронизации", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (res == MessageBoxResult.OK)
+                OnSyncLeaderSet(this, null);
         }
         #endregion
 
 
         #region Реализация ЗУМА
+        public double OldZoomKoef = 1;
+        public double CurZoomKoef = 1;
+
         private void VLC_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
 
@@ -427,6 +440,7 @@ namespace MultiPlayerNIIES.View
 
         public void Zoom(double ZoomKoef, FrameworkElement ZoomedElement, Point ZoomCenterPositionInContainer)
         {
+
             double w = ZoomedElement.ActualWidth;
             double h = ZoomedElement.ActualHeight;
 
@@ -469,7 +483,7 @@ namespace MultiPlayerNIIES.View
         private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
         {
             if (SyncronizationInstrumentsRow.Height.Value > 20) { SyncronizationInstrumentsRow.Height = new GridLength(0); SyncronizationShiftViewer.Opacity = 0; }
-            else {SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
+            else { SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
         }
 
         private void ButtonHidePanel_Click(object sender, RoutedEventArgs e)

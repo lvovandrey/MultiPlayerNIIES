@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.TimeLine.TimeLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeLine"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="820" Name="THIS">
+
+    <Grid Margin="0,0,-20,0" >
+        <Grid x:Name="GridMain"  Height="50" VerticalAlignment="Top" >
+            <Grid  Height="50" VerticalAlignment="Top" Margin="0,0,20,0" PreviewMouseDown="Grid_PreviewMouseDown">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF1B1B1B" Offset="0"/>
+                        <GradientStop Color="Black" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <local:ScaleTime x:Name="T1" Height="44" ></local:ScaleTime>
+                <local:ScaleTime x:Name="T_Sec" Height="44"></local:ScaleTime>
+                <local:ScaleTime x:Name="T_tenSec" Height="44"></local:ScaleTime>
+                <local:ScaleTime x:Name="T10" Height="44"></local:ScaleTime>
+            </Grid>
+
+            <Rectangle HorizontalAlignment="Stretch" Height="1"  VerticalAlignment="Bottom" Margin="0 0 20 10" Fill="#FFB07220" />
+            <Rectangle HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Margin="0 0 20 0" Stroke="#FF323232" />
+
+        </Grid>
+        <!--<Grid VerticalAlignment="Bottom" Height="25">
+
+        </Grid>-->
+        <local:Cursor x:Name="Cursor1" Margin="0,-5,0,-5" HorizontalAlignment="Left" Panel.ZIndex="10" Width="13" 
+                      ClipToBounds="False"  >
+            <!--CRPosition="{Binding POS,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"-->
+            <local:Cursor.Effect>
+                <DropShadowEffect BlurRadius="0" ShadowDepth="1" Direction="315" Color="White"/>
+            </local:Cursor.Effect>
+        </local:Cursor>
+
+    </Grid>
+</UserControl>
+

@@ -42,9 +42,9 @@ namespace MultiPlayerNIIES.View
             //UnSyncs = new Queue<TimeSpan>();
         }
 
-        System.Windows.Threading.DispatcherTimer timer;
-        Queue<TimeSpan> UnSyncs;
-        bool EnableAutoSync = false;
+        //System.Windows.Threading.DispatcherTimer timer;
+        //Queue<TimeSpan> UnSyncs;
+        //bool EnableAutoSync = false;
 
         private void timerTick(object sender, EventArgs e)
         {

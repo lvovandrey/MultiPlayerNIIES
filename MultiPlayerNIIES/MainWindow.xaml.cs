@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MultiPlayerNIIES.Tools;
+using MultiPlayerNIIES.View.DSPlayer;
 using MultiPlayerNIIES.ViewModel;
 
 namespace MultiPlayerNIIES
@@ -29,13 +31,14 @@ namespace MultiPlayerNIIES
 
             vm = new VM(AreaVideoPlayers.GridMain, this);
             DataContext = vm;
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             vm.CloseAppCommand.Execute(null);
-
         }
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

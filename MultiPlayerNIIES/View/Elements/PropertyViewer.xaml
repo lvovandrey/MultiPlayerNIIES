@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.Elements.PropertyViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.Elements"
+             mc:Ignorable="d" 
+             d:DesignHeight="20"  x:Name="This" Tag="Default tag">
+    <Grid>
+        <Grid x:Name="ThisGrid" Tag="Название">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" MinWidth="100"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding ElementName=This, Path=DataContext, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  />
+            <TextBlock Text="{Binding ElementName= This, Path=Tag}" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</UserControl>
+
