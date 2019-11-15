@@ -38,6 +38,8 @@ _This repository contains images from Gnome desktop icons pack (https://www.icon
 
 Если видео начались не одновременно то каждому из них должно быть назначено смещение синхронизации относительно лидера синхронизации. Смещение синхронизации задается вручную.
 
+![Схема синхронизации по смещению](https://github.com/lvovandrey/MultiPlayerNIIES/blob/Readme-Branch/ReadmeImgs/Shema.jpg)
+
 ##### _Показатели рассинхронизации (для синхронизации по титрам и синхронизации по смещению)_
 
 ### 1. Интерфейс
