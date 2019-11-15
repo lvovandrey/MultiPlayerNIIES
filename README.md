@@ -1,18 +1,14 @@
 # MultiPlayerNIIES
-Многооконный плеер для синхронного воспроизведения видеофайлов.
-***
-Новый абзац 
+## Многооконный плеер для синхронного воспроизведения видеофайлов. 
+_Player with multi-window interface to play many video files._ 
 
-/fonts
+## Licence
+_This repository contains images from Gnome desktop icons pack (https://www.iconspedia.com/pack/gnome-desktop-2042/) with liscense GNU GPL v.2. The rest of this repository is licensed by WTFPL._
 
-    dir /images
-    dir /js
+## Руководство по эксплуатации
 
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-```
+### 1. Интерфейс
 
-> Текст
-> 
-> Продолжение текста выделенного блока
-> Завершение текста
+
+
+![screenshot of sample](https://github.com/lvovandrey/MultiPlayerNIIES/blob/master/MultiPlayerNIIES/Images/PNG/Gnome-Appointment-Missed-64.png) - это значок одного из действий
