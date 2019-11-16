@@ -47,6 +47,25 @@ namespace MultiPlayerNIIES.ViewModel
             Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
         }
 
+
+        private bool outOfSyncronization = false;
+        private bool outOfSyncronizationTitles = false;
+        public bool OutOfSyncronization
+        {
+            get { return outOfSyncronization; }
+            set { outOfSyncronization = value; OnPropertyChanged("OutOfSyncronization");
+            }
+        }
+
+        public bool OutOfSyncronizationTitles
+        {
+            get { return outOfSyncronizationTitles; }
+            set
+            {
+                outOfSyncronizationTitles = value; OnPropertyChanged("OutOfSyncronization");
+            }
+        }
+
         public SyncronizationShiftVM SyncronizationShiftVM
         {
             get

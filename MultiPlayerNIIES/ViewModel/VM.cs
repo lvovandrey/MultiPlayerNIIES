@@ -340,7 +340,7 @@ namespace MultiPlayerNIIES.ViewModel
 
                 if (SyncLeadPlayer != null)
                 {
-                  //  Debug.WriteLine("SyncLeadPlayer.SliderPosition PROP=" + SyncLeadPlayer.SliderPosition.ToString());
+                    //  Debug.WriteLine("SyncLeadPlayer.SliderPosition PROP=" + SyncLeadPlayer.SliderPosition.ToString());
                     return SyncLeadPlayer.SliderPosition;
                 }
                 else return 0;
@@ -447,7 +447,7 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        private double shiftVolume=100;
+        private double shiftVolume = 100;
         /// <summary>
         /// Подрегулировка уровня звука
         /// </summary>
@@ -463,9 +463,9 @@ namespace MultiPlayerNIIES.ViewModel
                 OnPropertyChanged("ShiftVolume");
                 foreach (var v in videoPlayerVMs)
                 {
-                   v.ShiftVolume = value;
+                    v.ShiftVolume = value;
                 }
-                Console.WriteLine("VMShiftVol="+ shiftVolume);
+                Console.WriteLine("VMShiftVol=" + shiftVolume);
             }
         }
 
@@ -630,6 +630,14 @@ namespace MultiPlayerNIIES.ViewModel
             List<TimeSpan> deltas = new List<TimeSpan>();
             foreach (VideoPlayerVM v in videoPlayerVMs)
             {
+                //Если момент выходит за границы продолжительности видео то его не учитываем
+                if (TimeSyncLead + v.SyncronizationShiftVM.ShiftTime > v.Duration || TimeSyncLead + v.SyncronizationShiftVM.ShiftTime < TimeSpan.Zero)
+                {
+                    if(IsOnAutoSyncronization) v.OutOfSyncronization = true;
+                    else v.OutOfSyncronization = false;
+                    continue;
+                }
+                else v.OutOfSyncronization = false;
                 TimeSpan dt = (TimeSyncLead - v.CurTime + v.SyncronizationShiftVM.ShiftTime);
                 if (dt < TimeSpan.Zero) dt = -dt;
                 deltas.Add(dt);
@@ -655,11 +663,22 @@ namespace MultiPlayerNIIES.ViewModel
             }
             if (videoPlayers.Count < 2) return TimeSpan.Zero;
             List<TimeSpan> deltas = new List<TimeSpan>();
-            TimeSpan TL =  videoPlayers[0].GetSyncTimeFromTitles(TimeSyncLead); 
+            TimeSpan TL = videoPlayers[0].GetSyncTimeFromTitles(TimeSyncLead);
             foreach (VideoPlayerVM v in videoPlayers)
             {
                 TimeSpan t = v.GetSyncTimeFromTitles(v.CurTime);
                 TimeSpan dt = (t - TL);
+
+                //Если момент выходит за границы продолжительности видео то его не учитываем
+                if (t > v.Duration || t < TimeSpan.Zero)
+                {
+                    if (IsOnAutoSyncronizationTitles )
+                        v.OutOfSyncronizationTitles = true;
+                    else v.OutOfSyncronizationTitles = false;
+                    continue;
+                }
+                else v.OutOfSyncronizationTitles = false;
+
                 if (dt < TimeSpan.Zero) dt = -dt;
                 deltas.Add(dt);
             }
@@ -932,7 +951,7 @@ namespace MultiPlayerNIIES.ViewModel
                       if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
                       if (File.Exists(@saveFileDialog.FileName))
                       {
-                         MessageBoxResult res =  System.Windows.MessageBox.Show("Перезаписать файл?", "Файл существует", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                          MessageBoxResult res = System.Windows.MessageBox.Show("Перезаписать файл?", "Файл существует", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                           if (res == MessageBoxResult.No) return;
                       }
                       Tools.Serialization.StateSaver.Save(@saveFileDialog.FileName, this);
@@ -977,14 +996,14 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       if (videoPlayerVMs.Count == 0) return;
                       MessageBoxResult res = System.Windows.MessageBox.Show("Все видео-окна будут закрыты. Продолжить?", "Закрыть все видео", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (res == MessageBoxResult.No) return;
+                      if (res == MessageBoxResult.No) return;
 
                       VideoPlayerVM[] vs = new VideoPlayerVM[videoPlayerVMs.Count];
                       int i = 0; int Count = videoPlayerVMs.Count;
                       foreach (var v in videoPlayerVMs)
                       { vs[i] = v; i++; }
 
-                      for(i=0;i< Count; i++)
+                      for (i = 0; i < Count; i++)
                           vs[i].CloseCommand.Execute(null);
                   }));
             }
@@ -1027,12 +1046,12 @@ namespace MultiPlayerNIIES.ViewModel
                        if (FocusedPlayer == null) return;
                        if (FocusedPlayer.IsPlaying)
                        {
-                          List<Task> tasks = new List<Task>();
+                           List<Task> tasks = new List<Task>();
 
-                          foreach (VideoPlayerVM player in videoPlayerVMs)
-                          {
+                           foreach (VideoPlayerVM player in videoPlayerVMs)
+                           {
                                // player.PauseCommand.Execute(null);
-                               tasks.Add(new Task(() => { player.PauseCommand.Execute(null); })); 
+                               tasks.Add(new Task(() => { player.PauseCommand.Execute(null); }));
                            }
 
                            ToolsTimer.Delay(() =>
@@ -1052,7 +1071,7 @@ namespace MultiPlayerNIIES.ViewModel
 
                            foreach (VideoPlayerVM player in videoPlayerVMs)
                                tasks.Add(new Task(() => { player.PlayCommand.Execute(null); }));
-                       
+
                            ToolsTimer.Delay(() =>
                            {
                                foreach (var t in tasks) t.Start();
@@ -1073,13 +1092,13 @@ namespace MultiPlayerNIIES.ViewModel
                 return allPauseCommand ??
                   (allPauseCommand = new RelayCommand(obj =>
                   {
-                          List<Task> tasks = new List<Task>();
-                          foreach (VideoPlayerVM player in videoPlayerVMs)
-                              tasks.Add(new Task(() => { player.Body.VLC.pause(); })); //TODO:НАРУШЕН ПРИНЦИП ИНКАПСУЛЯЦИИ
-                          ToolsTimer.Delay(() =>
-                          {
-                              foreach (var t in tasks) t.Start();
-                          }, TimeSpan.FromSeconds(0.1));
+                      List<Task> tasks = new List<Task>();
+                      foreach (VideoPlayerVM player in videoPlayerVMs)
+                          tasks.Add(new Task(() => { player.Body.VLC.pause(); })); //TODO:НАРУШЕН ПРИНЦИП ИНКАПСУЛЯЦИИ
+                      ToolsTimer.Delay(() =>
+                      {
+                          foreach (var t in tasks) t.Start();
+                      }, TimeSpan.FromSeconds(0.1));
 
                   }));
             }
@@ -1147,7 +1166,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return rateIncreaceCommand ??
                   (rateIncreaceCommand = new RelayCommand(obj =>
                   {
-                       SetRateCommand.Execute(Rate + RateShift);
+                      SetRateCommand.Execute(Rate + RateShift);
                   }));
             }
         }
@@ -1194,7 +1213,7 @@ namespace MultiPlayerNIIES.ViewModel
                           }, TimeSpan.FromSeconds(0.1));
                       }, TimeSpan.FromSeconds(0.1));
 
-                     
+
                   }));
             }
         }
@@ -1398,12 +1417,25 @@ namespace MultiPlayerNIIES.ViewModel
                           }
 
                           foreach (KeyValuePair<VideoPlayerVM, TimeSpan> v in SyncDictionary)
-                              v.Key.CurTime = v.Value;
+                          {
+                              if (v.Key.Duration < v.Value)
+                              {
+                                  v.Key.CurTime = v.Key.Duration - TimeSpan.FromSeconds(0.05);
+                                  continue;
+                              }
+                              else if (v.Value <= TimeSpan.Zero)
+                              {
+                                  v.Key.CurTime = TimeSpan.FromSeconds(0.05);
+                                  continue;
+                              }
+                              else
+                                  v.Key.CurTime = v.Value;
+                          }
                           SyncErrorsCount = 0;
                       }
                       catch (SyncException e)
                       {
-                          
+
                           IsOnAutoSyncronizationTitles = false;
                           IsSyncInProcess = false;
                           if (SyncErrorsCount < SyncErrorsMaxCount)
@@ -1449,9 +1481,24 @@ namespace MultiPlayerNIIES.ViewModel
                       }
 
                       foreach (VideoPlayerVM v in videoPlayerVMs)
-                          if (!v.IsSyncronizeLeader) v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
+                      {
+                          if (!v.IsSyncronizeLeader)
+                          {
+                              if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead > v.Duration)
+                              {
+                                  v.CurTime = v.Duration - TimeSpan.FromSeconds(0.05);
+                                  continue;
+                              }
+                              else if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead <= TimeSpan.Zero)
+                              {
+                                  v.CurTime = TimeSpan.FromSeconds(0.05);
+                                  continue;
+                              }
+                              else
+                                  v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
+                          }
                           else v.CurTime = TimeSyncLead;
-
+                      }
 
 
                       System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
@@ -1465,12 +1512,12 @@ namespace MultiPlayerNIIES.ViewModel
                           if (IsAllSyncronized)
                           {
                               Timer.Stop();
-                              if(IsAllPlayerStatesEquals(PlayersStates))
-                                ToolsTimer.Delay(() =>
-                                {
-                                    foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
-                                        if (pair.Value) pair.Key.Play();
-                                }, TimeSpan.FromSeconds(1));
+                              if (IsAllPlayerStatesEquals(PlayersStates))
+                                  ToolsTimer.Delay(() =>
+                                  {
+                                      foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
+                                          if (pair.Value) pair.Key.Play();
+                                  }, TimeSpan.FromSeconds(1));
                           }
                       };
                       Timer.Interval = TimeSpan.FromSeconds(0.1);
@@ -1522,7 +1569,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
-                     ApiManager.ReleaseAll(); 
+                      ApiManager.ReleaseAll();
 
                   }));
             }
