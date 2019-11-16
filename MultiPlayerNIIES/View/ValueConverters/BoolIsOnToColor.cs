@@ -15,9 +15,9 @@ namespace MultiPlayerNIIES.View.ValueConverters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((bool)value == true)
-                return new SolidColorBrush(Colors.Red);
+                return new SolidColorBrush(Colors.Green);
             else
-                return new SolidColorBrush(Colors.Gray);
+                return new SolidColorBrush(Colors.LightGray);
 
         }
 
@@ -26,6 +26,8 @@ namespace MultiPlayerNIIES.View.ValueConverters
             return DependencyProperty.UnsetValue;
         }
     }
+
+
 
   
 }
