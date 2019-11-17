@@ -40,7 +40,9 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             {
                 VideoInfoRect videoInfoRect = new VideoInfoRect(this.MainGrid);
                 videoInfoRect.Width = 200;
-                videoInfoRect.Height = 100;
+                videoInfoRect.Height = 50;
+                videoInfoRect.HorizontalAlignment = HorizontalAlignment.Left;
+                videoInfoRect.VerticalAlignment = VerticalAlignment.Top;
                 margintop += 110;
                 videoInfoRect.Margin = new Thickness(0, margintop, 0, 0);
                 videoInfoRect.DataContext = v;

@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeDiffElements"
         mc:Ignorable="d"
         Title="TimeDIffWindowWindow" Height="450" Width="800" Closing="Window_Closing">
-    <Grid x:Name="MainGrid">
-       
+    <Grid >
+        <Grid x:Name="MainGrid">
+        </Grid>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="Black" Grid.Column="1"/>
+            <TextBlock Text="{Binding TimeDiffMeasured, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" HorizontalAlignment="Center" Height="20" Grid.ColumnSpan="3" Background="Aqua"/>
+        </Grid>
     </Grid>
 </Window>
