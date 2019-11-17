@@ -161,6 +161,20 @@
                     </Grid>
                 </Button>
 
+                 <Button
+                    Command="{Binding TimeDiffMeasuringCommand}"
+                    Style="{StaticResource ButtonMainPanel}"
+                    ToolTip="Заменить выставленные смещения на всех камерах текущим смещением (нынешним смещением от лидера)"
+                    >
+                    <Grid >
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64.png" 
+                               VerticalAlignment="Top" Margin="-2 -4 -2 -4" 
+                               Visibility="{Binding IsOnTimeDiffMeasuring, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64-Red.png" 
+                               VerticalAlignment="Top" Margin="-2 -4 -2 -4" 
+                               Visibility="{Binding IsOnTimeDiffMeasuring, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </Grid>
+                </Button>
 
             </ToolBar>
 

@@ -469,6 +469,38 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        
+        //------------------------------
+        // измерение времени ручное - его свойства тут.
+        private bool isOnTimeDiffMeasuring = false;
+        public bool IsOnTimeDiffMeasuring
+        {
+            get { return isOnTimeDiffMeasuring; }
+            set { isOnTimeDiffMeasuring = value; OnPropertyChanged("IsOnTimeDiffMeasuring"); }
+        }
+
+        public TimeSpan firstTimeMeasured;
+        public TimeSpan secondTimeMeasured;
+       
+
+        public TimeSpan FirstTimeMeasured
+        {
+            get { return firstTimeMeasured; }
+            set { firstTimeMeasured = value; OnPropertyChanged("FirstTimeMeasured"); OnPropertyChanged("TimeDiffMeasured"); }
+        }
+        public TimeSpan SecondTimeMeasured
+        {
+            get { return secondTimeMeasured; }
+            set { secondTimeMeasured = value; OnPropertyChanged("SecondTimeMeasured"); OnPropertyChanged("TimeDiffMeasured"); }
+        }
+        public TimeSpan TimeDiffMeasured
+        {
+            get { return SecondTimeMeasured-FirstTimeMeasured ; }
+        }
+
+        //-------------------------------
+
+
         #endregion
 
         #region Methods
@@ -633,7 +665,7 @@ namespace MultiPlayerNIIES.ViewModel
                 //Если момент выходит за границы продолжительности видео то его не учитываем
                 if (TimeSyncLead + v.SyncronizationShiftVM.ShiftTime > v.Duration || TimeSyncLead + v.SyncronizationShiftVM.ShiftTime < TimeSpan.Zero)
                 {
-                    if(IsOnAutoSyncronization) v.OutOfSyncronization = true;
+                    if (IsOnAutoSyncronization) v.OutOfSyncronization = true;
                     else v.OutOfSyncronization = false;
                     continue;
                 }
@@ -672,7 +704,7 @@ namespace MultiPlayerNIIES.ViewModel
                 //Если момент выходит за границы продолжительности видео то его не учитываем
                 if (t > v.Duration || t < TimeSpan.Zero)
                 {
-                    if (IsOnAutoSyncronizationTitles )
+                    if (IsOnAutoSyncronizationTitles)
                         v.OutOfSyncronizationTitles = true;
                     else v.OutOfSyncronizationTitles = false;
                     continue;
@@ -709,8 +741,6 @@ namespace MultiPlayerNIIES.ViewModel
             RefreshTimeLineView();
 
         }
-
-
 
         public void OpenVideos(string[] fileNames, Rect[] AreasForPlacement)
         {
@@ -1558,8 +1588,6 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
         private RelayCommand closeAppCommand;
-
-
         public RelayCommand CloseAppCommand
         {
             get
@@ -1576,6 +1604,29 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
+        private RelayCommand timeDiffMeasuringCommand;
+        public RelayCommand TimeDiffMeasuringCommand
+        {
+            get
+            {
+                return timeDiffMeasuringCommand ??
+                  (timeDiffMeasuringCommand = new RelayCommand(obj =>
+                  {
+                      IsOnTimeDiffMeasuring = !IsOnTimeDiffMeasuring;
+                      if (IsOnTimeDiffMeasuring)
+                      {
+                          firstTimeMeasured = TimeSyncLead;
+                          secondTimeMeasured = TimeSpan.Zero;
+                      }
+                      else
+                      {
+                          secondTimeMeasured = TimeSyncLead;
+                          System.Windows.MessageBox.Show(TimeDiffMeasured.ToString());
+                      }
+
+                  }));
+            }
+        }
         #endregion
     }
 }

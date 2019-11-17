@@ -483,6 +483,9 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Green.png" />
+    <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Red.png" />
+    <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Yellow.png" />
     <Resource Include="Images\PNG\Gnome-Process-Stop-64.png" />
     <Resource Include="Images\PNG\Gnome-Folder-Open-64.png" />
     <Resource Include="Images\PNG\Gnome-Media-Floppy-64.png" />
