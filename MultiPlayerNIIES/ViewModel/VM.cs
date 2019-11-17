@@ -5,6 +5,7 @@ using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
 using MultiPlayerNIIES.View.Elements;
+using MultiPlayerNIIES.View.TimeDiffElements;
 using MultiPlayerNIIES.View.TimeLine;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace MultiPlayerNIIES.ViewModel
         WaitProgressBar WaitIndicator;
         SettingsWindowView settingsWindowView;
         SettingsWindowVM settingsWindowVM;
+        TimeDIffWindowWindow TimeDIffWindowWindow;
 
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
@@ -96,6 +98,9 @@ namespace MultiPlayerNIIES.ViewModel
                 sourceOfPostMessages = HwndSource.FromHwnd(new WindowInteropHelper(MainWindow).Handle);
                 sourceOfPostMessages.AddHook(new HwndSourceHook(PostMessagesRecieve));
             }, TimeSpan.FromSeconds(4));
+
+            TimeDIffWindowWindow = new TimeDIffWindowWindow();
+            TimeDIffWindowWindow.DataContext = this;
         }
 
         private void Settings_SettingsChanged()
@@ -1622,6 +1627,8 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           secondTimeMeasured = TimeSyncLead;
                           System.Windows.MessageBox.Show(TimeDiffMeasured.ToString());
+                          TimeDIffWindowWindow.AddVideoInfoRects();
+                          TimeDIffWindowWindow.Show();
                       }
 
                   }));

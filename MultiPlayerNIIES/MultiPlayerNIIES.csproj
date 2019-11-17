@@ -224,6 +224,12 @@
     <Compile Include="View\SettingsWindowView.xaml.cs">
       <DependentUpon>SettingsWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TimeDiffElements\TimeDIffWindowWindow.xaml.cs">
+      <DependentUpon>TimeDIffWindowWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeDiffElements\VideoInfoRect.xaml.cs">
+      <DependentUpon>VideoInfoRect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TimeLine\Cursor.xaml.cs">
       <DependentUpon>Cursor.xaml</DependentUpon>
     </Compile>
@@ -333,6 +339,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingsWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeDiffElements\TimeDIffWindowWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeDiffElements\VideoInfoRect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
