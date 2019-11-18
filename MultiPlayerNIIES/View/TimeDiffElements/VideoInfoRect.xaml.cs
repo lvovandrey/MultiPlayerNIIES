@@ -35,19 +35,19 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         {
             if (Margin.Left > SeparatorMarginLeft - LeftRelativeToThisRect)
             {
-                Margin = new Thickness(SeparatorMarginLeft + 10, Margin.Top, 0, 0);
+                Margin = new Thickness(SeparatorMarginLeft + 50, Margin.Top, 0, 0);
                 Position = 1;
             }
             else
             {
-                Margin = new Thickness(10, Margin.Top, 0, 0);
+                Margin = new Thickness(50, Margin.Top, 0, 0);
                 Position = 0;
             }
         }
 
         internal void OnSizeContaierChanged()
         {
-            Margin = new Thickness(Position*SeparatorMarginLeft + 10, Margin.Top, 0, 0);
+            Margin = new Thickness(Position*SeparatorMarginLeft + 50, Margin.Top, 0, 0);
         }
         #endregion
 
@@ -71,6 +71,8 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             IsDragDrop = true;
             MouseLeftButtonDown += StartDrag;
 
+            Console.WriteLine(IsDragDrop + this.GetHashCode().ToString());
+
         }
 
         public void DragDropSwitchOff(UIElement container)
@@ -80,10 +82,14 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             IsDragDrop = false;
             MouseLeftButtonDown -= StartDrag;
 
+
+
         }
 
         void StartDrag(object sender, MouseButtonEventArgs e)
         {
+            Console.WriteLine("Start" + this.GetHashCode().ToString());
+
             if (!DraggerArea.IsMouseOver) return;
             if ((Container == null) || !IsDragDrop) return;
             draggedObject = (FrameworkElement)sender;
@@ -92,6 +98,8 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             draggedObject.LostMouseCapture += OnLostCapture;
             draggedObject.MouseUp += OnMouseUp;
             Mouse.Capture(draggedObject);
+
+            Shadow.Visibility = Visibility.Visible;
         }
 
 
@@ -123,12 +131,15 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         void FinishDrag(object sender, MouseEventArgs e)
         {
+
+            Console.WriteLine("Finish" + this.GetHashCode().ToString());
             draggedObject.MouseMove -= OnDragMove;
             draggedObject.LostMouseCapture -= OnLostCapture;
             draggedObject.MouseUp -= OnMouseUp;
             UpdatePosition(e);
 
             AfterFinish(e.GetPosition(this).X);
+            Shadow.Visibility = Visibility.Hidden;
         }
         #endregion
     }

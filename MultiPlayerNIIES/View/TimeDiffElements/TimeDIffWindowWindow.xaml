@@ -5,20 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeDiffElements"
         mc:Ignorable="d"
-        Title="TimeDIffWindowWindow" Height="450" Width="800" Closing="Window_Closing" SizeChanged="Window_SizeChanged">
-    <Grid >
-        <Grid x:Name="MainGrid">
-        </Grid>
-        <Grid >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="ColumnLeft"/>
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Rectangle Fill="Black" Grid.Column="1" />
-            <TextBlock Grid.Column="0" HorizontalAlignment="Center">Сначала</TextBlock>
-            <TextBlock Grid.Column="2" HorizontalAlignment="Center">Потом</TextBlock>
-            <TextBlock Text="{Binding TimeDiffMeasured, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" HorizontalAlignment="Center" Height="20" Grid.ColumnSpan="3" Background="Aqua"/>
-        </Grid>
+        Title="Расставь видео по порядку" Height="450" Width="800" Closing="Window_Closing" SizeChanged="Window_SizeChanged"  ShowInTaskbar="False">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF343434" />
+            <Setter Property="Foreground" Value="#FFB07220" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+    </Window.Resources>
+        <Grid Background="#FF161616">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Border BorderThickness="2" BorderBrush="#FFB07220" Margin="5" Panel.ZIndex="1">
+            <Grid Panel.ZIndex="1">
+           
+                <Grid x:Name="MainGrid" Panel.ZIndex="100">
+                </Grid>
+                <Grid Panel.ZIndex="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="ColumnLeft"/>
+                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle Fill="#FFB07220" Grid.Column="1" />
+                    <TextBlock Foreground="#FFB07220" Grid.Column="0" HorizontalAlignment="Center" Margin="20" FontSize="16">Сначала</TextBlock>
+                    <TextBlock Foreground="#FFB07220" Grid.Column="2" HorizontalAlignment="Center" Margin="20" FontSize="16">Потом</TextBlock>
+                    <Image Source="/MultiPlayerNIIES;component/Images/Arrow1LeftOrange.png" Grid.Column="0" 
+                           HorizontalAlignment="Center" VerticalAlignment="Top" 
+                           Height="70" Width="150" Stretch="Fill" Grid.ColumnSpan="3" 
+                           RenderTransformOrigin="0.5,0.5" Opacity="0.5">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <!--, StringFormat=hh\\:mm\\:ss\\.ff-->
+                    <TextBlock  Text="{Binding TimeDiffMeasured, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                       FontSize="14" Grid.Column="0" 
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center" 
+                       Height="20" Grid.ColumnSpan="3" Margin="-20 25 0 0" />
+                </Grid>
+
+             </Grid>
+        </Border>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Width="100" Click="Button_Click_1"  >Применить</Button>
+            <Button  Width="100" Click="Button_Click" >Отмена</Button>
+        </StackPanel>
+
     </Grid>
 </Window>

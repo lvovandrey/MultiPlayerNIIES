@@ -965,6 +965,8 @@ namespace MultiPlayerNIIES.ViewModel
             Rect r = new Rect(0, 0, 250, 100);
             videoPlayerVM.Replace(r);
         }
+        
+        
         #endregion
 
 
@@ -1587,7 +1589,6 @@ namespace MultiPlayerNIIES.ViewModel
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                           if (!v.IsSyncronizeLeader)
                               v.SyncronizationShiftVM.ShiftTime = v.CurTime - TimeSyncLead;
-
                   }));
             }
         }
@@ -1620,19 +1621,27 @@ namespace MultiPlayerNIIES.ViewModel
                       IsOnTimeDiffMeasuring = !IsOnTimeDiffMeasuring;
                       if (IsOnTimeDiffMeasuring)
                       {
-                          firstTimeMeasured = TimeSyncLead;
-                          secondTimeMeasured = TimeSpan.Zero;
+                          FirstTimeMeasured = TimeSyncLead;
+                          SecondTimeMeasured = TimeSpan.Zero;
                       }
                       else
                       {
-                          secondTimeMeasured = TimeSyncLead;
-                          System.Windows.MessageBox.Show(TimeDiffMeasured.ToString());
+                          SecondTimeMeasured = TimeSyncLead;
+                          this.AllPauseCommand.Execute(null);
                           TimeDIffWindowWindow.AddVideoInfoRects();
                           TimeDIffWindowWindow.Show();
                       }
 
                   }));
             }
+        }
+
+        public void SetCustomShiftsOfSyncronization(Dictionary<VideoPlayerVM, TimeSpan> ViewModelsVMsShifts)
+        {
+            if (System.Windows.MessageBox.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на выставленные смещения. Продолжить?", "Замена смещений на текущие", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
+            foreach (var v in ViewModelsVMsShifts)
+                if (!v.Key.IsSyncronizeLeader)
+                    v.Key.SyncronizationShiftVM.ShiftTime = v.Value;
         }
         #endregion
     }
