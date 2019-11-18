@@ -32,7 +32,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             VM vm = DataContext as VM;
             if (vm == null) return;
 
-            double margintop = 10;
+            double margintop = 20;
             videoInfoRects = new List<VideoInfoRect>();
             this.MainGrid.Children.Clear();
 
@@ -43,10 +43,12 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
                 videoInfoRect.Height = 50;
                 videoInfoRect.HorizontalAlignment = HorizontalAlignment.Left;
                 videoInfoRect.VerticalAlignment = VerticalAlignment.Top;
-                margintop += 110;
-                videoInfoRect.Margin = new Thickness(0, margintop, 0, 0);
+                videoInfoRect.Margin = new Thickness(10, margintop, 0, 0);
+                margintop += 60;
                 videoInfoRect.DataContext = v;
+                videoInfoRect.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
                 videoInfoRects.Add(videoInfoRect);
+
             }
 
 
@@ -60,6 +62,15 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         {
             e.Cancel = true;
             Hide();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach (var v in videoInfoRects)
+            {
+                v.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
+                v.OnSizeContaierChanged();
+            }
         }
     }
 }

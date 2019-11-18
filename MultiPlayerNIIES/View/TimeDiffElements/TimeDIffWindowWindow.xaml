@@ -5,17 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeDiffElements"
         mc:Ignorable="d"
-        Title="TimeDIffWindowWindow" Height="450" Width="800" Closing="Window_Closing">
+        Title="TimeDIffWindowWindow" Height="450" Width="800" Closing="Window_Closing" SizeChanged="Window_SizeChanged">
     <Grid >
         <Grid x:Name="MainGrid">
         </Grid>
         <Grid >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition x:Name="ColumnLeft"/>
                 <ColumnDefinition Width="3" />
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Rectangle Fill="Black" Grid.Column="1"/>
+            <Rectangle Fill="Black" Grid.Column="1" />
+            <TextBlock Grid.Column="0" HorizontalAlignment="Center">Сначала</TextBlock>
+            <TextBlock Grid.Column="2" HorizontalAlignment="Center">Потом</TextBlock>
             <TextBlock Text="{Binding TimeDiffMeasured, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" HorizontalAlignment="Center" Height="20" Grid.ColumnSpan="3" Background="Aqua"/>
         </Grid>
     </Grid>
