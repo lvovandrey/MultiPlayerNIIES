@@ -56,6 +56,8 @@ namespace MultiPlayerNIIES.ViewModel
             get { return TimeSpan.FromSeconds((SliderPosition/SliderMaxPosition)*ShiftMaxTime.TotalSeconds); }
             set
             {
+                if (value.Duration() > ShiftMaxTime) ShiftMaxTime = TimeSpan.FromSeconds(3)+ TimeSpan.FromMilliseconds(Math.Ceiling(value.Duration().TotalMilliseconds));
+
                 sliderPosition = (value.TotalSeconds/ShiftMaxTime.TotalSeconds)*SliderMaxPosition;
                 if (sliderPosition > SliderMaxPosition) sliderPosition = SliderMaxPosition;
                 if (sliderPosition < SliderMinPosition) sliderPosition = SliderMinPosition;
