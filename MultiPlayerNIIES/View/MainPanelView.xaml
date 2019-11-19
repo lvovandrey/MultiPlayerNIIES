@@ -49,7 +49,7 @@
 
             <ToolBar Height="50" VerticalAlignment="Top">
 
-                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}" Visibility="Collapsed">
+                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}" >
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
                         <Label
@@ -100,7 +100,7 @@
                 </Button>
 
                 <Button 
-                    Visibility="Collapsed"
+                    
                     HorizontalAlignment="Stretch"
                     Command="{Binding AutoSyncTitlesOnOffCommand}"
                     Style="{StaticResource ButtonMainPanel}"
