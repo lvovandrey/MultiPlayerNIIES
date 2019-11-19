@@ -1638,7 +1638,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         public void SetCustomShiftsOfSyncronization(Dictionary<VideoPlayerVM, TimeSpan> ViewModelsVMsShifts)
         {
-            if (System.Windows.MessageBox.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на выставленные смещения. Продолжить?", "Замена смещений на текущие", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
+            //if (System.Windows.MessageBox.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на выставленные смещения. Продолжить?", "Замена смещений на текущие", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
             foreach (var v in ViewModelsVMsShifts)
                 if (!v.Key.IsSyncronizeLeader)
                     v.Key.SyncronizationShiftVM.ShiftTime = v.Value;
