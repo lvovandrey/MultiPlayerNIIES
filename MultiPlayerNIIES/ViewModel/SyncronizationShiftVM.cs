@@ -118,6 +118,60 @@ namespace MultiPlayerNIIES.ViewModel
                   }));
             }
         }
+
+        private RelayCommand decShiftTimeCommand;
+        public RelayCommand DecShiftTimeCommand
+        {
+            get
+            {
+                return decShiftTimeCommand ??
+                  (decShiftTimeCommand = new RelayCommand(obj =>
+                  {
+                      ShiftTime -= TimeSpan.FromSeconds(1);
+                  }));
+            }
+        }
+
+        private RelayCommand decFineShiftTimeCommand;
+        public RelayCommand DecFineShiftTimeCommand
+        {
+            get
+            {
+                return decFineShiftTimeCommand ??
+                  (decFineShiftTimeCommand = new RelayCommand(obj =>
+                  {
+                      ShiftTime -= TimeSpan.FromSeconds(0.05);
+                  }));
+            }
+        }
+
+
+        private RelayCommand incShiftTimeCommand;
+        public RelayCommand IncShiftTimeCommand
+        {
+            get
+            {
+                return incShiftTimeCommand ??
+                  (incShiftTimeCommand = new RelayCommand(obj =>
+                  {
+                      ShiftTime += TimeSpan.FromSeconds(1);
+                  }));
+            }
+        }
+
+        private RelayCommand incFineShiftTimeCommand;
+        public RelayCommand IncFineShiftTimeCommand
+        {
+            get
+            {
+                return incFineShiftTimeCommand ??
+                  (incFineShiftTimeCommand = new RelayCommand(obj =>
+                  {
+                      ShiftTime += TimeSpan.FromSeconds(0.05);
+                  }));
+            }
+        }
+
         #endregion
 
 
