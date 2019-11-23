@@ -222,5 +222,17 @@ namespace WindowsFormsVideoControl
             oldW = Width;
             oldH = Height;
         }
+
+        public void SetZoom(Rect zoomedArea)
+        {
+            SelectablePictureBox1.Width = (int)Math.Round(zoomedArea.Width);
+            SelectablePictureBox1.Height = (int)Math.Round(zoomedArea.Height);
+            SelectablePictureBox1.Location = new System.Drawing.Point((int)Math.Round(zoomedArea.Left), (int)Math.Round(zoomedArea.Top));
+        }
+
+        public Rect GetZoomedArea()
+        {
+            return new Rect(SelectablePictureBox1.Location.X, SelectablePictureBox1.Location.Y, SelectablePictureBox1.Width, SelectablePictureBox1.Height);
+        }
     }
 }

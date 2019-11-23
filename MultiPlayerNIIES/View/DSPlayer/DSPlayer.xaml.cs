@@ -317,6 +317,16 @@ namespace MultiPlayerNIIES.View.DSPlayer
             Rate += 0.1;
         }
 
+        internal void SetSoom(Rect zoomedArea)
+        {
+            VideoMMM.SetZoom(zoomedArea);
+        }
+
+        public Rect GetZoomedArea()
+        {
+            return VideoMMM.GetZoomedArea();
+        }
+
         private void IncSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
             if (dxPlay == null) return;

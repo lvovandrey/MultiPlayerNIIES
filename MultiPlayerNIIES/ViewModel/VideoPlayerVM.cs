@@ -279,7 +279,16 @@ namespace MultiPlayerNIIES.ViewModel
             Body.Margin = new Thickness(AreaForPlacementInContainer.Left, AreaForPlacementInContainer.Top, 0, 0);
             Body.Width = AreaForPlacementInContainer.Width;
             Body.Height = AreaForPlacementInContainer.Height;
+        }
 
+        public void SetZoom(Rect ZoomedArea)
+        {
+            Body.SetZoom(ZoomedArea);
+        }
+
+        public Rect GetZoomedArea()
+        {
+            return Body.GetZoomedArea();
         }
 
         internal void Play()

@@ -70,7 +70,8 @@ namespace MultiPlayerNIIES.Tools.Serialization
                     IsSyncLeader = v.IsSyncronizeLeader,
                     Position = new Rect(v.Body.Margin.Left, v.Body.Margin.Top, v.Body.ActualWidth, v.Body.ActualHeight),
                     Duration = v.Duration,
-                    SelfVolume = v.SelfVolume
+                    SelfVolume = v.SelfVolume,
+                    ZoomedArea = v.GetZoomedArea()
                 }); ;
             }    
         }
@@ -120,6 +121,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
         public bool IsSyncLeader;
         public Rect Position;
         public double SelfVolume;
+        public Rect ZoomedArea;
 
         public PlayerStateSerialized(){}
 

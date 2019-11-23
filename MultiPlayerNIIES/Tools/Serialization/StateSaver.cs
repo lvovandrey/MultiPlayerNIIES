@@ -122,7 +122,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
                 {
                    filenames[i] = Path.GetFullPath(Path.Combine(sets.TargetDirectory, sets.Players[i].relativeFilename)); //преобразование относительного пути в абсолютный
                 }
-                
+
             //... и зон размещения проигрывателей для ...
             Rect[] areas = new Rect[sets.Players.Count];
             for (int i = 0; i < sets.Players.Count; i++)
@@ -152,6 +152,16 @@ namespace MultiPlayerNIIES.Tools.Serialization
                 foreach (VideoPlayerVM v in vm.videoPlayerVMs)
                 {
                     v.SelfVolume = sets.Players[vm.videoPlayerVMs.IndexOf(v)].SelfVolume;
+                }
+
+                //Устанавливаем везде нужный зум
+                foreach (VideoPlayerVM v in vm.videoPlayerVMs)
+                {
+                    Rect ZoomedArea = sets.Players[vm.videoPlayerVMs.IndexOf(v)].ZoomedArea;
+
+                    if (ZoomedArea.Width>10  && ZoomedArea.Height>10 && ZoomedArea.Left+ ZoomedArea.Width > 0 && ZoomedArea.Height+ ZoomedArea.Top >0)
+                    v.SetZoom(ZoomedArea);
+                    v.Body.VLC.OnResize();
                 }
             }, TimeSpan.FromSeconds(2));
         }

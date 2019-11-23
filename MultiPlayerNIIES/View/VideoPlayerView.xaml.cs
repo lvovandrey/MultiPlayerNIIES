@@ -328,6 +328,16 @@ namespace MultiPlayerNIIES.View
                 ResizedObject.Height = newHeight;
         }
 
+        internal void SetZoom(Rect zoomedArea)
+        {
+            VLC.SetSoom(zoomedArea);
+        }
+
+        public Rect GetZoomedArea()
+        {
+           return VLC.GetZoomedArea();
+        }
+
         void OnMouseUpResize(object sender, MouseButtonEventArgs e)
         {
             FinishResize(sender, e);
