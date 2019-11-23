@@ -510,9 +510,6 @@ namespace MultiPlayerNIIES.View
         {
             return VLC.GetSnapShot();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            IMAGE.Source = Tools.Graphics.GraphicsTools.ToBitmapSource(VLC.GetSnapShot());
-        }
+
     }
 }

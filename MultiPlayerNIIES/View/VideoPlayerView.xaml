@@ -210,19 +210,7 @@
             Visibility="{Binding OutOfSyncronizationTitles, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }"
              >Видео за границами синхронизации титров</TextBlock>
 
-        <Button 
-            Margin="150 0 150 0"             
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="3" Click="Button_Click"  >Жми</Button>
-
-        <Image
-            HorizontalAlignment="Right" Width="150"
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            x:Name="IMAGE"
-            Source="{Binding SnapShotTimeDiff1, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}" Stretch="Fill"  ></Image>
+       
 
         <elements:PlayerPanel
             x:Name="PlayerPanelViewer"
