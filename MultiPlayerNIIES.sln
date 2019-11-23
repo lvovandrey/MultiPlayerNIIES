@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "Windows
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsVideoControl", "WindowsFormsVideoControl\WindowsFormsVideoControl.csproj", "{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRenderDShow", "NewRenderDShow\NewRenderDShow.csproj", "{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x64.Build.0 = Release|Any CPU
 		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x86.ActiveCfg = Release|Any CPU
 		{F2ACB569-E6D0-4752-AD17-8D87D63C7FFB}.Release|x86.Build.0 = Release|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Debug|x64.Build.0 = Debug|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Debug|x86.Build.0 = Debug|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Release|x64.ActiveCfg = Release|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Release|x64.Build.0 = Release|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Release|x86.ActiveCfg = Release|Any CPU
+		{EBCA22E0-8EBD-42F8-9CD2-07C01FAD0168}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
