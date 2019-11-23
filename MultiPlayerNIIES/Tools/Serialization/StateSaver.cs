@@ -136,7 +136,8 @@ namespace MultiPlayerNIIES.Tools.Serialization
                 if (v.IsSyncLeader) SyncLeadId = sets.Players.IndexOf(v);
             vm.SyncLeadPlayer = vm.videoPlayerVMs[SyncLeadId];
 
-
+            //Устанавливаем подрегулировку громкости
+            vm.ShiftVolume = sets.ShiftVolume;
 
             ToolsTimer.Delay(() =>
             {
@@ -145,6 +146,12 @@ namespace MultiPlayerNIIES.Tools.Serialization
                 {
                     v.CurTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].CurTime;
                     v.SyncronizationShiftVM.ShiftTime = sets.Players[vm.videoPlayerVMs.IndexOf(v)].TimeShift;
+                }
+
+                //Устанавливаем всем нужную громкость
+                foreach (VideoPlayerVM v in vm.videoPlayerVMs)
+                {
+                    v.SelfVolume = sets.Players[vm.videoPlayerVMs.IndexOf(v)].SelfVolume;
                 }
             }, TimeSpan.FromSeconds(2));
         }

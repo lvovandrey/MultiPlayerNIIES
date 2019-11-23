@@ -39,6 +39,11 @@ namespace MultiPlayerNIIES.Tools.Serialization
         /// Состояние окна  - развернуто/свернуто/восстановлено
         /// </summary>
         public WindowState WindowState;
+        /// <summary>
+        /// Общий уровень подрегулировки звука
+        /// </summary>
+        public double ShiftVolume;
+
 
 
         public ApplicationStateSerialized()
@@ -51,6 +56,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
             Position = new Rect(vm.MainWindow.Left, vm.MainWindow.Top, vm.MainWindow.ActualWidth, vm.MainWindow.ActualHeight);
             WindowState = vm.MainWindow.WindowState;
             IsExcelConnected = vm.IsExcelConnected;
+            ShiftVolume = vm.ShiftVolume;
             if (IsExcelConnected) ExcelBookFilename = vm.ExcelBookFilename;
             Players = new List<PlayerStateSerialized>();
             foreach (var v in vm.videoPlayerVMs)
@@ -63,7 +69,8 @@ namespace MultiPlayerNIIES.Tools.Serialization
                     TimeShift = v.SyncronizationShiftVM.ShiftTime,
                     IsSyncLeader = v.IsSyncronizeLeader,
                     Position = new Rect(v.Body.Margin.Left, v.Body.Margin.Top, v.Body.ActualWidth, v.Body.ActualHeight),
-                    Duration = v.Duration
+                    Duration = v.Duration,
+                    SelfVolume = v.SelfVolume
                 }); ;
             }    
         }
@@ -112,6 +119,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
 
         public bool IsSyncLeader;
         public Rect Position;
+        public double SelfVolume;
 
         public PlayerStateSerialized(){}
 
