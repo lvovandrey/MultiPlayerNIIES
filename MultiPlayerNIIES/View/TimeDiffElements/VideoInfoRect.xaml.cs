@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         {
             InitializeComponent();
             DragDropSwitchOn(Container, this);
+            ShowSnapShots();
         }
 
         public byte Position = 0; //0-слева, 1-справа
@@ -33,6 +35,9 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         public double SeparatorMarginLeft;
         public void AfterFinish(double LeftRelativeToThisRect)
         {
+            VideoPlayerVM v = DataContext as VideoPlayerVM;
+            if (v == null) return;
+
             if (Margin.Left > SeparatorMarginLeft - LeftRelativeToThisRect)
             {
                 Margin = new Thickness(SeparatorMarginLeft + 50, Margin.Top, 0, 0);
@@ -43,11 +48,28 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
                 Margin = new Thickness(50, Margin.Top, 0, 0);
                 Position = 0;
             }
+            ShowSnapShots();
+
+        }
+
+        private void ShowSnapShots()
+        {
+            if (Position == 1)
+            {
+                ImageSnapShot.Visibility = Visibility.Hidden;
+                ImageSnapShot2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ImageSnapShot.Visibility = Visibility.Visible;
+                ImageSnapShot2.Visibility = Visibility.Hidden;
+            }
         }
 
         internal void OnSizeContaierChanged()
         {
             Margin = new Thickness(Position*SeparatorMarginLeft + 50, Margin.Top, 0, 0);
+            ShowSnapShots();
         }
         #endregion
 
@@ -141,6 +163,19 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             AfterFinish(e.GetPosition(this).X);
             Shadow.Visibility = Visibility.Hidden;
         }
+
         #endregion
+
+        private void ImageSnapShot2_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //ImageSnapShotBig.Source = ((Image)sender).Source;
+            //ImageSnapShotBig.Visibility = Visibility.Visible;
+        }
+
+        private void ImageSnapShot2_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //ImageSnapShotBig.Source = ((Image)sender).Source;
+            //ImageSnapShotBig.Visibility = Visibility.Collapsed;
+        }
     }
 }

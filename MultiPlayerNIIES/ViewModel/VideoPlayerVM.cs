@@ -123,18 +123,18 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        private double shiftVolume=100;
+        private double shiftVolume = 100;
         public double ShiftVolume
         {
             get { return shiftVolume; }
-            set { shiftVolume = value; Volume = (shiftVolume/100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume"); Console.WriteLine("shiftV=" + shiftVolume); }
+            set { shiftVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume"); Console.WriteLine("shiftV=" + shiftVolume); }
         }
 
-        private double selfVolume=Settings.DefaultVolume;
+        private double selfVolume = Settings.DefaultVolume;
         public double SelfVolume
         {
             get { return selfVolume; }
-            set { selfVolume = value;  Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); Console.WriteLine("selfV=" +selfVolume); }
+            set { selfVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); Console.WriteLine("selfV=" + selfVolume); }
         }
 
 
@@ -182,6 +182,20 @@ namespace MultiPlayerNIIES.ViewModel
                 else
                     return Path.GetFileName(SourceFilename);
             }
+        }
+
+        private System.Drawing.Bitmap snapShotTimeDiff1;
+        private System.Drawing.Bitmap snapShotTimeDiff2;
+
+        public System.Drawing.Bitmap SnapShotTimeDiff1
+        {
+            get { return snapShotTimeDiff1; }
+            set { snapShotTimeDiff1 = value;  OnPropertyChanged("SnapShotTimeDiff1"); }
+        }
+        public System.Drawing.Bitmap SnapShotTimeDiff2
+        {
+            get { return snapShotTimeDiff2; }
+            set { snapShotTimeDiff2 = value;  OnPropertyChanged("SnapShotTimeDiff2"); }
         }
 
 
@@ -304,6 +318,11 @@ namespace MultiPlayerNIIES.ViewModel
         private void Settings_SettingsChanged()
         {
             OnPropertyChanged("FilenameForTitle");
+        }
+
+        public System.Drawing.Bitmap GetSnapShot()
+        {
+            return Body.VLC.GetSnapShot();
         }
 
         #endregion

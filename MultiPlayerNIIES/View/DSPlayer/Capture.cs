@@ -310,6 +310,11 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 );
         }
 
+        public Bitmap GetSnapShot()
+        {
+            return IPToBmp(SnapShot());
+        }
+
         // Build the capture graph for grabber and renderer.</summary>
         // (Control to show video in, Filename to play)
         private void SetupGraph2(Control hWin, string FileName, ref bool RateOk)

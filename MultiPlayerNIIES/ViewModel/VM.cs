@@ -1623,11 +1623,17 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           FirstTimeMeasured = TimeSyncLead;
                           SecondTimeMeasured = TimeSpan.Zero;
+                          foreach (var v in videoPlayerVMs)
+                              v.SnapShotTimeDiff1 = v.Body.GetSnapShot();
                       }
                       else
                       {
                           SecondTimeMeasured = TimeSyncLead;
                           this.AllPauseCommand.Execute(null);
+                          foreach (var v in videoPlayerVMs)
+                          {
+                              v.SnapShotTimeDiff2 = v.Body.GetSnapShot();
+                          }
                           TimeDIffWindowWindow.AddVideoInfoRects();
                           TimeDIffWindowWindow.Show();
                       }

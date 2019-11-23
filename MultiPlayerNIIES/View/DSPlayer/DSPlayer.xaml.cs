@@ -488,6 +488,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
             OnResize(e);
         }
 
+        public Bitmap GetSnapShot()
+        {
+            return dxPlay.GetSnapShot();
+        }
 
         #region Реализация ЗУМА
 
