@@ -73,6 +73,11 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        private TimeSpan smoothShiftTime = TimeSpan.Zero;
+        public TimeSpan SmoothShiftTime
+        {
+
+        }
 
         private TimeSpan shiftMaxTime;
         public TimeSpan ShiftMaxTime

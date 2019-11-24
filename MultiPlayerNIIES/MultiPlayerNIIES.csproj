@@ -484,6 +484,7 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Time-Go-32.png" />
     <Resource Include="Images\Arrow1LeftOrange.png" />
     <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Green.png" />
     <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Red.png" />
