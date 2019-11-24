@@ -254,6 +254,8 @@
     <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
     <Compile Include="View\ValueConverters\SyncOnOffWordConverter.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
+    <Compile Include="View\ValueConverters\TimeShiftToColor.cs" />
+    <Compile Include="View\ValueConverters\TimeShiftToVisibility.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToTotalMiliseconds.cs" />

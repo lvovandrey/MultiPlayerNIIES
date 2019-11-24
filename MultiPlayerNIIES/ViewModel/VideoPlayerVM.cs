@@ -19,8 +19,8 @@ namespace MultiPlayerNIIES.ViewModel
     {
         public VideoPlayerView Body; //Ну это не настоящая VM
         Grid Container;
-        VM VM;
-        SyncronizationShiftVM syncronizationShiftVM;
+        public VM VM;
+        public SyncronizationShiftVM syncronizationShiftVM;
         PlayerPanelVM playerPanelVM;
         public VideoPlayerVM(Grid container, VM vm, Rect AreaForPlacementInContainer)
         {
@@ -73,6 +73,17 @@ namespace MultiPlayerNIIES.ViewModel
             set
             { syncronizationShiftVM = value; OnPropertyChanged("SyncronizationShiftVM"); }
         }
+
+        public TimeSpan CurShiftTime 
+        {
+            get
+            { return SyncronizationShiftVM.CurrentShiftTime-SyncronizationShiftVM.ShiftTime; }
+            set
+            { CurShiftTime = value; OnPropertyChanged("CurShiftTime"); }
+        }
+
+        public void OnPropertyChangedCurShiftTime() { OnPropertyChanged("CurShiftTime"); }
+
 
         public PlayerPanelVM PlayerPanelVM
         {

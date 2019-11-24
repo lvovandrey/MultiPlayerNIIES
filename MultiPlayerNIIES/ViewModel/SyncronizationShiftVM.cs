@@ -25,6 +25,7 @@ namespace MultiPlayerNIIES.ViewModel
         void MainTimerTick(object state)
         {
             OnPropertyChanged("CurrentShiftTime");
+            videoPlayerVM.OnPropertyChangedCurShiftTime();
         }
         #region Properties
         private VideoPlayerVM videoPlayerVM;
@@ -73,11 +74,6 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        private TimeSpan smoothShiftTime = TimeSpan.Zero;
-        public TimeSpan SmoothShiftTime
-        {
-
-        }
 
         private TimeSpan shiftMaxTime;
         public TimeSpan ShiftMaxTime

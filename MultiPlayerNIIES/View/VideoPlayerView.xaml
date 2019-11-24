@@ -22,7 +22,12 @@
         <converters:BoolIsSyncLeaderToVisibility x:Key="BoolIsSyncLeaderToVisibility" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:BitmapToBitmapSource x:Key="BitmapToBitmapSource"/>
+        <converters:TimeShiftToColor x:Key="TimeShiftToColor"/>
+        <converters:TimeShiftToVisibility x:Key="TimeShiftToVisibility"/>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
 
+        
+        
         <Style x:Key="BtnStyle" TargetType="Button">
             <Setter Property="Width" Value="14" />
             <Setter Property="Height" Value="14" />
@@ -210,6 +215,26 @@
             Visibility="{Binding OutOfSyncronizationTitles, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }"
              >Видео за границами синхронизации титров</TextBlock>
 
+        <Image 
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Right"
+            Margin="0 0 80 0" Source="/MultiPlayerNIIES;component/Images/PNG/Time-Go-32.png"/>
+        <TextBlock
+            Margin="0 0 10 0"      
+            HorizontalAlignment="Right"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            FontSize="12" FontWeight="Bold" 
+            Foreground="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColor}}"
+            Visibility="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToVisibility} }"
+            VerticalAlignment="Center"
+            Text="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}  }"
+             >
+            <TextBlock.ToolTip>Значение рассинхронизации</TextBlock.ToolTip>
+        </TextBlock>     
        
 
         <elements:PlayerPanel
