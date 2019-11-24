@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MultiPlayerNIIES.View
 {
     /// <summary>
-    /// Логика взаимодействия для VideoPlayerPropertiesView.xaml
+    /// Логика взаимодействия для InfoWindowView.xaml
     /// </summary>
-    public partial class VideoPlayerPropertiesView : UserControl
+    public partial class InfoWindowView : Window
     {
-        public VideoPlayerPropertiesView()
+        public InfoWindowView()
         {
             InitializeComponent();
         }

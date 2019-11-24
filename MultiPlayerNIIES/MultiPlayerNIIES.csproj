@@ -200,6 +200,9 @@
     <Compile Include="View\Elements\WaitProgressBar.xaml.cs">
       <DependentUpon>WaitProgressBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\InfoWindowView.xaml.cs">
+      <DependentUpon>InfoWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>
@@ -254,17 +257,8 @@
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToTotalMiliseconds.cs" />
-    <Compile Include="View\VideoPlayerListView.xaml.cs">
-      <DependentUpon>VideoPlayerListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\VideoPlayerPropertiesView.xaml.cs">
-      <DependentUpon>VideoPlayerPropertiesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\VideoPlayerView.xaml.cs">
       <DependentUpon>VideoPlayerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\VideoSetsPanelView.xaml.cs">
-      <DependentUpon>VideoSetsPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\VLCPlayer\Helper.cs" />
     <Compile Include="View\VLCPlayer\VLCPlayer.xaml.cs">
@@ -308,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Elements\WaitProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InfoWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -367,19 +365,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\VideoPlayerListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\VideoPlayerPropertiesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\VideoPlayerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\VideoSetsPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
