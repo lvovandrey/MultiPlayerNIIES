@@ -35,7 +35,9 @@ namespace MultiPlayerNIIES.ViewModel
         Excel.Workbooks ExcelBooks;
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
-        WaitProgressBar WaitIndicator;
+        InfoWindowView InfoWindowView;
+
+
         SettingsWindowView settingsWindowView;
         SettingsWindowVM settingsWindowVM;
         TimeDIffWindowWindow TimeDIffWindowWindow;
@@ -61,9 +63,12 @@ namespace MultiPlayerNIIES.ViewModel
             Settings.SettingsChanged += Settings_SettingsChanged;
             Settings.RestoreAllSettings();
 
+            InfoWindowView = new InfoWindowView(this);
+            InfoWindowView.Visibility = Visibility.Hidden;
+            
             videoPlayerVMs = new List<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
-            WaitIndicator = mainWindow.AreaVideoPlayers.WaitProgressBar1;
+            
             MainWindow = mainWindow;
             MainWindow.SizeChanged += MainWindow_SizeChanged;
             oldMainWindowWidth = MainWindow.ActualWidth;
@@ -1432,7 +1437,7 @@ namespace MultiPlayerNIIES.ViewModel
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));//TODO: Очень бы тут пригодилась многопоточность
 
-                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
+                      InfoWindowView.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
@@ -1501,7 +1506,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
-                      WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
+                      InfoWindowView.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
 
 

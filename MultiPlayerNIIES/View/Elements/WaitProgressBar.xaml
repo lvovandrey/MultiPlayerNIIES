@@ -12,13 +12,13 @@
         <StackPanel Orientation="Vertical">
             <TextBlock
                 x:Name="TextBlockInfo"
-                Margin="10"
+                Margin="10 10 10 0"
                 HorizontalAlignment="Center"
                 Text="Ждите. Идет синхронизация" />
             <ProgressBar
                 x:Name="WaitProgressBar1"
                 Height="40"
-                Margin="10" />
+                Margin="10 0 10 0" />
         </StackPanel>
     </Grid>
 </UserControl>

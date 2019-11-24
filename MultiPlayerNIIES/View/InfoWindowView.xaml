@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayerNIIES.View"
+        xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
         mc:Ignorable="d"
-        Title="InfoWindowView" Height="450" Width="800">
+        Title="InfoWindowView" Height="100" Width="200"
+        WindowStyle="None" >
     <Grid>
-        
+        <elements:WaitProgressBar x:Name="WaitProgressBar"/>
     </Grid>
 </Window>
