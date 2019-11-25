@@ -67,6 +67,9 @@ namespace WindowsFormsVideoControl
         public void Zoom(double ZoomKoef, System.Windows.Forms.Control ZoomedElement, System.Drawing.Point ZoomCenterPositionInContainer)
         {
 
+            double kAspectRatio = (OriginalSize.Height / OriginalSize.Width);
+
+
             double w = (double)ZoomedElement.Width;
             double h = (double)ZoomedElement.Height;
 
@@ -94,7 +97,7 @@ namespace WindowsFormsVideoControl
             double kappa = c / d;
             double MTnew = -(kappa / (1 + kappa)) * deltaY - MT;
 
-
+            Думаю надо  тут учесть если оригинальное соотношение сторон, то...... над чет по другому делать (т.к. щас у нас мотаешь в минус - до ширины доходит минимальной а до высоты нет...)
             if (MLnew > 0) MLnew = 0;
             if (wnew < this.Width) wnew = this.Width;
             if (MTnew > 0) MTnew = 0;
@@ -104,7 +107,8 @@ namespace WindowsFormsVideoControl
             ZoomedElement.Height = (int)hnew;
             ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
 
-            if (AspectRatio == AspectRatio.Original) ZoomedElement.Height = (int)(ZoomedElement.Width * (OriginalSize.Height / OriginalSize.Width));
+            if (AspectRatio == AspectRatio.Original)
+                    ZoomedElement.Height = (int)(ZoomedElement.Width * kAspectRatio);
         }
 
         public void FitToFill()
@@ -225,8 +229,12 @@ namespace WindowsFormsVideoControl
                 }
                 if (AspectRatio == AspectRatio.Original)
                 {
+
                     double kx = (double)Width / (double)oldW;
-                    double ky = kx;
+                    double ky = (double)Height / (double)oldH;
+                    if (Height > SelectablePictureBox1.Height) ky = kx;
+                    else if (Width >= SelectablePictureBox1.Width) kx = ky;
+                    else ky = kx;
 
                     double wa = (double)SelectablePictureBox1.Width;
                     double wxa = (double)SelectablePictureBox1.Location.X;
@@ -236,8 +244,42 @@ namespace WindowsFormsVideoControl
 
                     SelectablePictureBox1.Width = (int)Math.Round(wa * kx);
                     SelectablePictureBox1.Height = (int)Math.Round(ha * ky);
+
+                    double k = (OriginalSize.Height / OriginalSize.Width);
+                    if (SelectablePictureBox1.Location.X == 0 && SelectablePictureBox1.Location.Y == 0)
+                    {
+                        if (!(Height >= SelectablePictureBox1.Height && Width >= SelectablePictureBox1.Width))
+                        {
+                            if (Width < SelectablePictureBox1.Width)
+                            {
+                                SelectablePictureBox1.Width = Width;
+                                SelectablePictureBox1.Height = (int)(Width * k);
+                            }
+                            if (Height < SelectablePictureBox1.Height)
+                            {
+                                SelectablePictureBox1.Height = Height + 1;
+                                SelectablePictureBox1.Width = (int)(Height / k);
+                            }
+
+                        }
+                        if (Height >= SelectablePictureBox1.Height && Width >= SelectablePictureBox1.Width)
+                        {
+                            if (k > 1)
+                            {
+                                SelectablePictureBox1.Height = Height;
+                                SelectablePictureBox1.Width = (int)(Height / k);
+                            }
+                            else
+                            {
+                                SelectablePictureBox1.Width = Width;
+                                SelectablePictureBox1.Height = (int)(Width * k);
+                            }
+
+                        }
+
+                    }
                     SelectablePictureBox1.Location = new System.Drawing.Point((int)Math.Round(wxa * kx), (int)Math.Round(hya * ky));
-                } 
+                }
             }
             oldW = Width;
             oldH = Height;
@@ -263,7 +305,7 @@ namespace WindowsFormsVideoControl
         /// <summary>
         /// Исходный размер видео
         /// </summary>
-        public System.Windows.Size OriginalSize = new System.Windows.Size(200,100);
+        public System.Windows.Size OriginalSize = new System.Windows.Size(200, 100);
 
     }
 
