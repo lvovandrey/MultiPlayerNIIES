@@ -92,9 +92,6 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             DraggerArea = dragger;
             IsDragDrop = true;
             MouseLeftButtonDown += StartDrag;
-
-            Console.WriteLine(IsDragDrop + this.GetHashCode().ToString());
-
         }
 
         public void DragDropSwitchOff(UIElement container)
@@ -110,8 +107,6 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         void StartDrag(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("Start" + this.GetHashCode().ToString());
-
             if (!DraggerArea.IsMouseOver) return;
             if ((Container == null) || !IsDragDrop) return;
             draggedObject = (FrameworkElement)sender;
@@ -153,8 +148,6 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         void FinishDrag(object sender, MouseEventArgs e)
         {
-
-            Console.WriteLine("Finish" + this.GetHashCode().ToString());
             draggedObject.MouseMove -= OnDragMove;
             draggedObject.LostMouseCapture -= OnLostCapture;
             draggedObject.MouseUp -= OnMouseUp;

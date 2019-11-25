@@ -475,7 +475,6 @@ namespace MultiPlayerNIIES.ViewModel
                 {
                     v.ShiftVolume = value;
                 }
-                Console.WriteLine("VMShiftVol=" + shiftVolume);
             }
         }
 

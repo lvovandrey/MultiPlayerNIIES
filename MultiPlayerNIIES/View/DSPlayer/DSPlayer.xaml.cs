@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Graphics;
+using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -131,6 +132,28 @@ namespace MultiPlayerNIIES.View.DSPlayer
             {
                 if (dxPlay == null) return TimeSpan.Zero;
                 return dxPlay.CurTime;
+            }
+        }
+
+        /// <summary>
+        /// Соотношение сторон
+        /// </summary>
+        public AspectRatio AspectRatio
+        {
+            get { return (AspectRatio)VideoMMM.AspectRatio; }
+            set { VideoMMM.AspectRatio = (WindowsFormsVideoControl.AspectRatio)value; }
+        }
+
+
+        public System.Windows.Size OriginalSize
+        {
+            get
+            {
+                return dxPlay.OriginalSize;
+            }
+            set
+            {
+                dxPlay.OriginalSize = value;
             }
         }
 

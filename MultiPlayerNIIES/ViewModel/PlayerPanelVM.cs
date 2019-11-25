@@ -142,6 +142,26 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        
+
+        private RelayCommand changeAspectRatioCommand;
+        public RelayCommand ChangeAspectRatioCommand
+        {
+            get
+            {
+                return changeAspectRatioCommand ?? (changeAspectRatioCommand = new RelayCommand(obj =>
+                {
+                    switch (VideoPlayerVM.AspectRatio)
+                    {
+                        case AspectRatio.Original: VideoPlayerVM.AspectRatio = AspectRatio.BindToContainer; break;
+                        case AspectRatio.BindToContainer: VideoPlayerVM.AspectRatio = AspectRatio.Original; break;
+                        default: VideoPlayerVM.AspectRatio = AspectRatio.BindToContainer; break;
+                    }
+                     
+
+                }));
+            }
+        }
 
         #endregion
 

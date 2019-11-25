@@ -15,6 +15,12 @@ using System.Windows.Controls;
 namespace MultiPlayerNIIES.ViewModel
 {
     public delegate void PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e);
+    public enum AspectRatio
+    {
+        Original,
+        BindToContainer
+    }
+
     public class VideoPlayerVM : INPCBase
     {
         public VideoPlayerView Body; //Ну это не настоящая VM
@@ -130,7 +136,7 @@ namespace MultiPlayerNIIES.ViewModel
                 if (volume < 0) Body.VLC.Volume = 0;
                 else if (volume > 100) Body.VLC.Volume = 100;
                 else Body.VLC.Volume = volume;
-                OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); Console.WriteLine("V=" + Volume);
+                OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); 
             }
         }
 
@@ -138,15 +144,42 @@ namespace MultiPlayerNIIES.ViewModel
         public double ShiftVolume
         {
             get { return shiftVolume; }
-            set { shiftVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume"); Console.WriteLine("shiftV=" + shiftVolume); }
+            set { shiftVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume");  }
         }
 
         private double selfVolume = Settings.DefaultVolume;
         public double SelfVolume
         {
             get { return selfVolume; }
-            set { selfVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); Console.WriteLine("selfV=" + selfVolume); }
+            set { selfVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume");  }
         }
+
+
+
+        /// <summary>
+        /// Соотношение сторон
+        /// </summary>
+        public AspectRatio AspectRatio
+        {
+            get { return Body.VLC.AspectRatio; }
+            set { Body.VLC.AspectRatio = value; OnPropertyChanged("AspectRatio");}
+        }
+
+        /// <summary>
+        /// Исходный размер видео
+        /// </summary>
+        public Size OriginalSize
+        {
+            get
+            {
+                return Body.VLC.OriginalSize;
+            }
+            set
+            {
+                Body.VLC.OriginalSize = value; OnPropertyChanged("OriginalSize");
+            }
+        }
+
 
 
         public TimeSpan Duration

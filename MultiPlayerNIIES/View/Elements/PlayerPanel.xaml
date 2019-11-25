@@ -20,8 +20,9 @@
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="25" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="65" />
 
 
             </Grid.ColumnDefinitions>
@@ -63,9 +64,18 @@
             </Button>
 
             <Button
+                Name="AspectRatioBtn"
+                Grid.Column="4"
+                Margin="2"
+                Command="{Binding ChangeAspectRatioCommand}">
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-contract-48.png" Stretch="Uniform" Margin="-5"/>
+            </Button>
+
+
+            <Button
                 Name="DecSpeedBtn"
                 Grid.Row="1"
-                Grid.Column="4"
+                Grid.Column="5"
                 Margin="2"
                 Command="{Binding DecSpeedCommand}"
                 Content="x0.5"
@@ -73,7 +83,7 @@
             <Button
                 Name="IncSpeedBtn"
                 Grid.Row="1"
-                Grid.Column="5"
+                Grid.Column="6"
                 Margin="2"
                 Command="{Binding IncSpeedCommand}"
                 Content="x2"
@@ -81,7 +91,7 @@
             <Button
                 Name="FrameBackwardBtn"
                 Grid.Row="1"
-                Grid.Column="6"
+                Grid.Column="7"
                 Margin="2"
                 Command="{Binding StepBackwardCommand}"
                 Content="&lt;-"
@@ -89,7 +99,7 @@
             <Button
                 Name="FrameForwardBtn"
                 Grid.Row="1"
-                Grid.Column="7"
+                Grid.Column="8"
                 Margin="2"
                 Command="{Binding StepForwardCommand}"
                 Content="-&gt;"
@@ -97,7 +107,7 @@
 
             <Slider
                 Name="TimeSlider"
-                Grid.Column="8"
+                Grid.Column="9"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Maximum="1000"
@@ -108,7 +118,7 @@
             <TextBox
                 x:Name="TimeTextBox"
                 Grid.Row="1"
-                Grid.Column="9"
+                Grid.Column="10"
                 MinHeight="10"
                 VerticalAlignment="Center"
                 BorderBrush="{x:Null}"

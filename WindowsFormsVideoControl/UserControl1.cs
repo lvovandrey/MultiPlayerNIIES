@@ -103,6 +103,8 @@ namespace WindowsFormsVideoControl
             ZoomedElement.Width = (int)wnew;
             ZoomedElement.Height = (int)hnew;
             ZoomedElement.Location = new System.Drawing.Point((int)MLnew, (int)MTnew);
+
+            if (AspectRatio == AspectRatio.Original) ZoomedElement.Height = (int)(ZoomedElement.Width * (OriginalSize.Height / OriginalSize.Width));
         }
 
         public void FitToFill()
@@ -206,18 +208,36 @@ namespace WindowsFormsVideoControl
         {
             if (oldH > 0 && oldW > 0)
             {
-                double kx = (double)Width / (double)oldW;
-                double ky = (double)Height / (double)oldH;
+                if (AspectRatio == AspectRatio.BindToContainer)
+                {
+                    double kx = (double)Width / (double)oldW;
+                    double ky = (double)Height / (double)oldH;
 
-                double wa = (double)SelectablePictureBox1.Width;
-                double wxa = (double)SelectablePictureBox1.Location.X;
+                    double wa = (double)SelectablePictureBox1.Width;
+                    double wxa = (double)SelectablePictureBox1.Location.X;
 
-                double ha = (double)SelectablePictureBox1.Height;
-                double hya = (double)SelectablePictureBox1.Location.Y;
+                    double ha = (double)SelectablePictureBox1.Height;
+                    double hya = (double)SelectablePictureBox1.Location.Y;
 
-                SelectablePictureBox1.Width = (int)Math.Round(wa * kx);
-                SelectablePictureBox1.Height = (int)Math.Round(ha * ky);
-                SelectablePictureBox1.Location = new System.Drawing.Point((int)Math.Round(wxa * kx), (int)Math.Round(hya * ky));
+                    SelectablePictureBox1.Width = (int)Math.Round(wa * kx);
+                    SelectablePictureBox1.Height = (int)Math.Round(ha * ky);
+                    SelectablePictureBox1.Location = new System.Drawing.Point((int)Math.Round(wxa * kx), (int)Math.Round(hya * ky));
+                }
+                if (AspectRatio == AspectRatio.Original)
+                {
+                    double kx = (double)Width / (double)oldW;
+                    double ky = kx;
+
+                    double wa = (double)SelectablePictureBox1.Width;
+                    double wxa = (double)SelectablePictureBox1.Location.X;
+
+                    double ha = (double)SelectablePictureBox1.Height;
+                    double hya = (double)SelectablePictureBox1.Location.Y;
+
+                    SelectablePictureBox1.Width = (int)Math.Round(wa * kx);
+                    SelectablePictureBox1.Height = (int)Math.Round(ha * ky);
+                    SelectablePictureBox1.Location = new System.Drawing.Point((int)Math.Round(wxa * kx), (int)Math.Round(hya * ky));
+                } 
             }
             oldW = Width;
             oldH = Height;
@@ -234,5 +254,17 @@ namespace WindowsFormsVideoControl
         {
             return new Rect(SelectablePictureBox1.Location.X, SelectablePictureBox1.Location.Y, SelectablePictureBox1.Width, SelectablePictureBox1.Height);
         }
+
+        /// <summary>
+        /// Соотношение сторон
+        /// </summary>
+        public AspectRatio AspectRatio = AspectRatio.BindToContainer;
+
+        /// <summary>
+        /// Исходный размер видео
+        /// </summary>
+        public System.Windows.Size OriginalSize = new System.Windows.Size(200,100);
+
     }
+
 }
