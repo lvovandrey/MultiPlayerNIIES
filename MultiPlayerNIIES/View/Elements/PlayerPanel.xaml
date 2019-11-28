@@ -68,8 +68,8 @@
                 Grid.Column="4"
                 Margin="2"
                 Command="{Binding ChangeAspectRatioCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-contract-48.png" Stretch="Uniform" Margin="-5"/>
-            </Button>
+                <TextBlock Margin="-3" FontSize="8" Text="Fill" x:Name="TextBlockAspectRatio"/>
+           </Button>
 
 
             <Button

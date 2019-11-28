@@ -147,6 +147,7 @@ namespace MultiPlayerNIIES.ViewModel
             set { shiftVolume = value; Volume = (shiftVolume / 100) * selfVolume; OnPropertyChanged("Volume"); OnPropertyChanged("SelfVolume"); OnPropertyChanged("ShiftVolume");  }
         }
 
+
         private double selfVolume = Settings.DefaultVolume;
         public double SelfVolume
         {
@@ -180,6 +181,11 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+
+        internal void RefreshSize()
+        {
+            Body.VLC.RefreshSize();
+        }
 
 
         public TimeSpan Duration

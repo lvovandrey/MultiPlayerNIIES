@@ -157,7 +157,14 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
         }
 
+        internal void RefreshSize()
+        {
+            VideoMMM.ResizeVideoContainer();
+            OnResize();
+        }
         System.Windows.Threading.DispatcherTimer timer;
+
+
 
         internal void RateIncreace()
         {

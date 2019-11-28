@@ -36,10 +36,12 @@ namespace MultiPlayerNIIES.View.Elements
 
         private void TimeSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            PlayerPanelVM ppVM = DataContext as PlayerPanelVM; // да хуй с ним знаю что уродство
+            PlayerPanelVM ppVM = DataContext as PlayerPanelVM; // TODO: Код на коленке
             if (ppVM == null) return;
             ppVM.Body.VLC.TimeSlider_PreviewMouseUp(sender, e);
 
         }
+
+
     }
 }

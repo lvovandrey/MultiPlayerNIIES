@@ -97,7 +97,6 @@ namespace WindowsFormsVideoControl
             double kappa = c / d;
             double MTnew = -(kappa / (1 + kappa)) * deltaY - MT;
 
-            Думаю надо  тут учесть если оригинальное соотношение сторон, то...... над чет по другому делать (т.к. щас у нас мотаешь в минус - до ширины доходит минимальной а до высоты нет...)
             if (MLnew > 0) MLnew = 0;
             if (wnew < this.Width) wnew = this.Width;
             if (MTnew > 0) MTnew = 0;
@@ -114,7 +113,7 @@ namespace WindowsFormsVideoControl
         public void FitToFill()
         {
             Zoom(-1, SelectablePictureBox1, new System.Drawing.Point(0, 0));
-
+            SelectablePictureBox1.Location = new System.Drawing.Point(0, 0);
             oldW = Width;
             oldH = Height;
         }
@@ -208,6 +207,11 @@ namespace WindowsFormsVideoControl
 
         #endregion
 
+        public void ResizeVideoContainer()
+        {
+            FitToFill();
+            VideoContainer1_Resize(null, null);
+        }
         private void VideoContainer1_Resize(object sender, EventArgs e)
         {
             if (oldH > 0 && oldW > 0)

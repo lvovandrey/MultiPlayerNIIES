@@ -15,6 +15,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         #region Поля 
         public VideoPlayerView Body; //Ну это не настоящая VM
+        public View.Elements.PlayerPanel PanelBody;
         private VideoPlayerVM VideoPlayerVM;
         #endregion
 
@@ -23,6 +24,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             Body = body;
             VideoPlayerVM = videoPlayerVM;
+            PanelBody = Body.PlayerPanelViewer;
             SubscriptedToEventsInPlayerDepPropChanges();
         }
         #endregion
@@ -153,8 +155,16 @@ namespace MultiPlayerNIIES.ViewModel
                 {
                     switch (VideoPlayerVM.AspectRatio)
                     {
-                        case AspectRatio.Original: VideoPlayerVM.AspectRatio = AspectRatio.BindToContainer; break;
-                        case AspectRatio.BindToContainer: VideoPlayerVM.AspectRatio = AspectRatio.Original; break;
+                        case AspectRatio.Original:
+                            VideoPlayerVM.AspectRatio = AspectRatio.BindToContainer;
+                            VideoPlayerVM.RefreshSize();
+                            PanelBody.TextBlockAspectRatio.Text = "Fill"; //TODO: Не самое красивое решение, так сказать, не mvvm ниразу
+                            break;
+                        case AspectRatio.BindToContainer:
+                            VideoPlayerVM.AspectRatio = AspectRatio.Original;
+                            VideoPlayerVM.RefreshSize();
+                            PanelBody.TextBlockAspectRatio.Text = "1:1";
+                            break;
                         default: VideoPlayerVM.AspectRatio = AspectRatio.BindToContainer; break;
                     }
                      
