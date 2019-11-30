@@ -163,6 +163,7 @@
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
     <Compile Include="Model\Settings.cs" />
+    <Compile Include="Model\TimeDiffMeasuring.cs" />
     <Compile Include="Tools\Graphics\GraphicsTools.cs" />
     <Compile Include="Tools\Serialization\ApplicationStateSerialized.cs" />
     <Compile Include="Tools\Serialization\ConfigurationTools.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
     <Compile Include="ViewModel\SettingsWindowVM.cs" />
     <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
+    <Compile Include="ViewModel\TimeDiffColumnVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
