@@ -1639,10 +1639,10 @@ namespace MultiPlayerNIIES.ViewModel
                           else return;  
                       }
                           
-                          TimeDIffWindowWindow.Show();
+                      TimeDIffWindowWindow.Show();
+                      ((TimeDiffWindowVM)TimeDIffWindowWindow.DataContext).ShowCommand.Execute(null);
                       
-                          Console.WriteLine("dsfsd"); 
-                          //SecondTimeMeasured = TimeSyncLead;
+                      //SecondTimeMeasured = TimeSyncLead;
                           //this.AllPauseCommand.Execute(null);
                           //foreach (var v in videoPlayerVMs)
                           //{

@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.View.TimeDiffElements;
 using System;
 using System.Collections.Generic;
@@ -41,12 +42,16 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
 
         public void AddVideos()
         {
+            int i = 1;
             foreach (var p in TimeDiffMeasuringManager.TimeDiffVideos)
             {
-                TimeDiffVideoInfoRectVM videoVM = new TimeDiffVideoInfoRectVM();
+                TimeDiffVideoInfoRectVM videoVM = new TimeDiffVideoInfoRectVM(TimeDiffMeasuringManager.TimeDiffVideos.IndexOf(p));
                 VideoInfoRectVMs.Add(videoVM);
                 Body.AddVideo(videoVM);
+                i++;
             }
+            ToolsTimer.Delay(() => { Body.FormatWindowContent(); }, TimeSpan.FromSeconds(0.1));
+
         }
 
 
@@ -67,6 +72,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
                 return showCommand ?? (showCommand = new RelayCommand(obj =>
                 {
                     AddColumns();
+                    AddVideos();
 
                 }));
             }

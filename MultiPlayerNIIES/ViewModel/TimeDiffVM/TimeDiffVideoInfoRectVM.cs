@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,13 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
     {
 
         #region Поля 
-
+        
         #endregion
 
         #region Конструкторы
-        public TimeDiffVideoInfoRectVM()
+        public TimeDiffVideoInfoRectVM(int Number)
         {
-
+            number = Number;
         }
         #endregion
 
@@ -28,16 +29,27 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
         #region Свойства
         public bool IsSyncronizeLeader
         {
-            get; set;
+            get { return TimeDiffVideo.IsSyncLead; }
         }
         public string FilenameForTitle
         {
-            get; set;
+            get { return TimeDiffVideo.FileName; }
         }
+
+        private int number;
+        public int Number { get { return number; } }
+
+        public TimeDiffVideo TimeDiffVideo
+        { get { return TimeDiffMeasuringManager.TimeDiffVideos[number]; } }
 
         public System.Drawing.Bitmap SnapShotTimeDiff
         {
-            get; set;// изменяется когда меняется position
+            get
+            {
+                return TimeDiffVideo.SnapShotsOnPositions[0]; //TODO: тут не всегда так! исправить
+            }
+
+            // изменяется когда меняется position
         }
 
         #endregion

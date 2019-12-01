@@ -37,7 +37,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             videoInfoRects = new List<VideoInfoRect>();
             this.MainGrid.Children.Clear();
 
-           
+
 
             foreach (var v in vm.videoPlayerVMs)
             {
@@ -79,30 +79,16 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         }
 
 
-        private void FormatWindowContent()
+        public void FormatWindowContent()
         {
             VideoInfoRect PrevVideoInfoRect = null;
             foreach (var item in this.MainGrid.Children)
             {
                 VideoInfoRect videoInfoRect = item as VideoInfoRect;
                 if (item == null) return;
-                videoInfoRect.HorizontalAlignment = HorizontalAlignment.Left;
-                videoInfoRect.VerticalAlignment = VerticalAlignment.Top;
-                videoInfoRect.Height = videoInfoRect.TextVideoFileName.ActualHeight + videoInfoRect.TextSyncLead.ActualHeight + 10;
-                if (PrevVideoInfoRect == null)
-                    videoInfoRect.Margin = new Thickness(50, 50, 0, 0);
-                else
-                {
-                    videoInfoRect.Margin = new Thickness(50, PrevVideoInfoRect.Margin.Top + PrevVideoInfoRect.Height + 10, 0, 0);
-                    videoInfoRect.Position = 1;
-                    videoInfoRect.OnSizeContaierChanged();
-                }
+                FormatingVideoInfoRect(videoInfoRect, PrevVideoInfoRect);
                 PrevVideoInfoRect = videoInfoRect;
             }
-
-
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -131,7 +117,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
                 VideoPlayerVM vpvm = v.DataContext as VideoPlayerVM;
                 if (!vpvm.IsSyncronizeLeader)
                 {
-                    if(v.Position != SyncLeadPos && v.Position==1)
+                    if (v.Position != SyncLeadPos && v.Position == 1)
                         T = vm.TimeDiffMeasured + vpvm.SyncronizationShiftVM.CurrentShiftTime;
                     if (v.Position != SyncLeadPos && v.Position == 0)
                         T = -vm.TimeDiffMeasured + vpvm.SyncronizationShiftVM.CurrentShiftTime;
@@ -149,8 +135,25 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         internal void AddVideo(TimeDiffVideoInfoRectVM videoVM)
         {
-            MessageBox.Show("метод AddVideo не создан");
+
+            VideoInfoRect video = new VideoInfoRect(this.MainGrid);
+            video.DataContext = videoVM;
+            this.MainGrid.Children.Add(video);
         }
+
+        internal void FormatingVideoInfoRect(VideoInfoRect v, VideoInfoRect prev)
+        {
+
+            v.HorizontalAlignment = HorizontalAlignment.Left;
+            v.VerticalAlignment = VerticalAlignment.Top;
+            v.Height = v.TextVideoFileName.ActualHeight + v.TextSyncLead.ActualHeight + 10;
+
+            if (prev == null)
+                v.Margin = new Thickness(20, 50, 0, 0);
+            else
+                v.Margin = new Thickness(20, prev.Margin.Top + prev.Height + 10, 0, 0);
+        }
+
 
         internal void AddColumn(TimeDiffColumnVM columnVM)
         {
@@ -163,6 +166,6 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         {
             this.ColumnStack.Children.Clear();
         }
-
     }
 }
+
