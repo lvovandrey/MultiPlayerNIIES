@@ -43,10 +43,7 @@
 
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Width="100" Command="{Binding ShowCommand}"  >Показать</Button>
-            
             <Button Width="100" Click="Button_Click_1"  >Применить</Button>
-            
             <Button  Width="100" Click="Button_Click" >Отмена</Button>
         </StackPanel>
 

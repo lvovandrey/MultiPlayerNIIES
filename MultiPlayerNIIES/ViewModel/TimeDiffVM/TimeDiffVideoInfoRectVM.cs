@@ -12,13 +12,14 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
     {
 
         #region Поля 
-        
+        public VideoPlayerVM VideoPlayerVM;
         #endregion
 
         #region Конструкторы
-        public TimeDiffVideoInfoRectVM(int Number)
+        public TimeDiffVideoInfoRectVM(int Number, VideoPlayerVM videoPlayerVM)
         {
             number = Number;
+            VideoPlayerVM = videoPlayerVM;
         }
         #endregion
 
@@ -27,6 +28,35 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
         #endregion
 
         #region Свойства
+
+        public int CurrentPosition
+        {
+            get
+            {
+                return TimeDiffVideo.CurrentPosition.Number-1;
+            }
+            set
+            {
+                if (value < TimeDiffMeasuringManager.TimeDiffPositions.Count && value >= 0)
+                {
+                    TimeDiffVideo.CurrentPosition = TimeDiffMeasuringManager.TimeDiffPositions[value];
+                    Console.WriteLine(TimeDiffMeasuringManager.TimeDiffPositions[value]);
+                }
+                OnPropertyChanged("CurrentPosition");
+                OnPropertyChanged("SnapShot");
+            }
+        }
+
+        public TimeSpan PositionTime
+        {
+            get
+            {
+                return TimeDiffVideo.CurrentPosition.Time;
+            }
+        }
+
+
+
         public bool IsSyncronizeLeader
         {
             get { return TimeDiffVideo.IsSyncLead; }
@@ -42,14 +72,12 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
         public TimeDiffVideo TimeDiffVideo
         { get { return TimeDiffMeasuringManager.TimeDiffVideos[number]; } }
 
-        public System.Drawing.Bitmap SnapShotTimeDiff
+        public System.Drawing.Bitmap SnapShot
         {
             get
             {
-                return TimeDiffVideo.SnapShotsOnPositions[0]; //TODO: тут не всегда так! исправить
+                return TimeDiffVideo.SnapShotsOnPositions[CurrentPosition];
             }
-
-            // изменяется когда меняется position
         }
 
         #endregion
@@ -68,6 +96,8 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
                 }));
             }
         }
+
+
 
 
 

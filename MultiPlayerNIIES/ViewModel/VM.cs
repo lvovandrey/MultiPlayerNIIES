@@ -106,7 +106,7 @@ namespace MultiPlayerNIIES.ViewModel
             }, TimeSpan.FromSeconds(4));
 
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
-            TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow);
+            TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
         }
 
         private void Settings_SettingsChanged()
@@ -1641,16 +1641,6 @@ namespace MultiPlayerNIIES.ViewModel
                           
                       TimeDIffWindowWindow.Show();
                       ((TimeDiffWindowVM)TimeDIffWindowWindow.DataContext).ShowCommand.Execute(null);
-                      
-                      //SecondTimeMeasured = TimeSyncLead;
-                          //this.AllPauseCommand.Execute(null);
-                          //foreach (var v in videoPlayerVMs)
-                          //{
-                          //    v.SnapShotTimeDiff2 = v.Body.GetSnapShot();
-                          //}
-                          //TimeDIffWindowWindow.AddVideoInfoRects();
-                         // TimeDIffWindowWindow.Show();
-
                   }));
             }
         }

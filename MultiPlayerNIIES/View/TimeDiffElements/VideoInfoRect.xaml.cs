@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.ViewModel;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,54 +23,40 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
     /// </summary>
     public partial class VideoInfoRect : UserControl
     {
-        public VideoInfoRect(UIElement Container)
+
+        public VideoInfoRect(UIElement Container, double ColumnsWidth)
         {
             InitializeComponent();
             DragDropSwitchOn(Container, this);
-            ShowSnapShots();
+            ColWidth = ColumnsWidth;
         }
 
-        public byte Position = 0; //0-слева, 1-справа
+        private double ColWidth = 300;
+
+        private TimeDiffVideoInfoRectVM vm
+        {
+            get
+            {
+                return DataContext as TimeDiffVideoInfoRectVM;
+            }
+        }
 
         #region Дополнения к Drag'n'Drop
-        public double SeparatorMarginLeft;
-        public void AfterFinish(double LeftRelativeToThisRect)
+        public void AfterFinish(double MarginLeft)
         {
-            VideoPlayerVM v = DataContext as VideoPlayerVM;
-            if (v == null) return;
-
-            if (Margin.Left > SeparatorMarginLeft - LeftRelativeToThisRect)
-            {
-                Margin = new Thickness(SeparatorMarginLeft + 50, Margin.Top, 0, 0);
-                Position = 1;
-            }
-            else
-            {
-                Margin = new Thickness(50, Margin.Top, 0, 0);
-                Position = 0;
-            }
-            ShowSnapShots();
-
+            if (vm == null) return;
+            int pos = (int)Math.Floor(MarginLeft / ColWidth);
+            vm.CurrentPosition = pos;
+            Console.WriteLine("pos=" + pos + "CurPos=" +vm.CurrentPosition);
+            Margin = new Thickness(vm.CurrentPosition * ColWidth + 20, Margin.Top, 0, 0);
         }
 
-        private void ShowSnapShots()
-        {
-            if (Position == 1)
-            {
-                ImageSnapShot.Visibility = Visibility.Hidden;
-                ImageSnapShot2.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                ImageSnapShot.Visibility = Visibility.Visible;
-                ImageSnapShot2.Visibility = Visibility.Hidden;
-            }
-        }
+      
 
         internal void OnSizeContaierChanged()
         {
-            Margin = new Thickness(Position*SeparatorMarginLeft + 50, Margin.Top, 0, 0);
-            ShowSnapShots();
+            if (vm == null) return;
+            Margin = new Thickness(ColWidth*vm.CurrentPosition + 20, Margin.Top, 0, 0);
         }
         #endregion
 
@@ -153,7 +140,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             draggedObject.MouseUp -= OnMouseUp;
             UpdatePosition(e);
 
-            AfterFinish(e.GetPosition(this).X);
+            AfterFinish(e.GetPosition(Container).X);
             Shadow.Visibility = Visibility.Hidden;
         }
 

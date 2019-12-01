@@ -73,27 +73,13 @@
             x:Name="ImageSnapShot"
             Grid.Column="1"
             Panel.ZIndex="2"
-            Source="{Binding SnapShotTimeDiff1, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}">
+            Source="{Binding SnapShot, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}">
             <Image.ToolTip>
                 <StackPanel>
                     <Image
                         Width="400"
                         Height="270"
-                        Source="{Binding SnapShotTimeDiff1, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}" />
-                </StackPanel>
-            </Image.ToolTip>
-        </Image>
-        <Image
-            x:Name="ImageSnapShot2"
-            Grid.Column="1"
-            Panel.ZIndex="2"
-            Source="{Binding SnapShotTimeDiff2, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}">
-            <Image.ToolTip>
-                <StackPanel>
-                    <Image
-                        Width="400"
-                        Height="270"
-                        Source="{Binding SnapShotTimeDiff2, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}" />
+                        Source="{Binding SnapShot, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BitmapToBitmapSource}}" />
                 </StackPanel>
             </Image.ToolTip>
         </Image>

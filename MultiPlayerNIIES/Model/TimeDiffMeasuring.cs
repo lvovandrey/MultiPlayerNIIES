@@ -30,7 +30,7 @@ namespace MultiPlayerNIIES.Model
 
             foreach (var v in videoPlayersVMs)
             {
-                TimeDiffVideos.Add(new TimeDiffVideo(v.IsSyncronizeLeader, v.FilenameForTitle, null));
+                TimeDiffVideos.Add(new TimeDiffVideo(v.IsSyncronizeLeader, v.FilenameForTitle, null, v));
             }
         }
         public static void AddMeasurement(TimeSpan CurTime, List<System.Drawing.Bitmap> SnapShoots)
@@ -72,17 +72,20 @@ namespace MultiPlayerNIIES.Model
         public TimeDiffPosition CurrentPosition;
         public bool IsSyncLead;
         public Dictionary<int, System.Drawing.Bitmap> SnapShotsOnPositions;
+        internal VideoPlayerVM VideoPlayerVM;//TODO: Может как-то это отсюда можно убрать?
+
         public System.Drawing.Bitmap CurrentSnapShot
         {
             get { return SnapShotsOnPositions[CurrentPosition.Number]; }
         }
 
-        public TimeDiffVideo(bool isSyncLead, string fileName, TimeDiffPosition position)
+        public TimeDiffVideo(bool isSyncLead, string fileName, TimeDiffPosition position, VideoPlayerVM videoPlayerVM)
         {
             FileName = fileName;
             IsSyncLead = isSyncLead;
             CurrentPosition = position;
             SnapShotsOnPositions = new Dictionary<int, System.Drawing.Bitmap>();
+            VideoPlayerVM = videoPlayerVM;
         }
 
     }

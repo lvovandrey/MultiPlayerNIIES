@@ -1,4 +1,5 @@
-﻿using MultiPlayerNIIES.Tools;
+﻿using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.ViewModel;
 using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 using System;
@@ -23,44 +24,14 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
     public partial class TimeDIffWindowWindow : Window
     {
         List<VideoInfoRect> videoInfoRects;
+        double ColWidth = 300;
+
         public TimeDIffWindowWindow()
         {
             InitializeComponent();
         }
 
-        public void AddVideoInfoRects()
-        {
-
-            VM vm = DataContext as VM;
-            if (vm == null) return;
-
-            videoInfoRects = new List<VideoInfoRect>();
-            this.MainGrid.Children.Clear();
-
-
-
-            foreach (var v in vm.videoPlayerVMs)
-            {
-                VideoInfoRect videoInfoRect = new VideoInfoRect(this.MainGrid);
-
-                videoInfoRect.DataContext = v;
-                videoInfoRect.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
-                videoInfoRects.Add(videoInfoRect);
-
-            }
-
-
-            foreach (var virect in videoInfoRects)
-            {
-                this.MainGrid.Children.Add(virect);
-            }
-
-            ToolsTimer.Delay(() =>
-            {
-                FormatWindowContent();
-
-            }, TimeSpan.FromSeconds(0.1));
-        }
+     
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -77,6 +48,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             //    v.OnSizeContaierChanged();
             //}
         }
+
 
 
         public void FormatWindowContent()
@@ -98,34 +70,23 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            VM vm = DataContext as VM;
-            if (vm == null) return;
 
             Dictionary<VideoPlayerVM, TimeSpan> dict = new Dictionary<VideoPlayerVM, TimeSpan>();
             int SyncLeadPos = 0;
 
-            foreach (var v in videoInfoRects)
-            {
-                VideoPlayerVM vpvm = v.DataContext as VideoPlayerVM;
-                if (vpvm.IsSyncronizeLeader)
-                    SyncLeadPos = v.Position;
-            }
+            TimeSpan TimeSyncLead = TimeSpan.Zero;
+            foreach (var v in TimeDiffMeasuringManager.TimeDiffVideos)
+                if (v.IsSyncLead) TimeSyncLead = v.CurrentPosition.Time;
 
-            foreach (var v in videoInfoRects)
+
+            foreach (var v in TimeDiffMeasuringManager.TimeDiffVideos)
             {
                 TimeSpan T = TimeSpan.Zero;
-                VideoPlayerVM vpvm = v.DataContext as VideoPlayerVM;
-                if (!vpvm.IsSyncronizeLeader)
-                {
-                    if (v.Position != SyncLeadPos && v.Position == 1)
-                        T = vm.TimeDiffMeasured + vpvm.SyncronizationShiftVM.CurrentShiftTime;
-                    if (v.Position != SyncLeadPos && v.Position == 0)
-                        T = -vm.TimeDiffMeasured + vpvm.SyncronizationShiftVM.CurrentShiftTime;
-                }
-                dict.Add(vpvm, T);
+                T = v.CurrentPosition.Time - TimeSyncLead + v.VideoPlayerVM.SyncronizationShiftVM.CurrentShiftTime;
+                dict.Add(v.VideoPlayerVM, T);
             }
 
-            vm.SetCustomShiftsOfSyncronization(dict);
+            ((TimeDiffWindowVM)DataContext).VM.SetCustomShiftsOfSyncronization(dict);
 
             Hide();
         }
@@ -135,8 +96,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         internal void AddVideo(TimeDiffVideoInfoRectVM videoVM)
         {
-
-            VideoInfoRect video = new VideoInfoRect(this.MainGrid);
+            VideoInfoRect video = new VideoInfoRect(this.MainGrid, ColWidth);
             video.DataContext = videoVM;
             this.MainGrid.Children.Add(video);
         }
@@ -152,19 +112,26 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
                 v.Margin = new Thickness(20, 50, 0, 0);
             else
                 v.Margin = new Thickness(20, prev.Margin.Top + prev.Height + 10, 0, 0);
+
+            v.Margin = new Thickness(((TimeDiffVideoInfoRectVM)v.DataContext).CurrentPosition * ColWidth + 20, v.Margin.Top, 0, 0);
         }
 
 
         internal void AddColumn(TimeDiffColumnVM columnVM)
         {
             Column column = new Column();
+            column.Width = ColWidth;
             column.DataContext = columnVM;
             this.ColumnStack.Children.Add(column);
         }
 
         internal void ClearColumns()
         {
-            this.ColumnStack.Children.Clear();
+            ColumnStack.Children.Clear();
+        }
+        internal void ClearVideoInfoRects()
+        {
+            MainGrid.Children.Clear();
         }
     }
 }
