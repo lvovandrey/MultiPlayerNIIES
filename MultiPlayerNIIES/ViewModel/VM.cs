@@ -1622,25 +1622,31 @@ namespace MultiPlayerNIIES.ViewModel
                 return timeDiffMeasuringCommand ??
                   (timeDiffMeasuringCommand = new RelayCommand(obj =>
                   {
-                      IsOnTimeDiffMeasuring = !IsOnTimeDiffMeasuring;
+                      if (!IsOnTimeDiffMeasuring)
+                      {
+                          TimeDiffMeasuringManager.StartNewMeasuring(videoPlayerVMs);
+                          IsOnTimeDiffMeasuring = true;
+                      }
                       if (IsOnTimeDiffMeasuring)
                       {
-                          FirstTimeMeasured = TimeSyncLead;
-                          SecondTimeMeasured = TimeSpan.Zero;
+                          List<System.Drawing.Bitmap> snapshots = new List<System.Drawing.Bitmap>();
                           foreach (var v in videoPlayerVMs)
-                              v.SnapShotTimeDiff1 = v.Body.GetSnapShot();
+                               snapshots.Add(v.Body.GetSnapShot());
+                          TimeDiffMeasuringManager.AddMeasurement(TimeSyncLead, snapshots);
+                          if (TimeDiffMeasuringManager.CurrentMeasurement >= TimeDiffMeasuringManager.MeasurementsCount)
+                              IsOnTimeDiffMeasuring = false;
+                          else return;  
                       }
-                      else
-                      {
-                          SecondTimeMeasured = TimeSyncLead;
-                          this.AllPauseCommand.Execute(null);
-                          foreach (var v in videoPlayerVMs)
-                          {
-                              v.SnapShotTimeDiff2 = v.Body.GetSnapShot();
-                          }
-                          TimeDIffWindowWindow.AddVideoInfoRects();
-                          TimeDIffWindowWindow.Show();
-                      }
+
+                          Console.WriteLine("dsfsd"); 
+                          //SecondTimeMeasured = TimeSyncLead;
+                          //this.AllPauseCommand.Execute(null);
+                          //foreach (var v in videoPlayerVMs)
+                          //{
+                          //    v.SnapShotTimeDiff2 = v.Body.GetSnapShot();
+                          //}
+                          //TimeDIffWindowWindow.AddVideoInfoRects();
+                         // TimeDIffWindowWindow.Show();
 
                   }));
             }

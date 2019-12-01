@@ -14,33 +14,36 @@ namespace MultiPlayerNIIES.Model
     {
         public static int CurrentMeasurement = 0;
         public static int MeasurementsCount = 2;
+        public static TimeSpan TimeSyncLead = TimeSpan.Zero;
         public static List<TimeDiffPosition> TimeDiffPositions;
         public static List<TimeDiffVideo> TimeDiffVideos;
 
-        public static void StartNewMeasuring(int MeasurementsCount, List<VideoPlayerVM> videoPlayersVMs)
+        public static void StartNewMeasuring(List<VideoPlayerVM> videoPlayersVMs)
         {
             if(TimeDiffPositions!=null) TimeDiffPositions.Clear();
             if(TimeDiffVideos!=null) TimeDiffVideos.Clear();
 
-            TimeDiffMeasuringManager.MeasurementsCount = MeasurementsCount;
+            TimeDiffMeasuringManager.MeasurementsCount = videoPlayersVMs.Count;
             TimeDiffMeasuringManager.CurrentMeasurement = 0;
             TimeDiffPositions = new List<TimeDiffPosition>();
-
-            for (int i = 0; i <= MeasurementsCount; i++)
-            {
-                TimeDiffPositions.Add(new TimeDiffPosition(i));
-            } 
+            TimeDiffVideos = new List<TimeDiffVideo>();
 
             foreach (var v in videoPlayersVMs)
             {
-                TimeDiffVideos.Add(new TimeDiffVideo(v.IsSyncronizeLeader, v.FilenameForTitle, TimeDiffPositions[0]));
+                TimeDiffVideos.Add(new TimeDiffVideo(v.IsSyncronizeLeader, v.FilenameForTitle, null));
             }
-
-
         }
-        public static void AddMeasurement()
+        public static void AddMeasurement(TimeSpan CurTime, List<System.Drawing.Bitmap> SnapShoots)
         {
+            CurrentMeasurement++;
+            TimeDiffPosition diffPosition = new TimeDiffPosition(CurrentMeasurement, CurTime);
+            TimeDiffPositions.Add(diffPosition);
+            TimeDiffVideos[CurrentMeasurement - 1].CurrentPosition = diffPosition;
 
+            foreach (var v in TimeDiffVideos)
+            {
+                v.SnapShotsOnPositions.Add(CurrentMeasurement-1, SnapShoots[TimeDiffVideos.IndexOf(v)]);
+            }
         }
 
     }
@@ -51,10 +54,11 @@ namespace MultiPlayerNIIES.Model
     public class TimeDiffPosition
     {
         public int Number;
-        public TimeSpan TimeDifference;
-        public TimeDiffPosition(int number)
+        public TimeSpan Time;
+        public TimeDiffPosition(int number, TimeSpan time)
         {
             Number = number;
+            Time = time;
         }
     }
 
