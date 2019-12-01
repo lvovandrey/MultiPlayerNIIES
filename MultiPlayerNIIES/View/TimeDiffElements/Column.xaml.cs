@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 
 namespace MultiPlayerNIIES.View.TimeDiffElements
 {
@@ -20,9 +21,12 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
     /// </summary>
     public partial class Column : UserControl
     {
+
         public Column()
         {
             InitializeComponent();
         }
+
+
     }
 }

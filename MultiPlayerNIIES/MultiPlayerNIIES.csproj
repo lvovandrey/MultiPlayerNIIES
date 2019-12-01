@@ -177,7 +177,9 @@
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
     <Compile Include="ViewModel\SettingsWindowVM.cs" />
     <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
-    <Compile Include="ViewModel\TimeDiffColumnVM.cs" />
+    <Compile Include="ViewModel\TimeDiffVM\TimeDiffColumnVM.cs" />
+    <Compile Include="ViewModel\TimeDiffVM\TimeDiffVideoInfoRectVM.cs" />
+    <Compile Include="ViewModel\TimeDiffVM\TimeDiffWindowVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>

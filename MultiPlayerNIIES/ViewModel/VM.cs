@@ -7,6 +7,7 @@ using MultiPlayerNIIES.View;
 using MultiPlayerNIIES.View.Elements;
 using MultiPlayerNIIES.View.TimeDiffElements;
 using MultiPlayerNIIES.View.TimeLine;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -105,7 +106,7 @@ namespace MultiPlayerNIIES.ViewModel
             }, TimeSpan.FromSeconds(4));
 
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
-            TimeDIffWindowWindow.DataContext = this;
+            TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow);
         }
 
         private void Settings_SettingsChanged()
@@ -1637,7 +1638,9 @@ namespace MultiPlayerNIIES.ViewModel
                               IsOnTimeDiffMeasuring = false;
                           else return;  
                       }
-
+                          
+                          TimeDIffWindowWindow.Show();
+                      
                           Console.WriteLine("dsfsd"); 
                           //SecondTimeMeasured = TimeSyncLead;
                           //this.AllPauseCommand.Execute(null);

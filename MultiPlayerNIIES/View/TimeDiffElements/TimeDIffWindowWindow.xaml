@@ -24,6 +24,8 @@
            
                 <Grid x:Name="MainGrid" Panel.ZIndex="100">
                 </Grid>
+                <StackPanel x:Name="ColumnStack" Orientation="Horizontal" Panel.ZIndex="99">
+                </StackPanel>
                 <Grid Panel.ZIndex="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="ColumnLeft"/>
@@ -41,7 +43,10 @@
 
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Width="100" Command="{Binding ShowCommand}"  >Показать</Button>
+            
             <Button Width="100" Click="Button_Click_1"  >Применить</Button>
+            
             <Button  Width="100" Click="Button_Click" >Отмена</Button>
         </StackPanel>
 

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiPlayerNIIES.ViewModel
+namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
 {
-    class TimeDiffColumnVM : INPCBase
+    class TimeDiffVideoInfoRectVM : INPCBase
     {
 
         #region Поля 
@@ -15,7 +15,10 @@ namespace MultiPlayerNIIES.ViewModel
         #endregion
 
         #region Конструкторы
+        public TimeDiffVideoInfoRectVM()
+        {
 
+        }
         #endregion
 
         #region Методы
@@ -23,13 +26,20 @@ namespace MultiPlayerNIIES.ViewModel
         #endregion
 
         #region Свойства
-
-        private TimeSpan timeDiffMeasured;
-        public TimeSpan TimeDiffMeasured
+        public bool IsSyncronizeLeader
         {
-            get { return timeDiffMeasured; }
-            set { timeDiffMeasured = value; OnPropertyChanged("TimeDiffMeasured");  }
+            get; set;
         }
+        public string FilenameForTitle
+        {
+            get; set;
+        }
+
+        public System.Drawing.Bitmap SnapShotTimeDiff
+        {
+            get; set;// изменяется когда меняется position
+        }
+
         #endregion
 
         #region Комманды
@@ -41,7 +51,7 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return emptyCommand ?? (emptyCommand = new RelayCommand(obj =>
                 {
-                   
+
 
                 }));
             }

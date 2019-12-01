@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.ViewModel;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,7 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             }, TimeSpan.FromSeconds(0.1));
         }
 
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
@@ -69,11 +71,11 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            foreach (var v in videoInfoRects)
-            {
-                v.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
-                v.OnSizeContaierChanged();
-            }
+            //foreach (var v in videoInfoRects)
+            //{
+            //    v.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
+            //    v.OnSizeContaierChanged();
+            //}
         }
 
 
@@ -141,5 +143,26 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
             Hide();
         }
+
+
+
+
+        internal void AddVideo(TimeDiffVideoInfoRectVM videoVM)
+        {
+            MessageBox.Show("метод AddVideo не создан");
+        }
+
+        internal void AddColumn(TimeDiffColumnVM columnVM)
+        {
+            Column column = new Column();
+            column.DataContext = columnVM;
+            this.ColumnStack.Children.Add(column);
+        }
+
+        internal void ClearColumns()
+        {
+            this.ColumnStack.Children.Clear();
+        }
+
     }
 }

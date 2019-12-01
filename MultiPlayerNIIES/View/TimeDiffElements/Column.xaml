@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeDiffElements"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Width="300">
     <Grid>
         <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3" Stroke="#FFB07220" StrokeThickness="2" ></Rectangle>
         <TextBlock  Text="{Binding TimeDiffMeasured, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
