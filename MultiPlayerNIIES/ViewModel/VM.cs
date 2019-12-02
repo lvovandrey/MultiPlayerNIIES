@@ -1305,7 +1305,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepValueIncreaceCommand ??
                   (stepValueIncreaceCommand = new RelayCommand(obj =>
                   {
-                      Step += TimeSpan.FromMilliseconds(10);
+                      Step += TimeSpan.FromMilliseconds(50);
                   }));
             }
         }
@@ -1318,7 +1318,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepValueDecreaceCommand ??
                   (stepValueDecreaceCommand = new RelayCommand(obj =>
                   {
-                      Step -= TimeSpan.FromMilliseconds(10);
+                      Step -= TimeSpan.FromMilliseconds(50);
                   }));
             }
         }
