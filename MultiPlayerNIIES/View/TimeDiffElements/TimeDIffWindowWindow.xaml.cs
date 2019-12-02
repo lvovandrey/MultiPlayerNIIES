@@ -61,6 +61,11 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
                 FormatingVideoInfoRect(videoInfoRect, PrevVideoInfoRect);
                 PrevVideoInfoRect = videoInfoRect;
             }
+
+            ToolsTimer.Delay(() => 
+            {
+                Width = ColumnStack.ActualWidth+50;
+            }, TimeSpan.FromSeconds(0.1)); 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -133,6 +138,8 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
         {
             MainGrid.Children.Clear();
         }
+
+
     }
 }
 

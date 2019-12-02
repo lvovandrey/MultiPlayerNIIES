@@ -14,7 +14,7 @@
         </Style>
 
     </Window.Resources>
-        <Grid Background="#FF161616">
+        <Grid Background="#FF161616" x:Name="BasedGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="40"/>

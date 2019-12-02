@@ -1,4 +1,5 @@
-﻿using MultiPlayerNIIES.ViewModel;
+﻿using MultiPlayerNIIES.Abstract;
+using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace MultiPlayerNIIES.Model
     /// <summary>
     /// Класс содержит в себе всю информацию обо всех измерениях разниц во времени и состояние измерения
     /// </summary>
-    public static class TimeDiffMeasuringManager
+    public static class TimeDiffMeasuringManager 
     {
         public static int CurrentMeasurement = 0;
         public static int MeasurementsCount = 2;
@@ -45,6 +46,8 @@ namespace MultiPlayerNIIES.Model
                 v.SnapShotsOnPositions.Add(CurrentMeasurement-1, SnapShoots[TimeDiffVideos.IndexOf(v)]);
             }
         }
+
+
 
     }
 

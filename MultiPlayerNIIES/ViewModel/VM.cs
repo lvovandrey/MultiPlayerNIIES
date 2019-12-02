@@ -1623,6 +1623,8 @@ namespace MultiPlayerNIIES.ViewModel
                 return timeDiffMeasuringCommand ??
                   (timeDiffMeasuringCommand = new RelayCommand(obj =>
                   {
+                      if (videoPlayerVMs.Count < 2) { IsOnTimeDiffMeasuring = false; return; }
+
                       if (!IsOnTimeDiffMeasuring)
                       {
                           TimeDiffMeasuringManager.StartNewMeasuring(videoPlayerVMs);
@@ -1634,15 +1636,26 @@ namespace MultiPlayerNIIES.ViewModel
                           foreach (var v in videoPlayerVMs)
                                snapshots.Add(v.Body.GetSnapShot());
                           TimeDiffMeasuringManager.AddMeasurement(TimeSyncLead, snapshots);
+                          OnPropertyChanged("CurrentTimeDiffMeasurement");
                           if (TimeDiffMeasuringManager.CurrentMeasurement >= TimeDiffMeasuringManager.MeasurementsCount)
+                          {
                               IsOnTimeDiffMeasuring = false;
+                              CurrentTimeDiffMeasurement = 0;
+                          }
                           else return;  
                       }
-                          
+
+                      this.AllPauseCommand.Execute(null);
                       TimeDIffWindowWindow.Show();
                       ((TimeDiffWindowVM)TimeDIffWindowWindow.DataContext).ShowCommand.Execute(null);
                   }));
             }
+        }
+
+        public int CurrentTimeDiffMeasurement
+        {
+            get { return TimeDiffMeasuringManager.CurrentMeasurement; }
+            set { TimeDiffMeasuringManager.CurrentMeasurement = value; OnPropertyChanged("CurrentTimeDiffMeasurement"); }
         }
 
         public void SetCustomShiftsOfSyncronization(Dictionary<VideoPlayerVM, TimeSpan> ViewModelsVMsShifts)

@@ -78,7 +78,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeDiffVM
                 {
                     AddColumns();
                     AddVideos();
-
+                    
                 }));
             }
         }
