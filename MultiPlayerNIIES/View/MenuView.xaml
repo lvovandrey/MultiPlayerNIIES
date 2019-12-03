@@ -10,49 +10,54 @@
         <Menu>
             <MenuItem Header="_Файл">
 
-                <MenuItem Header="_Открыть файл" Command="{Binding OpenCommand}">
+                <MenuItem Header="_Открыть видео" Command="{Binding OpenCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Page-White-Add.png" Width="20" Height="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" Width="20" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Открыть состояние плеера" Command="{Binding OpenStateCommand}"  >
+                    <MenuItem.Icon>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Folder-Open-64.png" Width="20" Height="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="_Сохранить файл" Command="{Binding SaveCommand}" >
+                <MenuItem Header="_Сохранить состояние" Command="{Binding SaveStateCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Disk.png" Width="20" Height="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Floppy-64.png" Width="20" Height="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+
+                <Separator />
+                <MenuItem Header="_Закрыть все видеоокна" Command="{Binding СloseAllCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Process-Stop-64.png" Width="20" Height="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
 
                 <Separator />
-                <MenuItem Header="_Добавить из .csv" Command="{Binding ImportCommand}">
+                <MenuItem Header="_Выход" Command="{Binding CloseAppCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Page-White-Put.png" Width="20" Height="20"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-
-
-                <Separator />
-                <MenuItem Header="_Выход" Command="{Binding ExitCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" Width="10" Height="10"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" Width="15" Height="15"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Инструменты">
-                <MenuItem Header="_Измерить в NX" Command="{Binding MeasureCommand}">
+                <MenuItem Header="_Связь с Excel" Command="{Binding ExcelOpenCommand}">
                     <MenuItem.Icon>
-                        <Image Width="20" Height="20" Source="/MultiPlayerNIIES;component/Images/PNG/Measure.png"/>
+                        <Image Width="20" Height="20" Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Вид">
-                <MenuItem Header="_Показать таблицу"  Command="{Binding ShowTableCommand}">
+                
+            </MenuItem>
+
+            <MenuItem Header="_Опции">
+                <MenuItem Header="_Настройки" Command="{Binding SettingsOpenCommand}">
                     <MenuItem.Icon>
-                        <Image Width="20" Height="20" Source="/MultiPlayerNIIES;component/Images/PNG/Table.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="_Скрыть таблицу" Command="{Binding HideTableCommand}" >
-                    <MenuItem.Icon>
-                        <Image Width="20" Height="20" Source="/MultiPlayerNIIES;component/Images/PNG/Table-Delete.png"/>
+                        <Image Width="20" Height="20" Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

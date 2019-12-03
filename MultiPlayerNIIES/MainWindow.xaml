@@ -24,19 +24,18 @@
     <Grid Background="#FF161616">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="55" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="1">
+        <view:MenuView Grid.Row="1"/>
+        <Grid Grid.Row="2">
             <view:AreaVideoPlayersView x:Name="AreaVideoPlayers" Grid.Column="0" />
         </Grid>
 
-        <view:MainPanelView Grid.Row="3" />
-
-        <StackPanel Orientation="Vertical" Grid.Row="2">
+        <StackPanel Orientation="Vertical" Grid.Row="3">
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -73,5 +72,7 @@
                 </Label>
             </Grid>
         </StackPanel>
+
+        <view:MainPanelView Grid.Row="4" />
     </Grid>
 </Window>

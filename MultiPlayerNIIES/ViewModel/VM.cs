@@ -1609,7 +1609,13 @@ namespace MultiPlayerNIIES.ViewModel
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
                       ApiManager.ReleaseAll();
-
+                      try
+                      {
+                          this.MainWindow.Close();
+                      }
+                      catch
+                      {
+                      }
                   }));
             }
         }
