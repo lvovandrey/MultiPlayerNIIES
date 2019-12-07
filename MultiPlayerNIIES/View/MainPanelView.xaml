@@ -38,14 +38,14 @@
                 <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
                 </Button>
-                <Button Command="{Binding StopCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Stop-64.png" />
-                </Button>
+
 
                 <Button Command="{Binding OpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
                 </Button>
+
             </ToolBar>
+
 
             <ToolBar Height="50" VerticalAlignment="Top">
 
@@ -253,20 +253,7 @@
 
             </ToolBar>
 
-            <ToolBar Height="50">
-                <Button Command="{Binding OpenStateCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Folder-Open-64.png" />
-                </Button>                
-                <Button Command="{Binding SaveStateCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Floppy-64.png" />
-                </Button>
-                <Button Command="{Binding СloseAllCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Process-Stop-64.png" />
-                </Button>
-                <Button Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" />
-                </Button>
-            </ToolBar>
+
             <ToolBar Height="50">
 
                 <Button Command="{Binding RateDecreaceCommand}" Style="{StaticResource ButtonMainPanel}">

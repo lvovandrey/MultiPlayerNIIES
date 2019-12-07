@@ -1611,7 +1611,7 @@ namespace MultiPlayerNIIES.ViewModel
                       ApiManager.ReleaseAll();
                       try
                       {
-                          this.MainWindow.Close();
+                          System.Windows.Application.Current.Shutdown();
                       }
                       catch
                       {
