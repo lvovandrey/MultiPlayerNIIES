@@ -10,9 +10,9 @@
     <UserControl.Resources>
         <converters:DoubleWithAdditionConverter x:Key="DoubleWithAdditionConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="MainGrid">
 
-        <Rectangle >
+        <Rectangle Stroke="#FF111111" StrokeThickness="0.5" >
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFB07220" Offset="0"/>
@@ -21,17 +21,28 @@
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle Fill="#80ffffff" 
-                   Width= "{Binding ElementName=Info, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
-                   HorizontalAlignment="Center" Height="9" Margin="0 0.5 0 0" VerticalAlignment="Center" Stroke="DarkBlue" StrokeThickness="0.5" RadiusX="2" RadiusY="2"/>
-        <!--"{Binding ElementName=Info, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}"-->
+                   Width= "{Binding ElementName=Infotxt, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
+                   HorizontalAlignment="Center" 
+                   Height="9" 
+                   Margin="0 0.5 0 0" 
+                   VerticalAlignment="Center"
+                   Stroke="DarkBlue" 
+                   StrokeThickness="0.5" 
+                   RadiusX="2" 
+                   RadiusY="2"/>
+        <TextBlock x:Name="Infotxt"                 
+                   Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                   HorizontalAlignment="Center" 
+                   FontSize="8" 
+                   VerticalAlignment="Center" 
+                   Margin="0 -1 0 0"/>
 
-        <TextBlock x:Name="Info" Text="Название видеозаписи" HorizontalAlignment="Center" FontSize="7" VerticalAlignment="Center" Margin="0 -1 0 0">
-            <TextBlock.ToolTip>
-                <StackPanel Background="Wheat">
-                    <TextBlock Text="{Binding ElementName=Info, Path=Text,UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="00:01:12,32"/>
-                </StackPanel>
-            </TextBlock.ToolTip>
-        </TextBlock>
+        <Grid.ToolTip >
+            <StackPanel Background="Wheat">
+                <TextBlock Text="Название видео" />
+                <TextBlock Text="123"/>
+                <TextBlock Text="00:01:12,32"/>
+            </StackPanel>
+        </Grid.ToolTip>
     </Grid>
 </UserControl>

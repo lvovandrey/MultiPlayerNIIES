@@ -19,7 +19,7 @@ namespace MultiPlayerNIIES.Model
         public static List<TimeDiffPosition> TimeDiffPositions;
         public static List<TimeDiffVideo> TimeDiffVideos;
 
-        public static void StartNewMeasuring(List<VideoPlayerVM> videoPlayersVMs)
+        public static void StartNewMeasuring(ICollection<VideoPlayerVM> videoPlayersVMs)
         {
             if(TimeDiffPositions!=null) TimeDiffPositions.Clear();
             if(TimeDiffVideos!=null) TimeDiffVideos.Clear();

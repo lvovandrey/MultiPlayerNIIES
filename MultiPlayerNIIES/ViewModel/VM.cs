@@ -10,6 +10,7 @@ using MultiPlayerNIIES.View.TimeLine;
 using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace MultiPlayerNIIES.ViewModel
     public class VM : INPCBase
     {
         #region Поля
-        public List<VideoPlayerVM> videoPlayerVMs;
+        public ObservableCollection<VideoPlayerVM> videoPlayerVMs;
         Grid AreaVideoPlayersGrid;
         public MainWindow MainWindow;
         VideoPlayerVM focusedPlayer;
@@ -67,7 +68,7 @@ namespace MultiPlayerNIIES.ViewModel
             InfoWindowView = new InfoWindowView(this);
             InfoWindowView.Visibility = Visibility.Hidden;
             
-            videoPlayerVMs = new List<VideoPlayerVM>();
+            videoPlayerVMs = new ObservableCollection<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
             
             MainWindow = mainWindow;
@@ -1647,16 +1648,27 @@ namespace MultiPlayerNIIES.ViewModel
                 return closeAppCommand ??
                   (closeAppCommand = new RelayCommand(obj =>
                   {
+                      ApiManager.ReleaseAll();
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
-                      ApiManager.ReleaseAll();
-                      try
+
+                      sourceOfPostMessages.Dispose();
+
+                      ToolsTimer.Delay(() =>
                       {
-                          System.Windows.Application.Current.Shutdown();
-                      }
-                      catch
-                      {
-                      }
+                          try
+                          {
+                              this.InfoWindowView.Close();
+                              this.settingsWindowView.Close();
+                              this.TimeDIffWindowWindow.Close();
+                              MainWindow.Close();
+                              System.Windows.Application.Current.Shutdown();
+                          }
+                          catch
+                          {
+                             // System.Windows.Application.Current.Shutdown();
+                          }
+                      }, TimeSpan.FromSeconds(2));
                   }));
             }
         }

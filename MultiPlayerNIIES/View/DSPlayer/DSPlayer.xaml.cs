@@ -403,7 +403,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void OnClosing()
         {
             if (dxPlay == null) return;
+            
             dxPlay.Dispose();
+
             testDx.Dispose();
         }
 
