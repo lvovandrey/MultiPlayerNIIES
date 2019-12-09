@@ -98,7 +98,20 @@
                             Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
                     </Grid>
                 </Button>
-
+                <Button
+                    Command="{Binding SyncronizationCombinedCommand}"
+                    Style="{StaticResource ButtonMainPanel}"
+                    ToolTip="Заменить выставленные смещения на всех камерах текущим смещением (нынешним смещением от лидера)">
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+                        <Image
+                            Width="30"
+                            Margin="1,-1,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
+                    </Grid>
+                </Button>
                 <Button 
                     
                     HorizontalAlignment="Stretch"

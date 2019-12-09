@@ -1571,6 +1571,44 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        private RelayCommand syncronizationCombinedCommand;
+        public RelayCommand SyncronizationCombinedCommand
+        {
+            get
+            {
+                return syncronizationCombinedCommand ?? (syncronizationCombinedCommand = new RelayCommand(obj =>
+                {
+                    bool OldIsOnAutoSyncroinization = IsOnAutoSyncronization;
+                    bool OldIsOnAutoSyncroinizationTitles = IsOnAutoSyncronizationTitles;
+
+                    AllPauseCommand.Execute(null);
+                    ToolsTimer.Delay(() => 
+                    {
+                        IsOnAutoSyncronization = false;
+                        IsOnAutoSyncronizationTitles = false;
+
+                        SyncronizationTitleCommand.Execute(null);
+                        ToolsTimer.Delay(() =>
+                        {
+                            SetCurrencyShiftsOfSyncronizationCommand.Execute(null);
+                            ToolsTimer.Delay(() =>
+                            {
+                                SyncronizationShiftCommand.Execute(null);
+                                ToolsTimer.Delay(() =>
+                                {
+                                    IsOnAutoSyncronization = OldIsOnAutoSyncroinization;
+                                    IsOnAutoSyncronizationTitles = OldIsOnAutoSyncroinizationTitles;
+                                }, TimeSpan.FromSeconds(3));
+                            }, TimeSpan.FromSeconds(0.2));
+                        }, TimeSpan.FromSeconds(3));
+
+                    }, TimeSpan.FromSeconds(0.1));
+
+                }));
+            }
+        }
+
+
         private bool IsAllPlayerStatesEquals(Dictionary<VideoPlayerVM, bool> PlayersStates)
         {
             bool flag = true;
@@ -1579,6 +1617,9 @@ namespace MultiPlayerNIIES.ViewModel
                 if (firstval != pair.Value) flag = false;
             return flag;
         }
+
+
+
 
 
 
