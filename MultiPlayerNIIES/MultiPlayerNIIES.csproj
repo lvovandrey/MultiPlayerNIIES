@@ -252,6 +252,12 @@
     <Compile Include="View\TimeLine\TimeLine.xaml.cs">
       <DependentUpon>TimeLine.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TimeStripes\Stripe.xaml.cs">
+      <DependentUpon>Stripe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeStripes\StripesContainer.xaml.cs">
+      <DependentUpon>StripesContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ValueConverters\BitmapToBitmapSource.cs" />
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
@@ -259,6 +265,7 @@
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
     <Compile Include="View\ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
+    <Compile Include="View\ValueConverters\DoubleWithAdditionConverter.cs" />
     <Compile Include="View\ValueConverters\SyncOnOffWordConverter.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\TimeShiftToColor.cs" />
@@ -375,6 +382,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TimeLine\TimeLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeStripes\Stripe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TimeStripes\StripesContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

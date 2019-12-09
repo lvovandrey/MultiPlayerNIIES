@@ -11,6 +11,7 @@
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     xmlns:dshow ="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
     xmlns:timeline="clr-namespace:MultiPlayerNIIES.View.TimeLine"
+    xmlns:timestrips="clr-namespace:MultiPlayerNIIES.View.TimeStripes"
     Title="Видеоплеер НИИЭС"
     Width="1200"
     Height="800"
@@ -26,7 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="55" />
+            <RowDefinition Height="92" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -36,6 +37,7 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="3">
+            <timestrips:StripesContainer/>
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
