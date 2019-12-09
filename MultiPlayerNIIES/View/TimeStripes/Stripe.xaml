@@ -20,14 +20,15 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Fill="White" 
-                   Width="{Binding ElementName=Info, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
-                   HorizontalAlignment="Center" Height="8" VerticalAlignment="Center" />
+        <Rectangle Fill="#80ffffff" 
+                   Width= "{Binding ElementName=Info, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
+                   HorizontalAlignment="Center" Height="9" Margin="0 0.5 0 0" VerticalAlignment="Center" Stroke="DarkBlue" StrokeThickness="0.5" RadiusX="2" RadiusY="2"/>
+        <!--"{Binding ElementName=Info, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}"-->
 
-        <TextBlock x:Name="Info" Text="Название видеозаписи" HorizontalAlignment="Center" FontSize="6" VerticalAlignment="Center" >
+        <TextBlock x:Name="Info" Text="Название видеозаписи" HorizontalAlignment="Center" FontSize="7" VerticalAlignment="Center" Margin="0 -1 0 0">
             <TextBlock.ToolTip>
                 <StackPanel Background="Wheat">
-                    <TextBlock Text="{Binding Text,UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="{Binding ElementName=Info, Path=Text,UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Text="00:01:12,32"/>
                 </StackPanel>
             </TextBlock.ToolTip>

@@ -17,8 +17,12 @@ namespace MultiPlayerNIIES.View.ValueConverters
             
             if (!(value is double)) return 0;
             double v = (double)value;
-            if (!(parameter is double)) return v;
-            double p = (double)parameter;
+            double p = 0;
+            if (parameter is string)
+                double.TryParse((string)parameter, out p);
+            if (parameter is double)
+                p = (double)parameter;
+
             return p + v;
         }
 
