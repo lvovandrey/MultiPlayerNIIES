@@ -23,6 +23,7 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:BitmapToBitmapSource x:Key="BitmapToBitmapSource"/>
         <converters:TimeShiftToColor x:Key="TimeShiftToColor"/>
+        <converters:TimeShiftToColorBack x:Key="TimeShiftToColorBack"/>
         <converters:TimeShiftToVisibility x:Key="TimeShiftToVisibility"/>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
 
@@ -211,6 +212,7 @@
             Grid.ColumnSpan="3"
             FontSize="12" FontWeight="Bold" 
             Foreground="Red"
+            
             VerticalAlignment="Center"
             Visibility="{Binding OutOfSyncronizationTitles, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }"
              >Видео за границами синхронизации титров</TextBlock>
@@ -220,7 +222,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Right"
-            Margin="0 0 80 0" Source="/MultiPlayerNIIES;component/Images/PNG/Time-Go-32.png"/>
+            Margin="0 0 85 0" Source="/MultiPlayerNIIES;component/Images/PNG/Time-Go-32.png"/>
         <TextBlock
             Margin="0 0 10 0"      
             HorizontalAlignment="Right"
@@ -229,6 +231,7 @@
             Grid.ColumnSpan="3"
             FontSize="12" FontWeight="Bold" 
             Foreground="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColor}}"
+            Background="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColorBack}}"
             Visibility="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToVisibility} }"
             VerticalAlignment="Center"
             Text="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}  }"

@@ -171,14 +171,14 @@ namespace MultiPlayerNIIES.View.TimeLine
             T10.FillDashes(N);
 
 
-            T1.ChangeDashesHeight(15);
+            T1.ChangeDashesHeight(20);
             T1.ChangeDashesWidth(1);
 
-            T_tenSec.ChangeDashesHeight(10);
+            T_tenSec.ChangeDashesHeight(14);
 
-            T_Sec.ChangeDashesHeight(6);
+            T_Sec.ChangeDashesHeight(10);
 
-            T10.ChangeDashesHeight(22);
+            T10.ChangeDashesHeight(26);
             T10.ChangeDashesWidth(2);
 
             T1.Visibility = Visibility.Visible;

@@ -27,4 +27,23 @@ namespace MultiPlayerNIIES.View.ValueConverters
         }
 
     }
+
+    class TimeShiftToColorBack : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            TimeSpan t = ((TimeSpan)value).Duration();
+            if (t > TimeSpan.FromMilliseconds(0) && t < TimeSpan.FromMilliseconds(200)) return new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            else if (t >= TimeSpan.FromMilliseconds(200) && t < TimeSpan.FromMilliseconds(300)) return new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            else if (t >= TimeSpan.FromMilliseconds(300)) return new SolidColorBrush(Colors.Yellow);
+            else return new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
+        }
+
+    }
 }
