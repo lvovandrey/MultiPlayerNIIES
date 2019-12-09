@@ -57,7 +57,10 @@
         </Style>
 
     </UserControl.Resources>
-    <Grid
+    <Grid>
+        <Rectangle Grid.ColumnSpan="100" Grid.RowSpan="100" Stroke="#FFC2965B" StrokeThickness="1"  ></Rectangle>
+        <Grid
+            Margin="2"
         x:Name="MainGrid"
         Background="{Binding Focus, Converter={StaticResource BoolFocusToColor}}"
         ClipToBounds="True">
@@ -75,7 +78,9 @@
             <RowDefinition x:Name="SyncronizationInstrumentsRow" Height="30" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
-
+       
+       
+        
         <StackPanel
             Grid.Row="0"
             Grid.RowSpan="2"
@@ -126,6 +131,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Right"
+            
             Panel.ZIndex="3"
             Orientation="Horizontal">
             <Button x:Name="Minimize" Command="{Binding MinimizeCommand}">
@@ -340,6 +346,6 @@
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
 
-
+        </Grid>
     </Grid>
 </UserControl>

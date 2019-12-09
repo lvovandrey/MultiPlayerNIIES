@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="65" />
+                <ColumnDefinition Width="85" />
 
 
             </Grid.ColumnDefinitions>
@@ -123,10 +123,11 @@
                 x:Name="TimeTextBox"
                 Grid.Row="1"
                 Grid.Column="10"
+                Margin="-2"
                 MinHeight="10"
                 VerticalAlignment="Center"
                 BorderBrush="{x:Null}"
-                FontSize="10"
+                FontSize="14"
                 Text="{Binding CurTime, StringFormat=hh\\:mm\\:ss\\.ff}"
                 TextAlignment="Center" />
 

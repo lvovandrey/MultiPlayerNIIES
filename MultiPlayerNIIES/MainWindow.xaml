@@ -44,7 +44,7 @@
                 </Grid.ColumnDefinitions>
                 <Slider Width="70" VerticalAlignment="Center" Minimum="0" Maximum="500"  
                         Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                        Foreground="#FFB07220" Background="#7F7C7C7C" LargeChange="0"/>
+                        Foreground="#FFB07220"  LargeChange="0"/>
                 <timeline:TimeLine POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                     
                                    Height="50" Grid.Column="1" x:Name="TimeLine1"  Margin="10 0 10 0"  />
