@@ -27,16 +27,8 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
             StripeContainerVM = stripeContainerVM;
             Body.DataContext = this;
             VideoPlayerVM.SyncronizationShiftVM.PropertyChanged += SyncronizationShiftVM_PropertyChanged;
-            VideoPlayerVM.PropertyChanged += VideoPlayerVM_PropertyChanged;
         }
 
-        private void VideoPlayerVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "IsSyncronizeLeader")
-            {
-                Refresh();
-            }
-        }
 
         private void SyncronizationShiftVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -76,20 +68,25 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
 
         public Thickness Margin
         {
-            get { return new Thickness(TimeShift.TotalSeconds, 0, 0, 0); }
+            get
+            { 
+                if (IsSyncronizeLeader) return new Thickness(0, 0, 0, 0);
+                else return new Thickness(TimeShift.TotalSeconds, 0, 0, 0);
+            }
         }
 
         public double Width
         {
             get
             {
-
-
                 if (VideoPlayerVM.IsSyncronizeLeader)
                     return StripeContainerVM.SyncLeadBodyWidth;
                 else
-                    return  StripeContainerVM.SyncLeadBodyWidth-100;
+                {
+                    double k = Duration.TotalSeconds / StripeContainerVM.SyncLeadDuration.TotalSeconds;
 
+                    return StripeContainerVM.SyncLeadBodyWidth*k;
+                }
             }
         }
         public void Refresh()

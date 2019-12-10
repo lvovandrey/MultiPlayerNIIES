@@ -30,6 +30,15 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
             VM.videoPlayerVMs.CollectionChanged += VideoPlayerVMs_CollectionChanged;
             stripeVMs = new ObservableCollection<StripeVM>();
             FillStripes();
+            VM.PropertyChanged += VideoPlayerVM_PropertyChanged;
+        }
+
+        private void VideoPlayerVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SyncLeadPlayer")
+            {
+                foreach (var v in stripeVMs) v.Refresh();
+            }
         }
 
         private void VideoPlayerVMs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -50,6 +59,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
             List<Stripe> stripes = new List<Stripe>();
             foreach (var v in stripeVMs)
             {
+                v.Body.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 stripes.Add(v.Body);
                 Refreshed += v.Refresh;
             }
@@ -79,16 +89,17 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         {
             get
             {
-                //var SyncLeadStripes = (from v in stripeVMs
-                //                       where v.IsSyncronizeLeader
-                //                       select v.Body).ToList();
-
-                //if (SyncLeadStripes.Count() > 0 && SyncLeadStripes.First().MainGrid.ActualWidth > 100)
-                    return Body.ActualWidth-400;
-           //     else return 100;
+                return Body.ActualWidth - 400;
             }
         }
 
+        public TimeSpan SyncLeadDuration
+        {
+            get
+            {
+                return VM.SyncLeadPlayer.Duration;
+            }
+        }
 
         #endregion
 

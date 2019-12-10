@@ -691,6 +691,7 @@ namespace MultiPlayerNIIES.ViewModel
                 deltas.Add(dt);
             }
 
+            if (deltas.Count == 0) return TimeSpan.Zero;
 
             SyncDeltasBuffer.Enqueue(deltas.Max());
             if (SyncDeltasBuffer.Count > 10) SyncDeltasBuffer.Dequeue();
