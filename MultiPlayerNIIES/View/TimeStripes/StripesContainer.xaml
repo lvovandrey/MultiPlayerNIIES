@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Height="40">
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" x:Name="MainStack">
             <local:Stripe  Margin="0 0 0 0"/>
             <local:Stripe Margin="150 0 80 0"/>
             <local:Stripe Margin="10 0 100 0" />

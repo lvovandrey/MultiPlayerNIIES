@@ -8,6 +8,7 @@ using MultiPlayerNIIES.View.Elements;
 using MultiPlayerNIIES.View.TimeDiffElements;
 using MultiPlayerNIIES.View.TimeLine;
 using MultiPlayerNIIES.ViewModel.TimeDiffVM;
+using MultiPlayerNIIES.ViewModel.TimeStripeVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,6 +44,8 @@ namespace MultiPlayerNIIES.ViewModel
         SettingsWindowView settingsWindowView;
         SettingsWindowVM settingsWindowVM;
         TimeDIffWindowWindow TimeDIffWindowWindow;
+
+        StripeContainerVM StripeContainerVM;
 
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
@@ -108,6 +111,8 @@ namespace MultiPlayerNIIES.ViewModel
 
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
             TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
+
+            StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
         }
 
         private void Settings_SettingsChanged()
@@ -1666,9 +1671,9 @@ namespace MultiPlayerNIIES.ViewModel
                           }
                           catch
                           {
-                             // System.Windows.Application.Current.Shutdown();
+                             System.Windows.Application.Current.Shutdown();
                           }
-                      }, TimeSpan.FromSeconds(2));
+                      }, TimeSpan.FromSeconds(1));
                   }));
             }
         }

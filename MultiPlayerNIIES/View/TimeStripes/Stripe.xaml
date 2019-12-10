@@ -8,19 +8,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="10" d:DesignWidth="800" Height="10">
     <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:DoubleWithAdditionConverter x:Key="DoubleWithAdditionConverter"/>
     </UserControl.Resources>
-    <Grid x:Name="MainGrid">
-
-        <Rectangle Stroke="#FF111111" StrokeThickness="0.5" >
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFB07220" Offset="0"/>
-                    <GradientStop Color="#FF805823" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-        <Rectangle Fill="#80ffffff" 
+    <Grid x:Name="MainGrid" Margin="200 0 200 0 ">
+        <Grid  Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" >
+            <Rectangle Stroke="#FF111111" StrokeThickness="0.5" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFB07220" Offset="0"/>
+                        <GradientStop Color="#FF805823" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Fill="#80ffffff" 
                    Width= "{Binding ElementName=Infotxt, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
                    HorizontalAlignment="Center" 
                    Height="9" 
@@ -30,19 +31,22 @@
                    StrokeThickness="0.5" 
                    RadiusX="2" 
                    RadiusY="2"/>
-        <TextBlock x:Name="Infotxt"                 
+            <TextBlock x:Name="Infotxt"                 
                    Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
                    HorizontalAlignment="Center" 
                    FontSize="8" 
                    VerticalAlignment="Center" 
                    Margin="0 -1 0 0"/>
 
-        <Grid.ToolTip >
-            <StackPanel Background="Wheat">
-                <TextBlock Text="Название видео" />
-                <TextBlock Text="123"/>
-                <TextBlock Text="00:01:12,32"/>
-            </StackPanel>
-        </Grid.ToolTip>
+            <Rectangle Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Fill="#80FF7676"/>
+            <Grid.ToolTip >
+                <StackPanel Background="Wheat">
+                    <TextBlock Text="Название видео" />
+                    <TextBlock Text="123"/>
+                    <TextBlock Text="00:01:12,32"/>
+                </StackPanel>
+            </Grid.ToolTip>
+
+        </Grid>
     </Grid>
 </UserControl>

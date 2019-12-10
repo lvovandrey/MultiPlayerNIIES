@@ -11,6 +11,7 @@ namespace MultiPlayerNIIES.ViewModel
     public class SyncronizationShiftVM : INPCBase
     {
         Timer MainTimer;
+        public event Action ShiftTimeChanged;
 
         #region Constructor
 
@@ -35,7 +36,7 @@ namespace MultiPlayerNIIES.ViewModel
         public double SliderPosition
         {
             get { return sliderPosition; }
-            set { sliderPosition = value; OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
+            set { sliderPosition = value; OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); if(ShiftTimeChanged!=null) ShiftTimeChanged(); }
         }
 
         private double sliderMaxPosition = 1000;
@@ -62,7 +63,9 @@ namespace MultiPlayerNIIES.ViewModel
                 sliderPosition = (value.TotalSeconds/ShiftMaxTime.TotalSeconds)*SliderMaxPosition;
                 if (sliderPosition > SliderMaxPosition) sliderPosition = SliderMaxPosition;
                 if (sliderPosition < SliderMinPosition) sliderPosition = SliderMinPosition;
-                OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
+                OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime");
+                if (ShiftTimeChanged != null) ShiftTimeChanged();
+            }
         }
 
         public TimeSpan CurrentShiftTime
@@ -79,15 +82,23 @@ namespace MultiPlayerNIIES.ViewModel
         public TimeSpan ShiftMaxTime
         {
             get { return shiftMaxTime; }
-            set {
+            set
+            {
                 SliderPosition = (ShiftTime.TotalSeconds / value.TotalSeconds) * SliderMaxPosition;
                 shiftMaxTime = value;
-                OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
+                OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime");
+                if (ShiftTimeChanged != null) ShiftTimeChanged();
+            }
         }
         public TimeSpan ShiftMinTime
         {
             get { return -shiftMaxTime; }
-            set { shiftMaxTime = -value; OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime"); }
+            set
+            {
+                shiftMaxTime = -value;
+                OnPropertyChanged("ShiftMinTime"); OnPropertyChanged("ShiftMaxTime"); OnPropertyChanged("SliderPosition"); OnPropertyChanged("ShiftTime");
+                if (ShiftTimeChanged != null) ShiftTimeChanged();
+            }
         }
 
         #endregion

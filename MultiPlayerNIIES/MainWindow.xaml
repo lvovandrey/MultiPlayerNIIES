@@ -37,7 +37,7 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="3">
-            <timestrips:StripesContainer/>
+            <timestrips:StripesContainer x:Name="StripesContainer"/>
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

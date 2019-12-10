@@ -24,5 +24,14 @@ namespace MultiPlayerNIIES.View.TimeStripes
         {
             InitializeComponent();
         }
+
+        public void FillStripes(IEnumerable<Stripe> stripes)
+        {
+            MainStack.Children.Clear();
+            foreach (var s in stripes)
+            {
+                MainStack.Children.Add(s);
+            }
+        }
     }
 }

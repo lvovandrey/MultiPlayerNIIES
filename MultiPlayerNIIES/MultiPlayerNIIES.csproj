@@ -164,6 +164,7 @@
     <Compile Include="Abstract\RelayComand.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\TimeDiffMeasuring.cs" />
+    <Compile Include="Model\TimeStripesModel.cs" />
     <Compile Include="Tools\Graphics\GraphicsTools.cs" />
     <Compile Include="Tools\Serialization\ApplicationStateSerialized.cs" />
     <Compile Include="Tools\Serialization\ConfigurationTools.cs" />
@@ -180,6 +181,8 @@
     <Compile Include="ViewModel\TimeDiffVM\TimeDiffColumnVM.cs" />
     <Compile Include="ViewModel\TimeDiffVM\TimeDiffVideoInfoRectVM.cs" />
     <Compile Include="ViewModel\TimeDiffVM\TimeDiffWindowVM.cs" />
+    <Compile Include="ViewModel\TimeStripeVM\StripeContainerVM.cs" />
+    <Compile Include="ViewModel\TimeStripeVM\StripeVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
