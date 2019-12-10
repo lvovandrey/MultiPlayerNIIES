@@ -62,9 +62,14 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
             get { return VideoPlayerVM.SyncronizationShiftVM.ShiftTime; }
         }
 
+        public TimeSpan Duration
+        {
+            get { return VideoPlayerVM.Duration; }
+        }
+
         public Thickness Margin
         {
-            get { return new Thickness(TimeShift.TotalSeconds, 0, 0, 0); }
+            get { return new Thickness(TimeShift.TotalSeconds, 0, -TimeShift.TotalSeconds, 0); }
         }
         public void Refresh()
         {

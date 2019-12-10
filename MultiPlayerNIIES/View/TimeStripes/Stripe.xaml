@@ -6,10 +6,14 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeStripes"
              xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
              mc:Ignorable="d" 
-             d:DesignHeight="10" d:DesignWidth="800" Height="10">
+             d:DesignHeight="10" d:DesignWidth="800" Height="13">
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:DoubleWithAdditionConverter x:Key="DoubleWithAdditionConverter"/>
+        <converters:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter"/>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
+        <converters:TimeSpanHiSignedConverter x:Key="TimeSpanHiSignedConverter"/>
+
     </UserControl.Resources>
     <Grid x:Name="MainGrid" Margin="200 0 200 0 ">
         <Grid  Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" >
@@ -21,10 +25,33 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
+
+
+            <TextBlock Margin="3 0 0 0" 
+                       Text="{Binding TimeShift, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeSpanHiSignedConverter}, ConverterParameter=''}" 
+                       Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" 
+                       HorizontalAlignment="Left" FontSize="10" Foreground="White"/>
+
+            <Rectangle Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" 
+                       HorizontalAlignment="Left" 
+                       Width="40" 
+                       Margin="0 1 0 1"
+                       >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="DodgerBlue" Offset="0"/>
+                        <GradientStop Color="#FF596168" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Margin="10 0 0 0"  Text="Sync" HorizontalAlignment="Left" FontSize="10" Foreground="White"
+                       Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+
             <Rectangle Fill="#80ffffff" 
                    Width= "{Binding ElementName=Infotxt, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
                    HorizontalAlignment="Center" 
-                   Height="9" 
+                   Height="11" 
                    Margin="0 0.5 0 0" 
                    VerticalAlignment="Center"
                    Stroke="DarkBlue" 
@@ -34,19 +61,17 @@
             <TextBlock x:Name="Infotxt"                 
                    Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
                    HorizontalAlignment="Center" 
-                   FontSize="8" 
+                   FontSize="10" 
                    VerticalAlignment="Center" 
                    Margin="0 -1 0 0"/>
 
-            <Rectangle Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Fill="#80FF7676"/>
             <Grid.ToolTip >
                 <StackPanel Background="Wheat">
-                    <TextBlock Text="Название видео" />
-                    <TextBlock Text="123"/>
-                    <TextBlock Text="00:01:12,32"/>
+                    <TextBlock Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  />
+                    <TextBlock Text="{Binding Duration, StringFormat='Длительность {0:hh\\:mm\\:ss\\.ff}'}" />
+                    <TextBlock Text="{Binding TimeShift, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeSpanHiConverter}, ConverterParameter='Смещение: '}"/>
                 </StackPanel>
             </Grid.ToolTip>
-
         </Grid>
     </Grid>
 </UserControl>
