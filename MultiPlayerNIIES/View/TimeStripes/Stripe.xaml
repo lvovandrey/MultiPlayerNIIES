@@ -15,8 +15,8 @@
         <converters:TimeSpanHiSignedConverter x:Key="TimeSpanHiSignedConverter"/>
 
     </UserControl.Resources>
-    <Grid x:Name="MainGrid" Margin="200 0 200 0 ">
-        <Grid  Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" >
+    <Grid  Margin="200 0 200 0 ">
+        <Grid  Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" x:Name="MainGrid"  Width="{Binding Width, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" >
             <Rectangle Stroke="#FF111111" StrokeThickness="0.5" >
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

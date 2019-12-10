@@ -13,6 +13,8 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
     class StripeContainerVM : INPCBase
     {
 
+        public event Action Refreshed;
+
         #region Поля 
         public VM VM;
         public ObservableCollection<StripeVM> stripeVMs;
@@ -24,6 +26,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         {
             VM = vm;
             Body = body;
+            Body.DataContext = this;
             VM.videoPlayerVMs.CollectionChanged += VideoPlayerVMs_CollectionChanged;
             stripeVMs = new ObservableCollection<StripeVM>();
             FillStripes();
@@ -43,19 +46,25 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         {
             stripeVMs.Clear();
             foreach (var v in videoPlayerVMs)
-            {
-                stripeVMs.Add(new StripeVM(v));
-            }
+                stripeVMs.Add(new StripeVM(v, this, new Stripe()));
             List<Stripe> stripes = new List<Stripe>();
             foreach (var v in stripeVMs)
             {
-                Stripe s = new Stripe();
-                s.DataContext = v;
-                stripes.Add(s);
+                stripes.Add(v.Body);
+                Refreshed += v.Refresh;
             }
             Body.FillStripes(stripes);
         }
-        
+        public void Refresh()
+        {
+            OnPropertyChanged("IsSyncronizeLeader");
+            OnPropertyChanged("FilenameForTitle");
+            OnPropertyChanged("TimeShift");
+            OnPropertyChanged("Margin");
+            OnPropertyChanged("SyncLeadBodyWidth");
+            if (Refreshed != null) Refreshed();
+        }
+
 
         #endregion
 
@@ -65,13 +74,19 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         {
             get { return VM.videoPlayerVMs; }
         }
-       
-        public void Refresh()
+
+        public double SyncLeadBodyWidth
         {
-            OnPropertyChanged("IsSyncronizeLeader");
-            OnPropertyChanged("FilenameForTitle");
-            OnPropertyChanged("TimeShift");
-            OnPropertyChanged("Margin");
+            get
+            {
+                //var SyncLeadStripes = (from v in stripeVMs
+                //                       where v.IsSyncronizeLeader
+                //                       select v.Body).ToList();
+
+                //if (SyncLeadStripes.Count() > 0 && SyncLeadStripes.First().MainGrid.ActualWidth > 100)
+                    return Body.ActualWidth-400;
+           //     else return 100;
+            }
         }
 
 

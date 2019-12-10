@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.ViewModel.TimeStripeVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,12 @@ namespace MultiPlayerNIIES.View.TimeStripes
             {
                 MainStack.Children.Add(s);
             }
+        }
+
+        private void MainStack_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (DataContext is StripeContainerVM)
+            ((StripeContainerVM)this.DataContext).Refresh();
         }
     }
 }

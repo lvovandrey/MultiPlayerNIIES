@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.View.TimeStripes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,17 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
 
         #region Поля 
         public VideoPlayerVM VideoPlayerVM;
+        public Stripe Body;
+        public StripeContainerVM StripeContainerVM;
         #endregion
 
         #region Конструкторы
-        public StripeVM( VideoPlayerVM videoPlayerVM)
+        public StripeVM(VideoPlayerVM videoPlayerVM, StripeContainerVM stripeContainerVM, Stripe body)
         {
             VideoPlayerVM = videoPlayerVM;
-
+            Body = body;
+            StripeContainerVM = stripeContainerVM;
+            Body.DataContext = this;
             VideoPlayerVM.SyncronizationShiftVM.PropertyChanged += SyncronizationShiftVM_PropertyChanged;
             VideoPlayerVM.PropertyChanged += VideoPlayerVM_PropertyChanged;
         }
@@ -43,6 +48,8 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         #endregion
 
         #region Методы
+
+
 
         #endregion
 
@@ -69,7 +76,21 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
 
         public Thickness Margin
         {
-            get { return new Thickness(TimeShift.TotalSeconds, 0, -TimeShift.TotalSeconds, 0); }
+            get { return new Thickness(TimeShift.TotalSeconds, 0, 0, 0); }
+        }
+
+        public double Width
+        {
+            get
+            {
+
+
+                if (VideoPlayerVM.IsSyncronizeLeader)
+                    return StripeContainerVM.SyncLeadBodyWidth;
+                else
+                    return  StripeContainerVM.SyncLeadBodyWidth-100;
+
+            }
         }
         public void Refresh()
         {
@@ -77,6 +98,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
             OnPropertyChanged("FilenameForTitle");
             OnPropertyChanged("TimeShift");
             OnPropertyChanged("Margin");
+            OnPropertyChanged("Width");
         }
 
 
