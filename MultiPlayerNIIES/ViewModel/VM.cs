@@ -113,6 +113,7 @@ namespace MultiPlayerNIIES.ViewModel
             TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
 
             StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
+            IsStripesContainerVisible = false;
         }
 
         private void Settings_SettingsChanged()
@@ -485,38 +486,33 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        
+
         //------------------------------
         // измерение времени ручное - его свойства тут.
         private bool isOnTimeDiffMeasuring = false;
         public bool IsOnTimeDiffMeasuring
         {
             get { return isOnTimeDiffMeasuring; }
-            set { isOnTimeDiffMeasuring = value; OnPropertyChanged("IsOnTimeDiffMeasuring"); }
+            set
+            {
+                isOnTimeDiffMeasuring = value; OnPropertyChanged("IsOnTimeDiffMeasuring");
+            }
         }
 
-        public TimeSpan firstTimeMeasured;
-        public TimeSpan secondTimeMeasured;
-       
-
-        public TimeSpan FirstTimeMeasured
-        {
-            get { return firstTimeMeasured; }
-            set { firstTimeMeasured = value; OnPropertyChanged("FirstTimeMeasured"); OnPropertyChanged("TimeDiffMeasured"); }
-        }
-        public TimeSpan SecondTimeMeasured
-        {
-            get { return secondTimeMeasured; }
-            set { secondTimeMeasured = value; OnPropertyChanged("SecondTimeMeasured"); OnPropertyChanged("TimeDiffMeasured"); }
-        }
-        public TimeSpan TimeDiffMeasured
-        {
-            get { return SecondTimeMeasured-FirstTimeMeasured ; }
-        }
 
         //-------------------------------
-
-
+        private bool isStripesContainerVisible = false;
+        public bool IsStripesContainerVisible
+        {
+            get { return isStripesContainerVisible; }
+            set
+            {
+                isStripesContainerVisible = value;
+                OnPropertyChanged("IsStripesContainerVisible");
+                if (value) MainWindow.StripesContainer.Visibility = Visibility.Visible;
+                else MainWindow.StripesContainer.Visibility = Visibility.Collapsed;  //TODO: почему то не получилось привязку сделать.... почему?
+            }
+        }
         #endregion
 
         #region Methods
@@ -1730,6 +1726,23 @@ namespace MultiPlayerNIIES.ViewModel
                 if (!v.Key.IsSyncronizeLeader)
                     v.Key.SyncronizationShiftVM.ShiftTime = v.Value;
         }
+
+
+
+        private RelayCommand stripesContainerShowHideCommand;
+        public RelayCommand StripesContainerShowHideCommand
+        {
+            get
+            {
+                return stripesContainerShowHideCommand ?? (stripesContainerShowHideCommand = new RelayCommand(obj =>
+                {
+                    IsStripesContainerVisible = !IsStripesContainerVisible;
+
+                }));
+            }
+        }
+
+
         #endregion
     }
 }

@@ -51,7 +51,12 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Вид">
-                
+                <MenuItem Header="_Панель Видеополосы" Command="{Binding  StripesContainerShowHideCommand}">
+                    <MenuItem.Icon>
+                        <Image  Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png" Stretch="Fill" Width="20"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+               
             </MenuItem>
 
             <MenuItem Header="_Опции">

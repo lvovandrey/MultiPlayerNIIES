@@ -515,6 +515,8 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-High-64.png" />
+    <Resource Include="Images\PNG\Gnome-Format-Justify-Fill-64.png" />
     <Resource Include="Images\PNG\Arrow-contract-48.png" />
     <Resource Include="Images\PNG\Time-Go-32.png" />
     <Resource Include="Images\Arrow1LeftOrange.png" />

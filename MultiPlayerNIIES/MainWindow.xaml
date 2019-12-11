@@ -21,6 +21,7 @@
     <Window.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Window.Resources>
     <Grid Background="#FF161616">
         <Grid.RowDefinitions>
@@ -48,12 +49,16 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <timestrips:StripesContainer Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" x:Name="StripesContainer" Margin="80 0 0 0"  />
-                
-                <Slider Width="70" VerticalAlignment="Center" Minimum="0" Maximum="500"  
+                <timestrips:StripesContainer Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" x:Name="StripesContainer" Margin="80 0 0 0" 
+                                             />
+                <!--Visibility="{Binding IsStripesContainerVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"-->
+                <Image VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5 5 -5 5" Grid.Row="1" Source="Images/PNG/Gnome-Audio-Volume-High-64.png" Width="25"
+                        Visibility="{Binding IsStripesContainerVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <Slider Width="70" VerticalAlignment="Bottom" Margin="5 0 -5 5" Minimum="0" Maximum="500"  
                         Grid.Row="1"
                         Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                         Foreground="#FFB07220"  LargeChange="0"/>
+               
                 <timeline:TimeLine  POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                      Grid.Row="1"
                                    Height="50" Grid.Column="1" x:Name="TimeLine1"  Margin="10 0 10 0"  />
