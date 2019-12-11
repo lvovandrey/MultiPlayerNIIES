@@ -89,7 +89,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         {
             get
             {
-                return Body.ActualWidth - 400;
+                return VM.MainWindow.TimeLine1.ActualWidth;
             }
         }
 
@@ -97,7 +97,8 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         {
             get
             {
-                return VM.SyncLeadPlayer.Duration;
+                if (VM.SyncLeadPlayer == null) return TimeSpan.Zero;
+                else return VM.SyncLeadPlayer.Duration;
             }
         }
 

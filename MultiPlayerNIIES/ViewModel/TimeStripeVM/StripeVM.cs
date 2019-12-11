@@ -69,9 +69,19 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
         public Thickness Margin
         {
             get
-            { 
+            {
+                double left = -StripeContainerVM.SyncLeadBodyWidth * TimeShift.TotalSeconds / StripeContainerVM.SyncLeadDuration.TotalSeconds;
+
                 if (IsSyncronizeLeader) return new Thickness(0, 0, 0, 0);
-                else return new Thickness(TimeShift.TotalSeconds, 0, 0, 0);
+                else return new Thickness(left, 0, 0, 0);
+            }
+        }
+
+        public bool IsEnoughWidthForViewInfoTxt
+        {
+            get
+            {
+                return (Width > Body.InfoTxtBackground.ActualWidth + Body.SyncLeadIndicatorBackground.ActualWidth);
             }
         }
 
@@ -85,7 +95,7 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
                 {
                     double k = Duration.TotalSeconds / StripeContainerVM.SyncLeadDuration.TotalSeconds;
 
-                    return StripeContainerVM.SyncLeadBodyWidth*k;
+                    return StripeContainerVM.SyncLeadBodyWidth * k;
                 }
             }
         }
