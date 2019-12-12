@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1200" >
-    <Grid x:Name="GridMain">
+    <Grid x:Name="GridMain" Background="#FF1F1F1F">
         <elements:WaitProgressBar x:Name="WaitProgressBar1" Height="100" Width="250" Visibility="Hidden"/>
     </Grid>
 </UserControl>

@@ -35,6 +35,7 @@
                 </Rectangle.Fill>
             </Rectangle>
 
+            
             <TextBlock Margin="3 0 0 0" 
                        Text="{Binding TimeShift, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeSpanHiSignedConverter}, ConverterParameter=''}" 
                        Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" 
