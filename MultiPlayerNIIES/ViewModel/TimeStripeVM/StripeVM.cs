@@ -27,9 +27,23 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
             StripeContainerVM = stripeContainerVM;
             Body.DataContext = this;
             VideoPlayerVM.SyncronizationShiftVM.PropertyChanged += SyncronizationShiftVM_PropertyChanged;
+            VideoPlayerVM.PropertyChanged += VideoPlayerVM_PropertyChanged;
+            Body.UpFocus += Body_UpFocus;
+        }
+
+        private void VideoPlayerVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Focus")
+            {
+                OnPropertyChanged("Focus");
+            }
         }
 
 
+
+        #endregion
+
+        #region Методы
         private void SyncronizationShiftVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ShiftTime")
@@ -37,12 +51,21 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
                 Refresh();
             }
         }
-        #endregion
+        private void Body_UpFocus()
+        {
+            this.VideoPlayerVM.UpFocusX();
+    //        this.StripeContainerVM.Refresh();
+        }
 
-        #region Методы
-
-
-
+        public void Refresh()
+        {
+            OnPropertyChanged("IsSyncronizeLeader");
+            OnPropertyChanged("FilenameForTitle");
+            OnPropertyChanged("TimeShift");
+            OnPropertyChanged("Margin");
+            OnPropertyChanged("Width");
+    //        OnPropertyChanged("Focus");
+        }
         #endregion
 
         #region Свойства
@@ -99,15 +122,11 @@ namespace MultiPlayerNIIES.ViewModel.TimeStripeVM
                 }
             }
         }
-        public void Refresh()
-        {
-            OnPropertyChanged("IsSyncronizeLeader");
-            OnPropertyChanged("FilenameForTitle");
-            OnPropertyChanged("TimeShift");
-            OnPropertyChanged("Margin");
-            OnPropertyChanged("Width");
-        }
 
+        public bool Focus
+        {
+            get { return this.VideoPlayerVM.Focus; }
+        }
 
         #endregion
 

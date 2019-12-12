@@ -24,5 +24,14 @@ namespace MultiPlayerNIIES.View.TimeStripes
         {
             InitializeComponent();
         }
+
+        #region Реализация Focused
+        public event Action UpFocus;
+
+        private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpFocus();
+        }
+        #endregion
     }
 }
