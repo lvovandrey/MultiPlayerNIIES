@@ -181,7 +181,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private void timerTick(object sender, EventArgs e)
         {
             if (dxPlay == null) return;
-            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01) && dxPlay.IsPlaying)
+            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01) && (dxPlay.IsPlaying || dxPlay.IsPaused))
             {
                 Duration = dxPlay.Duration;
                 CurTime = dxPlay.CurTime;

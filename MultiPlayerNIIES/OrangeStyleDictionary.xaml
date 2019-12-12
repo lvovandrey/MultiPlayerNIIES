@@ -13,7 +13,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="OrangeTextStyle" TargetType="TextBox">
+    <Style x:Key="OrangeTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="#FFB07220"/>
+    </Style>
+    <Style x:Key="OrangeTextBlockStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="#FFB07220"/>
     </Style>
     <Style x:Key="OrangeLabelStyle" TargetType="Label">
@@ -36,8 +39,8 @@
                         <Rectangle x:Name="rectangle" Stroke="Gray" StrokeThickness="1.5">
                             <Rectangle.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFF4BF79" Offset="0"/>
-                                    <GradientStop Color="#FFB7823C" Offset="1"/>
+                                    <GradientStop Color="#FFCD974F" Offset="0"/>
+                                    <GradientStop Color="#FFB0772D" Offset="1"/>
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
@@ -57,14 +60,15 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Fill" TargetName="rectangle">
+                            <!--<Setter Property="Fill" TargetName="rectangle">
                                 <Setter.Value>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FF805823" Offset="0"/>
                                         <GradientStop Color="#FFB07220" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
-                            </Setter>
+                            </Setter>-->
+                            <Setter Property="Stroke" TargetName="rectangle" Value="#FFECA241"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
 

@@ -40,8 +40,9 @@
 
 
             <Button Command="{Binding OpenCommand}" Style="{StaticResource OrangeButtonStyle}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
-                </Button>
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" >
+                </Image>
+            </Button>
 
 
             <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource OrangeButtonStyle}" >
@@ -274,7 +275,7 @@
                         ContentStringFormat="{}{0:F2} раз"
                         FontSize="10"
                         FontWeight="Bold"/>-->
-                    <TextBlock Text="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="50"></TextBlock>
+                <TextBlock Text="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="50" Style="{StaticResource OrangeTextBlockStyle}"></TextBlock>
 
                 </StackPanel>
 
