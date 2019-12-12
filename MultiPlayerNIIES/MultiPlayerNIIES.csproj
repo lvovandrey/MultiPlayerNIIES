@@ -213,6 +213,9 @@
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MainPanelViewNew\MainPanelViewNew.xaml.cs">
+      <DependentUpon>MainPanelViewNew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainSlider.xaml.cs">
       <DependentUpon>MainSlider.xaml</DependentUpon>
     </Compile>
@@ -296,6 +299,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrangeStyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AreaVideoPlayersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -329,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainPanelViewNew\MainPanelViewNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

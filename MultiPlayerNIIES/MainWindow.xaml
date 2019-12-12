@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:MultiPlayerNIIES"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:MultiPlayerNIIES.View"
+    xmlns:mainpanel="clr-namespace:MultiPlayerNIIES.View.MainPanelViewNew"
     xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
     xmlns:dshow ="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
     xmlns:timeline="clr-namespace:MultiPlayerNIIES.View.TimeLine"
@@ -22,6 +23,7 @@
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+ 
     </Window.Resources>
     <Grid Background="#FF161616">
         <Grid.RowDefinitions>
@@ -86,7 +88,7 @@
                 </Label>
             </Grid>
         </StackPanel>
-
-        <view:MainPanelView Grid.Row="4" />
+        
+        <mainpanel:MainPanelViewNew Grid.Row="4" />
     </Grid>
 </Window>

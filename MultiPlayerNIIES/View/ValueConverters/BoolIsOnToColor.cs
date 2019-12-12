@@ -17,7 +17,7 @@ namespace MultiPlayerNIIES.View.ValueConverters
             if ((bool)value == true)
                 return new SolidColorBrush(Colors.Green);
             else
-                return new SolidColorBrush(Colors.LightGray);
+                return new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
 
         }
 
