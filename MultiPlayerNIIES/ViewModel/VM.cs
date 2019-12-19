@@ -38,7 +38,7 @@ namespace MultiPlayerNIIES.ViewModel
         Excel.Workbooks ExcelBooks;
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
-        InfoWindowView InfoWindowView;
+        WaitProgressBarForTimeline WaitProgressBar;
 
 
         SettingsWindowView settingsWindowView;
@@ -68,8 +68,7 @@ namespace MultiPlayerNIIES.ViewModel
             Settings.SettingsChanged += Settings_SettingsChanged;
             Settings.RestoreAllSettings();
 
-            InfoWindowView = new InfoWindowView(this);
-            InfoWindowView.Visibility = Visibility.Hidden;
+
             
             videoPlayerVMs = new ObservableCollection<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
@@ -81,6 +80,9 @@ namespace MultiPlayerNIIES.ViewModel
             oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
             oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
 
+
+            WaitProgressBar = MainWindow.WaitProgressBarForTimeline;
+            WaitProgressBar.Visibility = Visibility.Collapsed;
 
             MainTimer = new System.Windows.Threading.DispatcherTimer();
             MainTimer.Tick += new EventHandler(MainTimerTick);
@@ -1446,7 +1448,7 @@ namespace MultiPlayerNIIES.ViewModel
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));//TODO: Очень бы тут пригодилась многопоточность
 
-                      InfoWindowView.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
+                      WaitProgressBar.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
@@ -1515,7 +1517,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
-                      InfoWindowView.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
+                      WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
 
 
@@ -1667,7 +1669,7 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           try
                           {
-                              this.InfoWindowView.Close();
+                            //  this.WaitProgressBar.Close();
                               this.settingsWindowView.Close();
                               this.TimeDIffWindowWindow.Close();
                               MainWindow.Close();
