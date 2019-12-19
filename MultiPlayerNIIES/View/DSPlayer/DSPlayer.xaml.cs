@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Graphics;
+using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -134,7 +135,36 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
         }
 
+        /// <summary>
+        /// Соотношение сторон
+        /// </summary>
+        public AspectRatio AspectRatio
+        {
+            get { return (AspectRatio)VideoMMM.AspectRatio; }
+            set { VideoMMM.AspectRatio = (WindowsFormsVideoControl.AspectRatio)value; }
+        }
+
+
+        public System.Windows.Size OriginalSize
+        {
+            get
+            {
+                return dxPlay.OriginalSize;
+            }
+            set
+            {
+                dxPlay.OriginalSize = value;
+            }
+        }
+
+        internal void RefreshSize()
+        {
+            VideoMMM.ResizeVideoContainer();
+            OnResize();
+        }
         System.Windows.Threading.DispatcherTimer timer;
+
+
 
         internal void RateIncreace()
         {
@@ -151,7 +181,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private void timerTick(object sender, EventArgs e)
         {
             if (dxPlay == null) return;
-            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01) && dxPlay.IsPlaying)
+            if (dxPlay.CurTime > TimeSpan.FromSeconds(0.01) && (dxPlay.IsPlaying || dxPlay.IsPaused))
             {
                 Duration = dxPlay.Duration;
                 CurTime = dxPlay.CurTime;
@@ -317,6 +347,16 @@ namespace MultiPlayerNIIES.View.DSPlayer
             Rate += 0.1;
         }
 
+        internal void SetSoom(Rect zoomedArea)
+        {
+            VideoMMM.SetZoom(zoomedArea);
+        }
+
+        public Rect GetZoomedArea()
+        {
+            return VideoMMM.GetZoomedArea();
+        }
+
         private void IncSpeedBtn_Click(object sender, RoutedEventArgs e)
         {
             if (dxPlay == null) return;
@@ -363,7 +403,9 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void OnClosing()
         {
             if (dxPlay == null) return;
+            
             dxPlay.Dispose();
+
             testDx.Dispose();
         }
 
@@ -478,6 +520,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
             OnResize(e);
         }
 
+        public Bitmap GetSnapShot()
+        {
+            return dxPlay.GetSnapShot();
+        }
 
         #region Реализация ЗУМА
 

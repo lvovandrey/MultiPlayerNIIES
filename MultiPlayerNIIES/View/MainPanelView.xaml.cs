@@ -23,27 +23,6 @@ namespace MultiPlayerNIIES.View
         public MainPanelView()
         {
             InitializeComponent();
-            Timer = new System.Windows.Threading.DispatcherTimer();
-        }
-
-        System.Windows.Threading.DispatcherTimer Timer;
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (Timer == null)
-            {
-                Timer = new System.Windows.Threading.DispatcherTimer();
-            }
-            Timer.Tick += (s, _) =>
-            {
-                var DC = DataContext as ViewModel.VM;
-                DC.SyncronizationShiftCommand.Execute(null);
-            };
-            Timer.Interval = TimeSpan.FromSeconds(20);
-            if (Timer.IsEnabled) Timer.Stop();
-            else Timer.Start();
         }
     }
 }

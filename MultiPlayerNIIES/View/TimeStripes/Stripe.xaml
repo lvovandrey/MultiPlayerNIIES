@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="MultiPlayerNIIES.View.TimeStripes.Stripe"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiPlayerNIIES.View.TimeStripes"
+             xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
+             mc:Ignorable="d" 
+             d:DesignHeight="13" d:DesignWidth="800" Height="13" PreviewMouseDown="UserControl_PreviewMouseDown">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:DoubleWithAdditionConverter x:Key="DoubleWithAdditionConverter"/>
+        <converters:BoolToVisibilityReverseConverter x:Key="BoolToVisibilityReverseConverter"/>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
+        <converters:TimeSpanHiSignedConverter x:Key="TimeSpanHiSignedConverter"/>
+
+    </UserControl.Resources>
+    <Grid  >
+        <Grid  Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" x:Name="MainGrid"  Width="{Binding Width, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" >
+            <Rectangle Stroke="#FF111111" StrokeThickness="0.5" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="DimGray" Offset="0"/>
+                        <GradientStop Color="#FF363636" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle Stroke="#FF111111" StrokeThickness="0.5"  Visibility="{Binding Focus, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFB07220" Offset="0"/>
+                        <GradientStop Color="#FF805823" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            
+            <TextBlock Margin="3 0 0 0" 
+                       Text="{Binding TimeShift, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeSpanHiSignedConverter}, ConverterParameter=''}" 
+                       Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" 
+                       HorizontalAlignment="Left" FontSize="10" Foreground="White"/>
+
+            <Rectangle x:Name="SyncLeadIndicatorBackground"
+                       Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" 
+                       HorizontalAlignment="Left" 
+                       Width="40" 
+                       Margin="0 1 0 1"
+                       >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="DodgerBlue" Offset="0"/>
+                        <GradientStop Color="#FF596168" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            
+            <TextBlock x:Name="SyncLeadIndicator" Margin="10 0 0 0"  Text="Sync" HorizontalAlignment="Left" FontSize="10" Foreground="White"
+                       Visibility="{Binding IsSyncronizeLeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <Rectangle Fill="#80ffffff" 
+                   x:Name="InfoTxtBackground"  
+                   Width= "{Binding ElementName=Infotxt, Path=ActualWidth, Converter={StaticResource DoubleWithAdditionConverter}, ConverterParameter=10}" 
+                   Visibility="{Binding IsEnoughWidthForViewInfoTxt, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" 
+                   HorizontalAlignment="Center" 
+                   Height="11" 
+                   Margin="0 0.5 0 0" 
+                   VerticalAlignment="Center"
+                   Stroke="DarkBlue" 
+                   StrokeThickness="0.5" 
+                   RadiusX="2" 
+                   RadiusY="2"/>
+            <TextBlock x:Name="Infotxt"                 
+                   Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                   Visibility="{Binding IsEnoughWidthForViewInfoTxt, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" 
+                   HorizontalAlignment="Center" 
+                   FontSize="10" 
+                   VerticalAlignment="Center" 
+                   Margin="0 -1 0 0"/>
+
+            <Grid.ToolTip >
+                <StackPanel Background="Wheat">
+                    <TextBlock Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  />
+                    <TextBlock Text="{Binding Duration, StringFormat='Длительность {0:hh\\:mm\\:ss\\.ff}'}" />
+                    <TextBlock Text="{Binding TimeShift, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeSpanHiConverter}, ConverterParameter='Смещение: '}"/>
+                </StackPanel>
+            </Grid.ToolTip>
+        </Grid>
+    </Grid>
+</UserControl>

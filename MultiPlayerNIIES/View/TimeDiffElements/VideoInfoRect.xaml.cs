@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MultiPlayerNIIES.ViewModel;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,33 +23,40 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
     /// </summary>
     public partial class VideoInfoRect : UserControl
     {
-        public VideoInfoRect(UIElement Container)
+
+        public VideoInfoRect(UIElement Container, double ColumnsWidth)
         {
             InitializeComponent();
             DragDropSwitchOn(Container, this);
+            ColWidth = ColumnsWidth;
         }
 
-        public byte Position = 0; //0-слева, 1-справа
+        private double ColWidth = 300;
+
+        private TimeDiffVideoInfoRectVM vm
+        {
+            get
+            {
+                return DataContext as TimeDiffVideoInfoRectVM;
+            }
+        }
 
         #region Дополнения к Drag'n'Drop
-        public double SeparatorMarginLeft;
-        public void AfterFinish(double LeftRelativeToThisRect)
+        public void AfterFinish(double MarginLeft)
         {
-            if (Margin.Left > SeparatorMarginLeft - LeftRelativeToThisRect)
-            {
-                Margin = new Thickness(SeparatorMarginLeft + 50, Margin.Top, 0, 0);
-                Position = 1;
-            }
-            else
-            {
-                Margin = new Thickness(50, Margin.Top, 0, 0);
-                Position = 0;
-            }
+            if (vm == null) return;
+            int pos = (int)Math.Floor(MarginLeft / ColWidth);
+            vm.CurrentPosition = pos;
+            Console.WriteLine("pos=" + pos + "CurPos=" +vm.CurrentPosition);
+            Margin = new Thickness(vm.CurrentPosition * ColWidth + 20, Margin.Top, 0, 0);
         }
+
+      
 
         internal void OnSizeContaierChanged()
         {
-            Margin = new Thickness(Position*SeparatorMarginLeft + 50, Margin.Top, 0, 0);
+            if (vm == null) return;
+            Margin = new Thickness(ColWidth*vm.CurrentPosition + 20, Margin.Top, 0, 0);
         }
         #endregion
 
@@ -70,9 +79,6 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
             DraggerArea = dragger;
             IsDragDrop = true;
             MouseLeftButtonDown += StartDrag;
-
-            Console.WriteLine(IsDragDrop + this.GetHashCode().ToString());
-
         }
 
         public void DragDropSwitchOff(UIElement container)
@@ -88,8 +94,6 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         void StartDrag(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("Start" + this.GetHashCode().ToString());
-
             if (!DraggerArea.IsMouseOver) return;
             if ((Container == null) || !IsDragDrop) return;
             draggedObject = (FrameworkElement)sender;
@@ -131,16 +135,27 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         void FinishDrag(object sender, MouseEventArgs e)
         {
-
-            Console.WriteLine("Finish" + this.GetHashCode().ToString());
             draggedObject.MouseMove -= OnDragMove;
             draggedObject.LostMouseCapture -= OnLostCapture;
             draggedObject.MouseUp -= OnMouseUp;
             UpdatePosition(e);
 
-            AfterFinish(e.GetPosition(this).X);
+            AfterFinish(e.GetPosition(Container).X);
             Shadow.Visibility = Visibility.Hidden;
         }
+
         #endregion
+
+        private void ImageSnapShot2_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //ImageSnapShotBig.Source = ((Image)sender).Source;
+            //ImageSnapShotBig.Visibility = Visibility.Visible;
+        }
+
+        private void ImageSnapShot2_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //ImageSnapShotBig.Source = ((Image)sender).Source;
+            //ImageSnapShotBig.Visibility = Visibility.Collapsed;
+        }
     }
 }

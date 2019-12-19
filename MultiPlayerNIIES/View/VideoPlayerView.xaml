@@ -21,7 +21,14 @@
         <converters:BoolSyncLeaderToColor x:Key="BoolSyncLeaderToColor" />
         <converters:BoolIsSyncLeaderToVisibility x:Key="BoolIsSyncLeaderToVisibility" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        
+        <converters:BitmapToBitmapSource x:Key="BitmapToBitmapSource"/>
+        <converters:TimeShiftToColor x:Key="TimeShiftToColor"/>
+        <converters:TimeShiftToColorBack x:Key="TimeShiftToColorBack"/>
+        <converters:TimeShiftToVisibility x:Key="TimeShiftToVisibility"/>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
+
+
+
         <Style x:Key="BtnStyle" TargetType="Button">
             <Setter Property="Width" Value="14" />
             <Setter Property="Height" Value="14" />
@@ -50,26 +57,31 @@
         </Style>
 
     </UserControl.Resources>
-    <Grid
+    <Grid>
+        <Rectangle Grid.ColumnSpan="100" Grid.RowSpan="100" Stroke="#FFC2965B" StrokeThickness="1"  ></Rectangle>
+        <Grid
+            Margin="2"
         x:Name="MainGrid"
         Background="{Binding Focus, Converter={StaticResource BoolFocusToColor}}"
         ClipToBounds="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="5" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5" />
-            <RowDefinition Height="14" />
-            <RowDefinition />
-            <RowDefinition x:Name="ButtonsShowerPanelRow" Height="20" />
-            <RowDefinition x:Name="PlayerPanelRow" Height="20" />
-            <RowDefinition x:Name="SyncronizationInstrumentsRow" Height="30" />
-            <RowDefinition Height="5" />
-        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="5" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+                <RowDefinition Height="14" />
+                <RowDefinition />
+                <RowDefinition x:Name="ButtonsShowerPanelRow" Height="20" />
+                <RowDefinition x:Name="PlayerPanelRow" Height="20" />
+                <RowDefinition x:Name="SyncronizationInstrumentsRow" Height="30" />
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
 
-        <StackPanel
+
+
+            <StackPanel
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
@@ -77,15 +89,15 @@
             HorizontalAlignment="Left"
             Panel.ZIndex="3"
             Orientation="Horizontal">
-            <Grid Cursor="Hand" MouseUp="SyncLeadIndicator_MouseUp">
-                <TextBlock
-                    Margin="10,2,0,0"
+                <Grid Cursor="Hand" MouseUp="SyncLeadIndicator_MouseUp">
+                    <TextBlock
+                    Margin="0,2,-0.118,-0.176"
                     Panel.ZIndex="101"
                     FontSize="9"
-                    Foreground="White">
+                    Foreground="White" HorizontalAlignment="Right" Width="40">
                     Sync
-                </TextBlock>
-                <Rectangle
+                    </TextBlock>
+                    <Rectangle
                     x:Name="SyncLeadIndicator"
                     Width="40"
                     Margin="0,0,10,0"
@@ -93,8 +105,8 @@
                     Fill="{Binding IsSyncronizeLeader, Converter={StaticResource BoolSyncLeaderToColor}, UpdateSourceTrigger=PropertyChanged}"
                     Stroke="DodgerBlue"
                     StrokeThickness="1" />
-            </Grid>
-            <TextBlock
+                </Grid>
+                <TextBlock
                 x:Name="TextBlockSubtitles"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -103,7 +115,7 @@
                 Text="..." />
 
 
-            <TextBox
+                <TextBox
                 x:Name="TextBlockDebug"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -112,38 +124,39 @@
                 Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
                 Foreground="#FF2EFF00" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FF8D8D8D"  />
 
-        </StackPanel>
-        <StackPanel
+            </StackPanel>
+            <StackPanel
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Right"
+            
             Panel.ZIndex="3"
             Orientation="Horizontal">
-            <Button x:Name="Minimize" Command="{Binding MinimizeCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Minimize_Window.png" />
-            </Button>
-            <Button x:Name="Maximize" Command="{Binding MaximizeCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Maximize_Window.png" />
-            </Button>
-            <Button x:Name="Restore" Command="{Binding RestoreCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Restore-Window-64.png" />
-            </Button>
-            <Button x:Name="Close" Command="{Binding CloseCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Close_Window.png" />
-            </Button>
-        </StackPanel>
+                <Button x:Name="Minimize" Command="{Binding MinimizeCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Minimize_Window.png" />
+                </Button>
+                <Button x:Name="Maximize" Command="{Binding MaximizeCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Maximize_Window.png" />
+                </Button>
+                <Button x:Name="Restore" Command="{Binding RestoreCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Restore-Window-64.png" />
+                </Button>
+                <Button x:Name="Close" Command="{Binding CloseCommand}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Close_Window.png" />
+                </Button>
+            </StackPanel>
 
 
-        <!--<mvlc:MVLCPlayer
+            <!--<mvlc:MVLCPlayer
             x:Name="VLC"
             Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             PreviewMouseWheel="VLC_PreviewMouseWheel" />-->
 
-        <dsplayer:DSPlayer
+            <dsplayer:DSPlayer
             x:Name="VLC"
             Grid.Row="2"
             Grid.Column="1"
@@ -151,14 +164,14 @@
             PreviewMouseWheel="VLC_PreviewMouseWheel"
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch"/>
-        <!--<vlc:VLCPlayer 
+            <!--<vlc:VLCPlayer 
             x:Name="VLC"
             Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             PreviewMouseWheel="VLC_PreviewMouseWheel" />-->
-        
-        <Button
+
+            <Button
             x:Name="ButtonHideInstruments"
             Grid.Row="3"
             Grid.Column="0"
@@ -170,10 +183,10 @@
             Opacity="0.7"
             Style="{StaticResource BtnStyle}"
             ToolTip="Скрыть/показать панель синхронизации">
-            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
-        </Button>
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+            </Button>
 
-        <Button
+            <Button
             x:Name="ButtonHidePanel"
             Grid.Row="3"
             Grid.Column="0"
@@ -185,10 +198,10 @@
             Opacity="0.7"
             Style="{StaticResource BtnStyle2}"
             ToolTip="Скрыть/показать панель управления проигрывателя">
-            <Image Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png" />
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png" />
 
-        </Button>
-         <TextBlock
+            </Button>
+            <TextBlock
             Margin="50 0 0 0"             
             Grid.Row="3"
             Grid.Column="0"
@@ -198,24 +211,49 @@
             VerticalAlignment="Center"
             Visibility="{Binding OutOfSyncronization, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }"
              >Видео за границами синхронизации</TextBlock>
-        <TextBlock
+            <TextBlock
             Margin="50 0 0 0"             
             Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             FontSize="12" FontWeight="Bold" 
             Foreground="Red"
+            
             VerticalAlignment="Center"
             Visibility="{Binding OutOfSyncronizationTitles, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }"
              >Видео за границами синхронизации титров</TextBlock>
-        <elements:PlayerPanel
+
+            <Image 
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Right"
+            Margin="0 0 85 0" Source="/MultiPlayerNIIES;component/Images/PNG/Time-Go-32.png"/>
+            <TextBlock
+            Margin="0 0 10 0"      
+            HorizontalAlignment="Right"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            FontSize="12" FontWeight="Bold" 
+            Foreground="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColor}}"
+            Background="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColorBack}}"
+            Visibility="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToVisibility} }"
+            VerticalAlignment="Center"
+            Text="{Binding Path=CurShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}  }"
+             >
+                <TextBlock.ToolTip>Значение рассинхронизации</TextBlock.ToolTip>
+            </TextBlock>
+
+
+            <elements:PlayerPanel
             x:Name="PlayerPanelViewer"
             Grid.Row="4"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             DataContext="{Binding PlayerPanelVM}" />
 
-        <elements:SyncronizationShiftView
+            <elements:SyncronizationShiftView
             x:Name="SyncronizationShiftViewer"
             Grid.Row="5"
             Grid.Column="0"
@@ -224,13 +262,13 @@
             DataContext="{Binding SyncronizationShiftVM}"
             Visibility="{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
 
-        <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
-        <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
-        <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
+            <!--<vlc:VLCPlayer Grid.Row="2" Grid.Column="1" x:Name="VLC"></vlc:VLCPlayer>-->
+            <!--<MediaElement x:Name="ME" LoadedBehavior="Manual" Stretch="Fill"/>-->
+            <!--<ffme:MediaElement x:Name="FFME" LoadedBehavior="Manual" Stretch="Fill"/>-->
 
 
 
-        <Rectangle
+            <Rectangle
             x:Name="Dragger"
             Grid.Row="0"
             Grid.RowSpan="2"
@@ -240,7 +278,7 @@
             Cursor="SizeAll"
             Fill="#99000000" />
 
-        <Rectangle
+            <Rectangle
             x:Name="SizerRightBottom"
             Grid.Row="6"
             Grid.Column="2"
@@ -248,7 +286,7 @@
             Cursor="SizeNWSE"
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
-        <Rectangle
+            <Rectangle
             x:Name="SizerLeftTop"
             Grid.Row="0"
             Grid.Column="0"
@@ -256,7 +294,7 @@
             Cursor="SizeNWSE"
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
-        <Rectangle
+            <Rectangle
             x:Name="SizerLeftBottom"
             Grid.Row="6"
             Grid.Column="0"
@@ -264,7 +302,7 @@
             Cursor="SizeNESW"
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
-        <Rectangle
+            <Rectangle
             x:Name="SizerRightTop"
             Grid.Row="0"
             Grid.Column="2"
@@ -273,7 +311,7 @@
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
 
-        <Rectangle
+            <Rectangle
             x:Name="SizerBottom"
             Grid.Row="6"
             Grid.Column="1"
@@ -281,7 +319,7 @@
             Cursor="SizeNS"
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
-        <Rectangle
+            <Rectangle
             x:Name="SizerTop"
             Grid.Row="0"
             Grid.Column="1"
@@ -289,7 +327,7 @@
             Cursor="SizeNS"
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
-        <Rectangle
+            <Rectangle
             x:Name="SizerLeft"
             Grid.Row="1"
             Grid.RowSpan="4"
@@ -298,7 +336,7 @@
             Cursor="SizeWE"
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
-        <Rectangle
+            <Rectangle
             x:Name="SizerRight"
             Grid.Row="1"
             Grid.RowSpan="4"
@@ -308,6 +346,6 @@
             Fill="#00000000"
             MouseDown="Sizer_MouseDown" />
 
-
+        </Grid>
     </Grid>
 </UserControl>

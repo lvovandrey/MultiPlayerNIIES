@@ -163,6 +163,8 @@
     <Compile Include="Abstract\MagicAttribute.cs" />
     <Compile Include="Abstract\RelayComand.cs" />
     <Compile Include="Model\Settings.cs" />
+    <Compile Include="Model\TimeDiffMeasuring.cs" />
+    <Compile Include="Model\TimeStripesModel.cs" />
     <Compile Include="Tools\Graphics\GraphicsTools.cs" />
     <Compile Include="Tools\Serialization\ApplicationStateSerialized.cs" />
     <Compile Include="Tools\Serialization\ConfigurationTools.cs" />
@@ -176,6 +178,11 @@
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
     <Compile Include="ViewModel\SettingsWindowVM.cs" />
     <Compile Include="ViewModel\SyncronizationShiftVM.cs" />
+    <Compile Include="ViewModel\TimeDiffVM\TimeDiffColumnVM.cs" />
+    <Compile Include="ViewModel\TimeDiffVM\TimeDiffVideoInfoRectVM.cs" />
+    <Compile Include="ViewModel\TimeDiffVM\TimeDiffWindowVM.cs" />
+    <Compile Include="ViewModel\TimeStripeVM\StripeContainerVM.cs" />
+    <Compile Include="ViewModel\TimeStripeVM\StripeVM.cs" />
     <Compile Include="ViewModel\VideoPlayerVM.cs" />
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
@@ -200,8 +207,14 @@
     <Compile Include="View\Elements\WaitProgressBar.xaml.cs">
       <DependentUpon>WaitProgressBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\InfoWindowView.xaml.cs">
+      <DependentUpon>InfoWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainPanelViewNew\MainPanelViewNew.xaml.cs">
+      <DependentUpon>MainPanelViewNew.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainSlider.xaml.cs">
       <DependentUpon>MainSlider.xaml</DependentUpon>
@@ -224,6 +237,9 @@
     <Compile Include="View\SettingsWindowView.xaml.cs">
       <DependentUpon>SettingsWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TimeDiffElements\Column.xaml.cs">
+      <DependentUpon>Column.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TimeDiffElements\TimeDIffWindowWindow.xaml.cs">
       <DependentUpon>TimeDIffWindowWindow.xaml</DependentUpon>
     </Compile>
@@ -242,28 +258,30 @@
     <Compile Include="View\TimeLine\TimeLine.xaml.cs">
       <DependentUpon>TimeLine.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TimeStripes\Stripe.xaml.cs">
+      <DependentUpon>Stripe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TimeStripes\StripesContainer.xaml.cs">
+      <DependentUpon>StripesContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ValueConverters\BitmapToBitmapSource.cs" />
     <Compile Include="View\ValueConverters\BoolFocusToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsOnToColor.cs" />
     <Compile Include="View\ValueConverters\BoolIsSyncLeaderToVisibility.cs" />
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
     <Compile Include="View\ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
+    <Compile Include="View\ValueConverters\DoubleVolumeToVolumeImgSource.cs" />
+    <Compile Include="View\ValueConverters\DoubleWithAdditionConverter.cs" />
     <Compile Include="View\ValueConverters\SyncOnOffWordConverter.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
+    <Compile Include="View\ValueConverters\TimeShiftToColor.cs" />
+    <Compile Include="View\ValueConverters\TimeShiftToVisibility.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToTotalMiliseconds.cs" />
-    <Compile Include="View\VideoPlayerListView.xaml.cs">
-      <DependentUpon>VideoPlayerListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\VideoPlayerPropertiesView.xaml.cs">
-      <DependentUpon>VideoPlayerPropertiesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\VideoPlayerView.xaml.cs">
       <DependentUpon>VideoPlayerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\VideoSetsPanelView.xaml.cs">
-      <DependentUpon>VideoSetsPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\VLCPlayer\Helper.cs" />
     <Compile Include="View\VLCPlayer\VLCPlayer.xaml.cs">
@@ -282,6 +300,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrangeStyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AreaVideoPlayersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -310,7 +332,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\InfoWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainPanelViewNew\MainPanelViewNew.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -342,6 +372,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TimeDiffElements\Column.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TimeDiffElements\TimeDIffWindowWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -366,19 +400,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\VideoPlayerListView.xaml">
+    <Page Include="View\TimeStripes\Stripe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\VideoPlayerPropertiesView.xaml">
+    <Page Include="View\TimeStripes\StripesContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\VideoPlayerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\VideoSetsPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -497,6 +527,13 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-Low-64.png" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-Medium-64.png" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-Muted-64.png" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-High-64.png" />
+    <Resource Include="Images\PNG\Gnome-Format-Justify-Fill-64.png" />
+    <Resource Include="Images\PNG\Arrow-contract-48.png" />
+    <Resource Include="Images\PNG\Time-Go-32.png" />
     <Resource Include="Images\Arrow1LeftOrange.png" />
     <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Green.png" />
     <Resource Include="Images\PNG\Gnome-Object-Flip-Horizontal-64-Red.png" />

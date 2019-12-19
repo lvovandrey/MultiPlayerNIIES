@@ -210,6 +210,9 @@ namespace MultiPlayerNIIES.View
         Vector ResizeRelativeMousePos;
         Vector ResizeGlobalRelativeMousePos;
         FrameworkElement ResizedObject;
+
+
+
         UIElement Resizer;
         double oldWidth;
         double oldHeight;
@@ -326,6 +329,16 @@ namespace MultiPlayerNIIES.View
                 ResizedObject.Width = newWidth;
             if (newHeight > 50)
                 ResizedObject.Height = newHeight;
+        }
+
+        internal void SetZoom(Rect zoomedArea)
+        {
+            VLC.SetSoom(zoomedArea);
+        }
+
+        public Rect GetZoomedArea()
+        {
+           return VLC.GetZoomedArea();
         }
 
         void OnMouseUpResize(object sender, MouseButtonEventArgs e)
@@ -491,5 +504,12 @@ namespace MultiPlayerNIIES.View
             if (PlayerPanelRow.Height.Value > 15) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
             else { PlayerPanelRow.Height = new GridLength(20); PlayerPanelViewer.Opacity = 1; }
         }
+
+
+        internal System.Drawing.Bitmap GetSnapShot()
+        {
+            return VLC.GetSnapShot();
+        }
+
     }
 }

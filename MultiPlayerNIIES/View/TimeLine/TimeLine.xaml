@@ -23,7 +23,7 @@
                 <local:ScaleTime x:Name="T10" Height="44"></local:ScaleTime>
             </Grid>
 
-            <Rectangle HorizontalAlignment="Stretch" Height="1"  VerticalAlignment="Bottom" Margin="0 0 20 10" Fill="#FFB07220" />
+            <Rectangle HorizontalAlignment="Stretch" Height="1"  VerticalAlignment="Bottom" Margin="0 0 20 13" Fill="#FFB07220" />
             <Rectangle HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Margin="0 0 20 0" Stroke="#FF323232" />
 
         </Grid>

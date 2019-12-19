@@ -1,5 +1,7 @@
-﻿using MultiPlayerNIIES.Tools;
+﻿using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.ViewModel;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,44 +24,15 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
     public partial class TimeDIffWindowWindow : Window
     {
         List<VideoInfoRect> videoInfoRects;
+        double ColWidth = 300;
+
         public TimeDIffWindowWindow()
         {
             InitializeComponent();
         }
 
-        public void AddVideoInfoRects()
-        {
+     
 
-            VM vm = DataContext as VM;
-            if (vm == null) return;
-
-            videoInfoRects = new List<VideoInfoRect>();
-            this.MainGrid.Children.Clear();
-
-           
-
-            foreach (var v in vm.videoPlayerVMs)
-            {
-                VideoInfoRect videoInfoRect = new VideoInfoRect(this.MainGrid);
-
-                videoInfoRect.DataContext = v;
-                videoInfoRect.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
-                videoInfoRects.Add(videoInfoRect);
-
-            }
-
-
-            foreach (var virect in videoInfoRects)
-            {
-                this.MainGrid.Children.Add(virect);
-            }
-
-            ToolsTimer.Delay(() =>
-            {
-                FormatWindowContent();
-
-            }, TimeSpan.FromSeconds(0.1));
-        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -69,38 +42,30 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            foreach (var v in videoInfoRects)
-            {
-                v.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
-                v.OnSizeContaierChanged();
-            }
+            //foreach (var v in videoInfoRects)
+            //{
+            //    v.SeparatorMarginLeft = this.ColumnLeft.ActualWidth;
+            //    v.OnSizeContaierChanged();
+            //}
         }
 
 
-        private void FormatWindowContent()
+
+        public void FormatWindowContent()
         {
             VideoInfoRect PrevVideoInfoRect = null;
             foreach (var item in this.MainGrid.Children)
             {
                 VideoInfoRect videoInfoRect = item as VideoInfoRect;
                 if (item == null) return;
-                videoInfoRect.HorizontalAlignment = HorizontalAlignment.Left;
-                videoInfoRect.VerticalAlignment = VerticalAlignment.Top;
-                videoInfoRect.Height = videoInfoRect.TextVideoFileName.ActualHeight + videoInfoRect.TextSyncLead.ActualHeight + 10;
-                if (PrevVideoInfoRect == null)
-                    videoInfoRect.Margin = new Thickness(50, 50, 0, 0);
-                else
-                {
-                    videoInfoRect.Margin = new Thickness(50, PrevVideoInfoRect.Margin.Top + PrevVideoInfoRect.Height + 10, 0, 0);
-                    videoInfoRect.Position = 1;
-                    videoInfoRect.OnSizeContaierChanged();
-                }
+                FormatingVideoInfoRect(videoInfoRect, PrevVideoInfoRect);
                 PrevVideoInfoRect = videoInfoRect;
             }
 
-
-
-
+            ToolsTimer.Delay(() => 
+            {
+                Width = ColumnStack.ActualWidth+50;
+            }, TimeSpan.FromSeconds(0.1)); 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -110,36 +75,71 @@ namespace MultiPlayerNIIES.View.TimeDiffElements
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            VM vm = DataContext as VM;
-            if (vm == null) return;
 
             Dictionary<VideoPlayerVM, TimeSpan> dict = new Dictionary<VideoPlayerVM, TimeSpan>();
             int SyncLeadPos = 0;
 
-            foreach (var v in videoInfoRects)
-            {
-                VideoPlayerVM vpvm = v.DataContext as VideoPlayerVM;
-                if (vpvm.IsSyncronizeLeader)
-                    SyncLeadPos = v.Position;
-            }
+            TimeSpan TimeSyncLead = TimeSpan.Zero;
+            foreach (var v in TimeDiffMeasuringManager.TimeDiffVideos)
+                if (v.IsSyncLead) TimeSyncLead = v.CurrentPosition.Time;
 
-            foreach (var v in videoInfoRects)
+
+            foreach (var v in TimeDiffMeasuringManager.TimeDiffVideos)
             {
                 TimeSpan T = TimeSpan.Zero;
-                VideoPlayerVM vpvm = v.DataContext as VideoPlayerVM;
-                if (!vpvm.IsSyncronizeLeader)
-                {
-                    if(v.Position != SyncLeadPos && v.Position==1)
-                        T = vm.TimeDiffMeasured + vpvm.SyncronizationShiftVM.CurrentShiftTime;
-                    if (v.Position != SyncLeadPos && v.Position == 0)
-                        T = -vm.TimeDiffMeasured + vpvm.SyncronizationShiftVM.CurrentShiftTime;
-                }
-                dict.Add(vpvm, T);
+                T = v.CurrentPosition.Time - TimeSyncLead + v.VideoPlayerVM.SyncronizationShiftVM.CurrentShiftTime;
+                dict.Add(v.VideoPlayerVM, T);
             }
 
-            vm.SetCustomShiftsOfSyncronization(dict);
+            ((TimeDiffWindowVM)DataContext).VM.SetCustomShiftsOfSyncronization(dict);
 
             Hide();
         }
+
+
+
+
+        internal void AddVideo(TimeDiffVideoInfoRectVM videoVM)
+        {
+            VideoInfoRect video = new VideoInfoRect(this.MainGrid, ColWidth);
+            video.DataContext = videoVM;
+            this.MainGrid.Children.Add(video);
+        }
+
+        internal void FormatingVideoInfoRect(VideoInfoRect v, VideoInfoRect prev)
+        {
+
+            v.HorizontalAlignment = HorizontalAlignment.Left;
+            v.VerticalAlignment = VerticalAlignment.Top;
+            v.Height = v.TextVideoFileName.ActualHeight + v.TextSyncLead.ActualHeight + 10;
+
+            if (prev == null)
+                v.Margin = new Thickness(20, 50, 0, 0);
+            else
+                v.Margin = new Thickness(20, prev.Margin.Top + prev.Height + 10, 0, 0);
+
+            v.Margin = new Thickness(((TimeDiffVideoInfoRectVM)v.DataContext).CurrentPosition * ColWidth + 20, v.Margin.Top, 0, 0);
+        }
+
+
+        internal void AddColumn(TimeDiffColumnVM columnVM)
+        {
+            Column column = new Column();
+            column.Width = ColWidth;
+            column.DataContext = columnVM;
+            this.ColumnStack.Children.Add(column);
+        }
+
+        internal void ClearColumns()
+        {
+            ColumnStack.Children.Clear();
+        }
+        internal void ClearVideoInfoRects()
+        {
+            MainGrid.Children.Clear();
+        }
+
+
     }
 }
+

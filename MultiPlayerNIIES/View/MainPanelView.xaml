@@ -38,18 +38,18 @@
                 <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
                 </Button>
-                <Button Command="{Binding StopCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Stop-64.png" />
-                </Button>
+
 
                 <Button Command="{Binding OpenCommand}" Style="{StaticResource ButtonMainPanel}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" />
                 </Button>
+
             </ToolBar>
+
 
             <ToolBar Height="50" VerticalAlignment="Top">
 
-                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}" Visibility="Collapsed">
+                <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource ButtonMainPanel}" >
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
                         <Label
@@ -98,9 +98,22 @@
                             Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
                     </Grid>
                 </Button>
-
+                <Button
+                    Command="{Binding SyncronizationCombinedCommand}"
+                    Style="{StaticResource ButtonMainPanel}"
+                    ToolTip="Заменить выставленные смещения на всех камерах текущим смещением (нынешним смещением от лидера)">
+                    <Grid>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" />
+                        <Image
+                            Width="30"
+                            Margin="1,-1,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
+                    </Grid>
+                </Button>
                 <Button 
-                    Visibility="Collapsed"
+                    
                     HorizontalAlignment="Stretch"
                     Command="{Binding AutoSyncTitlesOnOffCommand}"
                     Style="{StaticResource ButtonMainPanel}"
@@ -174,6 +187,17 @@
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64-Red.png" 
                                VerticalAlignment="Top" Margin="-2 -4 -2 -4" 
                                Visibility="{Binding IsOnTimeDiffMeasuring, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding CurrentTimeDiffMeasurement, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center" 
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Margin="1 -3 0 0"
+                                   Panel.ZIndex="10"  >
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="White"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
                     </Grid>
                 </Button>
 
@@ -242,20 +266,7 @@
 
             </ToolBar>
 
-            <ToolBar Height="50">
-                <Button Command="{Binding OpenStateCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Folder-Open-64.png" />
-                </Button>                
-                <Button Command="{Binding SaveStateCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Floppy-64.png" />
-                </Button>
-                <Button Command="{Binding СloseAllCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Process-Stop-64.png" />
-                </Button>
-                <Button Command="{Binding SettingsOpenCommand}" Style="{StaticResource ButtonMainPanel}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" />
-                </Button>
-            </ToolBar>
+
             <ToolBar Height="50">
 
                 <Button Command="{Binding RateDecreaceCommand}" Style="{StaticResource ButtonMainPanel}">

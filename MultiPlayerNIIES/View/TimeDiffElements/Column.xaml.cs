@@ -12,17 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
 
-namespace MultiPlayerNIIES.View
+namespace MultiPlayerNIIES.View.TimeDiffElements
 {
     /// <summary>
-    /// Логика взаимодействия для VideoSetsPanelView.xaml
+    /// Логика взаимодействия для Column.xaml
     /// </summary>
-    public partial class VideoSetsPanelView : UserControl
+    public partial class Column : UserControl
     {
-        public VideoSetsPanelView()
+
+        public Column()
         {
             InitializeComponent();
         }
+
+
     }
 }

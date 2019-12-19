@@ -85,16 +85,6 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
         }
 
-
-        //public void SetVol(double value)
-        //{
-        
-        //plVolume:= (65535 * value * 5) div 100;
-        ////íîðìèðóåì õàðàêòåðèñòèêó óðîâíÿ ãðîìêîñòè
-        //db:= trunc(33.22 * 100 * ln((plVolume + 1e-6) / 65535) / ln(10));
-        //    if db < -10000 then db:= -9999;
-        //    pBasicAudio.put_Volume(db);
-        //}
         public double Rate
         {
             get
@@ -113,6 +103,21 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 int hr = m_mediaSeeking.SetRate(value);
               //  DsError.ThrowExceptionForHR(hr); 
               //TODO: снять отсюда комментарий
+            }
+        }
+
+        /// <summary>
+        /// Исходный размер видео
+        /// </summary>
+        public System.Windows.Size OriginalSize
+        {
+            get
+            {
+                return new System.Windows.Size(m_videoWidth,m_videoHeight);
+            }
+            set
+            {
+                throw new Exception("Не могу задать размер видео - он должен считвываться сам. CaptureAdditions.cs - Line 120 - OriginalSize Property");
             }
         }
 

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MultiPlayerNIIES.View
+namespace MultiPlayerNIIES.View.MainPanelViewNew
 {
     /// <summary>
-    /// Логика взаимодействия для VideoPlayerPropertiesView.xaml
+    /// Логика взаимодействия для MainPanelViewNew.xaml
     /// </summary>
-    public partial class VideoPlayerPropertiesView : UserControl
+    public partial class MainPanelViewNew : UserControl
     {
-        public VideoPlayerPropertiesView()
+        public MainPanelViewNew()
         {
             InitializeComponent();
         }

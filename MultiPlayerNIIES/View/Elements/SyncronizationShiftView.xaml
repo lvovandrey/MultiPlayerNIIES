@@ -33,11 +33,19 @@
                        ToolTip="Текущее реальное смещение данного видео от видео лидера синхронизации"
                        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,0" Width="70" />
             
-            <Button Content="&lt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="-40,0,0,0" FontSize="8"/>
-            <Button Content="&lt;&lt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="-105,0,0,0" FontSize="8"/>
+            <Button Content="&lt;" VerticalAlignment="Bottom" Width="30" 
+                    Command="{Binding DecFineShiftTimeCommand}"
+                    HorizontalAlignment="Center" Margin="-40,0,0,0" FontSize="8"/>
+            <Button Content="&lt;&lt;" VerticalAlignment="Bottom" Width="30" 
+                    Command="{Binding DecShiftTimeCommand}"
+                    HorizontalAlignment="Center" Margin="-105,0,0,0" FontSize="8"/>
 
-            <Button Content="&gt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="40,0,0,0" FontSize="8"/>
-            <Button Content="&gt;&gt;" VerticalAlignment="Bottom" Width="30" HorizontalAlignment="Center" Margin="105,0,0,0" FontSize="8"/>
+            <Button Content="&gt;" VerticalAlignment="Bottom" Width="30" 
+                    Command="{Binding IncFineShiftTimeCommand}"
+                    HorizontalAlignment="Center" Margin="40,0,0,0" FontSize="8"/>
+            <Button Content="&gt;&gt;" VerticalAlignment="Bottom" Width="30" 
+                    Command="{Binding IncShiftTimeCommand}"
+                    HorizontalAlignment="Center" Margin="105,0,0,0" FontSize="8"/>
 
             <!--<Button Content="-0.1" Grid.Row="2" Grid.Column="0" Margin="1" FontSize="10" />
             <Button Content="+1" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10"/>

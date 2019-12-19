@@ -1,14 +1,20 @@
-﻿<UserControl x:Class="MultiPlayerNIIES.View.DSPlayer.DSPlayer"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
-             xmlns:local="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
-              xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-             xmlns:mywf="clr-namespace:WindowsFormsVideoControl;assembly=WindowsFormsVideoControl"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" SizeChanged="UserControl_SizeChanged" >
-    <Grid x:Name="MainGrid" ClipToBounds="True" Background="Aqua">
+﻿<UserControl
+    x:Class="MultiPlayerNIIES.View.DSPlayer.DSPlayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MultiPlayerNIIES.View.DSPlayer"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mywf="clr-namespace:WindowsFormsVideoControl;assembly=WindowsFormsVideoControl"
+    xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    SizeChanged="UserControl_SizeChanged"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="MainGrid"
+        Background="Aqua"
+        ClipToBounds="True">
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition/>
@@ -20,14 +26,30 @@
             <RowDefinition Height="2"/>
         </Grid.RowDefinitions>-->
 
-        <WindowsFormsHost ClipToBounds="True" x:Name="vlc" Background="#FF5A5A5A"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"   >
-            <mywf:VideoContainer1 x:Name="VideoMMM" Dock="Fill"  MouseWheel="VideoPanel_MouseWheel"  />
+        <WindowsFormsHost
+            x:Name="vlc"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="#FF5A5A5A"
+            ClipToBounds="True">
+            <mywf:VideoContainer1
+                x:Name="VideoMMM"
+                Dock="Fill"
+                MouseWheel="VideoPanel_MouseWheel" />
             <!--<wf:PictureBox x:Name="VideoPanel" BackColor="Green"  Dock="Left" MouseDown="VideoPanel_MouseDown" Height="100" Width="100" MouseWheel="VideoPanel_MouseWheel" Anchor="None"  />-->
         </WindowsFormsHost>
 
-        <WindowsFormsHost x:Name="vlc2" Width="1" Height="1" VerticalAlignment="Bottom"  HorizontalAlignment="Right">
-            <wf:Panel x:Name="VideoPanel2" BackColor="Red" Dock="Fill"/>
+        <WindowsFormsHost
+            x:Name="vlc2"
+            Width="1"
+            Height="1"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
+            <wf:Panel
+                x:Name="VideoPanel2"
+                BackColor="Red"
+                Dock="Fill" />
         </WindowsFormsHost>
-      
+
     </Grid>
 </UserControl>

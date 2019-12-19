@@ -13,16 +13,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MultiPlayerNIIES.View
+namespace MultiPlayerNIIES.View.TimeStripes
 {
     /// <summary>
-    /// Логика взаимодействия для VideoPlayerListView.xaml
+    /// Логика взаимодействия для Stripe.xaml
     /// </summary>
-    public partial class VideoPlayerListView : UserControl
+    public partial class Stripe : UserControl
     {
-        public VideoPlayerListView()
+        public Stripe()
         {
             InitializeComponent();
         }
+
+        #region Реализация Focused
+        public event Action UpFocus;
+
+        private void UserControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpFocus();
+        }
+        #endregion
     }
 }

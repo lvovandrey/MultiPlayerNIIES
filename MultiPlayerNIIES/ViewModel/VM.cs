@@ -7,8 +7,11 @@ using MultiPlayerNIIES.View;
 using MultiPlayerNIIES.View.Elements;
 using MultiPlayerNIIES.View.TimeDiffElements;
 using MultiPlayerNIIES.View.TimeLine;
+using MultiPlayerNIIES.ViewModel.TimeDiffVM;
+using MultiPlayerNIIES.ViewModel.TimeStripeVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -27,7 +30,7 @@ namespace MultiPlayerNIIES.ViewModel
     public class VM : INPCBase
     {
         #region Поля
-        public List<VideoPlayerVM> videoPlayerVMs;
+        public ObservableCollection<VideoPlayerVM> videoPlayerVMs;
         Grid AreaVideoPlayersGrid;
         public MainWindow MainWindow;
         VideoPlayerVM focusedPlayer;
@@ -35,15 +38,19 @@ namespace MultiPlayerNIIES.ViewModel
         Excel.Workbooks ExcelBooks;
         Excel._Workbook ExcelBook;
         HwndSource sourceOfPostMessages;
-        WaitProgressBar WaitIndicator;
+        InfoWindowView InfoWindowView;
+
+
         SettingsWindowView settingsWindowView;
         SettingsWindowVM settingsWindowVM;
         TimeDIffWindowWindow TimeDIffWindowWindow;
 
+        StripeContainerVM StripeContainerVM;
+
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
-        double oldMainWindowWidth, oldMainWindowHeight;//Блядь что за мусор? почему она тут валяется?
+        double oldAreaVideoPlayersWidth, oldAreaVideoPlayersHeight;//Блядь что за мусор? почему она тут валяется?
 
 
         private Queue<TimeSpan> SyncTitlesDeltasBuffer;
@@ -61,13 +68,18 @@ namespace MultiPlayerNIIES.ViewModel
             Settings.SettingsChanged += Settings_SettingsChanged;
             Settings.RestoreAllSettings();
 
-            videoPlayerVMs = new List<VideoPlayerVM>();
+            InfoWindowView = new InfoWindowView(this);
+            InfoWindowView.Visibility = Visibility.Hidden;
+            
+            videoPlayerVMs = new ObservableCollection<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
-            WaitIndicator = mainWindow.AreaVideoPlayers.WaitProgressBar1;
+            
             MainWindow = mainWindow;
-            MainWindow.SizeChanged += MainWindow_SizeChanged;
-            oldMainWindowWidth = MainWindow.ActualWidth;
-            oldMainWindowHeight = MainWindow.ActualHeight;
+          //  MainWindow.SizeChanged += MainWindow_SizeChanged;
+
+            MainWindow.AreaVideoPlayers.SizeChanged += AreaVideoPlayers_SizeChanged;
+            oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
+            oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
 
 
             MainTimer = new System.Windows.Threading.DispatcherTimer();
@@ -100,8 +112,13 @@ namespace MultiPlayerNIIES.ViewModel
             }, TimeSpan.FromSeconds(4));
 
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
-            TimeDIffWindowWindow.DataContext = this;
+            TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
+
+            StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
+            IsStripesContainerVisible = false;
         }
+
+
 
         private void Settings_SettingsChanged()
         {
@@ -470,42 +487,36 @@ namespace MultiPlayerNIIES.ViewModel
                 {
                     v.ShiftVolume = value;
                 }
-                Console.WriteLine("VMShiftVol=" + shiftVolume);
             }
         }
 
-        
+
         //------------------------------
         // измерение времени ручное - его свойства тут.
         private bool isOnTimeDiffMeasuring = false;
         public bool IsOnTimeDiffMeasuring
         {
             get { return isOnTimeDiffMeasuring; }
-            set { isOnTimeDiffMeasuring = value; OnPropertyChanged("IsOnTimeDiffMeasuring"); }
+            set
+            {
+                isOnTimeDiffMeasuring = value; OnPropertyChanged("IsOnTimeDiffMeasuring");
+            }
         }
 
-        public TimeSpan firstTimeMeasured;
-        public TimeSpan secondTimeMeasured;
-       
-
-        public TimeSpan FirstTimeMeasured
-        {
-            get { return firstTimeMeasured; }
-            set { firstTimeMeasured = value; OnPropertyChanged("FirstTimeMeasured"); OnPropertyChanged("TimeDiffMeasured"); }
-        }
-        public TimeSpan SecondTimeMeasured
-        {
-            get { return secondTimeMeasured; }
-            set { secondTimeMeasured = value; OnPropertyChanged("SecondTimeMeasured"); OnPropertyChanged("TimeDiffMeasured"); }
-        }
-        public TimeSpan TimeDiffMeasured
-        {
-            get { return SecondTimeMeasured-FirstTimeMeasured ; }
-        }
 
         //-------------------------------
-
-
+        private bool isStripesContainerVisible = false;
+        public bool IsStripesContainerVisible
+        {
+            get { return isStripesContainerVisible; }
+            set
+            {
+                isStripesContainerVisible = value;
+                OnPropertyChanged("IsStripesContainerVisible");
+                if (value) MainWindow.StripesContainer.Visibility = Visibility.Visible;
+                else MainWindow.StripesContainer.Visibility = Visibility.Collapsed;  //TODO: почему то не получилось привязку сделать.... почему?
+            }
+        }
         #endregion
 
         #region Methods
@@ -680,6 +691,7 @@ namespace MultiPlayerNIIES.ViewModel
                 deltas.Add(dt);
             }
 
+            if (deltas.Count == 0) return TimeSpan.Zero;
 
             SyncDeltasBuffer.Enqueue(deltas.Max());
             if (SyncDeltasBuffer.Count > 10) SyncDeltasBuffer.Dequeue();
@@ -908,14 +920,16 @@ namespace MultiPlayerNIIES.ViewModel
             focusedPlayer = videoPlayerVM;
         }
 
-        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void AreaVideoPlayers_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            double ScaleWidth = MainWindow.ActualWidth / oldMainWindowWidth;
-            double ScaleHeight = MainWindow.ActualHeight / oldMainWindowHeight;
+            double ScaleWidth = MainWindow.AreaVideoPlayers.ActualWidth / oldAreaVideoPlayersWidth;
+            double ScaleHeight = MainWindow.AreaVideoPlayers.ActualHeight / oldAreaVideoPlayersHeight;
             AllVideoPlayersResize(ScaleWidth, ScaleHeight);
-            oldMainWindowWidth = MainWindow.ActualWidth;
-            oldMainWindowHeight = MainWindow.ActualHeight;
+            oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
+            oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
         }
+
+        
 
         private void AllVideoPlayersResize(double ScaleWidth, double ScaleHeight)
         {
@@ -976,7 +990,7 @@ namespace MultiPlayerNIIES.ViewModel
         public RelayCommand SaveStateCommand
         {
             get
-            {
+            {  
                 return saveStateCommand ??
                   (saveStateCommand = new RelayCommand(obj =>
                   {
@@ -1300,7 +1314,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepValueIncreaceCommand ??
                   (stepValueIncreaceCommand = new RelayCommand(obj =>
                   {
-                      Step += TimeSpan.FromMilliseconds(10);
+                      Step += TimeSpan.FromMilliseconds(50);
                   }));
             }
         }
@@ -1313,7 +1327,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return stepValueDecreaceCommand ??
                   (stepValueDecreaceCommand = new RelayCommand(obj =>
                   {
-                      Step -= TimeSpan.FromMilliseconds(10);
+                      Step -= TimeSpan.FromMilliseconds(50);
                   }));
             }
         }
@@ -1432,7 +1446,7 @@ namespace MultiPlayerNIIES.ViewModel
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(3));//TODO: Очень бы тут пригодилась многопоточность
 
-                      WaitIndicator.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
+                      InfoWindowView.ShowMe("Синхронизация по титрам", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                       {
@@ -1501,7 +1515,7 @@ namespace MultiPlayerNIIES.ViewModel
                   {
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
-                      WaitIndicator.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
+                      InfoWindowView.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
 
 
@@ -1566,6 +1580,44 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        private RelayCommand syncronizationCombinedCommand;
+        public RelayCommand SyncronizationCombinedCommand
+        {
+            get
+            {
+                return syncronizationCombinedCommand ?? (syncronizationCombinedCommand = new RelayCommand(obj =>
+                {
+                    bool OldIsOnAutoSyncroinization = IsOnAutoSyncronization;
+                    bool OldIsOnAutoSyncroinizationTitles = IsOnAutoSyncronizationTitles;
+
+                    AllPauseCommand.Execute(null);
+                    ToolsTimer.Delay(() => 
+                    {
+                        IsOnAutoSyncronization = false;
+                        IsOnAutoSyncronizationTitles = false;
+
+                        SyncronizationTitleCommand.Execute(null);
+                        ToolsTimer.Delay(() =>
+                        {
+                            SetCurrencyShiftsOfSyncronizationCommand.Execute(null);
+                            ToolsTimer.Delay(() =>
+                            {
+                                SyncronizationShiftCommand.Execute(null);
+                                ToolsTimer.Delay(() =>
+                                {
+                                    IsOnAutoSyncronization = OldIsOnAutoSyncroinization;
+                                    IsOnAutoSyncronizationTitles = OldIsOnAutoSyncroinizationTitles;
+                                }, TimeSpan.FromSeconds(3));
+                            }, TimeSpan.FromSeconds(0.2));
+                        }, TimeSpan.FromSeconds(3));
+
+                    }, TimeSpan.FromSeconds(0.1));
+
+                }));
+            }
+        }
+
+
         private bool IsAllPlayerStatesEquals(Dictionary<VideoPlayerVM, bool> PlayersStates)
         {
             bool flag = true;
@@ -1574,6 +1626,9 @@ namespace MultiPlayerNIIES.ViewModel
                 if (firstval != pair.Value) flag = false;
             return flag;
         }
+
+
+
 
 
 
@@ -1601,10 +1656,28 @@ namespace MultiPlayerNIIES.ViewModel
                 return closeAppCommand ??
                   (closeAppCommand = new RelayCommand(obj =>
                   {
+                      ApiManager.ReleaseAll();
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
-                      ApiManager.ReleaseAll();
 
+                      if(sourceOfPostMessages!=null)
+                          sourceOfPostMessages.Dispose();
+
+                      ToolsTimer.Delay(() =>
+                      {
+                          try
+                          {
+                              this.InfoWindowView.Close();
+                              this.settingsWindowView.Close();
+                              this.TimeDIffWindowWindow.Close();
+                              MainWindow.Close();
+                              System.Windows.Application.Current.Shutdown();
+                          }
+                          catch
+                          {
+                             System.Windows.Application.Current.Shutdown();
+                          }
+                      }, TimeSpan.FromSeconds(1));
                   }));
             }
         }
@@ -1618,22 +1691,39 @@ namespace MultiPlayerNIIES.ViewModel
                 return timeDiffMeasuringCommand ??
                   (timeDiffMeasuringCommand = new RelayCommand(obj =>
                   {
-                      IsOnTimeDiffMeasuring = !IsOnTimeDiffMeasuring;
+                      if (videoPlayerVMs.Count < 2) { IsOnTimeDiffMeasuring = false; return; }
+
+                      if (!IsOnTimeDiffMeasuring)
+                      {
+                          TimeDiffMeasuringManager.StartNewMeasuring(videoPlayerVMs);
+                          IsOnTimeDiffMeasuring = true;
+                      }
                       if (IsOnTimeDiffMeasuring)
                       {
-                          FirstTimeMeasured = TimeSyncLead;
-                          SecondTimeMeasured = TimeSpan.Zero;
-                      }
-                      else
-                      {
-                          SecondTimeMeasured = TimeSyncLead;
-                          this.AllPauseCommand.Execute(null);
-                          TimeDIffWindowWindow.AddVideoInfoRects();
-                          TimeDIffWindowWindow.Show();
+                          List<System.Drawing.Bitmap> snapshots = new List<System.Drawing.Bitmap>();
+                          foreach (var v in videoPlayerVMs)
+                               snapshots.Add(v.Body.GetSnapShot());
+                          TimeDiffMeasuringManager.AddMeasurement(TimeSyncLead, snapshots);
+                          OnPropertyChanged("CurrentTimeDiffMeasurement");
+                          if (TimeDiffMeasuringManager.CurrentMeasurement >= TimeDiffMeasuringManager.MeasurementsCount)
+                          {
+                              IsOnTimeDiffMeasuring = false;
+                              CurrentTimeDiffMeasurement = 0;
+                          }
+                          else return;  
                       }
 
+                      this.AllPauseCommand.Execute(null);
+                      TimeDIffWindowWindow.Show();
+                      ((TimeDiffWindowVM)TimeDIffWindowWindow.DataContext).ShowCommand.Execute(null);
                   }));
             }
+        }
+
+        public int CurrentTimeDiffMeasurement
+        {
+            get { return TimeDiffMeasuringManager.CurrentMeasurement; }
+            set { TimeDiffMeasuringManager.CurrentMeasurement = value; OnPropertyChanged("CurrentTimeDiffMeasurement"); }
         }
 
         public void SetCustomShiftsOfSyncronization(Dictionary<VideoPlayerVM, TimeSpan> ViewModelsVMsShifts)
@@ -1643,6 +1733,23 @@ namespace MultiPlayerNIIES.ViewModel
                 if (!v.Key.IsSyncronizeLeader)
                     v.Key.SyncronizationShiftVM.ShiftTime = v.Value;
         }
+
+
+
+        private RelayCommand stripesContainerShowHideCommand;
+        public RelayCommand StripesContainerShowHideCommand
+        {
+            get
+            {
+                return stripesContainerShowHideCommand ?? (stripesContainerShowHideCommand = new RelayCommand(obj =>
+                {
+                    IsStripesContainerVisible = !IsStripesContainerVisible;
+
+                }));
+            }
+        }
+
+
         #endregion
     }
 }

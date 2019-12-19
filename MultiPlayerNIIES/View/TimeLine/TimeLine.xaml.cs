@@ -171,14 +171,14 @@ namespace MultiPlayerNIIES.View.TimeLine
             T10.FillDashes(N);
 
 
-            T1.ChangeDashesHeight(15);
+            T1.ChangeDashesHeight(20);
             T1.ChangeDashesWidth(1);
 
-            T_tenSec.ChangeDashesHeight(10);
+            T_tenSec.ChangeDashesHeight(14);
 
-            T_Sec.ChangeDashesHeight(6);
+            T_Sec.ChangeDashesHeight(10);
 
-            T10.ChangeDashesHeight(22);
+            T10.ChangeDashesHeight(26);
             T10.ChangeDashesWidth(2);
 
             T1.Visibility = Visibility.Visible;
@@ -186,14 +186,14 @@ namespace MultiPlayerNIIES.View.TimeLine
             T_Sec.Visibility = Visibility.Visible;
             T10.Visibility = Visibility.Visible;
 
-            if (FullTime < TimeSpan.FromMinutes(1))
+            if (FullTime < TimeSpan.FromMinutes(0.5))
             {
                 T1.TimeLabelVisibility = Visibility.Hidden;
                 T_tenSec.TimeLabelVisibility = Visibility.Visible;
                 T_Sec.TimeLabelVisibility = Visibility.Visible;
                 T10.TimeLabelVisibility = Visibility.Hidden;
             }
-            else if (FullTime < TimeSpan.FromMinutes(60))
+            else if (FullTime < TimeSpan.FromMinutes(30))
             {
                 T1.TimeLabelVisibility = Visibility.Visible;
                 T_tenSec.TimeLabelVisibility = Visibility.Hidden;
@@ -201,7 +201,7 @@ namespace MultiPlayerNIIES.View.TimeLine
                 T10.TimeLabelVisibility = Visibility.Visible;
                 T_Sec.Visibility = Visibility.Hidden;
             }
-            else if (FullTime >= TimeSpan.FromMinutes(60))
+            else if (FullTime >= TimeSpan.FromMinutes(30))
             {
                 T1.TimeLabelVisibility = Visibility.Hidden;
                 T_tenSec.TimeLabelVisibility = Visibility.Hidden;
