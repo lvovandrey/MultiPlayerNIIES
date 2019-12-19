@@ -1654,7 +1654,8 @@ namespace MultiPlayerNIIES.ViewModel
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
 
-                      sourceOfPostMessages.Dispose();
+                      if(sourceOfPostMessages!=null)
+                          sourceOfPostMessages.Dispose();
 
                       ToolsTimer.Delay(() =>
                       {

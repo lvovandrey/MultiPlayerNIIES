@@ -25,18 +25,19 @@
 
     <Style x:Key="OrangeButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+       
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="BorderThickness" Value="3"/>
-        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Height" Value="50"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="0,0,1,1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="Aqua">
-                        <Rectangle x:Name="rectangle" Stroke="Gray" StrokeThickness="1.5">
+                    <Grid Background="{x:Null}" >
+                        <Rectangle x:Name="rectangle" Stroke="Gray" StrokeThickness="1.5" RadiusX="3" RadiusY="3">
                             <Rectangle.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFCD974F" Offset="0"/>

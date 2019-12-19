@@ -14,7 +14,7 @@
     xmlns:timeline="clr-namespace:MultiPlayerNIIES.View.TimeLine"
     xmlns:timestrips="clr-namespace:MultiPlayerNIIES.View.TimeStripes"
     Title="Видеоплеер НИИЭС"
-    Width="1200"
+    Width="1250"
     Height="800"
     Closing="Window_Closing"
     MouseDown="Window_MouseDown"

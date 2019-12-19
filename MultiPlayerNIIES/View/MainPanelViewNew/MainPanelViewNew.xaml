@@ -7,7 +7,7 @@
     xmlns:elements="clr-namespace:MultiPlayerNIIES.View.Elements"
     xmlns:local="clr-namespace:MultiPlayerNIIES.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignWidth="1500"
+    d:DesignWidth="1235"
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:TimeSpanToTotalMiliseconds x:Key="TimeSpanToTotalMiliseconds" />
@@ -32,20 +32,22 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="60">
+        <StackPanel Orientation="Horizontal" Height="66">
 
-            <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource OrangeButtonStyle}" >
+            <Button Command="{Binding PlayPauseCommand}" Style="{StaticResource OrangeButtonStyle}" Margin="4" Height="58" >
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Playback-Start-64.png" />
                 </Button>
 
+            <Grid Width="1"/>
 
-            <Button Command="{Binding OpenCommand}" Style="{StaticResource OrangeButtonStyle}">
+            <Button Command="{Binding OpenCommand}" Style="{StaticResource OrangeButtonStyle}" Margin="4" Height="58" >
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" >
                 </Image>
             </Button>
 
+            <Grid Width="5"/>
 
-            <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource OrangeButtonStyle}" >
+            <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource OrangeButtonStyle}">
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" Margin="5" />
                         <Label
@@ -94,7 +96,7 @@
                             Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
                     </Grid>
                 </Button>
-                <Button
+                <!--<Button
                     Command="{Binding SyncronizationCombinedCommand}"
                     Style="{StaticResource OrangeButtonStyle}"
                     ToolTip="Заменить выставленные смещения на всех камерах текущим смещением (нынешним смещением от лидера)">
@@ -107,12 +109,13 @@
                             VerticalAlignment="Center"
                             Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
                     </Grid>
-                </Button>
+                </Button>-->
                 <Button 
                     
                     HorizontalAlignment="Stretch"
                     Command="{Binding AutoSyncTitlesOnOffCommand}"
                     Style="{StaticResource OrangeButtonStyle}"
+
                     ToolTip="Постоянная синхронизация по титрам вкл/выкл">
                     <Grid Height="46" Margin="1 2 1 1" Background="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}">
                         <TextBlock
@@ -199,7 +202,7 @@
                     </Grid>
                 </Button>
 
-
+            <Grid Width="15"/>
             <Button Command="{Binding ExcelOpenCommand}" Style="{StaticResource OrangeButtonStyle}">
                     <Grid>
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" Margin="5" />
@@ -258,6 +261,7 @@
                     </Grid>
                 </Button>
 
+            <Grid Width="15"/>
             <Button Command="{Binding RateDecreaceCommand}" Style="{StaticResource OrangeButtonStyle}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Seek-Backward-64.png" />
                 </Button>
@@ -267,7 +271,7 @@
                 </Button>
 
 
-                <StackPanel>
+                <StackPanel Margin="0 0 15 0">
                 <Label Content="Скорость"  Style="{StaticResource OrangeLabelStyle}"  />
                     <!--<Label
                         Margin="0 0 0 0"
@@ -289,7 +293,7 @@
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Forward-64.png" />
                 </Button>
                 <Separator />
-                <StackPanel>
+                <StackPanel Margin="6 0 6 0 ">
                 <Label Content="Шаг"  Style="{StaticResource OrangeLabelStyle}"/>
                     <StackPanel Orientation="Horizontal" Margin="0 -5 0 0">
                         <TextBox
