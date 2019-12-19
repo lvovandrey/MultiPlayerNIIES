@@ -207,6 +207,9 @@
     <Compile Include="View\Elements\WaitProgressBar.xaml.cs">
       <DependentUpon>WaitProgressBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Elements\WaitProgressBarForTimeline.xaml.cs">
+      <DependentUpon>WaitProgressBarForTimeline.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\InfoWindowView.xaml.cs">
       <DependentUpon>InfoWindowView.xaml</DependentUpon>
     </Compile>
@@ -329,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Elements\WaitProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Elements\WaitProgressBarForTimeline.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
