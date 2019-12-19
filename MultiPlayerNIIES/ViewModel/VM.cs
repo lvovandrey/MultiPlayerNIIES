@@ -50,7 +50,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         private System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
-        double oldMainWindowWidth, oldMainWindowHeight;//Блядь что за мусор? почему она тут валяется?
+        double oldAreaVideoPlayersWidth, oldAreaVideoPlayersHeight;//Блядь что за мусор? почему она тут валяется?
 
 
         private Queue<TimeSpan> SyncTitlesDeltasBuffer;
@@ -75,9 +75,11 @@ namespace MultiPlayerNIIES.ViewModel
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
             
             MainWindow = mainWindow;
-            MainWindow.SizeChanged += MainWindow_SizeChanged;
-            oldMainWindowWidth = MainWindow.ActualWidth;
-            oldMainWindowHeight = MainWindow.ActualHeight;
+          //  MainWindow.SizeChanged += MainWindow_SizeChanged;
+
+            MainWindow.AreaVideoPlayers.SizeChanged += AreaVideoPlayers_SizeChanged;
+            oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
+            oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
 
 
             MainTimer = new System.Windows.Threading.DispatcherTimer();
@@ -115,6 +117,8 @@ namespace MultiPlayerNIIES.ViewModel
             StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
             IsStripesContainerVisible = false;
         }
+
+
 
         private void Settings_SettingsChanged()
         {
@@ -916,14 +920,16 @@ namespace MultiPlayerNIIES.ViewModel
             focusedPlayer = videoPlayerVM;
         }
 
-        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void AreaVideoPlayers_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            double ScaleWidth = MainWindow.ActualWidth / oldMainWindowWidth;
-            double ScaleHeight = MainWindow.ActualHeight / oldMainWindowHeight;
+            double ScaleWidth = MainWindow.AreaVideoPlayers.ActualWidth / oldAreaVideoPlayersWidth;
+            double ScaleHeight = MainWindow.AreaVideoPlayers.ActualHeight / oldAreaVideoPlayersHeight;
             AllVideoPlayersResize(ScaleWidth, ScaleHeight);
-            oldMainWindowWidth = MainWindow.ActualWidth;
-            oldMainWindowHeight = MainWindow.ActualHeight;
+            oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
+            oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
         }
+
+        
 
         private void AllVideoPlayersResize(double ScaleWidth, double ScaleHeight)
         {
