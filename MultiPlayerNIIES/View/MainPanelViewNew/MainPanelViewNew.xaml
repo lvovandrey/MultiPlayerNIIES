@@ -47,7 +47,7 @@
 
             <Grid Width="5"/>
 
-            <Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource OrangeButtonStyle}">
+            <!--<Button Command="{Binding SyncronizationTitleCommand}" Style="{StaticResource OrangeButtonStyle}">
                     <Grid>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Synchronize-Blue-64.png" Margin="5" />
                         <Label
@@ -62,7 +62,7 @@
                             </Label.Effect>
                         </Label>
                     </Grid>
-                </Button>
+                </Button>-->
 
             <Button Command="{Binding SyncronizationShiftCommand}" Style="{StaticResource OrangeButtonStyle}">
                     <Grid>
@@ -96,7 +96,7 @@
                             Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
                     </Grid>
                 </Button>
-                <Button
+                <!--<Button
                     Command="{Binding SyncronizationCombinedCommand}"
                     Style="{StaticResource OrangeButtonStyle}"
                     ToolTip="Заменить выставленные смещения на всех камерах текущим смещением (нынешним смещением от лидера)">
@@ -109,8 +109,8 @@
                             VerticalAlignment="Center"
                             Source="/MultiPlayerNIIES;component/Images/PNG/Accept.png" />
                     </Grid>
-                </Button>
-                <Button 
+                </Button>-->
+                <!--<Button 
                     
                     HorizontalAlignment="Stretch"
                     Command="{Binding AutoSyncTitlesOnOffCommand}"
@@ -142,7 +142,7 @@
                             Text="{Binding SyncTitlesDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F1} мсек}"  />
 
                     </Grid>
-                </Button>
+                </Button>-->
 
                 <Button
                     HorizontalAlignment="Stretch"
