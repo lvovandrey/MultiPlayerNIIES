@@ -990,7 +990,7 @@ namespace MultiPlayerNIIES.ViewModel
         public RelayCommand SaveStateCommand
         {
             get
-            {
+            {  
                 return saveStateCommand ??
                   (saveStateCommand = new RelayCommand(obj =>
                   {
