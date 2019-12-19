@@ -271,6 +271,7 @@
     <Compile Include="View\ValueConverters\BoolSyncLeaderToColor.cs" />
     <Compile Include="View\ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
+    <Compile Include="View\ValueConverters\DoubleVolumeToVolumeImgSource.cs" />
     <Compile Include="View\ValueConverters\DoubleWithAdditionConverter.cs" />
     <Compile Include="View\ValueConverters\SyncOnOffWordConverter.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
@@ -526,6 +527,9 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-Low-64.png" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-Medium-64.png" />
+    <Resource Include="Images\PNG\Gnome-Audio-Volume-Muted-64.png" />
     <Resource Include="Images\PNG\Gnome-Audio-Volume-High-64.png" />
     <Resource Include="Images\PNG\Gnome-Format-Justify-Fill-64.png" />
     <Resource Include="Images\PNG\Arrow-contract-48.png" />

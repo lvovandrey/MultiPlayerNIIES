@@ -23,7 +23,7 @@
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
- 
+        <converters:DoubleVolumeToVolumeImgSource x:Key="DoubleVolumeToVolumeImgSource"/>
     </Window.Resources>
     <Grid Background="#FF161616">
         <Grid.RowDefinitions>
@@ -40,7 +40,6 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="3">
-            
             <Grid ClipToBounds="False">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -53,13 +52,14 @@
                 </Grid.RowDefinitions>
                 <timestrips:StripesContainer Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" x:Name="StripesContainer" Margin="80 0 0 0" 
                                              />
-                <!--Visibility="{Binding IsStripesContainerVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"-->
-                <Image VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5 5 -5 5" Grid.Row="1" Source="Images/PNG/Gnome-Audio-Volume-High-64.png" Width="25"
-                        Visibility="{Binding IsStripesContainerVisible, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <Slider Width="70" VerticalAlignment="Bottom" Margin="5 0 -5 5" Minimum="0" Maximum="500"  
+                <Image VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 0 -10 0" Grid.Row="1" 
+                       Width="33"
+                       Opacity="0.7"
+                       Source="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource DoubleVolumeToVolumeImgSource}}"/>
+                <Slider Width="70" VerticalAlignment="Bottom" Margin="5 0 -5 2" Minimum="0" Maximum="500"  
                         Grid.Row="1"
                         Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                        Foreground="#FFB07220"  LargeChange="0"/>
+                        Foreground="#FFB07220"  LargeChange="0" BorderBrush="{x:Null}" Background="{x:Null}"/>
                
                 <timeline:TimeLine  POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                      Grid.Row="1"
