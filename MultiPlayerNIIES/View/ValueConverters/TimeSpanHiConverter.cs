@@ -54,4 +54,28 @@ namespace MultiPlayerNIIES.View.ValueConverters
         }
 
     }
+
+
+    class TimeSpanHiSignedBackConverter : IValueConverter //TODO: на самом деле этот конвертер для TimeBlock не нужен можно просто указать StringFormat='Длительность {0:hh\\:mm\\:ss\\.ff}'
+    {
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string sign = "";
+            if ((TimeSpan)value < TimeSpan.Zero) sign = "-";
+
+            return sign + ((TimeSpan)value).ToString(@"hh\:mm\:ss\.ff");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (!(value is string)) return DependencyProperty.UnsetValue; 
+                TimeSpan t = TimeSpan.Zero;
+            if (TimeSpan.TryParse((string)value, out t))
+                return t;
+            else
+                return DependencyProperty.UnsetValue;
+        }
+
+    }
 }
