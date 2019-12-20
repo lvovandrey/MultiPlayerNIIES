@@ -28,12 +28,12 @@
             </Grid.ColumnDefinitions>
 
 
-            <Button
+            <Button 
+                 Style="{StaticResource OrangeSmallButtonStyle}"
                 Name="PlayBtn"
                 Grid.Column="0"
-                Margin="2"
                 Command="{Binding PlayPauseCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png" Stretch="Fill" />
+                <Image Source="/MultiPlayerNIIES;component/Images/play_pause.png" Stretch="Fill"  />
             </Button>
 
 
@@ -58,7 +58,7 @@
             <Button
                 Name="MuteBtn"
                 Grid.Column="3"
-                Margin="2"
+                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding MuteCommand}">
                 <Image Source="/MultiPlayerNIIES;component/Images/mute.png" Stretch="Fill" />
             </Button>
@@ -66,7 +66,7 @@
             <Button
                 Name="AspectRatioBtn"
                 Grid.Column="4"
-                Margin="2"
+                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding ChangeAspectRatioCommand}">
                 <TextBlock
                     x:Name="TextBlockAspectRatio"
@@ -80,7 +80,7 @@
                 Name="DecSpeedBtn"
                 Grid.Row="1"
                 Grid.Column="5"
-                Margin="2"
+                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding DecSpeedCommand}"
                 Content="x0.5"
                 FontSize="8" />
@@ -88,7 +88,7 @@
                 Name="IncSpeedBtn"
                 Grid.Row="1"
                 Grid.Column="6"
-                Margin="2"
+                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding IncSpeedCommand}"
                 Content="x2"
                 FontSize="8" />
@@ -96,7 +96,7 @@
                 Name="FrameBackwardBtn"
                 Grid.Row="1"
                 Grid.Column="7"
-                Margin="2"
+                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding StepBackwardCommand}"
                 Content="&lt;-"
                 FontSize="8" />
@@ -104,7 +104,7 @@
                 Name="FrameForwardBtn"
                 Grid.Row="1"
                 Grid.Column="8"
-                Margin="2"
+                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding StepForwardCommand}"
                 Content="-&gt;"
                 FontSize="8" />

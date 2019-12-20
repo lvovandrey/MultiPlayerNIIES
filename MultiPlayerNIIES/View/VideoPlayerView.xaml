@@ -64,6 +64,7 @@
         x:Name="MainGrid"
         Background="{Binding Focus, Converter={StaticResource BoolFocusToColor}}"
         ClipToBounds="True">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition />
