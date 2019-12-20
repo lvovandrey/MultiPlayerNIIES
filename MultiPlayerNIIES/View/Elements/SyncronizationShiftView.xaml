@@ -30,8 +30,9 @@
                    />
             <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanHiSignedBackConverter} }"
                        ToolTip="Заданное пользователем смещение"
-                     FontSize="8"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-250,0,0,1" Width="80" Height="16" />
+                     FontSize="11"
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-250,0,0,0" Width="80" BorderThickness="1" BorderBrush="Black" Background="#4CFFFFFF"  />
+
 
             <TextBlock Text="{Binding CurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=hh\\:mm\\:ss\\.ff}"
                        ToolTip="Текущее реальное смещение данного видео от видео лидера синхронизации"
