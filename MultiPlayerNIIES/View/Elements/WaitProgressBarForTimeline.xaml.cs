@@ -32,8 +32,18 @@ namespace MultiPlayerNIIES.View.Elements
             TextBlockInfo.Text = text;
             Panel.SetZIndex(this, 1000);
             this.Visibility = Visibility.Visible;
-            WaitProgressBar1.BeginAnimation(ProgressBar.ValueProperty, new DoubleAnimation(0, 100, interval));
-            ToolsTimer.Delay(() => { this.Visibility = Visibility.Collapsed; TextBlockInfo.Text = ""; WaitProgressBar1.Value = 0; }, interval);
+            ToolsTimer.Delay(() =>
+            {
+                DoubleAnimation animation = new DoubleAnimation(0, this.ActualWidth, interval);
+                WaitProgressBar1.BeginAnimation(Rectangle.WidthProperty, animation);
+                ToolsTimer.Delay(() => 
+                {
+                    WaitProgressBar1.BeginAnimation(Rectangle.WidthProperty, null);
+                    TextBlockInfo.Text = "";
+                    WaitProgressBar1.Width = 0;
+                    this.Visibility = Visibility.Collapsed;
+                }, interval+TimeSpan.FromSeconds(0.05));
+            }, TimeSpan.FromSeconds(0.05));
         }
     }
 }
