@@ -14,10 +14,21 @@ namespace MultiPlayerNIIES.View.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if((bool)value == true)
-                return  new SolidColorBrush(Colors.LightSlateGray);
+
+            LinearGradientBrush linGrBrush = new LinearGradientBrush(
+                                            Color.FromArgb(255, 248, 210, 159),   
+                                            Color.FromArgb(255, 212, 163, 98), 
+                                            new Point(0.5, 0.9),
+                                            new Point(0.5, 1));
+            LinearGradientBrush linGrBrushUnfocus = new LinearGradientBrush(
+                                            Colors.DimGray,
+                                            Color.FromArgb(255, 60, 60, 60),
+                                            new Point(0.5, 0.9),
+                                            new Point(0.5, 1));
+            if ((bool)value == true)
+                return linGrBrush;
             else
-                return new SolidColorBrush(Colors.DimGray);
+                return linGrBrushUnfocus; 
 
         }
 
