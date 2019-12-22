@@ -7,7 +7,21 @@
              mc:Ignorable="d" 
               d:DesignWidth="800">
     <Grid>
-        <Menu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Menu 
+              Grid.Column="0"
+              BorderBrush="#FF111111"
+              BorderThickness="0.5" 
+              Foreground="#FF383838"  >
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,0.6">
+                    <GradientStop Color="#FFDAAB6B" Offset="0"/>
+                    <GradientStop Color="#FFB48140" Offset="1"/>
+                </LinearGradientBrush>
+            </Menu.Background>
             <MenuItem Header="_Файл">
 
                 <MenuItem Header="_Открыть видео" Command="{Binding OpenCommand}" >
@@ -75,5 +89,19 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+        <Button 
+            Grid.Column="1" Width="20" 
+            Margin="0"
+            Style="{StaticResource OrangeExtraSmallButtonStyle}"/>
+        <Button 
+            Grid.Column="1" Width="20" 
+            Margin="0"
+            Style="{StaticResource OrangeExtraSmallButtonStyle}"/>
+        <Button 
+            Grid.Column="1" Width="20" 
+            Margin="0"
+            Style="{StaticResource OrangeExtraSmallButtonStyle}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
