@@ -67,18 +67,18 @@
                 <elementsview:WaitProgressBarForTimeline Grid.Row="1" Visibility="Collapsed"
                                    Height="50" Grid.Column="1" x:Name="WaitProgressBarForTimeline"  Margin="10 0 10 0"  />
                 <Label
-            x:Name="LabelCurTime"
-            Width="160"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Background="#FF101010"
-            BorderBrush="#FFB07220"
-            BorderThickness="1"
+                    x:Name="LabelCurTime"
+                    Width="160"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="#FF101010"
+                    BorderBrush="#FFB07220"
+                    BorderThickness="1"
                     Grid.Column="2" Grid.Row="1"
-            Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
-            FontSize="25"
-            Foreground="#FFB07220" >
+                    Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
+                    FontSize="25"
+                    Foreground="#FFB07220" >
                     <Label.ContextMenu>
                         <ContextMenu>
                             <MenuItem
