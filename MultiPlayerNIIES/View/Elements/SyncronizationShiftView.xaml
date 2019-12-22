@@ -126,7 +126,7 @@
                             <ScaleTransform/>
                             <SkewTransform/>
                             <RotateTransform Angle="180"/>
-                            <TranslateTransform Y="-1"/>
+                            <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>

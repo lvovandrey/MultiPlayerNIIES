@@ -253,14 +253,14 @@
             Grid.Column="0"
             Grid.ColumnSpan="3"
             DataContext="{Binding PlayerPanelVM}" 
-                Margin="0 0 8 0"/>
+                Margin="3 0 8 0"/>
 
             <elements:SyncronizationShiftView
             x:Name="SyncronizationShiftViewer"
             Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="3"
-                Margin="0 0 7 0"
+                Margin="3 0 7 -4"
             VerticalAlignment="Bottom"
             DataContext="{Binding SyncronizationShiftVM}"
             Visibility="{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
