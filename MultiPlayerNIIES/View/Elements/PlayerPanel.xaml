@@ -123,11 +123,14 @@
                 x:Name="TimeTextBox"
                 Grid.Row="1"
                 Grid.Column="10"
+                Background="#FF101010"
+                BorderBrush="#FFB07220"
+                BorderThickness="1"
+                Foreground="#FFB07220"
                 Margin="-2"
                 MinHeight="10"
                 VerticalAlignment="Center"
-                BorderBrush="{x:Null}"
-                FontSize="14"
+                FontSize="16"
                 Text="{Binding CurTime, StringFormat=hh\\:mm\\:ss\\.ff}"
                 TextAlignment="Center" />
 
