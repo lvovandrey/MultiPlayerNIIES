@@ -89,7 +89,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <StackPanel Grid.Column="1" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
         <Button 
             Grid.Column="1" Width="20" 
             Margin="0"
