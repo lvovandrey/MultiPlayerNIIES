@@ -29,28 +29,36 @@
                     Value="{Binding SliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                    />
             <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanHiSignedBackConverter} }"
-                       ToolTip="Заданное пользователем смещение"
+                     ToolTip="Заданное пользователем смещение"
                      FontSize="11"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-250,0,0,0" Width="80" BorderThickness="1" BorderBrush="Black" Background="#4CFFFFFF"  />
+                     HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                     Margin="-250,0,0,-1" Width="80" 
+                     BorderThickness="1" BorderBrush="Black" 
+                     TextAlignment="Center"
+                     Background="#4CFFFFFF"  />
 
 
             <TextBlock Text="{Binding CurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=hh\\:mm\\:ss\\.ff}"
                        ToolTip="Текущее реальное смещение данного видео от видео лидера синхронизации"
                        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,0" Width="70" />
-            
+
             <Button Content="&lt;" VerticalAlignment="Bottom" Width="30" 
                     Command="{Binding DecFineShiftTimeCommand}"
-                    HorizontalAlignment="Center" Margin="-40,0,0,0" FontSize="8"/>
+                    HorizontalAlignment="Center" Margin="-40,0,0,0" FontSize="8"
+                     Style="{StaticResource OrangeSmallButtonStyle}"/>
             <Button Content="&lt;&lt;" VerticalAlignment="Bottom" Width="30" 
                     Command="{Binding DecShiftTimeCommand}"
-                    HorizontalAlignment="Center" Margin="-105,0,0,0" FontSize="8"/>
+                    HorizontalAlignment="Center" Margin="-105,0,0,0" FontSize="8"
+                     Style="{StaticResource OrangeSmallButtonStyle}"/>
 
             <Button Content="&gt;" VerticalAlignment="Bottom" Width="30" 
                     Command="{Binding IncFineShiftTimeCommand}"
-                    HorizontalAlignment="Center" Margin="40,0,0,0" FontSize="8"/>
+                    HorizontalAlignment="Center" Margin="40,0,0,0" FontSize="8"
+                    Style="{StaticResource OrangeSmallButtonStyle}"/>
             <Button Content="&gt;&gt;" VerticalAlignment="Bottom" Width="30" 
                     Command="{Binding IncShiftTimeCommand}"
-                    HorizontalAlignment="Center" Margin="105,0,0,0" FontSize="8"/>
+                    HorizontalAlignment="Center" Margin="105,0,0,0" FontSize="8"
+                    Style="{StaticResource OrangeSmallButtonStyle}"/>
 
             <!--<Button Content="-0.1" Grid.Row="2" Grid.Column="0" Margin="1" FontSize="10" />
             <Button Content="+1" Grid.Row="1" Grid.Column="1" Margin="1" FontSize="10"/>
@@ -65,8 +73,12 @@
         <Image x:Name="ShiftMaxTimeHidingImage" Grid.Column="1"
                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Object-Flip-Horizontal-64.png" 
                Panel.ZIndex="2" PreviewMouseUp="ShiftMaxTimeHidingImage_PreviewMouseUp" 
-               Cursor="Hand"/>
-        <Rectangle Width="2" Grid.Column="1" Stroke="#FF3A3A3A" HorizontalAlignment="Left" />
+               Cursor="Hand">
+            <Image.Effect>
+                <DropShadowEffect BlurRadius="1" ShadowDepth="0"/>
+            </Image.Effect>
+        </Image>
+        <!--<Rectangle Width="2" Grid.Column="1" Stroke="#FF3A3A3A" HorizontalAlignment="Left" />-->
 
 
 
@@ -84,27 +96,37 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Text="Интервал" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="8" Margin="32,0,17,0" Grid.RowSpan="2"/>
-            <TextBox Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="1" Grid.RowSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1"/>
-            <Button Grid.Row="1" Grid.Column="1" Margin="1"  Command="{Binding IncMaxTimeCommand}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.531">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="2.85" ScaleY="2.4"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
+            <TextBox Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                     Grid.Row="1" Grid.RowSpan="2" 
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                     BorderThickness="1" BorderBrush="Black" 
+                     TextAlignment="Center"
+                     Background="#4CFFFFFF"/>
+            <Button Grid.Row="1" Grid.Column="1" Margin="0" 
+                    Command="{Binding IncMaxTimeCommand}"
+                     Style="{StaticResource OrangeExtraSmallButtonStyle}" >
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Stretch" 
+                       Margin="-1 -1 0 0"
+                       Width="13" Height="9" Stretch="Fill"  />
             </Button>
-            <Button Grid.Row="3" Grid.Column="1" Margin="1" FontSize="10" Command="{Binding DecMaxTimeCommand}" >
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" Margin="0" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.531" HorizontalAlignment="Right" Width="4">
+            <Button Grid.Row="2" Grid.Column="1" Margin="0" 
+                    Command="{Binding DecMaxTimeCommand}"
+                     Style="{StaticResource OrangeExtraSmallButtonStyle}" RenderTransformOrigin="0.5,0.5">
+
+                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Stretch" 
+                       Margin="-1 -1 0 0"
+                       Width="13" Height="9" Stretch="Fill" RenderTransformOrigin="0.5,0.5"  >
                     <Image.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform  ScaleX="2.85" ScaleY="2.4"/>
+                            <ScaleTransform/>
                             <SkewTransform/>
                             <RotateTransform Angle="180"/>
-                            <TranslateTransform/>
+                            <TranslateTransform Y="-1"/>
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
