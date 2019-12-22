@@ -18,6 +18,7 @@
     Height="800"
     Closing="Window_Closing"
     MouseDown="Window_MouseDown"
+    WindowStyle="None"
     mc:Ignorable="d">
     <Window.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
@@ -34,8 +35,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <view:MenuView Grid.Row="1"/>
-        <Grid Grid.Row="2">
+
+            <Grid Grid.Row="2">
             <view:AreaVideoPlayersView x:Name="AreaVideoPlayers" Grid.Column="0" />
         </Grid>
 
