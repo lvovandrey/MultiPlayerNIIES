@@ -45,6 +45,5 @@ namespace MultiPlayerNIIES
             this.Focus();
         }
 
-
     }
 }

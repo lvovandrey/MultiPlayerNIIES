@@ -291,6 +291,14 @@
             Fill="#000000FF"
             MouseDown="Sizer_MouseDown" />
             
+            <ResizeGrip
+            Grid.Row="6"
+            Grid.Column="2"
+            Margin="-7 -7 0 0"
+            Panel.ZIndex="-100"
+            Cursor="SizeNWSE"
+            Foreground="#FF979316" />
+            
             <Rectangle
             x:Name="SizerLeftTop"
             Grid.Row="0"

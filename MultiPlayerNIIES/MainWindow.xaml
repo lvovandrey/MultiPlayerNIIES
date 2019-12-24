@@ -18,8 +18,8 @@
     Height="800"
     Closing="Window_Closing"
     MouseDown="Window_MouseDown"
-    WindowStyle="None"
-    mc:Ignorable="d">
+    WindowStyle="SingleBorderWindow"
+        mc:Ignorable="d">
     <Window.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />

@@ -130,7 +130,7 @@
                 Margin="-2"
                 MinHeight="10"
                 VerticalAlignment="Center"
-                FontSize="16"
+                FontSize="15"
                 Text="{Binding CurTime, StringFormat=hh\\:mm\\:ss\\.ff}"
                 TextAlignment="Center" />
 
