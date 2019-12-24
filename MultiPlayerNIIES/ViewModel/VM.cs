@@ -1684,6 +1684,35 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        private RelayCommand minimizeWindowCommand;
+        public RelayCommand MinimizeWindowCommand
+        {
+            get
+            {
+                return minimizeWindowCommand ??
+                  (minimizeWindowCommand = new RelayCommand(obj =>
+                  {
+                      MainWindow.WindowState = WindowState.Minimized;
+                  }));
+            }
+        }
+
+        private RelayCommand maximizeRestoreWindowCommand;
+        public RelayCommand MaximizeRestoreWindowCommand
+        {
+            get
+            {
+                return maximizeRestoreWindowCommand ??
+                  (maximizeRestoreWindowCommand = new RelayCommand(obj =>
+                  {
+                      if(MainWindow.WindowState== WindowState.Maximized)
+                          MainWindow.WindowState = WindowState.Normal;
+                      else if (MainWindow.WindowState == WindowState.Normal)
+                          MainWindow.WindowState = WindowState.Maximized;
+                  }));
+            }
+        }
+
 
         private RelayCommand timeDiffMeasuringCommand;
         public RelayCommand TimeDiffMeasuringCommand

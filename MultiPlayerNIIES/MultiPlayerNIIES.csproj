@@ -303,7 +303,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OrangeStyleDictionary.xaml">
+    <Page Include="Styles\OrangeStyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -534,6 +534,9 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Close.png" />
+    <Resource Include="Images\PNG\Maximize.png" />
+    <Resource Include="Images\PNG\Minimize.png" />
     <Resource Include="Images\PNG\Gnome-Audio-Volume-Low-64.png" />
     <Resource Include="Images\PNG\Gnome-Audio-Volume-Medium-64.png" />
     <Resource Include="Images\PNG\Gnome-Audio-Volume-Muted-64.png" />
