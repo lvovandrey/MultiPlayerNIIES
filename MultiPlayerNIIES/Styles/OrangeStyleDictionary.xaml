@@ -1,6 +1,39 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MultiPlayerNIIES">
+
+
+
+
+    <Color x:Key="MyOrangeColor" A="255" R="176" G="114" B="32" />
+    <Color x:Key="MyLightOrangeColor" A="255" R="205" G="151" B="71" />
+    <Color x:Key="MyDarkOrangeColor" A="255" R="128" G="88" B="35" />
+
+
+    <SolidColorBrush x:Key="YellowGlassesBrush" Color="#7FB4AF17"/>
+    <SolidColorBrush x:Key="AlmostBlackBrush" Color="#FF1B1B1B"/>
+    <SolidColorBrush x:Key="NiceGrayBrush" Color="#FF323232"/>
+    <SolidColorBrush x:Key="SmartGrayBrush" Color="#FF3F3F3F"/>
+
+
+    <SolidColorBrush x:Key="MyOrangeBrush" Color="{StaticResource MyOrangeColor}"/>
+    <SolidColorBrush x:Key="MyLightOrangeBrush" Color="{StaticResource MyLightOrangeColor}"/>
+    <SolidColorBrush x:Key="MyDarkOrangeBrush" Color="{StaticResource MyDarkOrangeColor}"/>
+
+    <LinearGradientBrush x:Key="OrangeGradientBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="{StaticResource MyOrangeColor}" Offset="0"/>
+        <GradientStop Color="{StaticResource MyDarkOrangeColor}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LightOrangeGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="{StaticResource MyLightOrangeColor}" Offset="0"/>
+        <GradientStop Color="{StaticResource MyOrangeColor}" Offset="1"/>
+    </LinearGradientBrush>
+
+
+
+
+
     <Style x:Key="ButtonFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -37,38 +70,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid Background="{x:Null}" >
-                        <Rectangle x:Name="rectangle" Stroke="Gray" StrokeThickness="1.5" RadiusX="3" RadiusY="3">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFCD974F" Offset="0"/>
-                                    <GradientStop Color="#FFB0772D" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Rectangle x:Name="rectangle" Stroke="Gray" StrokeThickness="1.5" RadiusX="3" RadiusY="3" Fill="{StaticResource LightOrangeGradientBrush}"/>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefault" Value="True"/>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Fill" TargetName="rectangle">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FFB07220" Offset="0"/>
-                                        <GradientStop Color="#FF805823" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource OrangeGradientBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <!--<Setter Property="Fill" TargetName="rectangle">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF805823" Offset="0"/>
-                                        <GradientStop Color="#FFB07220" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>-->
                             <Setter Property="Stroke" TargetName="rectangle" Value="#FFECA241"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -94,7 +107,9 @@
                     <Grid Background="{x:Null}" >
                         <Rectangle x:Name="rectangle" StrokeThickness="1" Stroke="{x:Null}" />
 
-                        <ContentPresenter x:Name="contentBtn" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ContentPresenter x:Name="contentBtn" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefault" Value="True"/>
@@ -136,7 +151,7 @@
                             <Rectangle.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFCD974F" Offset="0"/>
-                                    <GradientStop Color="#FFB0772D" Offset="1"/>
+                                    <GradientStop Color="#FFB07720" Offset="1"/>
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
@@ -185,7 +200,7 @@
                             <Rectangle.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFCD974F" Offset="0"/>
-                                    <GradientStop Color="#FFB0772D" Offset="1"/>
+                                    <GradientStop Color="#FFB07720" Offset="1"/>
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
@@ -217,4 +232,160 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+
+
+
+    <!--ДРУГОЙ СЛАЙДЕР!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+
+
+
+
+
+    <Style x:Key="SliderOrangeRepeatButton" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border  BorderThickness="1"  Background="{StaticResource NiceGrayBrush}" Height="8" Margin="-11 0 1 0"
+                             CornerRadius="1"
+                                 BorderBrush="{StaticResource MyOrangeBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderOrangeRepeatButton1" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border SnapsToDevicePixels="True"  BorderThickness="1" 
+                                Height="8" Margin="1 0 -10 0" 
+                                CornerRadius="1"
+                                Background="{StaticResource OrangeGradientBrush}" 
+                                BorderBrush="{StaticResource MyOrangeBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderOrangeRepeatButton2" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border SnapsToDevicePixels="True"  BorderThickness="1" 
+                                Height="8" Margin="1 0 -10 0" 
+                                CornerRadius="1"
+                                Background="{StaticResource NiceGrayBrush}" 
+                                BorderBrush="{StaticResource MyOrangeBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderOrangeThumb" TargetType="Thumb">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Grid >
+                        <Ellipse x:Name="Ellipse"  Height="18" Width="18" Margin="0 0 0 0" Fill="{StaticResource MyOrangeBrush}" Stroke="{StaticResource MyLightOrangeBrush}" >
+
+                        </Ellipse>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource MyDarkOrangeBrush}"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="SliderOrange"  TargetType="Slider">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Track Grid.Row="1" x:Name="PART_Track"   >
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButton}" Command="Slider.IncreaseLarge" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource SliderOrangeThumb}"  />
+                </Track.Thumb>
+
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="Horizontal_SliderOrange" TargetType="Slider">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+
+                <Setter Property="Template" Value="{StaticResource SliderOrange}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+    <ControlTemplate x:Key="SliderShiftOrange"  TargetType="Slider">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Track Grid.Row="1" x:Name="PART_Track"   >
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButton2}"  Command="Slider.DecreaseLarge" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButton}" Command="Slider.IncreaseLarge" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource SliderOrangeThumb}"  />
+                </Track.Thumb>
+
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="Horizontal_SliderShiftOrange" TargetType="Slider">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+
+                <Setter Property="Template" Value="{StaticResource SliderShiftOrange}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+
 </ResourceDictionary>
