@@ -40,11 +40,11 @@
             <Slider
                 Name="VolumeSlider"
                 Grid.Column="1"
-                Margin="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Maximum="100"
-                Value="{Binding SelfVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                Value="{Binding SelfVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Style="{StaticResource Horizontal_SliderOrange}"  Margin="1 -1 3 0"/>
             <Label
                 Name="RealVolumeLabel"
                 Grid.Column="2"
@@ -117,7 +117,8 @@
                 Maximum="1000"
                 PreviewMouseDown="TimeSlider_PreviewMouseDown"
                 PreviewMouseUp="TimeSlider_PreviewMouseUp"
-                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged}" />
+                Value="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource Horizontal_SliderOrange}" Margin="1 -1 3 0"/>
 
             <TextBox
                 x:Name="TimeTextBox"

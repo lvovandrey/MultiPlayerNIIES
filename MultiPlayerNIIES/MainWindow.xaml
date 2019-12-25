@@ -60,10 +60,11 @@
                        Width="33"
                        Opacity="0.7"
                        Source="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource DoubleVolumeToVolumeImgSource}}"/>
-                <Slider Width="70" VerticalAlignment="Bottom" Margin="5 0 -5 2" Minimum="0" Maximum="500"  
+                <Slider Width="70" VerticalAlignment="Bottom" Minimum="0" Maximum="500"  
                         Grid.Row="1"
                         Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                        Foreground="#FFB07220"  LargeChange="0" BorderBrush="{x:Null}" Background="{x:Null}"/>
+                        Foreground="#FFB07220"  LargeChange="0" BorderBrush="{x:Null}" Background="{x:Null}"
+                        Style="{StaticResource Horizontal_SliderOrange}"  Margin="1 -1 5 0"/>
                
                 <timeline:TimeLine  POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                      Grid.Row="1"

@@ -27,7 +27,8 @@
                     Minimum="{Binding SliderMinPosition, UpdateSourceTrigger=PropertyChanged}"
                     HorizontalAlignment="Stretch" VerticalAlignment="Top"
                     Value="{Binding SliderPosition, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                   />
+                   Style="{StaticResource Horizontal_SliderShiftOrange}"  Margin="1 -1 3 0"
+                    />
             <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanHiSignedBackConverter} }"
                      ToolTip="Заданное пользователем смещение"
                      FontSize="11"
