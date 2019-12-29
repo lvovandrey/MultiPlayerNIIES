@@ -13,7 +13,9 @@
 
     <SolidColorBrush x:Key="YellowGlassesBrush" Color="#7FB4AF17"/>
     <SolidColorBrush x:Key="AlmostBlackBrush" Color="#FF1B1B1B"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="#FF070707"/>
     <SolidColorBrush x:Key="NiceGrayBrush" Color="#FF323232"/>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="#FFB4B4B4"/>
     <SolidColorBrush x:Key="SmartGrayBrush" Color="#FF3F3F3F"/>
 
 
@@ -48,13 +50,105 @@
     </Style>
 
     <Style x:Key="OrangeTextBoxStyle" TargetType="TextBox">
-        <Setter Property="Foreground" Value="#FFB07220"/>
+        <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
     </Style>
+
+    <Style x:Key="OrangeOnGrayTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}"/>
+        <Setter Property="Background" Value="{StaticResource LightGrayBrush}"/>
+    </Style>
+
+    <Style x:Key="OrangeTextStyle">
+        <Setter Property="Control.Background" Value="{StaticResource LightGrayBrush}" />
+        <Setter Property="Control.Foreground" Value="{StaticResource MyOrangeBrush}" />
+        <Setter Property="Control.Margin" Value="5" />
+    </Style>
+
+    <Style x:Key="OrangeGroupBoxStyleOld" TargetType="GroupBox">
+        <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="OrangeBorderStyle">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+    
+    <Style TargetType="ListBox" x:Key="OrangeListBoxStyle">
+        <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
+    </Style>
+    <Style TargetType="ListBoxItem" x:Key="OrangeListBoxItemStyle">
+        <Setter Property="Background" Value="#FF323232" />
+        <Setter Property="Foreground" Value="#FFB07220" />
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="Border"
+                    BorderThickness="0"
+                    SnapsToDevicePixels="true">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="#FF3F3F3F" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+    <Style x:Key="OrangeGroupBoxStyle" TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="{StaticResource MyOrangeBrush}" BorderThickness="2" Grid.ColumnSpan="4" CornerRadius="1" Grid.Row="1" Grid.RowSpan="3">
+                            <Border.OpacityMask>
+                                <MultiBinding ConverterParameter="7" Converter="{StaticResource BorderGapMaskConverter}">
+                                    <Binding ElementName="Header" Path="ActualWidth"/>
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                        </Border>
+                        <Border x:Name="Header" Grid.Column="1" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2">
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ContentPresenter Grid.ColumnSpan="2" Grid.Column="1" Margin="{TemplateBinding Padding}" Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
     <Style x:Key="OrangeTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="#FFB07220"/>
+        <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
     </Style>
     <Style x:Key="OrangeLabelStyle" TargetType="Label">
-        <Setter Property="Foreground" Value="#FFB07220"/>
+        <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
     </Style>
 
     <Style x:Key="OrangeButtonStyle" TargetType="{x:Type Button}">

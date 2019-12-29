@@ -7,20 +7,11 @@
              xmlns:el="clr-namespace:MultiPlayerNIIES.View.Elements"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style x:Key="TextStyle">
-            <Setter Property="Control.Background" Value="#FFBEBEBE" />
-            <Setter Property="Control.Foreground" Value="#FFB07220" />
-            <Setter Property="Control.Margin" Value="5" />
-        </Style>
-
-        
-    </UserControl.Resources>
     <Grid>
-        <GroupBox Header="Общее" BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+        <GroupBox Header="Общее" >
             <StackPanel>
 
-                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                <GroupBox >
                     <GroupBox.Header>
                         Скорость воспроизведения
                     </GroupBox.Header>
@@ -30,7 +21,7 @@
                         <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding RateShift, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Шаг изменения скорости (Ctrl+Up, Ctrl+Down)" Margin="5"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                <GroupBox >
                     <GroupBox.Header>
                         Звук
                     </GroupBox.Header>
@@ -38,7 +29,7 @@
                         <el:PropertyViewer_DoubleNums_UpDown DataContext="{Binding DefaultVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Tag="Громкость по умолчанию" Margin="5"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                <GroupBox >
                     <GroupBox.Header>
                         Навигация по видео
                     </GroupBox.Header>

@@ -26,6 +26,7 @@
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:DoubleVolumeToVolumeImgSource x:Key="DoubleVolumeToVolumeImgSource"/>
+        <Style TargetType="Slider" BasedOn="{StaticResource Horizontal_SliderOrange}"/>
     </Window.Resources>
     <Grid Background="#FF161616">
         <Grid.RowDefinitions>
@@ -54,7 +55,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <timestrips:StripesContainer Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" x:Name="StripesContainer" Margin="80 0 0 0" 
+                <timestrips:StripesContainer Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" x:Name="StripesContainer" Margin="86 0 0 0" 
                                              />
                 <Image VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 0 -10 0" Grid.Row="1" 
                        Width="33"
@@ -64,7 +65,7 @@
                         Grid.Row="1"
                         Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                         Foreground="#FFB07220"  LargeChange="0" BorderBrush="{x:Null}" Background="{x:Null}"
-                        Style="{StaticResource Horizontal_SliderOrange}"  Margin="1 -1 5 0"/>
+                          Margin="1 -1 5 0"/>
                
                 <timeline:TimeLine  POS="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                      Grid.Row="1"
@@ -77,13 +78,13 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Center"
-                    Background="#FF101010"
-                    BorderBrush="#FFB07220"
+                    Background="{StaticResource BlackBrush}"
+                    BorderBrush="{StaticResource MyOrangeBrush}"
                     BorderThickness="1"
+                    Foreground="{StaticResource MyOrangeBrush}"
                     Grid.Column="2" Grid.Row="1"
                     Content="{Binding CurTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}}"
-                    FontSize="25"
-                    Foreground="#FFB07220" >
+                    FontSize="25">
                     <Label.ContextMenu>
                         <ContextMenu>
                             <MenuItem

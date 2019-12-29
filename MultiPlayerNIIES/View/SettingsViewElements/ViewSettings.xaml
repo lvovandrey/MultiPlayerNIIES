@@ -6,22 +6,13 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <Style x:Key="TextStyle">
-            <Setter Property="Control.Background" Value="#FFBEBEBE" />
-            <Setter Property="Control.Foreground" Value="#FFB07220" />
-            <Setter Property="Control.Margin" Value="5" />
-        </Style>
 
-
-    </UserControl.Resources>
     <Grid>
-        <GroupBox Header="Вид" BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+        <GroupBox Header="Вид" >
             <StackPanel>
 
                 <CheckBox Margin="5"
-                             IsChecked="{Binding ShowFullNameInPlayerHeader, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             Style="{StaticResource TextStyle}">Отображать полный путь к файлу в шапке плеера</CheckBox>
+                             IsChecked="{Binding ShowFullNameInPlayerHeader, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">Отображать полный путь к файлу в шапке плеера</CheckBox>
             </StackPanel>
         </GroupBox>
     </Grid>

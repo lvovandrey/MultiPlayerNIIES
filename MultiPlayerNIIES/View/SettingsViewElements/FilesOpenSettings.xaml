@@ -7,29 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-    <Style x:Key="TextStyle">
-        <Setter Property="Control.Background" Value="#FFBEBEBE" />
-        <Setter Property="Control.Foreground" Value="#FFB07220" />
-        <Setter Property="Control.Margin" Value="5" />
-    </Style>
-
 
     </UserControl.Resources>
     <Grid>
-        <GroupBox Header="Сохранение файлов" BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+        <GroupBox Header="Сохранение файлов">
             <StackPanel>
-                <GroupBox BorderBrush="#FFB07220" Foreground="#FFB07220" Margin="5">
+                <GroupBox >
                     <GroupBox.Header>
                         Как будем открывать файлы
                     </GroupBox.Header>
                     <StackPanel>
                         <RadioButton GroupName="OpenStatePathType" Margin="5" 
-                             IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                             Style="{StaticResource TextStyle}">По абсолютному пути</RadioButton>
+                             IsChecked="{Binding IsStateFilesRestorePathTypeAbsolute, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">По абсолютному пути</RadioButton>
                         <RadioButton GroupName="OpenStatePathType" Margin="5"
-                             IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             Style="{StaticResource TextStyle}">По относительному пути</RadioButton>
-
+                             IsChecked="{Binding IsStateFilesRestorePathTypeRelative, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">По относительному пути</RadioButton>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

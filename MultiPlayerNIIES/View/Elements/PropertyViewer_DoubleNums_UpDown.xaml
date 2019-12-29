@@ -7,11 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="20" Height="20"  x:Name="This" Tag="Default tag">
     <UserControl.Resources>
-        <Style x:Key="TextStyle">
-            <Setter Property="Control.Background" Value="#FFBEBEBE" />
-            <Setter Property="Control.Foreground" Value="#FFB07220" />
-            <Setter Property="Control.Margin" Value="10 2 0 0" />
-        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
     </UserControl.Resources>
     <Grid>
         <Grid x:Name="ThisGrid" Tag="Название">
@@ -20,21 +16,23 @@
                 <ColumnDefinition Width="*" MinWidth="100"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <TextBox Width="80" x:Name="TextBoxValue" Text="{Binding ElementName=This, Path=DataContext, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  PreviewTextInput="TextBox_PreviewTextInput"/>
+                <TextBox 
+                         Width="80" x:Name="TextBoxValue" 
+                         Text="{Binding ElementName=This, Path=DataContext, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                         PreviewTextInput="TextBox_PreviewTextInput"/>
                 <StackPanel>
                     <Button
-                                Width="20"
-                                Height="10" Click="ButtonUp_Click"
-                        Margin="0"       
-                        >
+                        Width="20"
+                        Height="10" Click="ButtonUp_Click"
+                        Margin="0">
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" Margin="-2"/>
                     </Button>
                     <Button
-                                Width="20"
-                                Height="10"
+                        Width="20"
+                        Height="10"
                         Margin="0"
-                    Click="ButtonDown_Click"
-                                >
+                        Click="ButtonDown_Click"
+                        Style="{StaticResource OrangeSmallButtonStyle}">
                         <Image RenderTransformOrigin="0.5,0.5" Source="/MultiPlayerNIIES;component/Images/PNG/Arrow-sans-up-32.png" Margin="-2" >
                             <Image.RenderTransform>
                                 <TransformGroup>
@@ -45,7 +43,7 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
-            <TextBlock Text="{Binding ElementName= This, Path=Tag}" Grid.Column="1" Style="{StaticResource TextStyle}"/>
+            <TextBlock Text="{Binding ElementName= This, Path=Tag}" Grid.Column="1" Margin="5 1 0 0"/>
         </Grid>
     </Grid>
 </UserControl>
