@@ -9,39 +9,16 @@
         Title="Настройки" Height="400" Width="800" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" 
         BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing"  Loaded="Window_Loaded" >
     <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#FFB07220" />
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#FF343434" />
-            <Setter Property="Foreground" Value="#FFB07220" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="Background" Value="#FF323232" />
-            <Setter Property="Foreground" Value="#FFB07220" />
-            <Setter Property="Margin" Value="1" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border"
-                    BorderThickness="0"
-                    SnapsToDevicePixels="true">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#FF3F3F3F" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>
+        <Style TargetType="ListBox" BasedOn="{StaticResource OrangeListBoxStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource OrangeTextBlockStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
+        <Style TargetType="GroupBox" BasedOn="{StaticResource OrangeGroupBoxStyle}"/>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource OrangeOnGrayTextBoxStyle}"/>
     </Window.Resources>
-    <Grid Background="#FF161616">
+    <Grid Background="{StaticResource AlmostBlackBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
@@ -54,7 +31,7 @@
        
         <StackPanel VerticalAlignment="Stretch" Grid.Row="0" Margin="5">
             <TextBlock  Text="Разделы настроек" />
-            <ListBox VerticalAlignment="Stretch" Background="{x:Null}" BorderBrush="#FFB07220" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox VerticalAlignment="Stretch" Background="{x:Null}"  SelectionChanged="ListBox_SelectionChanged">
                 <ListBoxItem >Общее</ListBoxItem>
                 <ListBoxItem >Вид</ListBoxItem>
                 <ListBoxItem >Сохранение файлов</ListBoxItem>
@@ -66,8 +43,8 @@
             <elements:FilesOpenSettings Grid.Row="0" Grid.Column="1" Visibility="Collapsed" x:Name="FilesOpenSettings" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="0 0 10 0">
-            <Button Command="{Binding SaveSettingsCommand}" Click="Button_Click_1">Применить</Button>
-            <Button Click="Button_Click">Отмена</Button>
+            <Button Command="{Binding SaveSettingsCommand}" Click="Button_Click_1" Margin="0 3 10 3" Padding="10 0 10 0">Применить</Button>
+            <Button Click="Button_Click"   Margin="0 3 0 3" Padding="10 0 10 0" >Отмена</Button>
 
         </StackPanel>
     </Grid>

@@ -96,28 +96,6 @@
             </MenuItem>
         </Menu>
         
-        <!--<StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button 
-            Grid.Column="1" Width="40" Height="20"
-            Margin="0"
-                Command="{Binding MinimizeWindowCommand}"
-            Style="{StaticResource OrangeWindowButtonStyle}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Minimize.png"></Image>
-            </Button>
-            <Button 
-            Grid.Column="1" Width="40" Height="20" 
-            Margin="0"
-                Command="{Binding MaximizeRestoreWindowCommand}"
-                Style="{StaticResource OrangeWindowButtonStyle}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Maximize.png"></Image>
-            </Button>
-        <Button 
-            Grid.Column="1" Width="40" Height="20"
-            Margin="0"
-            Command="{Binding CloseAppCommand}"
-            Style="{StaticResource OrangeWindowButtonStyle}">
-                <Image Source="/MultiPlayerNIIES;component/Images/PNG/Close.png"></Image>
-            </Button>
-        </StackPanel>-->
+       
     </Grid>
 </UserControl>

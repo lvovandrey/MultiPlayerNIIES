@@ -8,6 +8,17 @@
     d:DesignHeight="20"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>
+        <Style TargetType="ListBox" BasedOn="{StaticResource OrangeListBoxStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource OrangeTextBlockStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
+        <Style TargetType="GroupBox" BasedOn="{StaticResource OrangeGroupBoxStyle}"/>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource OrangeOnGrayTextBoxStyle}"/>
+        <Style TargetType="Slider" BasedOn="{StaticResource Horizontal_SliderOrange}"/>
+    </UserControl.Resources>
     <Grid>
         <Grid x:Name="GridPanel" Grid.Row="1">
 
@@ -29,7 +40,6 @@
 
 
             <Button 
-                 Style="{StaticResource OrangeSmallButtonStyle}"
                 Name="PlayBtn"
                 Grid.Column="0"
                 Command="{Binding PlayPauseCommand}">
@@ -44,7 +54,7 @@
                 VerticalAlignment="Stretch"
                 Maximum="100"
                 Value="{Binding SelfVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                Style="{StaticResource Horizontal_SliderOrange}"  Margin="1 -1 3 0"/>
+                Margin="1 -1 3 0"/>
             <Label
                 Name="RealVolumeLabel"
                 Grid.Column="2"
@@ -52,13 +62,12 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="{Binding RealVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Foreground="{StaticResource BlackBrush}"
                 ContentStringFormat="{}{0:N0}"
                 FontSize="8" />
-            <!--    -->
             <Button
                 Name="MuteBtn"
                 Grid.Column="3"
-                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding MuteCommand}">
                 <Image Source="/MultiPlayerNIIES;component/Images/mute.png" Stretch="Fill" />
             </Button>
@@ -66,21 +75,16 @@
             <Button
                 Name="AspectRatioBtn"
                 Grid.Column="4"
-                Style="{StaticResource OrangeSmallButtonStyle}"
-                Command="{Binding ChangeAspectRatioCommand}">
-                <TextBlock
-                    x:Name="TextBlockAspectRatio"
-                    Margin="-3"
-                    FontSize="8"
-                    Text="Fill" />
+                Command="{Binding ChangeAspectRatioCommand}" 
+                FontSize="8" >
+                <TextBlock x:Name="TextBlockAspectRatio" Foreground="{StaticResource BlackBrush}">
+                    Fill
+                </TextBlock>
             </Button>
-
-
             <Button
                 Name="DecSpeedBtn"
                 Grid.Row="1"
                 Grid.Column="5"
-                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding DecSpeedCommand}"
                 Content="x0.5"
                 FontSize="8" />
@@ -88,7 +92,6 @@
                 Name="IncSpeedBtn"
                 Grid.Row="1"
                 Grid.Column="6"
-                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding IncSpeedCommand}"
                 Content="x2"
                 FontSize="8" />
@@ -96,7 +99,6 @@
                 Name="FrameBackwardBtn"
                 Grid.Row="1"
                 Grid.Column="7"
-                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding StepBackwardCommand}"
                 Content="&lt;-"
                 FontSize="8" />
@@ -104,7 +106,6 @@
                 Name="FrameForwardBtn"
                 Grid.Row="1"
                 Grid.Column="8"
-                Style="{StaticResource OrangeSmallButtonStyle}"
                 Command="{Binding StepForwardCommand}"
                 Content="-&gt;"
                 FontSize="8" />
@@ -118,24 +119,22 @@
                 PreviewMouseDown="TimeSlider_PreviewMouseDown"
                 PreviewMouseUp="TimeSlider_PreviewMouseUp"
                 Value="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
-                Style="{StaticResource Horizontal_SliderOrange}" Margin="1 -1 3 0"/>
+                Margin="1 -1 3 0"/>
 
             <TextBox
                 x:Name="TimeTextBox"
                 Grid.Row="1"
                 Grid.Column="10"
-                Background="#FF101010"
-                BorderBrush="#FFB07220"
+                Background="{StaticResource BlackBrush}"
+                BorderBrush="{StaticResource MyOrangeBrush}"
                 BorderThickness="1"
-                Foreground="#FFB07220"
+                Foreground="{StaticResource MyOrangeBrush}"
                 Margin="-2"
                 MinHeight="10"
                 VerticalAlignment="Center"
                 FontSize="15"
                 Text="{Binding CurTime, StringFormat=hh\\:mm\\:ss\\.ff}"
                 TextAlignment="Center" />
-
-
 
         </Grid>
     </Grid>

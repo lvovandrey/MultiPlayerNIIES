@@ -7,19 +7,21 @@
         mc:Ignorable="d"
         Title="Расставь видео по порядку" Height="450" Width="800" Closing="Window_Closing" SizeChanged="Window_SizeChanged"  ShowInTaskbar="False">
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="#FF343434" />
-            <Setter Property="Foreground" Value="#FFB07220" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
-
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>
+        <Style TargetType="ListBox" BasedOn="{StaticResource OrangeListBoxStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource OrangeTextBlockStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
+        <Style TargetType="GroupBox" BasedOn="{StaticResource OrangeGroupBoxStyle}"/>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource OrangeOnGrayTextBoxStyle}"/>
     </Window.Resources>
         <Grid Background="#FF161616" x:Name="BasedGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <Border BorderThickness="2" BorderBrush="#FFB07220" Margin="5" Panel.ZIndex="1">
+        <Border  Panel.ZIndex="1">
             <Grid Panel.ZIndex="1">
            
                 <Grid x:Name="MainGrid" Panel.ZIndex="100">
@@ -43,8 +45,8 @@
 
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Width="100" Click="Button_Click_1"  >Применить</Button>
-            <Button  Width="100" Click="Button_Click" >Отмена</Button>
+            <Button Width="100" Click="Button_Click_1"  Margin="0 5 10 5" Padding="10 0 10 0" >Применить</Button>
+            <Button  Width="100" Click="Button_Click"  Margin="0 5 10 5" Padding="10 0 10 0">Отмена</Button>
         </StackPanel>
 
     </Grid>
