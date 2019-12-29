@@ -278,6 +278,7 @@
     <Compile Include="View\ValueConverters\DoubleWithAdditionConverter.cs" />
     <Compile Include="View\ValueConverters\SyncOnOffWordConverter.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
+    <Compile Include="View\ValueConverters\SyncShiftSliderValueToMargin_MultiConverter.cs" />
     <Compile Include="View\ValueConverters\TimeShiftToColor.cs" />
     <Compile Include="View\ValueConverters\TimeShiftToVisibility.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />

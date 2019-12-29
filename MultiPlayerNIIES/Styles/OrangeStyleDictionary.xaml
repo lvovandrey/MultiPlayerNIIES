@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:MultiPlayerNIIES">
+                    xmlns:local="clr-namespace:MultiPlayerNIIES"
+                    xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters">
 
 
-
+    <converters:SyncShiftSliderValueToMargin_MultiConverter x:Key="SyncShiftSliderValueToMargin_MultiConverter"/>
 
     <Color x:Key="MyOrangeColor" A="255" R="176" G="114" B="32" />
     <Color x:Key="MyLightOrangeColor" A="255" R="205" G="151" B="71" />
@@ -241,7 +242,7 @@
 
 
 
-
+<!--#region NEW ORANGE SLIDER-->
 
 
     <Style x:Key="SliderOrangeRepeatButton" TargetType="RepeatButton">
@@ -348,8 +349,44 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+<!--#endregion-->
+    
+
+<!--#region Slider with indication of shift-->
 
 
+
+
+    <Style x:Key="SliderOrangeRepeatButtonTransparent" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border SnapsToDevicePixels="True"  BorderThickness="1" 
+                                Height="8" Margin="1 0 1 0" 
+                                CornerRadius="1"
+                                Background="Red" 
+                                BorderBrush="{StaticResource MyOrangeBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SliderOrangeRepeatButtonFull" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border SnapsToDevicePixels="True"  BorderThickness="1" 
+                                Height="8" Margin="1 0 1 0" 
+                                CornerRadius="1"
+                                Background="{StaticResource NiceGrayBrush}" 
+                                BorderBrush="{StaticResource MyOrangeBrush}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <ControlTemplate x:Key="SliderShiftOrange"  TargetType="Slider">
         <Grid>
@@ -358,34 +395,46 @@
                 <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Track Grid.Row="1" x:Name="PART_Track"   >
+            <RepeatButton Grid.Row="1" Style="{StaticResource SliderOrangeRepeatButtonFull}"></RepeatButton>
+            <Rectangle Grid.Row="1" Height="8" Fill="{StaticResource OrangeGradientBrush}" >
+                <Rectangle.Margin>
+
+                    <MultiBinding Converter="{StaticResource SyncShiftSliderValueToMargin_MultiConverter}">
+                        <MultiBinding.Bindings>
+                            <Binding Path="Value" RelativeSource="{RelativeSource TemplatedParent}"/>
+                            <Binding Path="Maximum" RelativeSource="{RelativeSource TemplatedParent}"/>
+                            <Binding Path="Minimum" RelativeSource="{RelativeSource TemplatedParent}"/>
+                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource TemplatedParent}"/>
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+
+                </Rectangle.Margin>
+            </Rectangle>
+
+            <Track Grid.Row="1" x:Name="PART_Track" >
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButton2}"  Command="Slider.DecreaseLarge" />
+                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButtonTransparent}" Opacity="0" Command="Slider.DecreaseLarge" />
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButton}" Command="Slider.IncreaseLarge" />
+                    <RepeatButton Style="{StaticResource SliderOrangeRepeatButtonTransparent}"  Opacity="0" Command="Slider.IncreaseLarge" />
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Style="{StaticResource SliderOrangeThumb}"  />
                 </Track.Thumb>
-
             </Track>
         </Grid>
     </ControlTemplate>
-
     <Style x:Key="Horizontal_SliderShiftOrange" TargetType="Slider">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
-
                 <Setter Property="Template" Value="{StaticResource SliderShiftOrange}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-
-
-
+    <!--#endregion-->
+    
 </ResourceDictionary>
