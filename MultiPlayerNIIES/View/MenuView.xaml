@@ -6,36 +6,33 @@
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
              mc:Ignorable="d" 
               d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="MenuItem" x:Key="MenuItemHiLevel"  >
+            <Setter Property="BorderBrush" Value="{StaticResource OrangeGradientBrush}"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+        </Style>
+        <Style TargetType="Separator" BasedOn="{StaticResource OrangeSeparatorStyle}"/>
+
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <!--<Rectangle 
-            x:Name="Dragger" 
-            Fill="#66000000" 
-            Panel.ZIndex="100" 
-            Margin="300 0 150 0 "
-            Cursor="SizeAll"/>-->
         <Menu 
               Grid.Column="0"
               BorderBrush="#FF111111"
               BorderThickness="0.5" 
-              Foreground="#FF383838"  >
-                <Menu.Background>
-                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,0.6">
-                    <GradientStop Color="#FFDAAB6B" Offset="0"/>
-                    <GradientStop Color="#FFD0974E" Offset="1"/>
-                </LinearGradientBrush>
-            </Menu.Background>
-            <MenuItem Header="_Файл">
+              Foreground="{StaticResource BlackBrush}" Background="{StaticResource  LightOrangeGradientBrush}"  >
 
-                <MenuItem Header="_Открыть видео" Command="{Binding OpenCommand}" >
+            <MenuItem Header="_Файл" Template="{StaticResource OrangeMenuItemControlTemplate}">
+
+                <MenuItem Header="_Открыть видео" Command="{Binding OpenCommand}"  >
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" Stretch="Fill" Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator />
+                <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
                 <MenuItem Header="_Открыть состояние плеера" Command="{Binding OpenStateCommand}"  >
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Folder-Open-64.png" Stretch="Fill" Width="20"/>
@@ -48,29 +45,28 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
+                <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
 
-                <Separator />
                 <MenuItem Header="_Закрыть все видеоокна" Command="{Binding СloseAllCommand}">
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Process-Stop-64.png" Stretch="Fill" Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
-
-                <Separator />
+                <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
                 <MenuItem Header="_Выход" Command="{Binding CloseAppCommand}">
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" Width="15" Height="15"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Инструменты">
+            <MenuItem Header="_Инструменты" Template="{StaticResource OrangeMenuItemControlTemplate}">
                 <MenuItem Header="_Связь с Excel" Command="{Binding ExcelOpenCommand}">
                     <MenuItem.Icon>
                         <Image  Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" Stretch="Fill" Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Вид">
+            <MenuItem Header="_Вид" Template="{StaticResource OrangeMenuItemControlTemplate}">
                 <MenuItem Header="_Панель Видеополосы" Command="{Binding  StripesContainerShowHideCommand}">
                     <MenuItem.Icon>
                         <Image  Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png" Stretch="Fill" Width="20"/>
@@ -79,7 +75,7 @@
                
             </MenuItem>
 
-            <MenuItem Header="_Опции">
+            <MenuItem Header="_Опции" Template="{StaticResource OrangeMenuItemControlTemplate}"> 
                 <MenuItem Header="_Настройки" Command="{Binding SettingsOpenCommand}">
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" Stretch="Fill"  Width="20"/>
@@ -87,7 +83,7 @@
                 </MenuItem>
             </MenuItem>
 
-            <MenuItem Header="_Справка">
+            <MenuItem Header="_Справка" Template="{StaticResource OrangeMenuItemControlTemplate}">
                 <MenuItem Header="_О программе" Command="{Binding AboutCommand}">
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Question.png" Stretch="Fill" Width="20"/>
