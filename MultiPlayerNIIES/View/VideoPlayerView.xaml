@@ -115,7 +115,8 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Panel.ZIndex="1"
-                Background="#7FFFFFFF"
+                
+                Style="{StaticResource OrangeTextBlockContrastStyle}"    
                 Text="..." />
 
 
@@ -125,8 +126,10 @@
                 VerticalAlignment="Center"
                 Panel.ZIndex="1"
                 Margin="20 0 0 0"
-                Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                Foreground="#FF2EFF00" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FF8D8D8D"  />
+                Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                Foreground="{DynamicResource VideoPlayerTopYellowBrush}" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FF8D8D8D"  />
+
+                <!--Text="{Binding FilenameForTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"-->
 
             </StackPanel>
             <!--<StackPanel

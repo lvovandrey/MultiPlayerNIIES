@@ -59,6 +59,7 @@
         </Setter>
     </Style>
 
+
     <Style x:Key="OrangeTextBoxStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
     </Style>
@@ -68,12 +69,20 @@
         <Setter Property="Background" Value="{StaticResource LightGrayBrush}"/>
     </Style>
 
+
+    <Style x:Key="OrangeTextBlockContrastStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource NiceGrayBrush }"/>
+        <Setter Property="Background" Value="{StaticResource MyLightOrangeBrush}"/>
+    </Style>
+
     <Style x:Key="OrangeTextStyle">
         <Setter Property="Control.Background" Value="{StaticResource LightGrayBrush}" />
         <Setter Property="Control.Foreground" Value="{StaticResource MyOrangeBrush}" />
         <Setter Property="Control.Margin" Value="5" />
     </Style>
 
+    
+    
     <Style x:Key="OrangeGroupBoxStyleOld" TargetType="GroupBox">
         <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
