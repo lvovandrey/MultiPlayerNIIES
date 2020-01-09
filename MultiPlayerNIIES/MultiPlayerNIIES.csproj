@@ -284,6 +284,7 @@
     <Compile Include="View\ValueConverters\TimeSpanToString.cs" />
     <Compile Include="View\ValueConverters\TimeSpanHiConverter.cs" />
     <Compile Include="View\ValueConverters\TimeSpanToTotalMiliseconds.cs" />
+    <Compile Include="View\ValueConverters\VideoPlayerWindowStateToImgSource.cs" />
     <Compile Include="View\VideoPlayerView.xaml.cs">
       <DependentUpon>VideoPlayerView.xaml</DependentUpon>
     </Compile>
@@ -535,6 +536,14 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\CloseO2.png" />
+    <Resource Include="Images\PNG\MaximizeO2.png" />
+    <Resource Include="Images\PNG\MinimizeO2.png" />
+    <Resource Include="Images\PNG\RestoreO2.png" />
+    <Resource Include="Images\PNG\CloseO1.png" />
+    <Resource Include="Images\PNG\MaximizeO1.png" />
+    <Resource Include="Images\PNG\MinimizeO1.png" />
+    <Resource Include="Images\PNG\RestoreO1.png" />
     <Resource Include="Images\PNG\Close.png" />
     <Resource Include="Images\PNG\Maximize.png" />
     <Resource Include="Images\PNG\Minimize.png" />

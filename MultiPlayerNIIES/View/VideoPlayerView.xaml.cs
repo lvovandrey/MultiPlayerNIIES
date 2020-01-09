@@ -1,6 +1,7 @@
 ﻿using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
+using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -239,6 +240,8 @@ namespace MultiPlayerNIIES.View
 
         void StartResize(object sender, MouseButtonEventArgs e)
         {
+            ((VideoPlayerVM)this.DataContext).VideoPlayerWindowState = VideoPlayerWindowState.Restored;
+
             if ((ResizeContainer == null) || !IsResize) return;
             ResizedObject = (FrameworkElement)this;
             Resizer = (UIElement)sender;
