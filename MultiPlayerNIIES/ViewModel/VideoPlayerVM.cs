@@ -21,6 +21,15 @@ namespace MultiPlayerNIIES.ViewModel
         BindToContainer
     }
 
+    public enum VideoPlayerWindowState
+    {
+        None,
+        Restored,
+        Maximized,
+        Minimized
+    }
+
+
     public class VideoPlayerVM : INPCBase
     {
         public VideoPlayerView Body; //Ну это не настоящая VM
@@ -283,6 +292,14 @@ namespace MultiPlayerNIIES.ViewModel
         Rect restoreWindowRect = new Rect(0, 0, 500, 350);
         bool IsAlreadyMax = false;
         bool IsAlreadyMin = false;
+        VideoPlayerWindowState videoPlayerWindowState = VideoPlayerWindowState.Restored;
+        public VideoPlayerWindowState VideoPlayerWindowState
+        {
+            get { return videoPlayerWindowState; }
+            set { videoPlayerWindowState = value; OnPropertyChanged("VideoPlayerWindowState"); }
+        }
+
+
         public void SetCurrentSizeForRestore()
         {
             Rect newR = new Rect(Body.Margin.Left, Body.Margin.Top, Body.ActualWidth, Body.ActualHeight);
@@ -488,10 +505,11 @@ namespace MultiPlayerNIIES.ViewModel
                 return maximizeCommand ??
                   (maximizeCommand = new RelayCommand(obj =>
                   {
-                      SetCurrentSizeForRestore();
-                      VM.MaximizePlayer(this);
-                      IsAlreadyMax = true;
-                      IsAlreadyMin = false;
+                          SetCurrentSizeForRestore();
+                          VM.MaximizePlayer(this);
+                          IsAlreadyMax = true;
+                          IsAlreadyMin = false;
+                          VideoPlayerWindowState = VideoPlayerWindowState.Maximized;
                   }));
             }
         }
@@ -508,9 +526,11 @@ namespace MultiPlayerNIIES.ViewModel
                       VM.MinimizePlayer(this);
                       IsAlreadyMax = false;
                       IsAlreadyMin = true;
+                      VideoPlayerWindowState = VideoPlayerWindowState.Minimized;
                   }));
             }
         }
+
         private RelayCommand restoreCommand;
         public RelayCommand RestoreCommand
         {
@@ -522,10 +542,26 @@ namespace MultiPlayerNIIES.ViewModel
                       IsAlreadyMax = false;
                       IsAlreadyMin = false;
                       Replace(restoreWindowRect);
+                      VideoPlayerWindowState = VideoPlayerWindowState.Restored;
                   }));
             }
         }
 
+        private RelayCommand restoreMaximizeCommand;
+        public RelayCommand RestoreMaximizeCommand
+        {
+            get
+            {
+                return restoreMaximizeCommand ??
+                  (restoreMaximizeCommand = new RelayCommand(obj =>
+                  {
+                      if (VideoPlayerWindowState != VideoPlayerWindowState.Maximized)
+                          MaximizeCommand.Execute(null);
+                      else
+                          RestoreCommand.Execute(null);
+                  }));
+            }
+        }
 
         internal void DefineOldVLCInnerPosition()
         {

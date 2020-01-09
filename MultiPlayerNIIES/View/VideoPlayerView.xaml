@@ -26,6 +26,7 @@
         <converters:TimeShiftToColorBack x:Key="TimeShiftToColorBack"/>
         <converters:TimeShiftToVisibility x:Key="TimeShiftToVisibility"/>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
+        <converters:VideoPlayerWindowStateToImgSource x:Key="VideoPlayerWindowStateToImgSource"/>
 
 
 
@@ -128,7 +129,7 @@
                 Foreground="#FF2EFF00" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="#FF8D8D8D"  />
 
             </StackPanel>
-            <StackPanel
+            <!--<StackPanel
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
@@ -149,7 +150,39 @@
                 <Button x:Name="Close" Command="{Binding CloseCommand}">
                     <Image Source="/MultiPlayerNIIES;component/Images/PNG/Close_Window.png" />
                 </Button>
-            </StackPanel>
+            </StackPanel>-->
+            <StackPanel   
+                Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Right"
+            Panel.ZIndex="3" Orientation="Horizontal" Margin="1 0 0 1">
+            <Button 
+            Grid.Column="1" Width="30" Height="18"
+            Margin="0"
+                Command="{Binding MinimizeCommand}"
+            Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/MinimizeO2.png" Margin="0"></Image>
+            </Button>
+            <Button 
+            Grid.Column="1" Width="30" Height="18" 
+            Margin="0"
+                Command="{Binding RestoreMaximizeCommand}"
+                Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="{Binding VideoPlayerWindowState, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, 
+                        Converter={StaticResource VideoPlayerWindowStateToImgSource}}"
+                       Margin="0"></Image>
+
+                </Button>
+        <Button 
+            Grid.Column="1" Width="30" Height="18"
+            Margin="0"
+            Command="{Binding CloseCommand}"
+            Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/CloseO2.png" Margin="0"></Image>
+            </Button>
+        </StackPanel>
 
 
             <!--<mvlc:MVLCPlayer

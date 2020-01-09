@@ -8,8 +8,10 @@
 
     <Color x:Key="MyOrangeColor" A="255" R="176" G="114" B="32" />
     <Color x:Key="MyLightOrangeColor" A="255" R="205" G="151" B="71" />
-    <Color x:Key="MyHiLightOrangeColor" A="255" R="205" G="151" B="71" />
+    <Color x:Key="MyHiLightOrangeColor" A="218" R="205" G="151" B="71" />
     <Color x:Key="MyDarkOrangeColor" A="255" R="128" G="88" B="35" />
+    <Color x:Key="VideoPlayerUpYellowColor" A="255" R="248" G="210" B="159"/>
+    <Color x:Key="VideoPlayerBottomYellowColor" A="255" R="212" G="163" B="98"/>
 
 
     <SolidColorBrush x:Key="YellowGlassesBrush" Color="#7FB4AF17"/>
@@ -19,18 +21,20 @@
     <SolidColorBrush x:Key="LightGrayBrush" Color="#FFB4B4B4"/>
     <SolidColorBrush x:Key="SmartGrayBrush" Color="#FF3F3F3F"/>
 
-
     <SolidColorBrush x:Key="MyOrangeBrush" Color="{StaticResource MyOrangeColor}"/>
     <SolidColorBrush x:Key="MyLightOrangeBrush" Color="{StaticResource MyLightOrangeColor}"/>
     <SolidColorBrush x:Key="MyDarkOrangeBrush" Color="{StaticResource MyDarkOrangeColor}"/>
+    <SolidColorBrush x:Key="VideoPlayerTopYellowBrush" Color="{StaticResource VideoPlayerUpYellowColor}"/>
+    <SolidColorBrush x:Key="VideoPlayerBottomYellowBrush" Color="{StaticResource VideoPlayerBottomYellowColor}"/>
 
+    
     <LinearGradientBrush x:Key="OrangeGradientBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="{StaticResource MyOrangeColor}" Offset="0"/>
         <GradientStop Color="{StaticResource MyDarkOrangeColor}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="HiLightOrangeGradientBrush" EndPoint="0.5,0" StartPoint="0.5,0.6">
-        <GradientStop Color="#FFDAAB6B" Offset="0"/>
+        <GradientStop Color="{StaticResource MyHiLightOrangeColor}" Offset="0"/>
         <GradientStop Color="{StaticResource MyLightOrangeColor}" Offset="1"/>
     </LinearGradientBrush>
 
@@ -81,7 +85,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
         <Setter Property="Margin" Value="5"/>
     </Style>
-    
+
     <Style TargetType="ListBox" x:Key="OrangeListBoxStyle">
         <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
     </Style>
@@ -159,7 +163,7 @@
 
     <Style x:Key="OrangeButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-       
+
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Margin" Value="2"/>
@@ -262,7 +266,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefault" Value="True"/>
                         <Trigger Property="IsMouseOver" Value="True">
-                            
+
                             <Setter Property="Fill" TargetName="rectangle">
                                 <Setter.Value>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -284,7 +288,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-   
+
     <Style x:Key="OrangeExtraSmallButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -336,13 +340,48 @@
 
 
 
+    <Style x:Key="OrangeVideoPlayerButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{x:Null}" >
+                        <Rectangle x:Name="rectangle" Stroke="{x:Null}" />
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource NiceGrayBrush}">
+                             </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+
+                            <Setter Property="Stroke" TargetName="rectangle" Value="#FFECA241"/>
+
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 
     <!--ДРУГОЙ СЛАЙДЕР!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
 
 
-<!--#region NEW ORANGE SLIDER-->
+    <!--#region NEW ORANGE SLIDER-->
 
 
     <Style x:Key="SliderOrangeRepeatButton" TargetType="RepeatButton">
@@ -449,10 +488,10 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-<!--#endregion-->
-    
+    <!--#endregion-->
 
-<!--#region Slider with indication of shift-->
+
+    <!--#region Slider with indication of shift-->
 
 
 
@@ -536,7 +575,7 @@
     </Style>
 
     <!--#endregion-->
-    
+
     <!--#region MenuItemHiLevel-->
     <ControlTemplate x:Key="OrangeMenuItemControlTemplate" TargetType="{x:Type MenuItem}">
         <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
