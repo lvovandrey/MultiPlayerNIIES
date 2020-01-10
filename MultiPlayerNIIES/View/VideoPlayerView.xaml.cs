@@ -495,6 +495,10 @@ namespace MultiPlayerNIIES.View
 
         #endregion
 
+
+
+        
+
         enum PanelsShowed
         {
             None,
@@ -517,24 +521,19 @@ namespace MultiPlayerNIIES.View
             else SyncPanelShowHide(false);
 
         }
-
+        //для VM открытый метод
+        public void ShowAndHidePanels() { ButtonHideInstruments_Click(null, null); }
         private void SyncPanelShowHide(bool SetShow)
         {
             if (SetShow)
             {
                 SyncronizationInstrumentsRow.Height = new GridLength(0);
                 SyncronizationShiftViewer.Opacity = 0;
-                //SyncInfoPanelRow.Height = new GridLength(0);
-                //SyncInfoPanelView.Opacity = 0;
-
             }
             else
             {
                 SyncronizationInstrumentsRow.Height = new GridLength(30);
                 SyncronizationShiftViewer.Opacity = 1;
-                //SyncInfoPanelRow.Height = new GridLength(30);
-                //SyncInfoPanelView.Opacity = 1;
-
             }
         }
         
@@ -543,6 +542,11 @@ namespace MultiPlayerNIIES.View
             if (SetShow) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
             else { PlayerPanelRow.Height = new GridLength(20); PlayerPanelViewer.Opacity = 1; }
         }
+
+
+
+
+
 
 
         internal System.Drawing.Bitmap GetSnapShot()

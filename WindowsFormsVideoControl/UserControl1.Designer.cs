@@ -35,7 +35,7 @@
             // 
             // SelectablePictureBox1
             // 
-            this.SelectablePictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.SelectablePictureBox1.BackColor = System.Drawing.Color.Black;
             this.SelectablePictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("SelectablePictureBox1.Image")));
             this.SelectablePictureBox1.Location = new System.Drawing.Point(0, 0);
             this.SelectablePictureBox1.Margin = new System.Windows.Forms.Padding(0);

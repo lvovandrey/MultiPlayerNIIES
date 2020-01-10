@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,8 +64,6 @@ namespace MultiPlayerNIIES.ViewModel
 
             Body.VLC.VideoMMM.SelectablePictureBox1.MouseDown += SelectablePictureBox1_MouseDown;
         }
-
-
 
         private bool outOfSyncronization = false;
         private bool outOfSyncronizationTitles = false;
@@ -395,10 +394,24 @@ namespace MultiPlayerNIIES.ViewModel
             return Body.VLC.GetSnapShot();
         }
 
+
+        bool DoubleClickWaiter = false;
         //Клик в области видео
         private void SelectablePictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             UpFocusX();
+            //проверка на двойной клик - танцы с бубном т.к. соответствующее событие не отрабатывает.
+            if (DoubleClickWaiter) SelectablePictureBox1_MouseDoubleClick(sender, e);
+            else
+            {
+                DoubleClickWaiter = true;
+                Tools.ToolsTimer.Delay(()=> { DoubleClickWaiter = false; }, TimeSpan.FromSeconds(0.3));
+            }
+        }
+
+        private void SelectablePictureBox1_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            Body.ShowAndHidePanels();
         }
 
         #endregion
