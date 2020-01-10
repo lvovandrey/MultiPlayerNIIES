@@ -262,9 +262,13 @@
 
             <StackPanel Margin="0 0 15 0">
                 <Label Content="Скорость"/>
-                <TextBlock Text="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="50" ></TextBlock>
+                <TextBlock 
+                    Text="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                    Width="50"
+                    TextAlignment="Center"
+                    FontSize="15"
+                    Style="{StaticResource  OrangeTextBlockStyle}"/>
             </StackPanel>
-
 
 
             <Button Command="{Binding StepBackwardCommand}">
@@ -274,16 +278,17 @@
             <Button Command="{Binding StepForwardCommand}">
                 <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Skip-Forward-64.png" />
             </Button>
-            <Separator />
             <StackPanel Margin="6 0 6 0 ">
                 <Label Content="Шаг"/>
                 <StackPanel Orientation="Horizontal" Margin="0 -5 0 0">
                     <TextBox
-                            Width="50"
-                            Height="26"
-                            VerticalContentAlignment="Center"
-                            FontSize="15"
-                            Text="{Binding Step, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanToTotalMiliseconds}}" />
+                        Width="50"
+                        Height="24"
+                        VerticalContentAlignment="Center"
+                        FontSize="15"
+                        Style="{StaticResource OrangeTextBoxContrastOnGrayStyle}"
+                        Text="{Binding Step, UpdateSourceTrigger=PropertyChanged, 
+                        Mode=TwoWay, Converter={StaticResource TimeSpanToTotalMiliseconds}}" />
                     <StackPanel>
                         <Button
                                 Width="20"

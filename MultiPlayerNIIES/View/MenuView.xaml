@@ -23,7 +23,7 @@
               Grid.Column="0"
               BorderBrush="#FF111111"
               BorderThickness="0.5" 
-              Foreground="{StaticResource BlackBrush}" Background="{StaticResource  LightOrangeGradientBrush}"  >
+              Foreground="{StaticResource BlackBrush}" Background="{StaticResource  VeryLightOrangeGradientBrush}"  >
 
             <MenuItem Header="_Файл" Template="{StaticResource OrangeMenuItemControlTemplate}">
 
