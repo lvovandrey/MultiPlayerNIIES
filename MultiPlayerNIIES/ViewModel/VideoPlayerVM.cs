@@ -60,7 +60,10 @@ namespace MultiPlayerNIIES.ViewModel
             Body.SizeChanged += (s, e) => { UpdateVLCInnerPosition(); };
 
             Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
+
+            Body.VLC.VideoMMM.SelectablePictureBox1.MouseDown += SelectablePictureBox1_MouseDown;
         }
+
 
 
         private bool outOfSyncronization = false;
@@ -390,6 +393,12 @@ namespace MultiPlayerNIIES.ViewModel
         public System.Drawing.Bitmap GetSnapShot()
         {
             return Body.VLC.GetSnapShot();
+        }
+
+        //Клик в области видео
+        private void SelectablePictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            UpFocusX();
         }
 
         #endregion
