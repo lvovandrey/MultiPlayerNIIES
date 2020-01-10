@@ -10,6 +10,10 @@
              d:DesignHeight="30" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:TimeSpanHiSignedBackConverter x:Key="TimeSpanHiSignedBackConverter"/>
+        <converters:TimeShiftToColor x:Key="TimeShiftToColor"/>
+        <converters:TimeShiftToColorBack x:Key="TimeShiftToColorBack"/>
+        <converters:TimeShiftToVisibility x:Key="TimeShiftToVisibility"/>
+        <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter"/>
         <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>
         <Style TargetType="ListBox" BasedOn="{StaticResource OrangeListBoxStyle}"/>
         <Style TargetType="TextBlock" BasedOn="{StaticResource OrangeTextBlockStyle}">
@@ -43,13 +47,28 @@
             <TextBox Text="{Binding ShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource TimeSpanHiSignedBackConverter} }"
                      ToolTip="Заданное пользователем смещение"
                      FontSize="11"
+                     TextAlignment="Center"
                      HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                     Margin="-250,0,0,-1" Width="80" BorderThickness="1" BorderBrush="Black"/>
+                     Margin="-280,0,0,0" Width="80" BorderThickness="1" BorderBrush="Black"/>
 
 
             <TextBlock Text="{Binding CurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=hh\\:mm\\:ss\\.ff}"
                        ToolTip="Текущее реальное смещение данного видео от видео лидера синхронизации"
-                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="250,0,0,0" Width="70" />
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                       Margin="250,0,0,2" Width="70"
+                       TextAlignment="Center"
+                       Style="{StaticResource OrangeTextBlockContrastOnGrayStyle}"/>
+            <TextBlock
+                    HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                    Margin="420,0,0,2" Width="70"
+                    FontWeight="Bold" 
+                    TextAlignment="Center"
+                    Foreground="{Binding FullCurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColor}}"
+                    Background="{Binding FullCurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToColorBack}}"
+                    Visibility="{Binding FullCurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeShiftToVisibility} }"
+                    Text="{Binding FullCurrentShiftTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource TimeSpanHiConverter}  }">
+                <TextBlock.ToolTip>Значение рассинхронизации</TextBlock.ToolTip>
+            </TextBlock>
 
             <Button Content="&lt;" VerticalAlignment="Bottom" 
                     Width="28"  Height="16"
@@ -69,8 +88,8 @@
                     Command="{Binding IncShiftTimeCommand}"
                     HorizontalAlignment="Center" Margin="107,0,0,0" FontSize="8"/>
 
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"   FontSize="8"/>
-            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}" FontSize="8"/>
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0 0 0 -3" Text="{Binding ShiftMinTime, UpdateSourceTrigger=PropertyChanged}"   FontSize="8"/>
+            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 0 -3" Text="{Binding ShiftMaxTime, UpdateSourceTrigger=PropertyChanged}" FontSize="8"/>
 
         </Grid>
 

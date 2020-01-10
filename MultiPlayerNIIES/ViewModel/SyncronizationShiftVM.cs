@@ -27,6 +27,7 @@ namespace MultiPlayerNIIES.ViewModel
         {
             OnPropertyChanged("CurrentShiftTime");
             videoPlayerVM.OnPropertyChangedCurShiftTime();
+            OnPropertyChanged("FullCurrentShiftTime"); 
         }
         #region Properties
         private VideoPlayerVM videoPlayerVM;
@@ -77,6 +78,16 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        
+        public TimeSpan FullCurrentShiftTime
+        {
+            get
+            {
+                return CurrentShiftTime - ShiftTime;
+            }
+            set
+            { FullCurrentShiftTime = value; OnPropertyChanged("FullCurrentShiftTime"); }
+        }
 
         private TimeSpan shiftMaxTime;
         public TimeSpan ShiftMaxTime
