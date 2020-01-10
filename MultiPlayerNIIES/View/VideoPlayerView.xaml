@@ -213,7 +213,8 @@
                 Grid.ColumnSpan="3"
                 Panel.ZIndex="0"
                 FontSize="8" FontWeight="Bold" 
-                Foreground="Red"
+                Foreground="White"
+                Background="Red"
                 VerticalAlignment="Center" HorizontalAlignment="Left" 
                 Visibility="{Binding OutOfSyncronization, UpdateSourceTrigger=PropertyChanged, 
                 Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }" >
@@ -224,7 +225,8 @@
                 Grid.ColumnSpan="3"
                 Panel.ZIndex="0"
                 FontSize="8" FontWeight="Bold" 
-                Foreground="Red"
+                Foreground="White"
+                Background="Red"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 Visibility="{Binding OutOfSyncronizationTitles, UpdateSourceTrigger=PropertyChanged, 
                 Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter} }">
