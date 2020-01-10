@@ -30,7 +30,7 @@ namespace MultiPlayerNIIES.View
         {
             InitializeComponent();
             ToolsTimer.Timer(TimerTick, TimeSpan.FromSeconds(0.05));
-            ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null); ButtonHidePanel_Click(null, null); }, TimeSpan.FromSeconds(1));
+           // ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null);  }, TimeSpan.FromSeconds(1));
         }
 
 
@@ -495,16 +495,52 @@ namespace MultiPlayerNIIES.View
 
         #endregion
 
+        enum PanelsShowed
+        {
+            None,
+            PlayOnly,
+            SyncAndPlay,
+            SyncOnly
+        }
+
+        PanelsShowed panelsShowed = PanelsShowed.PlayOnly;
         //скрываем панель инструментов синхронизации
         private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
         {
-            if (SyncronizationInstrumentsRow.Height.Value > 20) { SyncronizationInstrumentsRow.Height = new GridLength(0); SyncronizationShiftViewer.Opacity = 0; }
-            else { SyncronizationInstrumentsRow.Height = new GridLength(30); SyncronizationShiftViewer.Opacity = 1; }
+            if (panelsShowed == PanelsShowed.SyncOnly) panelsShowed = PanelsShowed.None;
+            else panelsShowed++;
+
+            if (panelsShowed == PanelsShowed.PlayOnly || panelsShowed == PanelsShowed.SyncAndPlay) PlayPanelShowHide(true);
+            else PlayPanelShowHide(false);
+
+            if (panelsShowed == PanelsShowed.SyncOnly || panelsShowed == PanelsShowed.SyncAndPlay) SyncPanelShowHide(true);
+            else SyncPanelShowHide(false);
+
         }
 
-        private void ButtonHidePanel_Click(object sender, RoutedEventArgs e)
+        private void SyncPanelShowHide(bool SetShow)
         {
-            if (PlayerPanelRow.Height.Value > 15) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
+            if (SetShow)
+            {
+                SyncronizationInstrumentsRow.Height = new GridLength(0);
+                SyncronizationShiftViewer.Opacity = 0;
+                //SyncInfoPanelRow.Height = new GridLength(0);
+                //SyncInfoPanelView.Opacity = 0;
+
+            }
+            else
+            {
+                SyncronizationInstrumentsRow.Height = new GridLength(30);
+                SyncronizationShiftViewer.Opacity = 1;
+                //SyncInfoPanelRow.Height = new GridLength(30);
+                //SyncInfoPanelView.Opacity = 1;
+
+            }
+        }
+        
+        private void PlayPanelShowHide(bool SetShow)
+        {
+            if (SetShow) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
             else { PlayerPanelRow.Height = new GridLength(20); PlayerPanelViewer.Opacity = 1; }
         }
 

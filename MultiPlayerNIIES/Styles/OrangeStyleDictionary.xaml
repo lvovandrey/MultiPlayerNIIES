@@ -12,6 +12,8 @@
     <Color x:Key="MyDarkOrangeColor" A="255" R="128" G="88" B="35" />
     <Color x:Key="VideoPlayerUpYellowColor" A="255" R="248" G="210" B="159"/>
     <Color x:Key="VideoPlayerBottomYellowColor" A="255" R="212" G="163" B="98"/>
+    <Color x:Key="AlmostWhiteColor" A="255" R="255" G="235" B="157"/>
+
 
 
     <SolidColorBrush x:Key="YellowGlassesBrush" Color="#7FB4AF17"/>
@@ -23,11 +25,12 @@
 
     <SolidColorBrush x:Key="MyOrangeBrush" Color="{StaticResource MyOrangeColor}"/>
     <SolidColorBrush x:Key="MyLightOrangeBrush" Color="{StaticResource MyLightOrangeColor}"/>
+    <SolidColorBrush x:Key="MyHiLightOrangeBrush" Color="{StaticResource MyHiLightOrangeColor}"/>
     <SolidColorBrush x:Key="MyDarkOrangeBrush" Color="{StaticResource MyDarkOrangeColor}"/>
     <SolidColorBrush x:Key="VideoPlayerTopYellowBrush" Color="{StaticResource VideoPlayerUpYellowColor}"/>
     <SolidColorBrush x:Key="VideoPlayerBottomYellowBrush" Color="{StaticResource VideoPlayerBottomYellowColor}"/>
+    <SolidColorBrush x:Key="AlmostWhiteBrush" Color="{StaticResource AlmostWhiteColor}"/>
 
-    
     <LinearGradientBrush x:Key="OrangeGradientBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="{StaticResource MyOrangeColor}" Offset="0"/>
         <GradientStop Color="{StaticResource MyDarkOrangeColor}" Offset="1"/>
@@ -68,11 +71,24 @@
         <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}"/>
         <Setter Property="Background" Value="{StaticResource LightGrayBrush}"/>
     </Style>
+    
+    <Style x:Key="OrangeTextBoxContrastOnGrayStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource MyHiLightOrangeBrush}"/>
+        <Setter Property="Background" Value="{StaticResource SmartGrayBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
 
 
     <Style x:Key="OrangeTextBlockContrastStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource NiceGrayBrush }"/>
         <Setter Property="Background" Value="{StaticResource MyLightOrangeBrush}"/>
+    </Style>
+
+    <Style x:Key="OrangeTextBlockContrastOnGrayStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource MyHiLightOrangeBrush}"/>
+        <Setter Property="Background" Value="{StaticResource SmartGrayBrush}"/>
     </Style>
 
     <Style x:Key="OrangeTextStyle">
