@@ -543,6 +543,11 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Film.png" />
+    <Resource Include="Images\PNG\Picture-Empty.png" />
+    <Resource Include="Images\PNG\Hslider.png" />
+    <Resource Include="Images\PNG\Edit-Chain.png" />
+    <Resource Include="Images\PNG\Application-Put.png" />
     <Resource Include="Images\PNG\CloseO2.png" />
     <Resource Include="Images\PNG\MaximizeO2.png" />
     <Resource Include="Images\PNG\MinimizeO2.png" />
