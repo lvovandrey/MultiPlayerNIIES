@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace MultiPlayerNIIES.View.MinimalisticGUI
 {
     /// <summary>
-    /// Логика взаимодействия для MinimalisticGUIPanel.xaml
+    /// Логика взаимодействия для MinimalisticMainPanel.xaml
     /// </summary>
-    public partial class MinimalisticGUIPanel : UserControl
+    public partial class MinimalisticMainPanel : UserControl
     {
-        public MinimalisticGUIPanel()
+        public MinimalisticMainPanel()
         {
             InitializeComponent();
         }
