@@ -228,6 +228,9 @@
     <Compile Include="View\MetaVLCPlayer\MVLCPlayer.xaml.cs">
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MinimalisticGUI\MinimalisticGUIPanel.xaml.cs">
+      <DependentUpon>MinimalisticGUIPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingsViewElements\CommonSettings.xaml.cs">
       <DependentUpon>CommonSettings.xaml</DependentUpon>
     </Compile>
@@ -362,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MetaVLCPlayer\MVLCPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MinimalisticGUI\MinimalisticGUIPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

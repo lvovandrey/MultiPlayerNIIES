@@ -7,11 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="800" ClipToBounds="False" >
     <Grid ClipToBounds="False">
-        <Rectangle HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Margin="-79 1 1 1" Stroke="#FF323232" Panel.ZIndex="100"/>
-        <Rectangle x:Name="Background" Margin="-80 0 0 0">
+        <Rectangle x:Name="Background" Margin="-86 0 0 0" Stroke="{StaticResource SmartGrayBrush}">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF1B1B1B" Offset="0"/>
+                    <GradientStop Color="{StaticResource AlmostBlackColor}" Offset="0"/>
                     <GradientStop Color="Black" Offset="1"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>

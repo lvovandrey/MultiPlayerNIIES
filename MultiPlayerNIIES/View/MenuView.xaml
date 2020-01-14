@@ -67,12 +67,67 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Вид" Template="{StaticResource OrangeMenuItemControlTemplate}">
-                <MenuItem Header="_Панель Видеополосы" Command="{Binding  StripesContainerShowHideCommand}">
+                <MenuItem  Command="{Binding  StripesPanelShowHideCommand}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image   
+                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
+                            <TextBlock VerticalAlignment="Center">Панель Видеополосы</TextBlock>
+                        </StackPanel>
+                    </MenuItem.Header>
                     <MenuItem.Icon>
-                        <Image  Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png" Stretch="Fill" Width="20"/>
+                        <CheckBox 
+                            Style="{StaticResource OrangeCheckBoxFullStyle}" 
+                            IsChecked="{Binding IsStripesPanelVisible, Mode=TwoWay}"/>
                     </MenuItem.Icon>
                 </MenuItem>
-               
+                <MenuItem  Command="{Binding  MainPanelShowHideCommand}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image   
+                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
+                            <TextBlock VerticalAlignment="Center">Главная панель</TextBlock>
+                        </StackPanel>
+                    </MenuItem.Header>
+                    <MenuItem.Icon>
+                        <CheckBox 
+                            Style="{StaticResource OrangeCheckBoxFullStyle}" 
+                            IsChecked="{Binding IsMainPanelVisible, Mode=TwoWay}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem  Command="{Binding  TimeLinePanelShowHideCommand}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image   
+                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
+                            <TextBlock VerticalAlignment="Center">Таймлайн</TextBlock>
+                        </StackPanel>
+                    </MenuItem.Header>
+                    <MenuItem.Icon>
+                        <CheckBox 
+                            Style="{StaticResource OrangeCheckBoxFullStyle}" 
+                            IsChecked="{Binding IsTimeLinePanelVisible, Mode=TwoWay}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
+                <MenuItem  Command="{Binding  TimeLinePanelShowHideCommand}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image   
+                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
+                            <TextBlock VerticalAlignment="Center">Минималистичный интерфейс</TextBlock>
+                        </StackPanel>
+                    </MenuItem.Header>
+                    <MenuItem.Icon>
+                        <CheckBox 
+                            Style="{StaticResource OrangeCheckBoxFullStyle}" 
+                            IsChecked="{Binding IsTimeLinePanelVisible, Mode=TwoWay}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
             <MenuItem Header="_Опции" Template="{StaticResource OrangeMenuItemControlTemplate}"> 
