@@ -117,7 +117,7 @@ namespace MultiPlayerNIIES.ViewModel
             TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
 
             StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
-            IsStripesContainerVisible = false;
+//            IsStripesContainerVisible = false;
         }
 
 
@@ -506,19 +506,60 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        //-------------------------------
-        private bool isStripesContainerVisible = false;
-        public bool IsStripesContainerVisible
+        //------------------------------------------
+        // свойства - отображение панелей в mainWindow
+
+        private bool isTimeLinePanelVisible= true;
+        public bool IsTimeLinePanelVisible
         {
-            get { return isStripesContainerVisible; }
+            get { return isTimeLinePanelVisible; }
             set
             {
-                isStripesContainerVisible = value;
-                OnPropertyChanged("IsStripesContainerVisible");
-                if (value) MainWindow.StripesContainer.Visibility = Visibility.Visible;
-                else MainWindow.StripesContainer.Visibility = Visibility.Collapsed;  //TODO: почему то не получилось привязку сделать.... почему?
+                isTimeLinePanelVisible = value;
+                OnPropertyChanged("IsTimeLinePanelVisible");
             }
         }
+
+        private bool isMainPanelVisible = true;
+        public bool IsMainPanelVisible
+        {
+            get { return isMainPanelVisible; }
+            set
+            {
+                isMainPanelVisible = value;
+                OnPropertyChanged("IsMainPanelVisible");
+            }
+        }
+
+        private bool isStripesPanelVisible = true;
+        public bool IsStripesPanelVisible
+        {
+            get { return isStripesPanelVisible; }
+            set
+            {
+                isStripesPanelVisible = value;
+                OnPropertyChanged("IsStripesPanelVisible");
+            }
+        }
+
+        private bool isGUIMinimalViewStyle = false;
+        public bool IsGUIMinimalViewStyle
+        {
+            get { return isGUIMinimalViewStyle; }
+            set
+            {
+                isGUIMinimalViewStyle = value;
+                if (isGUIMinimalViewStyle)
+                {
+                    IsMainPanelVisible = false;
+                    IsTimeLinePanelVisible = false;
+                    IsStripesPanelVisible = false;
+                }
+                OnPropertyChanged("IsGUIMinimalViewStyle");
+            }
+        }
+
+
         #endregion
 
         #region Methods
@@ -1767,20 +1808,52 @@ namespace MultiPlayerNIIES.ViewModel
 
 
 
-        private RelayCommand stripesContainerShowHideCommand;
-        public RelayCommand StripesContainerShowHideCommand
+        private RelayCommand stripesPanelShowHideCommand;
+        public RelayCommand StripesPanelShowHideCommand
         {
             get
             {
-                return stripesContainerShowHideCommand ?? (stripesContainerShowHideCommand = new RelayCommand(obj =>
+                return stripesPanelShowHideCommand ?? (stripesPanelShowHideCommand = new RelayCommand(obj =>
                 {
-                    IsStripesContainerVisible = !IsStripesContainerVisible;
-
+                    IsStripesPanelVisible = !IsStripesPanelVisible;
+                }));
+            }
+        }
+        private RelayCommand mainPanelShowHideCommand;
+        public RelayCommand MainPanelShowHideCommand
+        {
+            get
+            {
+                return mainPanelShowHideCommand ?? (mainPanelShowHideCommand = new RelayCommand(obj =>
+                {
+                    IsMainPanelVisible = !IsMainPanelVisible;
+                }));
+            }
+        }
+        private RelayCommand timeLinePanelShowHideCommand;
+        public RelayCommand TimeLinePanelShowHideCommand
+        {
+            get
+            {
+                return timeLinePanelShowHideCommand ?? (timeLinePanelShowHideCommand = new RelayCommand(obj =>
+                {
+                    IsTimeLinePanelVisible = !IsTimeLinePanelVisible;
                 }));
             }
         }
 
-
+        
+        private RelayCommand setGUIMinimalViewStyleCommand;
+        public RelayCommand SetGUIMinimalViewStyleCommand
+        {
+            get
+            {
+                return setGUIMinimalViewStyleCommand ?? (setGUIMinimalViewStyleCommand = new RelayCommand(obj =>
+                {
+                    IsGUIMinimalViewStyle = !IsGUIMinimalViewStyle;
+                }));
+            }
+        }
         #endregion
     }
 }

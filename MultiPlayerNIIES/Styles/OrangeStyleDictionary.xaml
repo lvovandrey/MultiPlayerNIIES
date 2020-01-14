@@ -14,10 +14,10 @@
     <Color x:Key="VideoPlayerBottomYellowColor" A="255" R="212" G="163" B="98"/>
     <Color x:Key="AlmostWhiteColor" A="255" R="255" G="235" B="157"/>
     <Color x:Key="MyVeryLightOrangeColor" A="255" R="255" G="189" B="89" />
-
+    <Color x:Key="AlmostBlackColor" A="255" R="27" G="27" B="27"/>
 
     <SolidColorBrush x:Key="YellowGlassesBrush" Color="#7FB4AF17"/>
-    <SolidColorBrush x:Key="AlmostBlackBrush" Color="#FF1B1B1B"/>
+    <SolidColorBrush x:Key="AlmostBlackBrush" Color="{StaticResource AlmostBlackColor}"/>
     <SolidColorBrush x:Key="BlackBrush" Color="#FF070707"/>
     <SolidColorBrush x:Key="NiceGrayBrush" Color="#FF323232"/>
     <SolidColorBrush x:Key="LightGrayBrush" Color="#FFB4B4B4"/>
@@ -140,6 +140,53 @@
         </Setter>
     </Style>
 
+    <Style TargetType="CheckBox" x:Key="OrangeCheckBoxStyle">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource HiLightOrangeGradientBrush}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource MyDarkOrangeBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="OrangeCheckBoxFullStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}"/>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MyDarkOrangeBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <Border x:Name="CheckMark" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <Path x:Name="CheckMarkPath" Data="M 0 4.0 L 0 9.6 L 5 14.8 L 14.2 5.6 L 14.2 0 L 5 9.2 Z" Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" Stretch="Fill" Height="15"  Width="15"/>
+                            </Border>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter Property="Visibility" TargetName="CheckMarkPath" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="CheckMark" Value="{StaticResource MyLightOrangeBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
     <Style x:Key="OrangeGroupBoxStyle" TargetType="{x:Type GroupBox}">
