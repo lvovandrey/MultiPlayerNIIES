@@ -83,18 +83,18 @@
                             IsChecked="{Binding IsStripesPanelVisible, Mode=TwoWay}"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem  Command="{Binding  MainPanelShowHideCommand}">
+                <MenuItem  Command="{Binding  MainPanelShowHideCommand}" >
                     <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                             <Image   
                                   Stretch="Fill" Width="20"
                                 Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png"/>
-                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Главная панель</TextBlock>
+                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0" >Главная панель</TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <CheckBox 
-                            Style="{StaticResource OrangeCheckBoxFullStyle}" 
+                            Style="{StaticResource OrangeDisabledCheckBoxFullStyle}" 
                             IsChecked="{Binding IsMainPanelVisible, Mode=TwoWay}"/>
                     </MenuItem.Icon>
                 </MenuItem>
@@ -123,7 +123,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
-                <MenuItem  Command="{Binding  TimeLinePanelShowHideCommand}">
+                <MenuItem  Command="{Binding  SetGUIMinimalViewStyleCommand}">
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
@@ -135,7 +135,7 @@
                     <MenuItem.Icon>
                         <CheckBox Margin="0 0 0 0"
                             Style="{StaticResource OrangeCheckBoxFullStyle}" 
-                            IsChecked="{Binding IsTimeLinePanelVisible, Mode=TwoWay}"/>
+                            IsChecked="{Binding IsGUIMinimalViewStyle, Mode=TwoWay}"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

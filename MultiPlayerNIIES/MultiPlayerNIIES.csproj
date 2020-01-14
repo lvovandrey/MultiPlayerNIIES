@@ -228,8 +228,11 @@
     <Compile Include="View\MetaVLCPlayer\MVLCPlayer.xaml.cs">
       <DependentUpon>MVLCPlayer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MinimalisticGUI\MinimalisticGUIPanel.xaml.cs">
-      <DependentUpon>MinimalisticGUIPanel.xaml</DependentUpon>
+    <Compile Include="View\MinimalisticGUI\MinimalisticMainPanel.xaml.cs">
+      <DependentUpon>MinimalisticMainPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MinimalisticGUI\MinimalisticTimeLineGUIPanel.xaml.cs">
+      <DependentUpon>MinimalisticTimeLineGUIPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsViewElements\CommonSettings.xaml.cs">
       <DependentUpon>CommonSettings.xaml</DependentUpon>
@@ -368,7 +371,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MinimalisticGUI\MinimalisticGUIPanel.xaml">
+    <Page Include="View\MinimalisticGUI\MinimalisticMainPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MinimalisticGUI\MinimalisticTimeLineGUIPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

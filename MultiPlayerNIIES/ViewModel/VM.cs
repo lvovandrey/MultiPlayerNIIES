@@ -531,6 +531,7 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+
         private bool isStripesPanelVisible = true;
         public bool IsStripesPanelVisible
         {
@@ -549,13 +550,10 @@ namespace MultiPlayerNIIES.ViewModel
             set
             {
                 isGUIMinimalViewStyle = value;
-                if (isGUIMinimalViewStyle)
-                {
-                    IsMainPanelVisible = false;
-                    IsTimeLinePanelVisible = false;
-                    IsStripesPanelVisible = false;
-                }
                 OnPropertyChanged("IsGUIMinimalViewStyle");
+                OnPropertyChanged("IsTimeLinePanelVisible");
+                OnPropertyChanged("IsStripesPanelVisible");
+                OnPropertyChanged("IsMainPanelVisible");
             }
         }
 
@@ -1854,6 +1852,9 @@ namespace MultiPlayerNIIES.ViewModel
                 }));
             }
         }
+
+
+
         #endregion
     }
 }
