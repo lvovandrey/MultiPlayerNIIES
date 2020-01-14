@@ -7,9 +7,10 @@
              mc:Ignorable="d" 
               d:DesignWidth="800">
     <UserControl.Resources>
-        <Style TargetType="MenuItem" x:Key="MenuItemHiLevel"  >
-            <Setter Property="BorderBrush" Value="{StaticResource OrangeGradientBrush}"/>
+        <Style TargetType="MenuItem"   >
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
             <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Template" Value="{StaticResource OrangeMenuInnerItemControlTemplate}"/>
         </Style>
         <Style TargetType="Separator" BasedOn="{StaticResource OrangeSeparatorStyle}"/>
 
@@ -29,19 +30,19 @@
 
                 <MenuItem Header="_Открыть видео" Command="{Binding OpenCommand}"  >
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png" Stretch="Fill" Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Eject-64.png"  Width="19" Stretch="UniformToFill"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
-                <MenuItem Header="_Открыть состояние плеера" Command="{Binding OpenStateCommand}"  >
+                <MenuItem Header="_Открыть состояние плеера" Command="{Binding OpenStateCommand}" >
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Folder-Open-64.png" Stretch="Fill" Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Folder-Open-64.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
 
                 <MenuItem Header="_Сохранить состояние" Command="{Binding SaveStateCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Floppy-64.png" Stretch="Fill" Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Media-Floppy-64.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
 
@@ -71,9 +72,9 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
+                               Stretch="Fill" Width="20"
                                 Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
-                            <TextBlock VerticalAlignment="Center">Панель Видеополосы</TextBlock>
+                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Панель Видеополосы</TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                     <MenuItem.Icon>
@@ -86,9 +87,9 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
-                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
-                            <TextBlock VerticalAlignment="Center">Главная панель</TextBlock>
+                                  Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Главная панель</TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                     <MenuItem.Icon>
@@ -101,9 +102,18 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
-                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
-                            <TextBlock VerticalAlignment="Center">Таймлайн</TextBlock>
+                                Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Film.png" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="90"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Таймлайн</TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                     <MenuItem.Icon>
@@ -117,13 +127,13 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                                Margin="10 -1 5 0"  Stretch="Fill" Width="20"
-                                Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
-                            <TextBlock VerticalAlignment="Center">Минималистичный интерфейс</TextBlock>
+                                Stretch="Fill" Width="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Picture-empty.png"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Минималистичный интерфейс</TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                     <MenuItem.Icon>
-                        <CheckBox 
+                        <CheckBox Margin="0 0 0 0"
                             Style="{StaticResource OrangeCheckBoxFullStyle}" 
                             IsChecked="{Binding IsTimeLinePanelVisible, Mode=TwoWay}"/>
                     </MenuItem.Icon>
