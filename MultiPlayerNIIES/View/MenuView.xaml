@@ -4,16 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiPlayerNIIES.View"
+             xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
              mc:Ignorable="d" 
               d:DesignWidth="800">
     <UserControl.Resources>
+        <converters:RadioButtonsBoolToEnumConverter x:Key="RadioButtonsBoolToEnumConverter"/>
         <Style TargetType="MenuItem"   >
             <Setter Property="BorderBrush" Value="{x:Null}"/>
             <Setter Property="Background" Value="{x:Null}"/>
             <Setter Property="Template" Value="{StaticResource OrangeMenuInnerItemControlTemplate}"/>
         </Style>
         <Style TargetType="Separator" BasedOn="{StaticResource OrangeSeparatorStyle}"/>
-
+        <Style TargetType="RadioButton" BasedOn="{StaticResource OrangeRadioButtonStyle}"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -138,9 +140,69 @@
                             IsChecked="{Binding IsGUIMinimalViewStyle, Mode=TwoWay}"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
+                <MenuItem Template="{StaticResource OrangeMenuCOMMONControlTemplate}">
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Margin="55 0 0 0" Height="20">Вид видеоокон</TextBlock>
+                    </MenuItem.Header>
+                    
+                    <MenuItem Command="{Binding VideoPlayersHideAllPanelsCommand}">
+                        <MenuItem.Header>
+                            <TextBlock Height="20"  VerticalAlignment="Center" Margin="0 0 0 0">Свернуть все панели</TextBlock>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <RadioButton  Height="20" Command="{Binding VideoPlayersHideAllPanelsCommand}"
+                                          IsChecked="{Binding SyncLeadVideoWindowPanelsShowed,  Mode=OneWay,
+                                          Converter={StaticResource RadioButtonsBoolToEnumConverter}, 
+                                          ConverterParameter=None}"
+                                          Margin="20 0 0 0" GroupName="VideoPlayerView"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                    <MenuItem Command="{Binding VideoPlayersShowAllPanelsCommand}" >
+                        <MenuItem.Header>
+                            <TextBlock Height="20"  VerticalAlignment="Center" Margin="0 0 0 0">Развернуть все панели</TextBlock>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <RadioButton Height="20" Command="{Binding VideoPlayersShowAllPanelsCommand}"
+                                          IsChecked="{Binding SyncLeadVideoWindowPanelsShowed, Mode=OneWay, 
+                                          Converter={StaticResource RadioButtonsBoolToEnumConverter}, 
+                                          ConverterParameter=SyncAndPlay}"
+                                          Margin="20 0 0 0" GroupName="VideoPlayerView"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding VideoPlayersShowPlayerPanelOnlyCommand}">
+                        <MenuItem.Header>
+                            <TextBlock Height="20"  VerticalAlignment="Center" Margin="0 0 0 0">Только панель управления</TextBlock>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <RadioButton Height="20" Command="{Binding VideoPlayersShowPlayerPanelOnlyCommand}"
+                                          IsChecked="{Binding SyncLeadVideoWindowPanelsShowed,  Mode=OneWay,
+                                          Converter={StaticResource RadioButtonsBoolToEnumConverter}, 
+                                          ConverterParameter=PlayOnly}"
+                                          Margin="20 0 0 0" GroupName="VideoPlayerView"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding VideoPlayersShowSyncPanelOnlyCommand}">
+                        <MenuItem.Header>
+                            <TextBlock Height="20"  VerticalAlignment="Center" Margin="0 0 0 0">Только синхронизация</TextBlock>
+                        </MenuItem.Header>
+                        <MenuItem.Icon>
+                            <RadioButton Height="20" Command="{Binding VideoPlayersShowSyncPanelOnlyCommand}"
+                                         IsChecked="{Binding SyncLeadVideoWindowPanelsShowed,  Mode=OneWay,
+                                         Converter={StaticResource RadioButtonsBoolToEnumConverter}, 
+                                         ConverterParameter=SyncOnly}"
+                                         Margin="20 0 0 0" GroupName="VideoPlayerView"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+
+                </MenuItem>
             </MenuItem>
 
-            <MenuItem Header="_Опции" Template="{StaticResource OrangeMenuItemControlTemplate}"> 
+            <MenuItem Header="_Опции" Template="{StaticResource OrangeMenuItemControlTemplate}">
                 <MenuItem Header="_Настройки" Command="{Binding SettingsOpenCommand}">
                     <MenuItem.Icon>
                         <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png"  Width="20"/>
@@ -156,7 +218,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        
-       
+
+
     </Grid>
 </UserControl>

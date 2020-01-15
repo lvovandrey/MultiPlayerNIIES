@@ -52,7 +52,7 @@
         <GradientStop Color="{StaticResource MyVeryLightOrangeColor}" Offset="0"/>
         <GradientStop Color="{StaticResource MyLightOrangeColor}" Offset="1"/>
     </LinearGradientBrush>
-    
+
 
 
 
@@ -73,11 +73,59 @@
         <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
     </Style>
 
+    <Style x:Key="OrangeRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MyDarkOrangeBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="radioButtonBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1,1,2,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid x:Name="markGrid" Margin="2">
+                                <Ellipse x:Name="optionMark" Fill="{StaticResource  AlmostBlackBrush}" MinWidth="6" MinHeight="6" Opacity="0"/>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource MyOrangeBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource LighterGrayBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource NiceGrayBrush}"/>
+                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource LighterGrayBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource AlmostBlackBrush}"/>
+                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource AlmostBlackBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="0.56"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="OrangeOnGrayTextBoxStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}"/>
         <Setter Property="Background" Value="{StaticResource LightGrayBrush}"/>
     </Style>
-    
+
     <Style x:Key="OrangeTextBoxContrastOnGrayStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="{StaticResource MyHiLightOrangeBrush}"/>
         <Setter Property="Background" Value="{StaticResource SmartGrayBrush}"/>
@@ -103,8 +151,8 @@
         <Setter Property="Control.Margin" Value="5" />
     </Style>
 
-    
-    
+
+
     <Style x:Key="OrangeGroupBoxStyleOld" TargetType="GroupBox">
         <Setter Property="Foreground" Value="{StaticResource MyOrangeBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource MyOrangeBrush}"/>
@@ -151,7 +199,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="{StaticResource MyDarkOrangeBrush}"/>
@@ -161,6 +209,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <Style x:Key="OrangeCheckBoxFullStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="Foreground" Value="{StaticResource AlmostBlackBrush}"/>
         <Setter Property="Background" Value="{x:Null}"/>
@@ -446,7 +495,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
 
                             <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource NiceGrayBrush}">
-                             </Setter>
+                            </Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
 
@@ -670,7 +719,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" 
                                   ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" 
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
@@ -716,6 +765,68 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="OrangeMenuCOMMONControlTemplate" TargetType="{x:Type MenuItem}">
+        <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+
+                <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" 
+                                  ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" 
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+                <Path x:Name="GlyphPanel" Data="F1M10,1.2L4.7,9.1 4.5,9.1 0,5.2 1.3,3.5 4.3,6.1 8.3,0 10,1.2z" Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" Margin="3" Visibility="Collapsed" VerticalAlignment="Center"/>
+                <Path x:Name="RightArrow" Grid.Column="2" HorizontalAlignment="Right" Data="M0,0L4,3.5 0,7z" Fill="#FF212121" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+                <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}"
+                                  Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" 
+                                  ContentSource="Header" Margin="{TemplateBinding Padding}"
+                                  RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                <Popup x:Name="PART_Popup"
+                           AllowsTransparency="True" 
+                           Focusable="False" 
+                           IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                           PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" 
+                           Placement="Right">
+
+                    <ScrollViewer x:Name="SubMenuScrollViewer" 
+                                  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                        <Grid RenderOptions.ClearTypeHint="Enabled" Background="{DynamicResource VeryLightOrangeGradientBrush}">
+                            <Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                <Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" 
+                                           Height="{Binding ActualHeight, ElementName=SubMenuBorder}" 
+                                           Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+                            </Canvas>
+                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" 
+                                            Grid.IsSharedSizeScope="True" 
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                            KeyboardNavigation.TabNavigation="Cycle"/>
+                        </Grid>
+                    </ScrollViewer>
+
+                </Popup>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource OrangeGradientBrush}"/>
+                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource SmartGrayBrush}"/>
+            </Trigger>
+            <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
+                <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+                <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
 
     <ControlTemplate x:Key="OrangeMenuInnerItemControlTemplate" TargetType="{x:Type MenuItem}">
         <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
@@ -728,7 +839,7 @@
                     <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
                     <ColumnDefinition Width="20"/>
                 </Grid.ColumnDefinitions>
-               
+
                 <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="46"/>
                 <ContentPresenter x:Name="menuHeaderContainer" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="2" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
                 <TextBlock x:Name="menuGestureText" Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center"/>

@@ -499,33 +499,43 @@ namespace MultiPlayerNIIES.View
 
         
 
-        enum PanelsShowed
-        {
-            None,
-            PlayOnly,
-            SyncAndPlay,
-            SyncOnly
-        }
 
-        PanelsShowed panelsShowed = PanelsShowed.PlayOnly;
-        //скрываем панель инструментов синхронизации
+
+        public VideoWindowPanelsShowed panelsShowed = VideoWindowPanelsShowed.PlayOnly;
+        //скрываем панели инструментов и синхронизации
         private void ButtonHideInstruments_Click(object sender, RoutedEventArgs e)
         {
-            if (panelsShowed == PanelsShowed.SyncOnly) panelsShowed = PanelsShowed.None;
+            if (panelsShowed == VideoWindowPanelsShowed.SyncOnly) panelsShowed = VideoWindowPanelsShowed.None;
             else panelsShowed++;
 
-            if (panelsShowed == PanelsShowed.PlayOnly || panelsShowed == PanelsShowed.SyncAndPlay) PlayPanelShowHide(true);
-            else PlayPanelShowHide(false);
-
-            if (panelsShowed == PanelsShowed.SyncOnly || panelsShowed == PanelsShowed.SyncAndPlay) SyncPanelShowHide(true);
-            else SyncPanelShowHide(false);
+            ShowHidePanels();
 
         }
+
+      //  https://stackoverflow.com/questions/9212873/binding-radiobuttons-group-to-a-property-in-wpf
+
         //для VM открытый метод
         public void ShowAndHidePanels() { ButtonHideInstruments_Click(null, null); }
+        public void ShowAndHidePanels(VideoWindowPanelsShowed _panelsShowed)
+        {
+            panelsShowed = _panelsShowed;
+            ShowHidePanels();
+        }
+
+        private void ShowHidePanels()
+        {
+            if (panelsShowed == VideoWindowPanelsShowed.PlayOnly || panelsShowed == VideoWindowPanelsShowed.SyncAndPlay) PlayPanelShowHide(true);
+            else PlayPanelShowHide(false);
+
+            if (panelsShowed == VideoWindowPanelsShowed.SyncOnly || panelsShowed == VideoWindowPanelsShowed.SyncAndPlay) SyncPanelShowHide(true);
+            else SyncPanelShowHide(false);
+
+            (DataContext as VideoPlayerVM).VM.SyncLeadVideoWindowPanelsShowedPropertyChanged();
+        }
+
         private void SyncPanelShowHide(bool SetShow)
         {
-            if (SetShow)
+            if (!SetShow)
             {
                 SyncronizationInstrumentsRow.Height = new GridLength(0);
                 SyncronizationShiftViewer.Opacity = 0;
@@ -539,7 +549,7 @@ namespace MultiPlayerNIIES.View
         
         private void PlayPanelShowHide(bool SetShow)
         {
-            if (SetShow) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
+            if (!SetShow) { PlayerPanelRow.Height = new GridLength(0); PlayerPanelViewer.Opacity = 0; }
             else { PlayerPanelRow.Height = new GridLength(20); PlayerPanelViewer.Opacity = 1; }
         }
 
