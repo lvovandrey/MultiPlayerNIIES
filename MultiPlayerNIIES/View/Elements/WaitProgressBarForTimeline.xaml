@@ -12,9 +12,10 @@
                 x:Name="TextBlockInfo"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
+                Margin="0 -5 0 0"
                 Panel.ZIndex="100"
                 Text="Ждите. Идет синхронизация" Foreground="#FFAFB800" />
-                <Rectangle Opacity="0.2" Width="0"
+                <Rectangle Opacity="0.45" Width="0"
                 x:Name="WaitProgressBar1" Fill="#7F50D23B"/>
 
         </Grid>

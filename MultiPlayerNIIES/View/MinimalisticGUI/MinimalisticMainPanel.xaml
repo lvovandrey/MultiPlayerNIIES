@@ -93,26 +93,69 @@
                     HorizontalAlignment="Stretch"
                     Command="{Binding AutoSyncTitlesOnOffCommand}"
                     ToolTip="Постоянная синхронизация по титрам вкл/выкл">
-                <Grid Height="26" Width="38" Margin="1 2 1 1" Background="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}">
+                <Grid Height="26" Width="38" Margin="0 0 1 1" Background="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}">
                     <TextBlock
                             HorizontalAlignment="Center"
                             Foreground="Black"
-                            FontSize="6"
-                            Text="{Binding IsOnAutoSyncronizationTitles, Converter={StaticResource SyncSRTOnOffWordConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                   
+                            FontSize="7"
+                            Text="Sync SRT" />
+                    <ProgressBar
+                            Width="33"
+                            Height="12"
+                            Margin="-1,4,0,0"
+                            BorderBrush="#FF4F4F4F"
+                            Foreground="{Binding SyncTitlesDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                            Maximum="100"
+                            Minimum="0"
+                            Opacity="0.7"
+                            Value="{Binding SyncTitlesDeltaPercentage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                     <TextBlock
-                            Margin="0,0,0,-12"
+                            Margin="0,0,0,-3"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="10"
-                            FontWeight="Bold"
+                            FontSize="7"
                             Foreground="Black"
-                            Background="#7FFFFFFF"
-                            Text="{Binding SyncTitlesDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F1} мсек}"  />
-
+                            Text="{Binding SyncTitlesDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F1}}"  >
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="White"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
                 </Grid>
             </Button>
-
+            <Button 
+                    Height="26" Width="40"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding AutoSyncOnOffCommand}"
+                    ToolTip="Постоянная синхронизация по титрам вкл/выкл">
+                <Grid Height="26" Width="38" Margin="0 0 1 1" Background="{Binding IsOnAutoSyncronization, Converter={StaticResource BoolIsOnToColor}, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock
+                            HorizontalAlignment="Center"
+                            Foreground="Black"
+                            FontSize="7"
+                            Text="Sync" />
+                    <ProgressBar
+                            Width="33"
+                            Height="12"
+                            Margin="-1,4,0,0"
+                            BorderBrush="#FF4F4F4F"
+                            Foreground="{Binding SyncDeltaPercentage, Converter={StaticResource DoubleSyncDeltaToColor}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                            Maximum="100"
+                            Minimum="0"
+                            Opacity="0.7"
+                            Value="{Binding SyncDeltaPercentage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <TextBlock
+                            Margin="0,0,0,-3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="7"
+                            Foreground="Black"
+                            Text="{Binding SyncDeltaTotalMiliseconds, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F1}}"  >
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="0" ShadowDepth="1" Color="White"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </Grid>
+            </Button>
             <!--<Button
                     HorizontalAlignment="Stretch"
                     Command="{Binding AutoSyncOnOffCommand}"

@@ -22,6 +22,8 @@ namespace MultiPlayerNIIES.View.Elements
     /// </summary>
     public partial class WaitProgressBarForTimeline : UserControl
     {
+
+        public List<WaitProgressBarForTimeline> AditionInstances = new List<WaitProgressBarForTimeline>();//костыль для дополнительных реализаций этого же элемента
         public WaitProgressBarForTimeline()
         {
             InitializeComponent();
@@ -44,6 +46,10 @@ namespace MultiPlayerNIIES.View.Elements
                     this.Visibility = Visibility.Collapsed;
                 }, interval+TimeSpan.FromSeconds(0.05));
             }, TimeSpan.FromSeconds(0.05));
+
+            if (AditionInstances.Count>0) //вот так извращенно мы пробросим в другие такие же элементы это событие
+                foreach (var item in AditionInstances)
+                    item.ShowMe(text, interval);
         }
     }
 }

@@ -82,6 +82,8 @@ namespace MultiPlayerNIIES.ViewModel
 
 
             WaitProgressBar = MainWindow.WaitProgressBarForTimeline;
+            WaitProgressBar.AditionInstances.Add(MainWindow.MinimalisticTimeLineGUIPanel.WaitProgressBarForTimeline);
+            MainWindow.MinimalisticTimeLineGUIPanel.WaitProgressBarForTimeline.Visibility = Visibility.Collapsed;
             WaitProgressBar.Visibility = Visibility.Collapsed;
 
             MainTimer = new System.Windows.Threading.DispatcherTimer();
@@ -532,7 +534,7 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
-        private bool isStripesPanelVisible = true;
+        private bool isStripesPanelVisible = false;
         public bool IsStripesPanelVisible
         {
             get { return isStripesPanelVisible; }
@@ -1440,7 +1442,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return settingsOpenCommand ??
                   (settingsOpenCommand = new RelayCommand(obj =>
                   {
-                      settingsWindowView.Show();
+                      settingsWindowView.ShowDialog();
                   }));
             }
         }
@@ -1784,8 +1786,9 @@ namespace MultiPlayerNIIES.ViewModel
                       }
 
                       this.AllPauseCommand.Execute(null);
-                      TimeDIffWindowWindow.Show();
+                     // TimeDIffWindowWindow.Show();
                       ((TimeDiffWindowVM)TimeDIffWindowWindow.DataContext).ShowCommand.Execute(null);
+                      TimeDIffWindowWindow.ShowDialog();
                   }));
             }
         }
