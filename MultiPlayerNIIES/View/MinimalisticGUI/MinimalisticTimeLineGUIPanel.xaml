@@ -22,14 +22,17 @@
                <Slider Width="70" Minimum="0" Maximum="500"  Style="{StaticResource Horizontal_SliderOrange}"
                        VerticalAlignment="Center" 
                        Value="{Binding ShiftVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                        LargeChange="0" Margin="0 0 20 0"/>
+                        LargeChange="0" Margin="0 0 10 0"/>
 
         <Slider  Value="{Binding SyncLeadSliderPosition, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                  Style="{StaticResource Horizontal_SliderOrange}"
-                 Height="22" Grid.Column="1" x:Name="TimeLine1" />
+                 Height="20" Grid.Column="1"  Margin="0 0 5 0" x:Name="TimeLine1" Maximum="1000"/>
+
+        <elementsview:WaitProgressBarForTimeline Visibility="Collapsed"
+                                   Height="20" Grid.Column="1" x:Name="WaitProgressBarForTimeline"  Margin="1 0 1 0"  />
         <Label
                     x:Name="LabelCurTime"
-                    Width="90"
+                    Width="110" Margin="0 1 0 0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Center"

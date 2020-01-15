@@ -50,20 +50,20 @@
 
                 <MenuItem Header="_Закрыть все видеоокна" Command="{Binding СloseAllCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Process-Stop-64.png" Stretch="Fill" Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Process-Stop-64.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
                 <MenuItem Header="_Выход" Command="{Binding CloseAppCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" Width="15" Height="15"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Cross.png" Width="14" Height="14"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Инструменты" Template="{StaticResource OrangeMenuItemControlTemplate}">
                 <MenuItem Header="_Связь с Excel" Command="{Binding ExcelOpenCommand}">
                     <MenuItem.Icon>
-                        <Image  Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png" Stretch="Fill" Width="20"/>
+                        <Image  Source="/MultiPlayerNIIES;component/Images/PNG/Ms-Excel-48.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -72,7 +72,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                               Stretch="Fill" Width="20"
+                                Width="20"
                                 Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Format-Justify-Fill-64.png"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Панель Видеополосы</TextBlock>
                         </StackPanel>
@@ -87,14 +87,14 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                             <Image   
-                                  Stretch="Fill" Width="20"
+                                 Width="20"
                                 Source="/MultiPlayerNIIES;component/Images/PNG/Hammer.png"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0" >Главная панель</TextBlock>
                         </StackPanel>
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <CheckBox 
-                            Style="{StaticResource OrangeDisabledCheckBoxFullStyle}" 
+                            Style="{StaticResource OrangeCheckBoxFullStyle}" 
                             IsChecked="{Binding IsMainPanelVisible, Mode=TwoWay}"/>
                     </MenuItem.Icon>
                 </MenuItem>
@@ -102,7 +102,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                                Stretch="Fill" Width="20"
+                                Width="20"
                                 Source="/MultiPlayerNIIES;component/Images/PNG/Film.png" RenderTransformOrigin="0.5,0.5">
                                 <Image.RenderTransform>
                                     <TransformGroup>
@@ -127,7 +127,7 @@
                     <MenuItem.Header>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Image   
-                                Stretch="Fill" Width="20"
+                                 Width="20"
                                 Source="/MultiPlayerNIIES;component/Images/PNG/Picture-empty.png"/>
                             <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0">Минималистичный интерфейс</TextBlock>
                         </StackPanel>
@@ -143,7 +143,7 @@
             <MenuItem Header="_Опции" Template="{StaticResource OrangeMenuItemControlTemplate}"> 
                 <MenuItem Header="_Настройки" Command="{Binding SettingsOpenCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png" Stretch="Fill"  Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Gnome-Applications-System-64.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -151,7 +151,7 @@
             <MenuItem Header="_Справка" Template="{StaticResource OrangeMenuItemControlTemplate}">
                 <MenuItem Header="_О программе" Command="{Binding AboutCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Question.png" Stretch="Fill" Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Question.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
