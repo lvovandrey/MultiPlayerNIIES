@@ -118,7 +118,7 @@ namespace MultiPlayerNIIES.ViewModel
         public double Rate
         {
             get { return Body.Rate; }
-            set { Body.Rate = value; OnPropertyChanged("Rate"); }
+            set { Body.Rate = value; OnPropertyChanged("Rate"); if (isSyncronizeLeader) VM.PropertyChangedRate(); }
         }
 
         public TimeSpan CurTime
@@ -468,6 +468,7 @@ namespace MultiPlayerNIIES.ViewModel
                       if (!(obj is double)) return;
                       Rate = (double)obj;
                       OnPropertyChanged("Rate");
+                      if (isSyncronizeLeader) VM.PropertyChangedRate();
                   }));
             }
         }

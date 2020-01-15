@@ -101,7 +101,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return decSpeedCommand ?? (decSpeedCommand = new RelayCommand(obj =>
                 {
-                    Body.Rate -= 0.1;
+                    Body.Rate -= VideoPlayerVM.VM.RateShift;
+                    if (VideoPlayerVM.IsSyncronizeLeader) VideoPlayerVM.VM.PropertyChangedRate();
                 }));
             }
         }
@@ -113,7 +114,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return incSpeedCommand ?? (incSpeedCommand = new RelayCommand(obj =>
                 {
-                    Body.Rate += 0.1;
+                    Body.Rate += VideoPlayerVM.VM.RateShift;
+                    if (VideoPlayerVM.IsSyncronizeLeader) VideoPlayerVM.VM.PropertyChangedRate();
                 }));
             }
         }

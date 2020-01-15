@@ -282,6 +282,7 @@
     <Compile Include="View\ValueConverters\DoubleSyncDeltaToColor.cs" />
     <Compile Include="View\ValueConverters\DoubleVolumeToVolumeImgSource.cs" />
     <Compile Include="View\ValueConverters\DoubleWithAdditionConverter.cs" />
+    <Compile Include="View\ValueConverters\RadioButtonsBoolToEnumConverter.cs" />
     <Compile Include="View\ValueConverters\SyncOnOffWordConverter.cs" />
     <Compile Include="View\ValueConverters\SyncronizationShiftToSliderValue.cs" />
     <Compile Include="View\ValueConverters\SyncShiftSliderValueToMargin_MultiConverter.cs" />

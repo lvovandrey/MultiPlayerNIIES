@@ -30,6 +30,10 @@
 
     </UserControl.Resources>
     <Grid>
+
+
+
+        
         <Rectangle Grid.ColumnSpan="100" Grid.RowSpan="100" Stroke="#FFC2965B" StrokeThickness="1"  ></Rectangle>
         <Grid
             Margin="2"
@@ -307,7 +311,14 @@
                 Visibility="{Binding ElementName=This, Path=DataContext.IsSyncronizeLeader, Converter={StaticResource BoolIsSyncLeaderToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
 
 
-            
+            <ResizeGrip
+            Grid.Row="7"
+            Grid.Column="2"
+            Margin="-7 -7 0 0"
+            Panel.ZIndex="-100"
+            Cursor="SizeNWSE"
+            Foreground="#FF979316" />
+
             <Rectangle
             x:Name="SizerRightBottom"
             Grid.Row="7"
@@ -318,13 +329,6 @@
             Fill="#000000FF"
             MouseDown="Sizer_MouseDown" />
 
-            <ResizeGrip
-            Grid.Row="7"
-            Grid.Column="2"
-            Margin="-7 -7 0 0"
-            Panel.ZIndex="-100"
-            Cursor="SizeNWSE"
-            Foreground="#FF979316" />
 
             <Rectangle
             x:Name="SizerLeftTop"

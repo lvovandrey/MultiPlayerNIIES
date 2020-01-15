@@ -27,6 +27,15 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MultiPlayerNIIES.ViewModel
 {
+    public enum VideoWindowPanelsShowed
+    {
+        None,
+        PlayOnly,
+        SyncAndPlay,
+        SyncOnly
+    }
+
+
     public class VM : INPCBase
     {
         #region Поля
@@ -339,6 +348,10 @@ namespace MultiPlayerNIIES.ViewModel
                 value.IsSyncronizeLeader = true;
                 OnPropertyChanged("SyncLeadPlayer");
                 RefreshTimeLineView();
+                OnPropertyChanged("SyncLeadVideoWindowPanelsShowed");
+                OnPropertyChanged("SyncLeadSliderDuration");
+                OnPropertyChanged("SyncLeadSliderPosition");
+                OnPropertyChanged("Rate");
             }
         }
 
@@ -398,9 +411,11 @@ namespace MultiPlayerNIIES.ViewModel
         {
             get
             {
-                if (FocusedPlayer != null) return FocusedPlayer.Rate; else return 0;
+                if (SyncLeadPlayer != null) return SyncLeadPlayer.Rate; else return 0;
             }
         }
+        public void PropertyChangedRate() { OnPropertyChanged("Rate"); }
+
         private double rateShift;
         public double RateShift
         {
@@ -560,6 +575,28 @@ namespace MultiPlayerNIIES.ViewModel
         }
 
 
+        //Видимость панелей в видеоокне лидера синхронизации
+        public VideoWindowPanelsShowed SyncLeadVideoWindowPanelsShowed
+        {
+            get
+            {
+                if (SyncLeadPlayer != null && SyncLeadPlayer.Body != null)
+                    return SyncLeadPlayer.Body.panelsShowed;
+                else
+                    return VideoWindowPanelsShowed.None;
+            }
+            set
+            {
+                if (SyncLeadPlayer != null && SyncLeadPlayer.Body != null)
+                    SyncLeadPlayer.Body.ShowAndHidePanels(value);
+                OnPropertyChanged("SyncLeadVideoWindowPanelsShowed");
+            }
+        }
+        public void SyncLeadVideoWindowPanelsShowedPropertyChanged()
+        {
+            OnPropertyChanged("SyncLeadVideoWindowPanelsShowed");
+        }
+
         #endregion
 
         #region Methods
@@ -571,7 +608,7 @@ namespace MultiPlayerNIIES.ViewModel
                 MainWindow.TimeLine1.FullTime = SyncLeadPlayer.Duration;
                 SyncLeadSliderPosition = SyncLeadPlayer.SliderPosition;
                 MainWindow.TimeLine1.POS = SyncLeadPlayer.SliderPosition;
-                MainWindow.TimeLine1.Cursor1.CRPosition = SyncLeadPlayer.SliderPosition;
+               // MainWindow.TimeLine1.Cursor1.CRPosition = SyncLeadPlayer.SliderPosition;
                 OnPropertyChanged("SyncLeadSliderDuration");
                 OnPropertyChanged("SyncLeadSliderPosition");
 
@@ -833,7 +870,7 @@ namespace MultiPlayerNIIES.ViewModel
             VideoPlayerVM videoPlayerVM = (VideoPlayerVM)sender;
 
             SyncLeadPlayer = videoPlayerVM;
-
+            
         }
 
         /// <summary>
@@ -1856,7 +1893,67 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        //----------------------------------------------------
+        // Команды для разворачивания/сворачивания интерфейса видеоокон
+        private RelayCommand videoPlayersHideAllPanelsCommand;
+        public RelayCommand VideoPlayersHideAllPanelsCommand
+        {
+            get
+            {
+                return videoPlayersHideAllPanelsCommand ?? (videoPlayersHideAllPanelsCommand = new RelayCommand(obj =>
+                {
+                    foreach (var v in videoPlayerVMs)
+                    {
+                        v.Body.ShowAndHidePanels(VideoWindowPanelsShowed.None);
+                    }
+                }));
+            }
+        }
 
+        private RelayCommand videoPlayersShowAllPanelsCommand;
+        public RelayCommand VideoPlayersShowAllPanelsCommand
+        {
+            get
+            {
+                return videoPlayersShowAllPanelsCommand ?? (videoPlayersShowAllPanelsCommand = new RelayCommand(obj =>
+                {
+                    foreach (var v in videoPlayerVMs)
+                    {
+                        v.Body.ShowAndHidePanels(VideoWindowPanelsShowed.SyncAndPlay);
+                    }
+                }));
+            }
+        }
+
+        private RelayCommand videoPlayersShowPlayerPanelOnlyCommand;
+        public RelayCommand VideoPlayersShowPlayerPanelOnlyCommand
+        {
+            get
+            {
+                return videoPlayersShowPlayerPanelOnlyCommand ?? (videoPlayersShowPlayerPanelOnlyCommand = new RelayCommand(obj =>
+                {
+                    foreach (var v in videoPlayerVMs)
+                    {
+                        v.Body.ShowAndHidePanels(VideoWindowPanelsShowed.PlayOnly);
+                    }
+                }));
+            }
+        }
+
+        private RelayCommand videoPlayersShowSyncPanelOnlyCommand;
+        public RelayCommand VideoPlayersShowSyncPanelOnlyCommand
+        {
+            get
+            {
+                return videoPlayersShowSyncPanelOnlyCommand ?? (videoPlayersShowSyncPanelOnlyCommand = new RelayCommand(obj =>
+                {
+                    foreach (var v in videoPlayerVMs)
+                    {
+                        v.Body.ShowAndHidePanels(VideoWindowPanelsShowed.SyncOnly);
+                    }
+                }));
+            }
+        }
 
         #endregion
     }
