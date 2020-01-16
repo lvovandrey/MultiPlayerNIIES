@@ -551,6 +551,7 @@
     <Content Include="dll\Microsoft.DirectX.AudioVideoPlayback.dll" />
     <Content Include="dll\Microsoft.DirectX.Direct3D.dll" />
     <Content Include="dll\Microsoft.DirectX.dll" />
+    <Resource Include="Images\PNG\Application-View-Tile.png" />
     <Resource Include="Images\PNG\Film.png" />
     <Resource Include="Images\PNG\Picture-Empty.png" />
     <Resource Include="Images\PNG\Hslider.png" />

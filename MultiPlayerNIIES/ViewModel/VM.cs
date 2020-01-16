@@ -1955,6 +1955,22 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+        
+        private RelayCommand videoPlayersShowTilesCommand;
+        public RelayCommand VideoPlayersShowTilesCommand
+        {
+            get
+            {
+                return videoPlayersShowTilesCommand ?? (videoPlayersShowTilesCommand = new RelayCommand(obj =>
+                {
+                    Queue<Rect> AreasForPlacement = CalcAreasForPlacementVideoplayers(videoPlayerVMs.Count);
+                    foreach (var v in videoPlayerVMs)
+                    {
+                        v.Replace(AreasForPlacement.Dequeue());
+                    }
+                }));
+            }
+        }
         #endregion
     }
 }

@@ -557,6 +557,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         public void FillWindowPosition(Control hWin)
         {
+            if (m_videoWindow == null) return;
             Rectangle rc = hWin.ClientRectangle;
             int hr = m_videoWindow.SetWindowPosition(0, 0, rc.Right, rc.Bottom);
             DsError.ThrowExceptionForHR(hr);
@@ -681,6 +682,19 @@ namespace MultiPlayerNIIES.View.DSPlayer
                         m_FilterGraph = null;
                     }
                 }
+                if (m_videoWindow != null)
+                {
+                    try
+                    {
+                        Marshal.ReleaseComObject(m_videoWindow);
+                    }
+                    catch { }
+                    finally
+                    {
+                        m_videoWindow = null;
+                    }
+                }
+                
             }
             GC.Collect();
         }

@@ -143,7 +143,7 @@
                 <Separator Style="{StaticResource OrangeSeparatorStyle}"/>
                 <MenuItem Template="{StaticResource OrangeMenuCOMMONControlTemplate}">
                     <MenuItem.Header>
-                        <TextBlock VerticalAlignment="Center" Margin="55 0 0 0" Height="20">Вид видеоокон</TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="54 0 0 0" Height="20">Вид видеоокон</TextBlock>
                     </MenuItem.Header>
                     
                     <MenuItem Command="{Binding VideoPlayersHideAllPanelsCommand}">
@@ -200,6 +200,19 @@
 
 
                 </MenuItem>
+
+                <MenuItem  Command="{Binding  VideoPlayersShowTilesCommand}">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image   
+                                Width="20" Height="20"
+                                Source="/MultiPlayerNIIES;component/Images/PNG/Application-View-Tile.png" RenderTransformOrigin="0.5,0.5">
+                            </Image>
+                            <TextBlock VerticalAlignment="Center" Margin="5 -2 0 0" >Видеоокна расположить мозаикой</TextBlock>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </MenuItem>
+
             </MenuItem>
 
             <MenuItem Header="_Опции" Template="{StaticResource OrangeMenuItemControlTemplate}">
