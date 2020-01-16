@@ -224,11 +224,13 @@
             </MenuItem>
 
             <MenuItem Header="_Справка" Template="{StaticResource OrangeMenuItemControlTemplate}">
-                <MenuItem Header="_О программе" Command="{Binding AboutCommand}">
+
+                <MenuItem Header="_Просмотр справки" Command="{Binding HelpCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Question.png"  Width="20"/>
+                        <Image Source="/MultiPlayerNIIES;component/Images/PNG/Information.png"  Width="20"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Height="20" Header="_О программе" Command="{Binding AboutCommand}"/>
             </MenuItem>
         </Menu>
 
