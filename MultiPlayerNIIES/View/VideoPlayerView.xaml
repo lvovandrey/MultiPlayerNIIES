@@ -33,7 +33,7 @@
 
 
 
-        
+
         <Rectangle Grid.ColumnSpan="100" Grid.RowSpan="100" Stroke="#FFC2965B" StrokeThickness="1"  ></Rectangle>
         <Grid
             Margin="2"
@@ -189,7 +189,7 @@
             Grid.ColumnSpan="3"
             PreviewMouseWheel="VLC_PreviewMouseWheel" />-->
 
-            
+
             <Button
                 x:Name="ButtonHideInstruments"
                 Grid.Row="3"
@@ -257,7 +257,7 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Margin="0 4 7 -4">
-                
+
                 <TextBlock
                 FontSize="12" FontWeight="Bold" 
                 Foreground="Red"

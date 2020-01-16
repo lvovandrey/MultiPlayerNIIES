@@ -4,6 +4,7 @@ using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
+using MultiPlayerNIIES.View.DialogWindows;
 using MultiPlayerNIIES.View.Elements;
 using MultiPlayerNIIES.View.TimeDiffElements;
 using MultiPlayerNIIES.View.TimeLine;
@@ -54,6 +55,7 @@ namespace MultiPlayerNIIES.ViewModel
         SettingsWindowVM settingsWindowVM;
         TimeDIffWindowWindow TimeDIffWindowWindow;
 
+        AboutWindow AboutWindow;
         StripeContainerVM StripeContainerVM;
 
 
@@ -127,6 +129,8 @@ namespace MultiPlayerNIIES.ViewModel
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
             TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
 
+            AboutWindow = new AboutWindow();
+            
             StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
 //            IsStripesContainerVisible = false;
         }
@@ -1995,7 +1999,7 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return aboutCommand ?? (aboutCommand = new RelayCommand(obj =>
                 {
-
+                    AboutWindow.ShowDialog();
                 }));
             }
         }

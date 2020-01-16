@@ -1,0 +1,83 @@
+﻿<Window x:Class="MultiPlayerNIIES.View.DialogWindows.AboutWindow"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiPlayerNIIES.View"
+        xmlns:elements="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
+        mc:Ignorable="d"
+        Title="О программе"  Height="300" Width="600" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" WindowStyle="None"
+        BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing" >
+    <Window.Resources>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>
+        <Style TargetType="ListBox" BasedOn="{StaticResource OrangeListBoxStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource OrangeTextBlockStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
+        <Style TargetType="GroupBox" BasedOn="{StaticResource OrangeGroupBoxStyle}"/>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource OrangeTextStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource OrangeOnGrayTextBoxStyle}"/>
+    </Window.Resources>
+    <Grid Background="{StaticResource AlmostBlackBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel   
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal" 
+            Background="{StaticResource SmartGrayBrush}">
+            <Button x:Name="ButtonClose"
+                Width="30" Height="18"
+                Click="ButtonClose_Click"
+                Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/CloseO2.png" Margin="0"></Image>
+            </Button>
+        </StackPanel>
+        <Rectangle Fill="{StaticResource SmartGrayBrush}"></Rectangle>
+        <TextBlock Text="О программе" VerticalAlignment="Center" Margin="10 0 0 0"/>
+        <Rectangle Fill="#02000000" Cursor="ScrollAll" x:Name="Dragger"></Rectangle>
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle Fill="{DynamicResource NiceGrayBrush}" Stroke="{StaticResource BlackBrush}" Grid.ColumnSpan="2"/>
+            <Grid  Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="MultiPlayerNIIES" FontSize="36" Margin="10 10 0 0"/>
+                <TextBlock Text="Многооконный плеер для синхронного воспроизведения видеофайлов." Grid.Row="1" Margin="10"/>
+            </Grid>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Разработчик" FontSize="18" Margin="10 10 0 0"/>
+                <TextBlock Text="Львов А.А. 2019-2020" Grid.Row="1" Margin="10 0 0 0"/>
+                <TextBlock Text="Лицензия" FontSize="18" Margin="10 10 0 0"/>
+                <TextBlock Text="WTFPL" Grid.Row="1" Margin="10 0 0 0"/>
+                <TextBlock Text="Контакты" FontSize="18" Margin="10 10 0 0"/>
+                <TextBlock Grid.Row="1" Margin="10 0 0 0"> 
+                    <Hyperlink Foreground="#FF5191FF" Click="Hyperlink_Click" NavigateUri="https://github.com/lvovandrey/MultiPlayerNIIES" >Github репозиторий</Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Margin="10 0 0 0"> 
+                    <Hyperlink Foreground="#FF5191FF" Click="Hyperlink_Click" NavigateUri="mailto:lvovandrey@mail.ru" >Написать: lvovandrey@mail.ru</Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+</Window>

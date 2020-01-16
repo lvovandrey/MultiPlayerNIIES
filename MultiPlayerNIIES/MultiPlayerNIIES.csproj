@@ -187,6 +187,9 @@
     <Compile Include="View\AreaVideoPlayersView.xaml.cs">
       <DependentUpon>AreaVideoPlayersView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DialogWindows\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DSPlayer\Capture.cs" />
     <Compile Include="View\DSPlayer\CaptureAdditions.cs" />
     <Compile Include="View\DSPlayer\DSPlayer.xaml.cs">
@@ -317,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AreaVideoPlayersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogWindows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
