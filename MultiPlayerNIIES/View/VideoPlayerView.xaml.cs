@@ -151,7 +151,10 @@ namespace MultiPlayerNIIES.View
             draggedObject.MouseMove += OnDragMove;
             draggedObject.LostMouseCapture += OnLostCapture;
             draggedObject.MouseUp += OnMouseUp;
+
+            Cursor oldcursor = (sender as FrameworkElement).Cursor;
             Mouse.Capture(draggedObject);
+            Mouse.OverrideCursor = oldcursor; //фиксируем форму курсора, а то она из-за capture слетает.
         }
 
         internal void RateIncreace()//TODO: Подключить VM и убрать это отсюда
@@ -192,6 +195,7 @@ namespace MultiPlayerNIIES.View
             draggedObject.LostMouseCapture -= OnLostCapture;
             draggedObject.MouseUp -= OnMouseUp;
             UpdatePosition(e);
+            Mouse.OverrideCursor = null;
         }
         #endregion
 
@@ -256,7 +260,13 @@ namespace MultiPlayerNIIES.View
             ResizedObject.MouseMove += OnResizeMove;
             ResizedObject.LostMouseCapture += OnLostCaptureResize;
             ResizedObject.MouseUp += OnMouseUpResize;
+
+
+
+            
+            Cursor oldcursor = (sender as FrameworkElement).Cursor;
             Mouse.Capture(ResizedObject);
+            Mouse.OverrideCursor = oldcursor; //фиксируем форму курсора, а то она из-за capture слетает.
 
 
         }
@@ -276,6 +286,7 @@ namespace MultiPlayerNIIES.View
 
         void UpdateResizePosition(MouseEventArgs e)
         {
+         //   Console.WriteLine("2" + Cursor.ToString());
             var point = e.GetPosition(Container);
             var newPos = point - ResizeRelativeMousePos;
             double newWidth = oldWidth;
@@ -348,6 +359,7 @@ namespace MultiPlayerNIIES.View
         {
             FinishResize(sender, e);
             Mouse.Capture(null);
+            Mouse.OverrideCursor = null;
         }
 
         void OnLostCaptureResize(object sender, MouseEventArgs e)
@@ -361,6 +373,7 @@ namespace MultiPlayerNIIES.View
             ResizedObject.LostMouseCapture -= OnLostCaptureResize;
             ResizedObject.MouseUp -= OnMouseUpResize;
             UpdateResizePosition(e);
+            Mouse.OverrideCursor = null;
         }
 
         #endregion

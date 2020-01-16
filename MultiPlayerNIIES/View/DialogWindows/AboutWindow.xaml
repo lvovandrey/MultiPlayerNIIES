@@ -43,7 +43,7 @@
         </StackPanel>
         <Rectangle Fill="{StaticResource SmartGrayBrush}"></Rectangle>
         <TextBlock Text="О программе" VerticalAlignment="Center" Margin="10 0 0 0"/>
-        <Rectangle Fill="#02000000" Cursor="ScrollAll" x:Name="Dragger"></Rectangle>
+        <Rectangle Fill="#02000000" x:Name="Dragger"></Rectangle>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
