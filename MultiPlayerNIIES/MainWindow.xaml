@@ -15,13 +15,15 @@
     xmlns:timeline="clr-namespace:MultiPlayerNIIES.View.TimeLine"
     xmlns:timestrips="clr-namespace:MultiPlayerNIIES.View.TimeStripes"
     Title="Видеоплеер НИИЭС"
-    BorderThickness="0"
+    BorderThickness="1"
+    BorderBrush="{StaticResource MyLightOrangeBrush}"
     Width="1310"
     Height="800"
     Closing="Window_Closing"
     MouseDown="Window_MouseDown"
     WindowStyle="SingleBorderWindow"
-        mc:Ignorable="d">
+    x:Name="ThisWindow"
+    mc:Ignorable="d">
     <Window.Resources>
         <converters:TimeSpanHiConverter x:Key="TimeSpanHiConverter" />
         <converters:TimeSpanToString x:Key="TimeSpanToString" />
@@ -29,6 +31,7 @@
         <converters:BoolToVisibilityToCollapseConverter x:Key="BoolToVisibilityToCollapseConverter"/>
         <converters:MultipleBoolToVisibilityToCollapseConverter x:Key="MultipleBoolToVisibilityToCollapseConverter"/>
         <converters:MultipleBoolXORToVisibilityToCollapseConverter x:Key="MultipleBoolXORToVisibilityToCollapseConverter"/>
+        <converters:WindowStateToImgSource x:Key="WindowStateToImgSource"/>
         <converters:DoubleVolumeToVolumeImgSource x:Key="DoubleVolumeToVolumeImgSource"/>
         <Style TargetType="Slider" BasedOn="{StaticResource Horizontal_SliderOrange}"/>
     </Window.Resources>
@@ -42,6 +45,44 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <Grid Grid.Row="0" x:Name="CustomTitleGrid" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding ElementName=ThisWindow, Path=Title}" Style="{StaticResource OrangeTextBlockStyle}" FontSize="14" VerticalAlignment="Center" Margin="10 0 0 0"/>
+            <Rectangle Height="24" Fill="#02000000" x:Name="Dragger" MouseLeftButtonDown="Dragger_MouseLeftButtonDown"></Rectangle>
+            
+            <StackPanel  
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal" Margin="1 0 0 1" Background="{StaticResource SmartGrayBrush}">
+                <Button 
+                    Grid.Column="1" Width="30" Height="18"
+                    Margin="0"
+                    Command="{Binding MinimizeWindowCommand}"
+                    Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/MinimizeO2.png" Margin="0"></Image>
+                </Button>
+                <Button 
+                    Grid.Column="1" Width="30" Height="18" 
+                    Margin="0"
+                    Command="{Binding MaximizeRestoreWindowCommand}"
+                    Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="{Binding ElementName=ThisWindow, Path=WindowState, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, 
+                        Converter={StaticResource WindowStateToImgSource}}"
+                        Margin="0"/>
+                </Button>
+                <Button 
+                    Grid.Column="1" Width="30" Height="18"
+                    Margin="0"
+                    Command="{Binding CloseAppCommand}"
+                    Style="{StaticResource OrangeVideoPlayerButtonStyle}">
+                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/CloseO2.png" Margin="0"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
         <view:MenuView Grid.Row="1"/>
 
         <Grid Grid.Row="2">

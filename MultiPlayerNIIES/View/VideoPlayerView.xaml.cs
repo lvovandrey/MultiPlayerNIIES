@@ -261,14 +261,9 @@ namespace MultiPlayerNIIES.View
             ResizedObject.LostMouseCapture += OnLostCaptureResize;
             ResizedObject.MouseUp += OnMouseUpResize;
 
-
-
-            
             Cursor oldcursor = (sender as FrameworkElement).Cursor;
             Mouse.Capture(ResizedObject);
             Mouse.OverrideCursor = oldcursor; //фиксируем форму курсора, а то она из-за capture слетает.
-
-
         }
 
 
@@ -276,7 +271,6 @@ namespace MultiPlayerNIIES.View
         void OnResizeMove(object sender, MouseEventArgs e)
         {
             UpdateResizePosition(e);
-            //      UpdateVLCInnerPosition();
         }
 
         internal void Step(TimeSpan step)
@@ -286,7 +280,6 @@ namespace MultiPlayerNIIES.View
 
         void UpdateResizePosition(MouseEventArgs e)
         {
-         //   Console.WriteLine("2" + Cursor.ToString());
             var point = e.GetPosition(Container);
             var newPos = point - ResizeRelativeMousePos;
             double newWidth = oldWidth;
