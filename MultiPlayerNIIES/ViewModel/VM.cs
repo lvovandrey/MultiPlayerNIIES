@@ -184,6 +184,10 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 SyncronizationShiftCommand.Execute(FastRate); e.Handled = true;
             }
+            if (e.Key == Key.F1 && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            {
+                HelpCommand.Execute(FastRate); e.Handled = true;
+            }
 
         }
 
@@ -1968,6 +1972,30 @@ namespace MultiPlayerNIIES.ViewModel
                     {
                         v.Replace(AreasForPlacement.Dequeue());
                     }
+                }));
+            }
+        }
+
+        private RelayCommand helpCommand;
+        public RelayCommand HelpCommand
+        {
+            get
+            {
+                return helpCommand ?? (helpCommand = new RelayCommand(obj =>
+                {
+                    Process.Start(Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "Manuals and docs/README.pdf"));
+                }));
+            }
+        }
+
+        private RelayCommand aboutCommand;
+        public RelayCommand AboutCommand
+        {
+            get
+            {
+                return aboutCommand ?? (aboutCommand = new RelayCommand(obj =>
+                {
+
                 }));
             }
         }
