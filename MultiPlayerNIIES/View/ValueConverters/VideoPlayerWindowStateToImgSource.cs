@@ -29,4 +29,25 @@ namespace MultiPlayerNIIES.View.ValueConverters
             return DependencyProperty.UnsetValue;
         }
     }
+
+    class WindowStateToImgSource : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null) return "/Images/PNG/MaximizeO2.png";
+            if (!(value is WindowState)) return "/Images/PNG/MaximizeO2.png";
+
+
+            if ((WindowState)value == WindowState.Maximized)
+                return "/Images/PNG/RestoreO2.png";
+            else
+                return "/Images/PNG/MaximizeO2.png";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DependencyProperty.UnsetValue;
+        }
+    }
+
 }

@@ -13,5 +13,12 @@ namespace MultiPlayerNIIES
     /// </summary>
     public partial class App : Application
     {
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MainWindow _MainWindow = new MainWindow();
+
+            _MainWindow.Show();
+        }
     }
 }

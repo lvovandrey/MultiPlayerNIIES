@@ -48,9 +48,5 @@ namespace MultiPlayerNIIES.View.DialogWindows
             Process.Start( s);
         }
 
-        private void Hyperlink_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

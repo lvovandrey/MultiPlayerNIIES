@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.View.DSPlayer;
 using MultiPlayerNIIES.ViewModel;
@@ -32,7 +33,22 @@ namespace MultiPlayerNIIES
             vm = new VM(AreaVideoPlayers.GridMain, this);
             DataContext = vm;
 
+           if(CustomTitleGrid.Visibility==Visibility.Visible && this.WindowStyle == WindowStyle.None) this.MaxHeight = SystemParameters.WorkArea.Height+12;
+            // TODO: разобраться с WindowChrome wC = WindowChrome.GetWindowChrome(this);
+
+            Dragger.MouseLeftButtonDown += new MouseButtonEventHandler(layoutRoot_MouseLeftButtonDown);
         }
+
+        void layoutRoot_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
 
         public void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -45,5 +61,9 @@ namespace MultiPlayerNIIES
             this.Focus();
         }
 
+        private void Dragger_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2) vm.MaximizeRestoreWindowCommand.Execute(null);
+        }
     }
 }
