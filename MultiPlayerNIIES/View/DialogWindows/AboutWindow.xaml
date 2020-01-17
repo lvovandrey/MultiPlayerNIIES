@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:MultiPlayerNIIES.View"
         xmlns:elements="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
         mc:Ignorable="d"
-        Title="О программе"  Height="300" Width="600" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" WindowStyle="None"
-        BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing" >
+        Title="О программе"  Height="300" Width="600" 
+        ResizeMode="NoResize"   
+        WindowStartupLocation="CenterOwner" 
+        Style="{StaticResource OrangeWindowStyle}"
+        BorderThickness="1" BorderBrush="#FFB07220" >
     <Window.Resources>
         <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>
         <Style TargetType="ListBox" BasedOn="{StaticResource OrangeListBoxStyle}"/>
@@ -18,34 +21,7 @@
         <Style TargetType="CheckBox" BasedOn="{StaticResource OrangeTextStyle}"/>
         <Style TargetType="TextBox" BasedOn="{StaticResource OrangeOnGrayTextBoxStyle}"/>
     </Window.Resources>
-    <Grid Background="{StaticResource AlmostBlackBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <StackPanel   
-            Grid.Row="0"
-            Grid.Column="1"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal" 
-            Background="{StaticResource SmartGrayBrush}">
-            <Button x:Name="ButtonClose"
-                Width="30" Height="18"
-                Click="ButtonClose_Click"
-                Style="{StaticResource OrangeVideoPlayerButtonStyle}">
-                    <Image Source="/MultiPlayerNIIES;component/Images/PNG/CloseO2.png" Margin="0"></Image>
-            </Button>
-        </StackPanel>
-        <Rectangle Fill="{StaticResource SmartGrayBrush}"></Rectangle>
-        <TextBlock Text="О программе" VerticalAlignment="Center" Margin="10 0 0 0"/>
-        <Rectangle Fill="#02000000" x:Name="Dragger"></Rectangle>
-
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+       <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -78,6 +54,4 @@
                 </TextBlock>
             </StackPanel>
         </Grid>
-        
-    </Grid>
 </Window>
