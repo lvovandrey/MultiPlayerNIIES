@@ -55,7 +55,6 @@ namespace MultiPlayerNIIES.ViewModel
         SettingsWindowVM settingsWindowVM;
         TimeDIffWindowWindow TimeDIffWindowWindow;
 
-        AboutWindow AboutWindow;
         StripeContainerVM StripeContainerVM;
 
 
@@ -129,7 +128,6 @@ namespace MultiPlayerNIIES.ViewModel
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
             TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
 
-            AboutWindow = new AboutWindow();
             
             StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
 //            IsStripesContainerVisible = false;
@@ -1999,7 +1997,8 @@ namespace MultiPlayerNIIES.ViewModel
             {
                 return aboutCommand ?? (aboutCommand = new RelayCommand(obj =>
                 {
-                    AboutWindow.ShowDialog();
+                    AboutWindow aboutWindow = new AboutWindow();
+                    aboutWindow.ShowDialog();
                 }));
             }
         }

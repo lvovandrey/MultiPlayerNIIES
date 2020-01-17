@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:MultiPlayerNIIES.View"
         xmlns:elements="clr-namespace:MultiPlayerNIIES.View.SettingsViewElements"
         mc:Ignorable="d"
-        Title="Настройки" Height="400" Width="800" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow"
+        Style="{StaticResource OrangeWindowStyle}"
+        Title="Настройки" Height="400" Width="800" ResizeMode="NoResize"   WindowStartupLocation="CenterScreen" 
         BorderThickness="1" BorderBrush="#FFB07220" Closing="Window_Closing"  Loaded="Window_Loaded" >
     <Window.Resources>
         <Style TargetType="ListBoxItem" BasedOn="{StaticResource OrangeListBoxItemStyle}"/>

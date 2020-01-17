@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,20 +15,13 @@ using System.Windows.Shapes;
 namespace MultiPlayerNIIES.View.DialogWindows
 {
     /// <summary>
-    /// Логика взаимодействия для AboutWindow.xaml
+    /// Логика взаимодействия для InfoWindow.xaml
     /// </summary>
-    public partial class AboutWindow : Window
+    public partial class InfoWindow : Window
     {
-        public AboutWindow()
+        public InfoWindow()
         {
             InitializeComponent();
         }
-
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            string s = (sender as Hyperlink).NavigateUri.OriginalString;
-            Process.Start( s);
-        }
-
     }
 }
