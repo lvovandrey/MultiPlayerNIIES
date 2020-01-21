@@ -7,8 +7,28 @@
         mc:Ignorable="d"
         Title="InfoWindow" Height="450" Width="800" 
         Style="{StaticResource OrangeWindowStyle}">
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource  OrangeTextBlockStyle}"/>
+    </Window.Resources>
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="DJLDSFSD"/>
+        <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Ok" Width="50" Height="30" HorizontalAlignment="Left" Click="buttonOk_onClick" Margin="10"/>
+            <Button Content="Cancel" Width="50" Height="30" HorizontalAlignment="Right" Click="buttonCancel_onClick" Margin="10"/>
+        </StackPanel>
     </Grid>
 
 </Window>

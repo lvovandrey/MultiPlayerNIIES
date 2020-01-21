@@ -14,14 +14,62 @@ using System.Windows.Shapes;
 
 namespace MultiPlayerNIIES.View.DialogWindows
 {
-    /// <summary>
-    /// Логика взаимодействия для InfoWindow.xaml
-    /// </summary>
+    public enum InfoWindowButtons
+    {
+        Ok,
+        YesNo,
+        OkCancel
+    }
+    public enum InfoWindowIcons
+    {
+        Info,
+        Warning,
+        Error,
+        None
+    }
+    public enum InfoWindowResult
+    {
+        Ok,
+        Cancel,
+        Yes,
+        No
+    }
     public partial class InfoWindow : Window
     {
         public InfoWindow()
         {
             InitializeComponent();
         }
+
+        InfoWindowResult Result = InfoWindowResult.Cancel;
+
+        public static InfoWindowResult Show(string message, string title="Информация", InfoWindowButtons buttons = InfoWindowButtons.Ok, InfoWindowIcons icon = InfoWindowIcons.Info)
+        {
+
+            var wnd = new InfoWindow();
+
+            if (wnd.ShowDialog().GetValueOrDefault())
+                return wnd.Result;
+            else return InfoWindowResult.Cancel; 
+        }
+
+
+
+        private void buttonOk_onClick(object sender, RoutedEventArgs e)
+        {
+            Result = InfoWindowResult.Ok;
+            this.DialogResult = true;
+            this.Close();
+        }
+
+        private void buttonCancel_onClick(object sender, RoutedEventArgs e)
+        {
+            Result = InfoWindowResult.Cancel;
+            this.DialogResult = true;
+            this.Close();
+
+        }
     }
+
+
 }

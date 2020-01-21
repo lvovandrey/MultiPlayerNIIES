@@ -234,6 +234,6 @@
             </MenuItem>
         </Menu>
 
-
+        <Button HorizontalAlignment="Center" Width="40" Click="Button_Click"></Button>
     </Grid>
 </UserControl>
