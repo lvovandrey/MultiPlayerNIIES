@@ -195,7 +195,7 @@
                     <Binding Path="IsMainPanelVisible" />
                 </MultiBinding>
             </Grid.Visibility>
-            <mainpanel:MainPanelViewNew/>
+            <mainpanel:MainPanelView2/>
         </Grid>
 
     </Grid>

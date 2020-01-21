@@ -223,6 +223,9 @@
     <Compile Include="View\MainPanelView.xaml.cs">
       <DependentUpon>MainPanelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MainPanelViewNew\MainPanelView2.xaml.cs">
+      <DependentUpon>MainPanelView2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPanelViewNew\MainPanelViewNew.xaml.cs">
       <DependentUpon>MainPanelViewNew.xaml</DependentUpon>
     </Compile>
@@ -372,6 +375,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainPanelViewNew\MainPanelView2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

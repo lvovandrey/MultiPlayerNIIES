@@ -665,6 +665,8 @@ namespace MultiPlayerNIIES.ViewModel
                                 }
                                 break;
                             }
+                        case 48: AllPlayCommand.Execute(null); break;
+                        case 49: AllPauseCommand.Execute(null); break;
                         default: break;
                     }
                 }
