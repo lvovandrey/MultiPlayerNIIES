@@ -25,6 +25,7 @@ namespace MultiPlayerNIIES
     public partial class MainWindow : Window
     {
         VM vm;
+        public static MainWindow mainWindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,6 +38,7 @@ namespace MultiPlayerNIIES
             // TODO: разобраться с WindowChrome wC = WindowChrome.GetWindowChrome(this);
 
             Dragger.MouseLeftButtonDown += new MouseButtonEventHandler(layoutRoot_MouseLeftButtonDown);
+            mainWindow = this;
         }
 
         void layoutRoot_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

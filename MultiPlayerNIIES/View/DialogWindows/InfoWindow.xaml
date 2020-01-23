@@ -4,31 +4,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayerNIIES.View.DialogWindows"
-        mc:Ignorable="d"
-        Title="InfoWindow" Height="450" Width="800" 
+        xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
+        mc:Ignorable="d" 
+        Title="InfoWindow" Width="400"  SizeToContent="Height"
         Style="{StaticResource OrangeWindowStyle}">
     <Window.Resources>
-        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}">
+            <Setter Property="Tag" Value="{Binding Content, RelativeSource={RelativeSource Self}}"/>
+            <!--<Setter Property="Command" Value="{Binding ClickCommand}"/>-->
+            <EventSetter Event="Click" Handler="Button_Click"/>
+            <Setter Property="Visibility" Value="Visible"/>
+            <converters:BoolToVisibilityConverter  x:Key="BoolToVisibilityConverter"/>
+        </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource  OrangeTextBlockStyle}"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="DJLDSFSD"/>
-        <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1"/>
-        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Ok" Width="50" Height="30" HorizontalAlignment="Left" Click="buttonOk_onClick" Margin="10"/>
-            <Button Content="Cancel" Width="50" Height="30" HorizontalAlignment="Right" Click="buttonCancel_onClick" Margin="10"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" 
+                       Text="{Binding Message}"
+                       TextWrapping="WrapWithOverflow"
+                       Margin="5 10 5 5"/>
+
+        <Image Grid.Row="0" Grid.Column="0" Source="/MultiPlayerNIIES;component/Images/PNG/Information.png" Width="34" Height="34" Margin="5" />
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button Content="Ok" Width="50" Height="30" 
+                    HorizontalAlignment="Left"  Margin="0 5 30 5"/>
+            <Button Content="Cancel" Width="50" Height="30" HorizontalAlignment="Right" 
+                     Margin="0 5 10 5" />
         </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button Content="Yes" Width="50" Height="30" 
+                    HorizontalAlignment="Left"  Margin="0 5 30 5"/>
+            <Button Content="No" Width="50" Height="30" HorizontalAlignment="Right" 
+                     Margin="0 5 10 5" />
+        </StackPanel>
+        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                Visibility="{Binding IsOkCentralButtonVisible, Converter=}"
+                Content="Ok" Width="50" Height="30" 
+                HorizontalAlignment="Center" Margin="0 5 30 5"/>
+
     </Grid>
 
 </Window>

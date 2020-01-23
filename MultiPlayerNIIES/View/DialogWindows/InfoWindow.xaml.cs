@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,10 +44,17 @@ namespace MultiPlayerNIIES.View.DialogWindows
 
         InfoWindowResult Result = InfoWindowResult.Cancel;
 
-        public static InfoWindowResult Show(string message, string title="Информация", InfoWindowButtons buttons = InfoWindowButtons.Ok, InfoWindowIcons icon = InfoWindowIcons.Info)
+        public static InfoWindowResult Show(string message, string title = "Информация", InfoWindowButtons buttons = InfoWindowButtons.Ok, InfoWindowIcons icon = InfoWindowIcons.Info, Window owner = null)
         {
 
-            var wnd = new InfoWindow();
+            InfoWindow wnd = new InfoWindow();
+            if (owner == null)
+                wnd.Owner = MainWindow.mainWindow;
+            else
+                wnd.Owner = owner;
+
+
+
 
             if (wnd.ShowDialog().GetValueOrDefault())
                 return wnd.Result;
@@ -55,19 +63,28 @@ namespace MultiPlayerNIIES.View.DialogWindows
 
 
 
-        private void buttonOk_onClick(object sender, RoutedEventArgs e)
+        //private void buttonOk_onClick(object sender, RoutedEventArgs e)
+        //{
+        //    Result = InfoWindowResult.Ok;
+        //    this.DialogResult = true;
+        //    this.Close();
+        //}
+
+        //private void buttonCancel_onClick(object sender, RoutedEventArgs e)
+        //{
+        //    Result = InfoWindowResult.Cancel;
+        //    this.DialogResult = true;
+        //    this.Close();
+
+        //}
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Result = InfoWindowResult.Ok;
+            InfoWindowResult Res = InfoWindowResult.Cancel;
+            Enum.TryParse((sender as Button).Tag.ToString(), out Res); 
+            Result = Res;
             this.DialogResult = true;
             this.Close();
-        }
-
-        private void buttonCancel_onClick(object sender, RoutedEventArgs e)
-        {
-            Result = InfoWindowResult.Cancel;
-            this.DialogResult = true;
-            this.Close();
-
         }
     }
 
