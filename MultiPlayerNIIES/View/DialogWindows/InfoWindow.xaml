@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayerNIIES.View.DialogWindows"
         xmlns:converters="clr-namespace:MultiPlayerNIIES.View.ValueConverters"
-        mc:Ignorable="d" 
-        Title="InfoWindow" Width="400"  SizeToContent="Height"
+        mc:Ignorable="d"  WindowStartupLocation="CenterOwner"
+        Title="{Binding Caption}" Width="400"  SizeToContent="Height"
         Style="{StaticResource OrangeWindowStyle}">
     <Window.Resources>
+        <converters:BoolToVisibilityConverter  x:Key="BoolToVisibilityConverter"/>
         <Style TargetType="Button" BasedOn="{StaticResource OrangeSmallButtonStyle}">
             <Setter Property="Tag" Value="{Binding Content, RelativeSource={RelativeSource Self}}"/>
             <!--<Setter Property="Command" Value="{Binding ClickCommand}"/>-->
             <EventSetter Event="Click" Handler="Button_Click"/>
             <Setter Property="Visibility" Value="Visible"/>
-            <converters:BoolToVisibilityConverter  x:Key="BoolToVisibilityConverter"/>
         </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource  OrangeTextBlockStyle}"/>
     </Window.Resources>
@@ -37,18 +37,22 @@
         <Image Grid.Row="0" Grid.Column="0" Source="/MultiPlayerNIIES;component/Images/PNG/Information.png" Width="34" Height="34" Margin="5" />
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button Content="Ok" Width="50" Height="30" 
+                    Visibility="{Binding IsOkButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                     HorizontalAlignment="Left"  Margin="0 5 30 5"/>
             <Button Content="Cancel" Width="50" Height="30" HorizontalAlignment="Right" 
+                    Visibility="{Binding IsCancelButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                      Margin="0 5 10 5" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button Content="Yes" Width="50" Height="30" 
+                    Visibility="{Binding IsYesButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                     HorizontalAlignment="Left"  Margin="0 5 30 5"/>
             <Button Content="No" Width="50" Height="30" HorizontalAlignment="Right" 
+                    Visibility="{Binding IsNoButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                      Margin="0 5 10 5" />
         </StackPanel>
         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                Visibility="{Binding IsOkCentralButtonVisible, Converter=}"
+                Visibility="{Binding IsOkCentralButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Ok" Width="50" Height="30" 
                 HorizontalAlignment="Center" Margin="0 5 30 5"/>
 

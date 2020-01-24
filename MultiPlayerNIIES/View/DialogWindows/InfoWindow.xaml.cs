@@ -53,8 +53,8 @@ namespace MultiPlayerNIIES.View.DialogWindows
             else
                 wnd.Owner = owner;
 
-
-
+            InfoWindowVM infoWindowVM = new InfoWindowVM(message, title, buttons, icon);
+            wnd.DataContext = infoWindowVM;
 
             if (wnd.ShowDialog().GetValueOrDefault())
                 return wnd.Result;
