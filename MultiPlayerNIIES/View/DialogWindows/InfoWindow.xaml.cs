@@ -44,7 +44,7 @@ namespace MultiPlayerNIIES.View.DialogWindows
 
         InfoWindowResult Result = InfoWindowResult.Cancel;
 
-        public static InfoWindowResult Show(string message, string title = "Информация", InfoWindowButtons buttons = InfoWindowButtons.Ok, InfoWindowIcons icon = InfoWindowIcons.Info, Window owner = null)
+        public static InfoWindowResult Show(string message, string title = "Сообщение", InfoWindowButtons buttons = InfoWindowButtons.Ok, InfoWindowIcons icon = InfoWindowIcons.Info, Window owner = null)
         {
 
             InfoWindow wnd = new InfoWindow();
@@ -60,23 +60,6 @@ namespace MultiPlayerNIIES.View.DialogWindows
                 return wnd.Result;
             else return InfoWindowResult.Cancel; 
         }
-
-
-
-        //private void buttonOk_onClick(object sender, RoutedEventArgs e)
-        //{
-        //    Result = InfoWindowResult.Ok;
-        //    this.DialogResult = true;
-        //    this.Close();
-        //}
-
-        //private void buttonCancel_onClick(object sender, RoutedEventArgs e)
-        //{
-        //    Result = InfoWindowResult.Cancel;
-        //    this.DialogResult = true;
-        //    this.Close();
-
-        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

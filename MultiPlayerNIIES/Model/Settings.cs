@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Tools.Serialization;
+using MultiPlayerNIIES.View.DialogWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace MultiPlayerNIIES.Model
             {
                 if (value <= 0 || value > 100)
                 {
-                    MessageBox.Show("Скорость воспроизведения должна быть положительным числом от 0.001 до 100", "Ошибка ввода скорости воспроизведения", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    InfoWindow.Show("Скорость воспроизведения должна быть положительным числом от 0.001 до 100", "Ошибка ввода скорости воспроизведения",InfoWindowButtons.Ok, InfoWindowIcons.Warning);
                     return;
                 }
                 slowRate = value.ToString();
@@ -62,7 +63,7 @@ namespace MultiPlayerNIIES.Model
             {
                 if (value <= 0 || value > 100)
                 {
-                    MessageBox.Show("Скорость воспроизведения должна быть положительным числом от 0.001 до 100", "Ошибка ввода скорости воспроизведения", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    InfoWindow.Show("Скорость воспроизведения должна быть положительным числом от 0.001 до 100", "Ошибка ввода скорости воспроизведения", InfoWindowButtons.Ok, InfoWindowIcons.Warning);
                     return;
                 }
                 fastRate = value.ToString();
@@ -82,7 +83,7 @@ namespace MultiPlayerNIIES.Model
             {
                 if (value <= 0 || value > 100)
                 {
-                    MessageBox.Show("Шаг скорости воспроизведения должна быть положительным числом от 0.001 до 100", "Ошибка ввода шага скорости воспроизведения", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    InfoWindow.Show("Шаг скорости воспроизведения должна быть положительным числом от 0.001 до 100", "Ошибка ввода шага скорости воспроизведения", InfoWindowButtons.Ok, InfoWindowIcons.Warning);
                     return;
                 }
                 rateShift = value.ToString();
@@ -102,7 +103,7 @@ namespace MultiPlayerNIIES.Model
             {
                 if (value <= 1 || value > 3600000)
                 {
-                    MessageBox.Show("Шаг перемещения задается в милисекундах от 1 (1 мсек) до 3 600 000 (1 час)", "Ошибка шага перемещения", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    InfoWindow.Show("Шаг перемещения задается в милисекундах от 1 (1 мсек) до 3 600 000 (1 час)", "Ошибка шага перемещения", InfoWindowButtons.Ok, InfoWindowIcons.Warning);
                     return;
                 }
                 step = value.ToString();
@@ -122,7 +123,7 @@ namespace MultiPlayerNIIES.Model
             {
                 if (value < 0 || value > 100)
                 {
-                    MessageBox.Show("Громкость по умолчанию - параметр задается в пределах от 0 до 100", "Ошибка ввода громкости по умолчанию", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    InfoWindow.Show("Громкость по умолчанию - параметр задается в пределах от 0 до 100", "Ошибка ввода громкости по умолчанию", InfoWindowButtons.Ok, InfoWindowIcons.Warning);
                     return;
                 }
                 defaultVolume = value.ToString();

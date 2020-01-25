@@ -2,6 +2,7 @@
 using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
+using MultiPlayerNIIES.View.DialogWindows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -322,7 +323,7 @@ namespace MultiPlayerNIIES.ViewModel
             }
             else
             {
-                MessageBox.Show("Файл " + filename + " не найден.");
+                InfoWindow.Show("Файл " + filename + " не найден.");
             }
         }
 

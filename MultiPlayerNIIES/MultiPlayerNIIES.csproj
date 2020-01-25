@@ -486,6 +486,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Images\PNG\Gnome-Dialog-Error-64.png" />
+    <Resource Include="Images\PNG\Gnome-Dialog-Information-64.png" />
+    <Resource Include="Images\PNG\Gnome-Dialog-Warning-64.png" />
     <Content Include="Manuals and docs\README.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

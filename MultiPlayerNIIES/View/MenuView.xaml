@@ -233,7 +233,5 @@
                 <MenuItem Height="20" Header="_О программе" Command="{Binding AboutCommand}"/>
             </MenuItem>
         </Menu>
-
-        <Button HorizontalAlignment="Center" Width="40" Click="Button_Click"></Button>
     </Grid>
 </UserControl>

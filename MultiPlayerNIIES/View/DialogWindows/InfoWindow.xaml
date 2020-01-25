@@ -34,7 +34,7 @@
                        TextWrapping="WrapWithOverflow"
                        Margin="5 10 5 5"/>
 
-        <Image Grid.Row="0" Grid.Column="0" Source="/MultiPlayerNIIES;component/Images/PNG/Information.png" Width="34" Height="34" Margin="5" />
+        <Image Grid.Row="0" Grid.Column="0" Source="{Binding ImageSource, Mode=OneWay}" Width="34" Height="34" Margin="5" />
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button Content="Ok" Width="50" Height="30" 
                     Visibility="{Binding IsOkButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -54,7 +54,7 @@
         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                 Visibility="{Binding IsOkCentralButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Ok" Width="50" Height="30" 
-                HorizontalAlignment="Center" Margin="0 5 30 5"/>
+                HorizontalAlignment="Center" Margin="0 5 0 5"/>
 
     </Grid>
 

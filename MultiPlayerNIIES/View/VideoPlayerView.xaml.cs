@@ -1,6 +1,7 @@
 ﻿using MultiPlayerNIIES.Model;
 using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
+using MultiPlayerNIIES.View.DialogWindows;
 using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -442,8 +443,8 @@ namespace MultiPlayerNIIES.View
         public event EventHandler OnSyncLeaderSet;
         private void SyncLeadIndicator_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            var res = MessageBox.Show("Вы уверены что хотите сменить плеер-лидер синхронизации?", "Смена плеера-лидера синхронизации", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-            if (res == MessageBoxResult.OK)
+            var res = InfoWindow.Show("Вы уверены что хотите сменить плеер-лидер синхронизации?", "Смена плеера-лидера синхронизации", InfoWindowButtons.OkCancel, InfoWindowIcons.Warning);
+            if (res == InfoWindowResult.Ok)
                 OnSyncLeaderSet(this, null);
         }
         #endregion

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.View.DialogWindows;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -52,7 +53,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             catch (Exception e)
             {
                 Ready = false;
-                MessageBox.Show("Ошибка считывания файлов титров: " + e.Message);                
+                InfoWindow.Show("Ошибка считывания файлов титров: " + e.Message);                
             }
             Parser.ParseRawTitles(RawSubtitles, out subtitles);
             RawSubtitles  = new List<string>();
@@ -88,7 +89,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch(Exception e)
             {
-                MessageBox.Show("Ошибка при поиске субтитров: " + e.Message);
+                InfoWindow.Show("Ошибка при поиске субтитров: " + e.Message);
             }
             return S;
         }
@@ -110,7 +111,7 @@ namespace MultiPlayerNIIES.Tools.Subtitles
             }
             catch (Exception e)
             {
-                MessageBox.Show("Ошибка синхронизации " + e.Message);
+                InfoWindow.Show("Ошибка синхронизации " + e.Message);
             }
             return S;
            // return subtitles[SearchAndTools.BinarySearchInTimesFromTitles(TimeTitles, subtitles,0, subtitles.FindLastIndex((x)=> {return x.Begin > TimeSpan.FromSeconds(-1); } ))];

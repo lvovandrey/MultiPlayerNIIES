@@ -1,4 +1,5 @@
 ﻿using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.View.DialogWindows;
 using MultiPlayerNIIES.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,12 @@ namespace MultiPlayerNIIES.Tools.Serialization
             XmlSerializer formatter = new XmlSerializer(typeof(ApplicationStateSerialized));
             ApplicationStateSerialized sets;
 
-            if (!File.Exists(filename)) { MessageBox.Show("Файл настроек " + filename + " не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+            if (!File.Exists(filename)) { InfoWindow.Show("Файл настроек " + filename + " не найден.", "Ошибка", InfoWindowButtons.Ok, InfoWindowIcons.Error); return; }
             using (FileStream fs = new FileStream(filename, FileMode.Open))
             {
                 sets = (ApplicationStateSerialized)formatter.Deserialize(fs);
             }
-            if (sets == null) { MessageBox.Show("Ошибка открытия файла настроек. Десериализатор вернул null."); return; }
+            if (sets == null) { InfoWindow.Show("Ошибка открытия файла настроек. Десериализатор вернул null."); return; }
 
             vm.СloseAllCommand.Execute(null);
 

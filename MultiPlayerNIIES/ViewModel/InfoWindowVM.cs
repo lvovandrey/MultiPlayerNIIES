@@ -40,6 +40,22 @@ namespace MultiPlayerNIIES.ViewModel
                     break;
             }
 
+            switch (icon)
+            {
+                case InfoWindowIcons.Info: Imgfilename = "/MultiPlayerNIIES;component/Images/PNG/Gnome-Dialog-Information-64.png";
+                    break;
+                case InfoWindowIcons.Warning: Imgfilename = "/MultiPlayerNIIES;component/Images/PNG/Gnome-Dialog-Warning-64.png";
+                    break;
+                case InfoWindowIcons.Error: Imgfilename = "/MultiPlayerNIIES;component/Images/PNG/Gnome-Dialog-Error-64.png";
+                    break;
+                case InfoWindowIcons.None: Imgfilename = "/MultiPlayerNIIES;component/Images/PNG/None.png";
+                    break;
+                default:
+                    break;
+            }
+
+
+
         }
         #endregion
 
@@ -54,7 +70,13 @@ namespace MultiPlayerNIIES.ViewModel
         [Magic]
         public string Caption { get; set; }
 
-        string Imgfilename;
+        private string imgfilename { get; set; }
+        public string Imgfilename
+        {
+            get { return imgfilename; }
+            set { imgfilename = value; OnPropertyChanged("Imgfilename"); OnPropertyChanged("ImageSource"); }
+        }
+
         [Magic]
         public ImageSource ImageSource
         {

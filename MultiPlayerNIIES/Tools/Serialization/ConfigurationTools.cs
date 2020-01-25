@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiPlayerNIIES.View.DialogWindows;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
             }
             catch (ConfigurationErrorsException)
             {
-                MessageBox.Show("Error reading app settings");
+                InfoWindow.Show("Error reading app settings");
                 return result;
             }
         }
@@ -46,7 +47,7 @@ namespace MultiPlayerNIIES.Tools.Serialization
             }
             catch (ConfigurationErrorsException)
             {
-                MessageBox.Show("Error writing app settings");
+                InfoWindow.Show("Error writing app settings");
             }
         }
     }

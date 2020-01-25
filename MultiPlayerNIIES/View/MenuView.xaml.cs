@@ -25,10 +25,5 @@ namespace MultiPlayerNIIES.View
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine(InfoWindow.Show("Хрень","Заголовочек", InfoWindowButtons.OkCancel,InfoWindowIcons.Warning));
-        }
     }
 }
