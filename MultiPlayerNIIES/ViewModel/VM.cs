@@ -87,6 +87,7 @@ namespace MultiPlayerNIIES.ViewModel
           //  MainWindow.SizeChanged += MainWindow_SizeChanged;
 
             MainWindow.AreaVideoPlayers.SizeChanged += AreaVideoPlayers_SizeChanged;
+
             oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
             oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
 
@@ -683,7 +684,7 @@ namespace MultiPlayerNIIES.ViewModel
         private void OnExcelClosing()
         {
             //Не совсем понял а что тут надо делать
-            InfoWindow.Show("Закрыт связанный файл Excel");
+            System.Windows.MessageBox.Show("Закрыт связанный файл Excel");
             IsExcelConnected = false;
         }
 
@@ -1090,8 +1091,8 @@ namespace MultiPlayerNIIES.ViewModel
                       if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
                       if (File.Exists(@saveFileDialog.FileName))
                       {
-                          InfoWindowResult res = InfoWindow.Show("Перезаписать файл?", "Файл существует", InfoWindowButtons.YesNo, InfoWindowIcons.Warning);
-                          if (res == InfoWindowResult.No) return;
+                          MessageBoxResult res = System.Windows.MessageBox.Show("Перезаписать файл?", "Файл существует", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                          if (res == MessageBoxResult.No) return;
                       }
                       Tools.Serialization.StateSaver.Save(@saveFileDialog.FileName, this);
                   }));
@@ -1119,7 +1120,7 @@ namespace MultiPlayerNIIES.ViewModel
                       }
                       catch
                       {
-                          InfoWindow.Show("Ошибка открытия файла проекта");
+                          System.Windows.MessageBox.Show("Ошибка открытия файла проекта");
                       }
                   }));
             }
@@ -1134,8 +1135,8 @@ namespace MultiPlayerNIIES.ViewModel
                   (closeAllCommand = new RelayCommand(obj =>
                   {
                       if (videoPlayerVMs.Count == 0) return;
-                      InfoWindowResult res = InfoWindow.Show("Все видео-окна будут закрыты. Продолжить?", "Закрыть все видео", InfoWindowButtons.YesNo, InfoWindowIcons.Warning);
-                      if (res == InfoWindowResult.No) return;
+                      MessageBoxResult res = System.Windows.MessageBox.Show("Все видео-окна будут закрыты. Продолжить?", "Закрыть все видео", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                      if (res == MessageBoxResult.No) return;
 
                       VideoPlayerVM[] vs = new VideoPlayerVM[videoPlayerVMs.Count];
                       int i = 0; int Count = videoPlayerVMs.Count;
@@ -1446,7 +1447,7 @@ namespace MultiPlayerNIIES.ViewModel
                       }
                       catch (Exception e)
                       {
-                          InfoWindow.Show("Ошибка при открытии Excel-файла: " + e.Message);
+                          System.Windows.MessageBox.Show("Ошибка при открытии Excel-файла: " + e.Message);
                       }
 
                   }));
@@ -1585,7 +1586,7 @@ namespace MultiPlayerNIIES.ViewModel
                           }
                           else
                           {
-                              InfoWindow.Show(e.Message);
+                              System.Windows.MessageBox.Show(e.Message);
                               SyncErrorsCount = 0;
                           }
                       }
@@ -1728,7 +1729,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return setCurrencyShiftsOfSyncronizationCommand ??
                   (setCurrencyShiftsOfSyncronizationCommand = new RelayCommand(obj =>
                   {
-                      if (InfoWindow.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на текущие смещения. Продолжить?", "Замена смещений на текущие", InfoWindowButtons.OkCancel, InfoWindowIcons.Warning) == InfoWindowResult.Cancel) return;
+                      if (System.Windows.MessageBox.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на текущие смещения. Продолжить?", "Замена смещений на текущие", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
                       foreach (VideoPlayerVM v in videoPlayerVMs)
                           if (!v.IsSyncronizeLeader)
                               v.SyncronizationShiftVM.ShiftTime = v.CurTime - TimeSyncLead;
@@ -1846,7 +1847,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         public void SetCustomShiftsOfSyncronization(Dictionary<VideoPlayerVM, TimeSpan> ViewModelsVMsShifts)
         {
-            if (InfoWindow.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на выставленные смещения. Продолжить?", "Замена смещений на текущие", InfoWindowButtons.OkCancel, InfoWindowIcons.Warning) == InfoWindowResult.Cancel) return;
+            if (System.Windows.MessageBox.Show("Все отрегулированные Вами ранее смещения синхронизации будут заменены на выставленные смещения. Продолжить?", "Замена смещений на текущие", MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel) return;
             foreach (var v in ViewModelsVMsShifts)
                 if (!v.Key.IsSyncronizeLeader)
                     v.Key.SyncronizationShiftVM.ShiftTime = v.Value;
@@ -2000,7 +2001,6 @@ namespace MultiPlayerNIIES.ViewModel
                 return aboutCommand ?? (aboutCommand = new RelayCommand(obj =>
                 {
                     AboutWindow aboutWindow = new AboutWindow();
-                    aboutWindow.Owner = MainWindow;
                     aboutWindow.ShowDialog();
                 }));
             }

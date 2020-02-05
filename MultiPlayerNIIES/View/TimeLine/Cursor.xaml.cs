@@ -33,7 +33,7 @@ namespace MultiPlayerNIIES.View.TimeLine
             OnCRPositionChanged += Cursor_OnCRPositionChanged;
         }
 
-        private void Cursor_OnCRPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void Cursor_OnCRPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             double newPos = Container.ActualWidth * CRPosition;
            

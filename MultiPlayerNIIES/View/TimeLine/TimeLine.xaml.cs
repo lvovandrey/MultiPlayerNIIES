@@ -59,10 +59,9 @@ namespace MultiPlayerNIIES.View.TimeLine
             Cursor1.OnStartDrag += Cursor1_OnStartDrag;
             Cursor1.OnEndDrag += Cursor1_OnEndDrag;
 
+            SizeChanged += (d, e)=> { RefreshCusorPosition(); };
+
         }
-
-
-
 
         #region Перемещения курсора
         bool wasplayed = false;
@@ -86,11 +85,16 @@ namespace MultiPlayerNIIES.View.TimeLine
             POS = Cursor1.CRPosition * 1000;
         }
 
-        private void TimeLine_OnPOSChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void TimeLine_OnPOSChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RefreshCusorPosition();
+        }
+
+        public void RefreshCusorPosition()
         {
             if (PosSelf) { PosSelf = false; return; }
-            if (POS > -0.1) { Cursor1.CRPosition = POS / 1000;  }
-
+            if (POS > -0.1) { Cursor1.CRPosition = POS / 1000;  Cursor1.RefreshPosition(); }
+            
         }
         #endregion
 
