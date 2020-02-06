@@ -87,7 +87,6 @@ namespace MultiPlayerNIIES.ViewModel
           //  MainWindow.SizeChanged += MainWindow_SizeChanged;
 
             MainWindow.AreaVideoPlayers.SizeChanged += AreaVideoPlayers_SizeChanged;
-
             oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
             oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
 

@@ -30,18 +30,18 @@ namespace MultiPlayerNIIES.View.TimeLine
             MouseLeftButtonDown += StartDrag;
 
             CursorColor = new SolidColorBrush(Color.FromArgb(255, 7, 0, 71));
-            OnCRPositionChanged += Cursor_OnCRPositionChanged;
+            OnCRPositionChanged += (d,e)=> { RefreshPosition(); };
         }
 
-        public void Cursor_OnCRPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void RefreshPosition()
         {
             double newPos = Container.ActualWidth * CRPosition;
            
             if (newPos < 0) Margin = new Thickness(0, -5, 0, -5);
             else if (newPos > Container.ActualWidth) Margin = new Thickness(Container.ActualWidth, -5, 0, -5);
             else Margin = new Thickness(newPos, -5, 0, -5);
-
         }
+
 
         SolidColorBrush _CursorColor { get; set; }
         public SolidColorBrush CursorColor
@@ -100,6 +100,7 @@ namespace MultiPlayerNIIES.View.TimeLine
             Mouse.Capture(draggedObject);
             CursorColor = new SolidColorBrush(Color.FromArgb(255, 83, 100, 255));
         }
+
 
         void OnDragMove(object sender, MouseEventArgs e)
         {
