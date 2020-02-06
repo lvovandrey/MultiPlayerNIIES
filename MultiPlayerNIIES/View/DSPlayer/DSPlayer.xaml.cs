@@ -81,11 +81,101 @@ namespace MultiPlayerNIIES.View.DSPlayer
             new FrameworkPropertyMetadata(new PropertyChangedCallback(VolumePropertyChangedCallback)));
 
 
-        public double Volume { get { return (double)GetValue(VolumeProperty); } set { SetValue(VolumeProperty, value); } }
-        public double Position { get { return (double)GetValue(PositionProperty); } set { SetValue(PositionProperty, value); } }
-        public TimeSpan Duration { get { return (TimeSpan)GetValue(DurationProperty); } set { SetValue(DurationProperty, value); } }
-        public TimeSpan CurTime { get { return (TimeSpan)GetValue(CurTimeProperty); } set { SetValue(CurTimeProperty, value); } }
-        public Uri Source { get { return (Uri)GetValue(SourceProperty); } set { SetValue(SourceProperty, value); } }
+        public double Volume
+        {
+            get
+            {
+                double t = Application.Current.Dispatcher.Invoke(new Func<double>(() =>
+                {
+                    return (double)GetValue(VolumeProperty);
+                }));
+                return t;
+            }
+            set
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    SetValue(VolumeProperty, value);
+                }));
+            }
+        }
+        public double Position
+        {
+            get
+            {
+                double t = Application.Current.Dispatcher.Invoke(new Func<double>(() =>
+                {
+                    return (double)GetValue(PositionProperty);
+                }));
+                return t;
+            }
+            set
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    SetValue(PositionProperty, value);
+                }));
+            }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                TimeSpan t = Application.Current.Dispatcher.Invoke(new Func<TimeSpan>(() =>
+                {
+                    return (TimeSpan)GetValue(DurationProperty);
+                }));
+                return t;
+            }
+            set
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    SetValue(DurationProperty, value);
+                }));
+            }
+        }
+
+        public TimeSpan CurTime
+        {
+            get
+            {
+                TimeSpan t = Application.Current.Dispatcher.Invoke(new Func<TimeSpan>(() =>
+                {
+                    return (TimeSpan)GetValue(CurTimeProperty);
+                }));
+                return t;
+            }
+            set
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    SetValue(CurTimeProperty, value);
+                }));
+
+            }
+        }
+
+        public Uri Source
+        {
+            get
+            {
+                Uri t = Application.Current.Dispatcher.Invoke(new Func<Uri>(() =>
+                {
+                    return (Uri)GetValue(SourceProperty);
+                }));
+                return t;
+            }
+            set
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    SetValue(SourceProperty, value);
+                }));
+
+            }
+        }
 
         public event PropertyChanged OnVolumeChanged;
         public event PropertyChanged OnPositionChanged;
@@ -413,7 +503,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void OnClosing()
         {
             if (dxPlay == null) return;
-            
+
             dxPlay.Dispose();
 
             testDx.Dispose();
@@ -517,7 +607,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void OnResize(SizeChangedEventArgs e)
         {
             if (dxPlay == null) return;
-            OnResize();  
+            OnResize();
         }
         public void OnResize()
         {

@@ -56,6 +56,7 @@ namespace MultiPlayerNIIES.View
 
         public void SetPosition(TimeSpan position)
         {
+
             if (VLC.Duration <= TimeSpan.Zero) Tools.ToolsTimer.Delay(() =>
             {
                 VLC.pause();

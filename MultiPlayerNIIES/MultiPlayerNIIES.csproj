@@ -175,6 +175,7 @@
     <Compile Include="Tools\Subtitles\Parser.cs" />
     <Compile Include="Tools\Subtitles\Record.cs" />
     <Compile Include="Tools\Subtitles\SearchAndTools.cs" />
+    <Compile Include="Tools\Syncronization\Syncronizator.cs" />
     <Compile Include="Tools\ToolTimer.cs" />
     <Compile Include="ViewModel\InfoWindowVM.cs" />
     <Compile Include="ViewModel\PlayerPanelVM.cs" />
