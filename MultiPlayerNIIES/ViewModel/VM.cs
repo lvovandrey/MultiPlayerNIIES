@@ -79,12 +79,12 @@ namespace MultiPlayerNIIES.ViewModel
             Settings.RestoreAllSettings();
 
 
-            
+
             videoPlayerVMs = new ObservableCollection<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
-            
+
             MainWindow = mainWindow;
-          //  MainWindow.SizeChanged += MainWindow_SizeChanged;
+            //  MainWindow.SizeChanged += MainWindow_SizeChanged;
 
             MainWindow.AreaVideoPlayers.SizeChanged += AreaVideoPlayers_SizeChanged;
             oldAreaVideoPlayersWidth = MainWindow.AreaVideoPlayers.ActualWidth;
@@ -128,9 +128,9 @@ namespace MultiPlayerNIIES.ViewModel
             TimeDIffWindowWindow = new TimeDIffWindowWindow();
             TimeDIffWindowWindow.DataContext = new TimeDiffWindowVM(TimeDIffWindowWindow, this);
 
-            
+
             StripeContainerVM = new StripeContainerVM(this, MainWindow.StripesContainer);
-//            IsStripesContainerVisible = false;
+            //            IsStripesContainerVisible = false;
         }
 
 
@@ -222,6 +222,21 @@ namespace MultiPlayerNIIES.ViewModel
                         }
                 }
                 return playerState;
+            }
+        }
+
+        bool isCursorDragging;
+        /// <summary>
+        /// Свойство нужно чтобы определить перемещаем мы курсор на таймлайне в текущий момент
+        /// и чтобы не было постоянной автосинхронизации пока мы курсор на таймлайне дергаем.
+        /// </summary>
+        public bool IsCursorDragging
+        {
+            get { return isCursorDragging; }
+            set
+            {
+                isCursorDragging = value;
+                OnPropertyChanged("IsCursorDragging");
             }
         }
 
@@ -532,7 +547,7 @@ namespace MultiPlayerNIIES.ViewModel
         //------------------------------------------
         // свойства - отображение панелей в mainWindow
 
-        private bool isTimeLinePanelVisible= true;
+        private bool isTimeLinePanelVisible = true;
         public bool IsTimeLinePanelVisible
         {
             get { return isTimeLinePanelVisible; }
@@ -614,7 +629,7 @@ namespace MultiPlayerNIIES.ViewModel
                 MainWindow.TimeLine1.FullTime = SyncLeadPlayer.Duration;
                 SyncLeadSliderPosition = SyncLeadPlayer.SliderPosition;
                 MainWindow.TimeLine1.POS = SyncLeadPlayer.SliderPosition;
-               // MainWindow.TimeLine1.Cursor1.CRPosition = SyncLeadPlayer.SliderPosition;
+                // MainWindow.TimeLine1.Cursor1.CRPosition = SyncLeadPlayer.SliderPosition;
                 OnPropertyChanged("SyncLeadSliderDuration");
                 OnPropertyChanged("SyncLeadSliderPosition");
 
@@ -699,8 +714,8 @@ namespace MultiPlayerNIIES.ViewModel
                 SyncLeadSliderPosition = 0;
             SyncDelta = CalcSyncDelta();
             SyncTitlesDelta = CalcSyncTitlesDelta();
-            if (IsOnAutoSyncronization) AutoSyncronization();
-            else if (IsOnAutoSyncronizationTitles) AutoSyncronizationTitles();
+            if (IsOnAutoSyncronization && !IsCursorDragging) AutoSyncronization();
+            else if (IsOnAutoSyncronizationTitles && !IsCursorDragging) AutoSyncronizationTitles();
         }
 
         private void ExcelRefreshStateTimerTick(object sender, EventArgs e)
@@ -755,8 +770,11 @@ namespace MultiPlayerNIIES.ViewModel
             if (SyncTitlesDelta > MaxSyncTitlesDelta && !IsSyncInProcess) SyncronizationTitleCommand.Execute(null);
         }
 
+        int testSyncId = 0;
         private void AutoSyncronization()
         {
+            testSyncId++;
+            Console.WriteLine("private void AutoSyncronization()" + testSyncId.ToString());
             if (SyncDelta > MaxSyncDelta && !IsSyncInProcess) SyncronizationShiftCommand.Execute(null);
         }
 
@@ -878,7 +896,7 @@ namespace MultiPlayerNIIES.ViewModel
             VideoPlayerVM videoPlayerVM = (VideoPlayerVM)sender;
 
             SyncLeadPlayer = videoPlayerVM;
-            
+
         }
 
         /// <summary>
@@ -1017,7 +1035,7 @@ namespace MultiPlayerNIIES.ViewModel
             oldAreaVideoPlayersHeight = MainWindow.AreaVideoPlayers.ActualHeight;
         }
 
-        
+
 
         private void AllVideoPlayersResize(double ScaleWidth, double ScaleHeight)
         {
@@ -1067,8 +1085,8 @@ namespace MultiPlayerNIIES.ViewModel
             Rect r = new Rect(0, 0, 250, 100);
             videoPlayerVM.Replace(r);
         }
-        
-        
+
+
         #endregion
 
 
@@ -1078,7 +1096,7 @@ namespace MultiPlayerNIIES.ViewModel
         public RelayCommand SaveStateCommand
         {
             get
-            {  
+            {
                 return saveStateCommand ??
                   (saveStateCommand = new RelayCommand(obj =>
                   {
@@ -1196,8 +1214,10 @@ namespace MultiPlayerNIIES.ViewModel
                            ToolsTimer.Delay(() =>
                            {
                                foreach (var t in tasks) t.Start();
-                               if (IsOnAutoSyncronization && SyncDeltaPercentage > 60) SyncronizationShiftCommand.Execute(null);
-                               if (IsOnAutoSyncronizationTitles && SyncTitlesDeltaPercentage > 60) SyncronizationTitleCommand.Execute(null);
+                               if (IsOnAutoSyncronization && SyncDeltaPercentage > 60)
+                                   SyncronizationShiftCommand.Execute(null);
+                               if (IsOnAutoSyncronizationTitles && SyncTitlesDeltaPercentage > 60)
+                                   SyncronizationTitleCommand.Execute(null);
                            }, TimeSpan.FromSeconds(0.1));
                        }
                        else
@@ -1601,66 +1621,86 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationShiftCommand ??
                   (syncronizationShiftCommand = new RelayCommand(obj =>
                   {
+                      if (IsSyncInProcess) return;
+
                       IsSyncInProcess = true;
                       ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2));
                       WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
                       if (videoPlayerVMs.Count < 2) return;
 
 
+                      bool IsSyncPlayerWasPlayed = SyncLeadPlayer.IsPlaying;
 
-                      Dictionary<VideoPlayerVM, bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
-                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      //Dictionary<VideoPlayerVM, bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
+                      //foreach (VideoPlayerVM v in videoPlayerVMs)
+                      //{
+                      //    PlayersStates.Add(v, v.IsPlaying);
+                      //}
+
+                      AllPauseCommand.Execute(null);
+                      //foreach (VideoPlayerVM v in videoPlayerVMs)
+                      //{
+                      //    v.PauseCommand.Execute(null);
+                      //}
+
+                      ToolsTimer.Delay(() =>
                       {
-                          PlayersStates.Add(v, v.IsPlaying);
-                      }
+                             foreach (VideoPlayerVM v in videoPlayerVMs)
+                             {
+                                 if (!v.IsSyncronizeLeader)
+                                 {
+                                     if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead > v.Duration)
+                                     {
+                                         v.CurTime = v.Duration - TimeSpan.FromSeconds(0.05);
+                                         continue;
+                                     }
+                                     else if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead <= TimeSpan.Zero)
+                                     {
+                                         v.CurTime = TimeSpan.FromSeconds(0.05);
+                                         continue;
+                                     }
+                                     else
+                                         v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
+                                 }
+                                 else v.CurTime = TimeSyncLead;
+                             }
+                      }, TimeSpan.FromSeconds(0.5));
 
-                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                      ToolsTimer.Delay(() =>
                       {
-                          v.PauseCommand.Execute(null);
-                      }
+                          if (IsSyncPlayerWasPlayed) this.AllPlayCommand.Execute(null);
+                          else this.AllPauseCommand.Execute(null);
+                          Console.WriteLine("IsSyncPlayerWasPlayed = " + IsSyncPlayerWasPlayed);
+                      }, TimeSpan.FromSeconds(1.5));
 
-                      foreach (VideoPlayerVM v in videoPlayerVMs)
-                      {
-                          if (!v.IsSyncronizeLeader)
-                          {
-                              if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead > v.Duration)
-                              {
-                                  v.CurTime = v.Duration - TimeSpan.FromSeconds(0.05);
-                                  continue;
-                              }
-                              else if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead <= TimeSpan.Zero)
-                              {
-                                  v.CurTime = TimeSpan.FromSeconds(0.05);
-                                  continue;
-                              }
-                              else
-                                  v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
-                          }
-                          else v.CurTime = TimeSyncLead;
-                      }
+                      //System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+                      //Timer.Tick += (s, _) =>
+                      //{
+                      //    bool IsAllSyncronized = true;
+                      //    foreach (VideoPlayerVM v in videoPlayerVMs)
+                      //        if (!v.IsSyncronizeLeader)
+                      //            if (v.CurTime != v.SyncronizationShiftVM.ShiftTime + TimeSyncLead) { IsAllSyncronized = false; break; }
 
+                      //    if (IsAllSyncronized )
+                      //    {
 
-                      System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
-                      Timer.Tick += (s, _) =>
-                      {
-                          bool IsAllSyncronized = true;
-                          foreach (VideoPlayerVM v in videoPlayerVMs)
-                              if (!v.IsSyncronizeLeader)
-                                  if (v.CurTime != v.SyncronizationShiftVM.ShiftTime + TimeSyncLead) { IsAllSyncronized = false; break; }
-
-                          if (IsAllSyncronized)
-                          {
-                              Timer.Stop();
-                              if (IsAllPlayerStatesEquals(PlayersStates))
-                                  ToolsTimer.Delay(() =>
-                                  {
-                                      foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
-                                          if (pair.Value) pair.Key.Play();
-                                  }, TimeSpan.FromSeconds(1));
-                          }
-                      };
-                      Timer.Interval = TimeSpan.FromSeconds(0.1);
-                      Timer.Start();
+                      //        ToolsTimer.Delay(() =>
+                      //        {
+                      //            this.AllPlayCommand.Execute(null);
+                      //        }, TimeSpan.FromSeconds(1));
+                      //    }
+                      //    Timer.Stop();
+                      //    //    Timer.Stop();
+                      //    //    if (IsAllPlayerStatesEquals(PlayersStates))
+                      //    //        ToolsTimer.Delay(() =>
+                      //    //        {
+                      //    //            foreach (KeyValuePair<VideoPlayerVM, bool> pair in PlayersStates)
+                      //    //                if (pair.Value) pair.Key.Play();
+                      //    //        }, TimeSpan.FromSeconds(1));
+                      //    //}
+                      //};
+                      //Timer.Interval = TimeSpan.FromSeconds(0.1);
+                      //Timer.Start();
 
 
                   }));
@@ -1679,7 +1719,7 @@ namespace MultiPlayerNIIES.ViewModel
                     bool OldIsOnAutoSyncroinizationTitles = IsOnAutoSyncronizationTitles;
 
                     AllPauseCommand.Execute(null);
-                    ToolsTimer.Delay(() => 
+                    ToolsTimer.Delay(() =>
                     {
                         IsOnAutoSyncronization = false;
                         IsOnAutoSyncronizationTitles = false;
@@ -1748,14 +1788,14 @@ namespace MultiPlayerNIIES.ViewModel
                       foreach (var v in videoPlayerVMs)
                           v.OnClose();
 
-                      if(sourceOfPostMessages!=null)
+                      if (sourceOfPostMessages != null)
                           sourceOfPostMessages.Dispose();
 
                       ToolsTimer.Delay(() =>
                       {
                           try
                           {
-                            //  this.WaitProgressBar.Close();
+                              //  this.WaitProgressBar.Close();
                               this.settingsWindowView.Close();
                               this.TimeDIffWindowWindow.Close();
                               MainWindow.Close();
@@ -1763,7 +1803,7 @@ namespace MultiPlayerNIIES.ViewModel
                           }
                           catch
                           {
-                             System.Windows.Application.Current.Shutdown();
+                              System.Windows.Application.Current.Shutdown();
                           }
                       }, TimeSpan.FromSeconds(1));
                   }));
@@ -1791,7 +1831,7 @@ namespace MultiPlayerNIIES.ViewModel
                 return maximizeRestoreWindowCommand ??
                   (maximizeRestoreWindowCommand = new RelayCommand(obj =>
                   {
-                      if(MainWindow.WindowState== WindowState.Maximized)
+                      if (MainWindow.WindowState == WindowState.Maximized)
                           MainWindow.WindowState = WindowState.Normal;
                       else if (MainWindow.WindowState == WindowState.Normal)
                           MainWindow.WindowState = WindowState.Maximized;
@@ -1819,7 +1859,7 @@ namespace MultiPlayerNIIES.ViewModel
                       {
                           List<System.Drawing.Bitmap> snapshots = new List<System.Drawing.Bitmap>();
                           foreach (var v in videoPlayerVMs)
-                               snapshots.Add(v.Body.GetSnapShot());
+                              snapshots.Add(v.Body.GetSnapShot());
                           TimeDiffMeasuringManager.AddMeasurement(TimeSyncLead, snapshots);
                           OnPropertyChanged("CurrentTimeDiffMeasurement");
                           if (TimeDiffMeasuringManager.CurrentMeasurement >= TimeDiffMeasuringManager.MeasurementsCount)
@@ -1827,11 +1867,11 @@ namespace MultiPlayerNIIES.ViewModel
                               IsOnTimeDiffMeasuring = false;
                               CurrentTimeDiffMeasurement = 0;
                           }
-                          else return;  
+                          else return;
                       }
 
                       this.AllPauseCommand.Execute(null);
-                     // TimeDIffWindowWindow.Show();
+                      // TimeDIffWindowWindow.Show();
                       ((TimeDiffWindowVM)TimeDIffWindowWindow.DataContext).ShowCommand.Execute(null);
                       TimeDIffWindowWindow.ShowDialog();
                   }));
@@ -1888,7 +1928,7 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        
+
         private RelayCommand setGUIMinimalViewStyleCommand;
         public RelayCommand SetGUIMinimalViewStyleCommand
         {
@@ -1963,7 +2003,7 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
-        
+
         private RelayCommand videoPlayersShowTilesCommand;
         public RelayCommand VideoPlayersShowTilesCommand
         {

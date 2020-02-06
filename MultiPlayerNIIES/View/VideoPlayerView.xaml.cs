@@ -206,6 +206,7 @@ namespace MultiPlayerNIIES.View
 
         public bool IsResize { get; private set; }
         public bool IsPlaying { get { return VLC.IsPlaying; } }
+        public bool IsPaused { get { return VLC.IsPaused; } }
 
         public double Rate { get { return VLC.Rate; } set { VLC.Rate = value; } }
 

@@ -22,7 +22,8 @@ namespace MultiPlayerNIIES.View.TimeLine
     /// </summary>
     public partial class Cursor : UserControl, INotifyPropertyChanged
     {
-      
+
+
         public Cursor()
         {
             InitializeComponent();
@@ -88,6 +89,7 @@ namespace MultiPlayerNIIES.View.TimeLine
 
         public event Action OnStartDrag;
         public event Action OnEndDrag;
+
 
         void StartDrag(object sender, MouseButtonEventArgs e)
         {

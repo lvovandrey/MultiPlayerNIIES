@@ -70,13 +70,18 @@ namespace MultiPlayerNIIES.View.TimeLine
             VM vm = DataContext as VM; // да хуй с ним знаю что уродство
             if (vm == null) return; if (vm.SyncLeadPlayer == null) return;
             vm.SyncLeadPlayer.Body.VLC.TimeSlider_PreviewMouseDown(this, null);
+            vm.IsCursorDragging= true; // уродства стало еще больше. Мне до сих пор плевать. =)
         }
         private void Cursor1_OnEndDrag()
         {
             VM vm = DataContext as VM; // да хуй с ним знаю что уродство
             if (vm == null) return; if (vm.SyncLeadPlayer == null) return;
             vm.SyncLeadPlayer.Body.VLC.TimeSlider_PreviewMouseUp(this, null);
+            vm.IsCursorDragging = false;
         }
+
+
+
 
         bool PosSelf = false;
         private void Cursor1_OnCRPChanged()
@@ -120,7 +125,6 @@ namespace MultiPlayerNIIES.View.TimeLine
             if (((TimeLine)d).OnPOSChanged != null)
                 ((TimeLine)d).OnPOSChanged(d, e);
         }
-
         #endregion
 
 
