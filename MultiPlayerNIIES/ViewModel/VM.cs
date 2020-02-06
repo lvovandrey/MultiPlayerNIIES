@@ -1613,6 +1613,21 @@ namespace MultiPlayerNIIES.ViewModel
             }
         }
 
+
+        bool IsAllPlayersPaused()
+        {
+            bool flag = true;
+            foreach (VideoPlayerVM v in videoPlayerVMs)
+            {
+                if (!v.IsPaused)
+                {
+                    flag = false;
+                }
+            }
+            return flag;
+        }
+
+
         private RelayCommand syncronizationShiftCommand;
         public RelayCommand SyncronizationShiftCommand
         {
@@ -1631,48 +1646,49 @@ namespace MultiPlayerNIIES.ViewModel
 
                       bool IsSyncPlayerWasPlayed = SyncLeadPlayer.IsPlaying;
 
-                      //Dictionary<VideoPlayerVM, bool> PlayersStates = new Dictionary<VideoPlayerVM, bool>();
-                      //foreach (VideoPlayerVM v in videoPlayerVMs)
-                      //{
-                      //    PlayersStates.Add(v, v.IsPlaying);
-                      //}
 
-                      AllPauseCommand.Execute(null);
-                      //foreach (VideoPlayerVM v in videoPlayerVMs)
-                      //{
-                      //    v.PauseCommand.Execute(null);
-                      //}
+                      foreach (VideoPlayerVM v in videoPlayerVMs)
+                          v.Body.Pause();
+
 
                       ToolsTimer.Delay(() =>
                       {
-                             foreach (VideoPlayerVM v in videoPlayerVMs)
-                             {
-                                 if (!v.IsSyncronizeLeader)
-                                 {
-                                     if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead > v.Duration)
-                                     {
-                                         v.CurTime = v.Duration - TimeSpan.FromSeconds(0.05);
-                                         continue;
-                                     }
-                                     else if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead <= TimeSpan.Zero)
-                                     {
-                                         v.CurTime = TimeSpan.FromSeconds(0.05);
-                                         continue;
-                                     }
-                                     else
-                                         v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
-                                 }
-                                 else v.CurTime = TimeSyncLead;
-                             }
+                          if (!IsAllPlayersPaused())
+                              foreach (VideoPlayerVM v in videoPlayerVMs)
+                                  v.Body.Pause();
+                          
+
+                          ToolsTimer.Delay(() =>
+                          {
+                              foreach (VideoPlayerVM v in videoPlayerVMs)
+                              {
+                                  if (!v.IsSyncronizeLeader)
+                                  {
+                                      if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead > v.Duration)
+                                      {
+                                          v.CurTime = v.Duration - TimeSpan.FromSeconds(0.05);
+                                          continue;
+                                      }
+                                      else if (v.SyncronizationShiftVM.ShiftTime + TimeSyncLead <= TimeSpan.Zero)
+                                      {
+                                          v.CurTime = TimeSpan.FromSeconds(0.05);
+                                          continue;
+                                      }
+                                      else
+                                          v.CurTime = v.SyncronizationShiftVM.ShiftTime + TimeSyncLead;
+                                  }
+                                  else v.CurTime = TimeSyncLead;
+                              }
+                          }, TimeSpan.FromSeconds(0.5));
+
+                          ToolsTimer.Delay(() =>
+                          {
+                          //if (IsSyncPlayerWasPlayed) this.AllPlayCommand.Execute(null);
+                          //else
+                          AllPauseCommand.Execute(null);
+                              Console.WriteLine("IsSyncPlayerWasPlayed = " + IsSyncPlayerWasPlayed);
+                          }, TimeSpan.FromSeconds(1.5));
                       }, TimeSpan.FromSeconds(0.5));
-
-                      ToolsTimer.Delay(() =>
-                      {
-                          if (IsSyncPlayerWasPlayed) this.AllPlayCommand.Execute(null);
-                          else this.AllPauseCommand.Execute(null);
-                          Console.WriteLine("IsSyncPlayerWasPlayed = " + IsSyncPlayerWasPlayed);
-                      }, TimeSpan.FromSeconds(1.5));
-
                       //System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
                       //Timer.Tick += (s, _) =>
                       //{
