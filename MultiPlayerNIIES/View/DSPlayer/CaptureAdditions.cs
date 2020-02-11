@@ -149,6 +149,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public bool IsPausedEx
         {
             get {
+                if (m_mediaCtrl == null) return true;
                 FilterState fs;
                 m_mediaCtrl.GetState(1, out fs);
                 return fs == FilterState.Paused;
@@ -159,6 +160,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         {
             get
             {
+                if (m_mediaCtrl == null) return false;
                 FilterState fs;
                 m_mediaCtrl.GetState(1, out fs);
                 return fs == FilterState.Running;

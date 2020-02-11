@@ -20,6 +20,9 @@ namespace MultiPlayerNIIES.Tools.Syncronization
 
         public async void SyncronizeOnShiftAsync()
         {
+            VM.SyncDeltasBuffer.Clear();
+            VM.SyncDelta = TimeSpan.Zero;
+
             await Task.Run(SyncronizeOnShift);
 
         }
@@ -35,9 +38,11 @@ namespace MultiPlayerNIIES.Tools.Syncronization
             if (IsSyncInProcess) return;
             isSyncInProcess = true;
             bool IsSyncLeadPaused = VM.SyncLeadPlayer.IsPaused;
+            VM.SyncDeltasBuffer.Clear();
+            VM.SyncDelta = TimeSpan.Zero;
+
             VM.MainTimer.Stop();
             int AttemptCounter = 0;
-
             do
             {
                 foreach (VideoPlayerVM v in VM.videoPlayerVMs)
@@ -56,10 +61,15 @@ namespace MultiPlayerNIIES.Tools.Syncronization
                 } while (!IsPlayerAlreadySyncronized(v));
             }
 
-            VM.SyncDeltasBuffer.Clear();
+            
 
+            
+            Thread.Sleep(3000);
+
+            foreach (VideoPlayerVM v in VM.videoPlayerVMs)
+                v.IsPausedReal = false;
+            Console.WriteLine("КОНЕЦ СИНХРОНИЗАЦИИ");
             VM.MainTimer.Start();
-            Thread.Sleep(200);
             isSyncInProcess = false;
         }
 
@@ -72,7 +82,7 @@ namespace MultiPlayerNIIES.Tools.Syncronization
             bool flag = true;
             foreach (VideoPlayerVM v in VM.videoPlayerVMs)
             {
-                if (!v.IsPaused)
+                if (!v.IsPausedReal)
                 {
                     flag = false;
                     break;
@@ -86,7 +96,7 @@ namespace MultiPlayerNIIES.Tools.Syncronization
             bool flag = false;
             foreach (VideoPlayerVM v in VM.videoPlayerVMs)
             {
-                if (v.IsPaused)
+                if (v.IsPausedReal)
                 {
                     flag = true;
                     break;

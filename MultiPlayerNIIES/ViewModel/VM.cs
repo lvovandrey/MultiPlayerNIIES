@@ -1253,6 +1253,8 @@ namespace MultiPlayerNIIES.ViewModel
 
                        //}
 
+                       Console.WriteLine(Syncronizator.IsSyncInProcess.ToString() + PlayerControlTools.IsOperationInProcess.ToString());
+
                        if (SyncLeadPlayer.IsPlaying) AllPauseCommand.Execute(null);
                        else AllPlayCommand.Execute(null);
                    }, new Func<object, bool>(PlayPauseCommandCanExecute)));
@@ -1280,6 +1282,9 @@ namespace MultiPlayerNIIES.ViewModel
                       //    foreach (var t in tasks) t.Start();
                       //}, TimeSpan.FromSeconds(0.01));
 
+                      Console.WriteLine(Syncronizator.IsSyncInProcess.ToString() + PlayerControlTools.IsOperationInProcess.ToString());
+                      if (Syncronizator.IsSyncInProcess) return;
+                      if (PlayerControlTools.IsOperationInProcess) return;
                       PlayerControlTools.PauseAllAsync();
 
                   }, new Func<object, bool>(AllPauseCommandCanExecute)));
@@ -1307,6 +1312,9 @@ namespace MultiPlayerNIIES.ViewModel
                       //    foreach (var t in tasks) t.Start();
                       //}, TimeSpan.FromSeconds(0.01));
 
+                      Console.WriteLine(Syncronizator.IsSyncInProcess.ToString() + PlayerControlTools.IsOperationInProcess.ToString());
+                      if (Syncronizator.IsSyncInProcess) return;
+                      if (PlayerControlTools.IsOperationInProcess) return;
                       PlayerControlTools.PlayAllAsync();
                   }, new Func<object, bool>(AllPlayCommandCanExecute)));
             }
@@ -1671,8 +1679,10 @@ namespace MultiPlayerNIIES.ViewModel
                 return syncronizationShiftCommand ??
                   (syncronizationShiftCommand = new RelayCommand(obj =>
                   {
+                      if (Syncronizator.IsSyncInProcess) return;
+                      if (PlayerControlTools.IsOperationInProcess) return;
                       if (videoPlayerVMs.Count < 2) return;
-                      WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
+                      WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(3));
                       Syncronizator.SyncronizeOnShiftAsync();
                       
                   }));

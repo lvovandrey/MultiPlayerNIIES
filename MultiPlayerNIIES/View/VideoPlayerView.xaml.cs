@@ -31,10 +31,12 @@ namespace MultiPlayerNIIES.View
         {
             InitializeComponent();
             ToolsTimer.Timer(TimerTick, TimeSpan.FromSeconds(0.05));
-           // ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null);  }, TimeSpan.FromSeconds(1));
+            // ToolsTimer.Delay(() => { ButtonHideInstruments_Click(null, null);  }, TimeSpan.FromSeconds(1));
+
+            VLC.OnPaused += () => { if (OnPaused != null) OnPaused(); };
         }
 
-
+        public event Action OnPaused;
 
         private void TimerTick()
         {

@@ -89,6 +89,47 @@
                     Margin="10 -2 0 0" Width="40">
                     Sync
                 </TextBlock>
+
+                <TextBlock
+                    Text="{Binding IsPaused}"
+                    Panel.ZIndex="101"
+                    FontSize="9"
+                    Foreground="White" 
+                    Background="Black"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Margin="40 -2 0 0" Width="40"/>
+
+                <TextBlock
+                    Text="{Binding IsPausedEx}"
+                    Panel.ZIndex="101"
+                    FontSize="9"
+                    Foreground="White" 
+                    Background="Black"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Margin="88 -2 0 0" Width="40"/>
+
+                <TextBlock
+                    Text="{Binding IsPausedReal_}"
+                    Panel.ZIndex="101"
+                    FontSize="9"
+                    Foreground="White" 
+                    Background="Black"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Margin="140 -2 0 0" Width="40"/>
+
+                <TextBlock
+                    Text="{Binding IsPlayingEx}"
+                    Panel.ZIndex="101"
+                    FontSize="9"
+                    Foreground="White" 
+                    Background="Black"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Margin="188 -2 0 0" Width="40"/>
+
                 <Rectangle
                     x:Name="SyncLeadIndicator"
                     Width="40"

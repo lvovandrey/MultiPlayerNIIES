@@ -1,5 +1,6 @@
 ﻿using MultiPlayerNIIES.Abstract;
 using MultiPlayerNIIES.Model;
+using MultiPlayerNIIES.Tools;
 using MultiPlayerNIIES.Tools.Subtitles;
 using MultiPlayerNIIES.View;
 using MultiPlayerNIIES.View.DialogWindows;
@@ -64,6 +65,35 @@ namespace MultiPlayerNIIES.ViewModel
             Body.VLC.OnVolumeChanged += (d, e) => { OnPropertyChanged("Volume"); };
 
             Body.VLC.VideoMMM.SelectablePictureBox1.MouseDown += SelectablePictureBox1_MouseDown;
+
+            Body.OnPaused += Body_OnPaused;
+
+            ToolsTimer.Timer(TimerTick, TimeSpan.FromSeconds(0.05));
+        }
+
+
+        public bool IsPausedReal = false;
+        public bool IsPausedReal_
+        {
+            get { return IsPausedReal; }
+        }
+
+
+
+        private void Body_OnPaused()
+        {
+            IsPausedReal = true;
+            Console.WriteLine("IsPausedReal = true");
+
+        }
+
+        private void TimerTick()
+        {
+            OnPropertyChanged("IsPaused");
+            OnPropertyChanged("IsPausedEx");
+            OnPropertyChanged("IsPlaying");
+            OnPropertyChanged("IsPlayingEx");
+            OnPropertyChanged("IsPausedReal_");
         }
 
         private bool outOfSyncronization = false;

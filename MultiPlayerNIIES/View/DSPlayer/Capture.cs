@@ -82,7 +82,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         // Release everything.
         public void Dispose()
         {
-            
+
             CloseInterfaces();
         }
         ~DxPlay()
@@ -96,7 +96,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
         // Play an avi file into a window.  Allow for snapshots.
         // (Control to show video in, Avi file to play
-        public  DxPlay(Control hWin, string FileName, ref bool Ok)
+        public DxPlay(Control hWin, string FileName, ref bool Ok)
         {
             try
             {
@@ -136,6 +136,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
 
+        public event Action OnPause;
+
         // Wait for events to happen.  This approach uses waiting on an event handle.
         // The nice thing about doing it this way is that you aren't in the windows message
         // loop, and don't have to worry about re-entrency or taking too long.  Plus, being
@@ -171,6 +173,11 @@ namespace MultiPlayerNIIES.View.DSPlayer
                         {
                             // Write the event name to the debug window
                             Debug.WriteLine(ec.ToString());
+
+                            if (ec == EventCode.Paused && OnPause!=null)
+                            {
+                                OnPause();
+                            }
 
                             // If the clip is finished playing
                             if (ec == EventCode.Complete)
@@ -219,7 +226,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void Start()
         {
             // If we aren't already playing (or shutting down)
-          //  if (m_State == GraphState.Stopped || m_State == GraphState.Paused)
+            //  if (m_State == GraphState.Stopped || m_State == GraphState.Paused)
             {
                 int hr = m_mediaCtrl.Run();
                 DsError.ThrowExceptionForHR(hr);
@@ -234,10 +241,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
             // If we are playing
             if (m_State == GraphState.Running)
             {
-                
+
                 int hr = m_mediaCtrl.Pause();
                 DsError.ThrowExceptionForHR(hr);
-               
+
                 m_State = GraphState.Paused;
             }
         }
@@ -245,7 +252,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         public void Stop()
         {
             // Can only Stop when playing or paused
-          //  if (m_State == GraphState.Running || m_State == GraphState.Paused)
+            //  if (m_State == GraphState.Running || m_State == GraphState.Paused)
             {
                 int hr = m_mediaCtrl.Stop();
                 DsError.ThrowExceptionForHR(hr);
@@ -299,7 +306,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             long diff2 = ((long)ipi + (long)iBufSize - (long)m_stride);
 
             Int64 diff = (ipi + iBufSize - m_stride);
-            
+
 
             return new Bitmap(
                 m_videoWidth,
@@ -320,7 +327,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         private void SetupGraph2(Control hWin, string FileName, ref bool RateOk)
         {
             int hr;
-          
+
             // Get the graphbuilder object
             m_FilterGraph = new FilterGraph() as IFilterGraph2;
 
@@ -347,7 +354,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_sampGrabber = (ISampleGrabber)new SampleGrabber();
                 IBaseFilter baseGrabFlt = (IBaseFilter)m_sampGrabber;
 
-              
+
 
                 // Configure the Sample Grabber
                 ConfigureSampleGrabber(m_sampGrabber);
@@ -363,7 +370,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                 DsError.ThrowExceptionForHR(hr);
 
-               // Now that the graph is built, read the dimensions of the bitmaps we'll be getting
+                // Now that the graph is built, read the dimensions of the bitmaps we'll be getting
                 SaveSizeInfo(m_sampGrabber);
 
                 // Configure the Video Window
@@ -374,7 +381,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 m_mediaEvent = m_FilterGraph as IMediaEvent;
                 m_mediaCtrl = m_FilterGraph as IMediaControl;
                 m_mediaSeeking = m_FilterGraph as IMediaSeeking;
-                
+
 
                 try
                 {
@@ -395,7 +402,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 }
                 catch
                 {
-                    
+
                 }
 
             }
@@ -416,7 +423,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
 
 
-        private bool IsVideoHaveAudio (Control hWin, string FileName)
+        private bool IsVideoHaveAudio(Control hWin, string FileName)
         {
             int hr = 0;
 
@@ -432,10 +439,10 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 hr = icgb2.SetFiltergraph(m_FilterGraph);
                 DsError.ThrowExceptionForHR(hr);
 
-//#if DEBUG
-//                // Allows you to view the graph with GraphEdit File/Connect
-//                m_DsRot = new DsROTEntry(m_FilterGraph);
-//#endif
+                //#if DEBUG
+                //                // Allows you to view the graph with GraphEdit File/Connect
+                //                m_DsRot = new DsROTEntry(m_FilterGraph);
+                //#endif
                 // Add the filters necessary to render the file.  This function will
                 // work with a number of different file types.
                 IBaseFilter sourceFilter = null;
@@ -471,7 +478,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                 // Grab some other interfaces
                 IMediaEvent m_mediaEvent = m_FilterGraph as IMediaEvent;
-                IMediaControl  m_mediaCtrl = m_FilterGraph as IMediaControl;
+                IMediaControl m_mediaCtrl = m_FilterGraph as IMediaControl;
                 IMediaSeeking m_mediaSeeking = m_FilterGraph as IMediaSeeking;
 
                 try
@@ -482,7 +489,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
                     hr = icgb2.RenderStream(null, MediaType.Audio, sourceFilter, null, pAudioRenderer);
                     //     DsError.ThrowExceptionForHR(hr);
-                   // hr = m_mediaSeeking.SetRate(0.5);
+                    // hr = m_mediaSeeking.SetRate(0.5);
 
                 }
                 catch
@@ -513,7 +520,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
 
-   
+
 
         // Configure the video window
         private void ConfigureVideoWindow(IVideoWindow videoWindow, Control hWin)
@@ -525,7 +532,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             DsError.ThrowExceptionForHR(hr);
 
             // Set the window style
-            hr = videoWindow.put_WindowStyle((DirectShowLib.WindowStyle.Child |  DirectShowLib.WindowStyle.ClipSiblings));
+            hr = videoWindow.put_WindowStyle((DirectShowLib.WindowStyle.Child | DirectShowLib.WindowStyle.ClipSiblings));
             DsError.ThrowExceptionForHR(hr);
 
             // Make the window visible
@@ -551,7 +558,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
             var dpiY = (int)dpiYProperty.GetValue(null, null);
 
 
-            int hr = m_videoWindow.SetWindowPosition((int)(rc.Left * dpiX / 96), (int)(rc.Top * dpiX / 96), (int)(rc.Width*dpiX/96), (int)(rc.Height * dpiY / 96));
+            int hr = m_videoWindow.SetWindowPosition((int)(rc.Left * dpiX / 96), (int)(rc.Top * dpiX / 96), (int)(rc.Width * dpiX / 96), (int)(rc.Height * dpiY / 96));
             DsError.ThrowExceptionForHR(hr);
         }
 
@@ -645,7 +652,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
 
-                    if (m_mediaCtrl != null)
+                if (m_mediaCtrl != null)
                 {
                     // Stop the graph
                     hr = m_mediaCtrl.Stop();
@@ -694,7 +701,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                         m_videoWindow = null;
                     }
                 }
-                
+
             }
             GC.Collect();
         }

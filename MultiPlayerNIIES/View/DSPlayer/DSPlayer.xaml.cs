@@ -51,6 +51,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
 
 
 
+
             timer = new System.Windows.Threading.DispatcherTimer();
 
             timer.Tick += new EventHandler(timerTick);
@@ -80,6 +81,8 @@ namespace MultiPlayerNIIES.View.DSPlayer
             typeof(double), typeof(DSPlayer),
             new FrameworkPropertyMetadata(new PropertyChangedCallback(VolumePropertyChangedCallback)));
 
+
+        public event Action OnPaused;
 
         public double Volume
         {
@@ -307,6 +310,14 @@ namespace MultiPlayerNIIES.View.DSPlayer
             if (!Ok) return;
             dxPlay = new DxPlay(VideoMMM.SelectablePictureBox1, Source.LocalPath, ref RateOk);
 
+
+            dxPlay.OnPause += () =>
+            {
+                if (OnPaused != null)
+                    OnPaused();
+            };
+
+
             Duration = dxPlay.Duration;
             //vlc.Height = ActualHeight - 40;
             //vlc.Width = ActualWidth - 10;
@@ -323,6 +334,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                  VideoMMM.FitToFill();
                  OnResize();
              }, TimeSpan.FromSeconds(1.5));
+
 
         }
 

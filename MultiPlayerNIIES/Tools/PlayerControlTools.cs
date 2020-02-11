@@ -50,8 +50,8 @@ namespace MultiPlayerNIIES.Tools
                     break;
                 }
             } while (!IsAllPlayersPlayed());
-            Console.WriteLine(AttemptCounter);
-            Thread.Sleep(50);
+            Console.WriteLine("СТАРТ");
+            Thread.Sleep(1000);
             isOperationInProcess = false;
 
         }
@@ -77,10 +77,12 @@ namespace MultiPlayerNIIES.Tools
                 }
             } while (!IsAllPlayersPaused());
 
-            Console.WriteLine(AttemptCounter);
-            
+            Console.WriteLine("ПАУЗА");
 
-            Thread.Sleep(50);
+
+            Thread.Sleep(1000);
+            foreach (VideoPlayerVM v in VM.videoPlayerVMs)
+                v.IsPausedReal = false;
             isOperationInProcess = false;
 
         }
@@ -113,7 +115,7 @@ namespace MultiPlayerNIIES.Tools
             bool flag = true;
             foreach (VideoPlayerVM v in VM.videoPlayerVMs)
             {
-                if (!v.IsPausedEx)
+                if (!v.IsPausedReal)
                 {
                     flag = false;
                     break;
