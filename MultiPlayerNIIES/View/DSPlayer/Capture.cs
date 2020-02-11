@@ -237,7 +237,7 @@ namespace MultiPlayerNIIES.View.DSPlayer
                 
                 int hr = m_mediaCtrl.Pause();
                 DsError.ThrowExceptionForHR(hr);
-
+               
                 m_State = GraphState.Paused;
             }
         }

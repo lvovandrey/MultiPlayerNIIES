@@ -393,6 +393,28 @@ namespace MultiPlayerNIIES.View.DSPlayer
             }
         }
 
+        public bool IsPausedEx
+        {
+            get
+            {
+                if (dxPlay != null)
+                    return dxPlay.IsPausedEx;
+                else return false;
+            }
+        }
+
+        public bool IsPlayingEx
+        {
+            get
+            {
+                if (dxPlay != null)
+                    return dxPlay.IsPlayingEx;
+                else return false;
+            }
+        }
+
+
+
         bool WasPlaing;
 
         public void TimeSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)

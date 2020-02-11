@@ -317,6 +317,9 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsDefault" Value="True"/>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <!--<Setter Property="Fill" TargetName="rectangle" Value="{StaticResource AlmostWhiteBrush}"/>-->
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource OrangeGradientBrush}"/>
                         </Trigger>

@@ -167,6 +167,7 @@
     <Compile Include="Model\TimeStripesModel.cs" />
     <Compile Include="Styles\OrangeWindowStyle.cs" />
     <Compile Include="Tools\Graphics\GraphicsTools.cs" />
+    <Compile Include="Tools\PlayerControlTools.cs" />
     <Compile Include="Tools\Serialization\ApplicationStateSerialized.cs" />
     <Compile Include="Tools\Serialization\ConfigurationTools.cs" />
     <Compile Include="Tools\Serialization\StateSaver.cs" />

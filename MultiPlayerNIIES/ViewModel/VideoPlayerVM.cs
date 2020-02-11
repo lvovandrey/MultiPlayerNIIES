@@ -121,6 +121,15 @@ namespace MultiPlayerNIIES.ViewModel
             get { return Body.IsPaused; }
         }
 
+        public bool IsPausedEx
+        {
+            get { return Body.IsPausedEx; }
+        }
+        public bool IsPlayingEx
+        {
+            get { return Body.IsPlayingEx; }
+        }
+
         public double Rate
         {
             get { return Body.Rate; }

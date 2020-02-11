@@ -146,6 +146,25 @@ namespace MultiPlayerNIIES.View.DSPlayer
         }
 
 
+        public bool IsPausedEx
+        {
+            get {
+                FilterState fs;
+                m_mediaCtrl.GetState(1, out fs);
+                return fs == FilterState.Paused;
+                }
+        }
+
+        public bool IsPlayingEx
+        {
+            get
+            {
+                FilterState fs;
+                m_mediaCtrl.GetState(1, out fs);
+                return fs == FilterState.Running;
+            }
+        }
+
         public bool IsOnDeleting = false;
 
 

@@ -24,7 +24,8 @@ namespace MultiPlayerNIIES.Tools.Syncronization
 
         }
 
-        bool IsSyncInProcess = false;
+        bool isSyncInProcess = false;
+        public bool IsSyncInProcess { get { return isSyncInProcess; } }
 
         /// <summary>
         /// Синхронизировать все плееры
@@ -32,21 +33,9 @@ namespace MultiPlayerNIIES.Tools.Syncronization
         public void SyncronizeOnShift()
         {
             if (IsSyncInProcess) return;
-            IsSyncInProcess = true;
-
+            isSyncInProcess = true;
             bool IsSyncLeadPaused = VM.SyncLeadPlayer.IsPaused;
-
             VM.MainTimer.Stop();
-
-            //Application.Current.Dispatcher.Invoke(new Action(() =>
-            //{
-            //    VM.WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
-            //}));
-            //            ToolsTimer.Delay(() => { IsSyncInProcess = false; }, TimeSpan.FromSeconds(2.2)); //TODO: Убрать
-
-
-            //            bool IsSyncPlayerWasPlayed = VM.SyncLeadPlayer.IsPlaying;
-
             int AttemptCounter = 0;
 
             do
@@ -67,30 +56,11 @@ namespace MultiPlayerNIIES.Tools.Syncronization
                 } while (!IsPlayerAlreadySyncronized(v));
             }
 
-            Console.WriteLine("Таймер запущен!!!!!!!!!!!!!!!!!!");
-
-
             VM.SyncDeltasBuffer.Clear();
 
             VM.MainTimer.Start();
-
             Thread.Sleep(200);
-            IsSyncInProcess = false;
-            VM.IsSyncInProcess = false;
-            Console.WriteLine("Блокировка снята!!");
-            //if (!IsSyncLeadPaused)
-            //{
-
-            //    do
-            //    {
-            //        foreach (VideoPlayerVM v in VM.videoPlayerVMs)
-            //            v.Body.Play();
-            //        Thread.Sleep(10);
-            //        if (AttemptCounter++ > 30) { Console.WriteLine("Syncronizator.SyncronizeOnShift() - не все плеры могут быть запущены."); break; }
-            //    } while (IsAnyPlayerPaused());
-
-            //}
-
+            isSyncInProcess = false;
         }
 
         /// <summary>
@@ -163,7 +133,6 @@ namespace MultiPlayerNIIES.Tools.Syncronization
                 {
                     if (!(v.CurTime <= v.Duration && v.CurTime > v.Duration - TimeSpan.FromSeconds(0.02)))
                     {
-                        Console.WriteLine("Несинхр. 1");
                         return false;
                     }
                 }
@@ -171,7 +140,6 @@ namespace MultiPlayerNIIES.Tools.Syncronization
                 {
                     if (!(v.CurTime >= TimeSpan.Zero && v.CurTime < TimeSpan.FromSeconds(0.02)))
                     {
-                        Console.WriteLine("Несинхр. 2");
                         return false;
                     }
                 }
@@ -180,21 +148,11 @@ namespace MultiPlayerNIIES.Tools.Syncronization
                     TimeSpan t = v.SyncronizationShiftVM.ShiftTime + VM.TimeSyncLead;
                     if (!(v.CurTime >= t - TimeSpan.FromSeconds(0.01) && v.CurTime <= t + TimeSpan.FromSeconds(0.01)))
                     {
-                        Console.WriteLine("Несинхр. 3");
                         return false;
                     }
                 }
             }
-            //else
-            //{
-            //    if (v.CurTime >= VM.TimeSyncLead - TimeSpan.FromSeconds(0.02) && v.CurTime <= VM.TimeSyncLead + TimeSpan.FromSeconds(0.02))
-            //    {
-            //        Console.WriteLine("Несинхр. 4");
-            //        return false;
-            //    }
-            //}
-                Console.WriteLine("синхр");
-                return true;
+            return true;
         }
     }
 }
