@@ -58,8 +58,8 @@ namespace MultiPlayerNIIES.ViewModel
 
         StripeContainerVM StripeContainerVM;
 
-        Syncronizator Syncronizator;
-        PlayerControlTools PlayerControlTools;
+        public Syncronizator Syncronizator;
+        public PlayerControlTools PlayerControlTools;
 
         public System.Windows.Threading.DispatcherTimer MainTimer;
         private System.Windows.Threading.DispatcherTimer ExcelRefreshStateTimer;
@@ -81,8 +81,10 @@ namespace MultiPlayerNIIES.ViewModel
             Settings.SettingsChanged += Settings_SettingsChanged;
             Settings.RestoreAllSettings();
 
-            Syncronizator = new Syncronizator(this);
+            
             PlayerControlTools = new PlayerControlTools(this);
+            Syncronizator = new Syncronizator(this);
+
 
             videoPlayerVMs = new ObservableCollection<VideoPlayerVM>();
             AreaVideoPlayersGrid = areaVideoPlayersGrid;
@@ -782,12 +784,12 @@ namespace MultiPlayerNIIES.ViewModel
 
         private void AutoSyncronizationTitles()
         {
-            if (SyncTitlesDelta > MaxSyncTitlesDelta && !Syncronizator.IsSyncInProcess) SyncronizationTitleCommand.Execute(null);
+            if (SyncTitlesDelta > MaxSyncTitlesDelta && !PlayerControlTools.IsOperationInProcess) SyncronizationTitleCommand.Execute(null);
         }
 
         private void AutoSyncronization()
         {
-            if (SyncDelta > MaxSyncDelta && !Syncronizator.IsSyncInProcess) SyncronizationShiftCommand.Execute(null);
+            if (SyncDelta > MaxSyncDelta && !PlayerControlTools.IsOperationInProcess) SyncronizationShiftCommand.Execute(null);
         }
 
         private TimeSpan CalcSyncDelta()
@@ -1261,7 +1263,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         bool PlayPauseCommandCanExecute(object obj)
         {
-            return (!Syncronizator.IsSyncInProcess && !PlayerControlTools.IsOperationInProcess);
+            return true;// (!PlayerControlTools.IsOperationInProcess);
         }
 
         private RelayCommand allPauseCommand;
@@ -1280,7 +1282,7 @@ namespace MultiPlayerNIIES.ViewModel
                       //    foreach (var t in tasks) t.Start();
                       //}, TimeSpan.FromSeconds(0.01));
 
-                      PlayerControlTools.PauseAllAsync();
+                      PlayerControlTools.CallCommand("PauseAll"); //.PauseAllAsync();
 
                   }, new Func<object, bool>(AllPauseCommandCanExecute)));
             }
@@ -1288,7 +1290,7 @@ namespace MultiPlayerNIIES.ViewModel
 
         bool AllPauseCommandCanExecute(object obj)
         {
-            return (!Syncronizator.IsSyncInProcess && !PlayerControlTools.IsOperationInProcess);
+            return true;//(!PlayerControlTools.IsOperationInProcess);
         }
 
         private RelayCommand allPlayCommand;
@@ -1306,15 +1308,16 @@ namespace MultiPlayerNIIES.ViewModel
                       //{
                       //    foreach (var t in tasks) t.Start();
                       //}, TimeSpan.FromSeconds(0.01));
+                      PlayerControlTools.CallCommand("PlayAll");
 
-                      PlayerControlTools.PlayAllAsync();
+                      //PlayerControlTools.PlayAllAsync();
                   }, new Func<object, bool>(AllPlayCommandCanExecute)));
             }
         }
 
         bool AllPlayCommandCanExecute(object obj)
         {
-            return (!Syncronizator.IsSyncInProcess && !PlayerControlTools.IsOperationInProcess);
+            return true;// (!PlayerControlTools.IsOperationInProcess);
         }
 
 
@@ -1672,7 +1675,7 @@ namespace MultiPlayerNIIES.ViewModel
                   (syncronizationShiftCommand = new RelayCommand(obj =>
                   {
                       if (videoPlayerVMs.Count < 2) return;
-                      WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(1));
+                      WaitProgressBar.ShowMe("Синхронизация по смещению", TimeSpan.FromSeconds(2));
                       Syncronizator.SyncronizeOnShiftAsync();
                       
                   }));

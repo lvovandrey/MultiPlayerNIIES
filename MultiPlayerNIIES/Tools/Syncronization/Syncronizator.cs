@@ -13,9 +13,11 @@ namespace MultiPlayerNIIES.Tools.Syncronization
     public class Syncronizator
     {
         VM VM;
+        PlayerControlTools PlayerControlTools;
         public Syncronizator(VM vm)
         {
             VM = vm;
+            PlayerControlTools = VM.PlayerControlTools;
         }
 
         public async void SyncronizeOnShiftAsync()
@@ -24,19 +26,25 @@ namespace MultiPlayerNIIES.Tools.Syncronization
 
         }
 
-        bool isSyncInProcess = false;
-        public bool IsSyncInProcess { get { return isSyncInProcess; } }
+
 
         /// <summary>
         /// Синхронизировать все плееры
         /// </summary>
         public void SyncronizeOnShift()
         {
-            if (IsSyncInProcess) return;
-            isSyncInProcess = true;
+            if (PlayerControlTools.IsOperationInProcess) return;
+            PlayerControlTools.isOperationInProcess = true;
             bool IsSyncLeadPaused = VM.SyncLeadPlayer.IsPaused;
             VM.MainTimer.Stop();
             int AttemptCounter = 0;
+
+            for (int i = 0; i < 20; i++)
+            {
+                foreach (VideoPlayerVM v in VM.videoPlayerVMs)
+                    v.Body.Pause();
+                Thread.Sleep(20);
+            }
 
             do
             {
@@ -57,10 +65,12 @@ namespace MultiPlayerNIIES.Tools.Syncronization
             }
 
             VM.SyncDeltasBuffer.Clear();
+            VM.SyncDelta = TimeSpan.Zero;
+            Thread.Sleep(2000);
 
             VM.MainTimer.Start();
-            Thread.Sleep(200);
-            isSyncInProcess = false;
+           
+            PlayerControlTools.isOperationInProcess = false;
         }
 
         /// <summary>

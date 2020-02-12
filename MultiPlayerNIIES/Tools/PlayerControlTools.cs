@@ -14,17 +14,46 @@ namespace MultiPlayerNIIES.Tools
         public PlayerControlTools(VM vm)
         {
             VM = vm;
+            ToolsTimer.Timer(TimerTick, TimeSpan.FromMilliseconds(50));
         }
 
-        bool isOperationInProcess= false;
+
+        Stack<string> CommandStack =  new Stack<string>();
+
+        void TimerTick()
+        {
+            ExecuteCommand();
+        }
+
+        private void ExecuteCommand()
+        {
+            if (isOperationInProcess) return;
+            if (CommandStack.Count == 0) return;
+            switch (CommandStack.Pop())
+            {
+                case "PlayAll": PlayAllAsync(); break;
+                case "PauseAll": PauseAllAsync(); break;
+                default:
+                    break;
+            }
+            CommandStack.Clear();
+        }
+
+        public void CallCommand(string commandName)
+        {
+            CommandStack.Push(commandName);
+        }
+
+        public bool isOperationInProcess= false;
         public bool IsOperationInProcess { get { return isOperationInProcess; } }
 
-        public async void PlayAllAsync()
+
+        async void PlayAllAsync()
         {
             await Task.Run(PlayAll);
         }
 
-        public async void PauseAllAsync()
+        async void PauseAllAsync()
         {
             await Task.Run(PauseAll);
         }
@@ -32,13 +61,20 @@ namespace MultiPlayerNIIES.Tools
         /// <summary>
         /// Старт всех плееров
         /// </summary>
-        public void PlayAll()
+        void PlayAll()
         {
 
             if (IsOperationInProcess) return;
             isOperationInProcess = true;
             int AttemptCounter = 0;
 
+            
+            for (int i = 0; i < 20; i++)
+            {
+                foreach (VideoPlayerVM v in VM.videoPlayerVMs)
+                    v.Body.Play();
+                Thread.Sleep(20);
+            }
             do
             {
                 foreach (VideoPlayerVM v in VM.videoPlayerVMs)
@@ -50,8 +86,11 @@ namespace MultiPlayerNIIES.Tools
                     break;
                 }
             } while (!IsAllPlayersPlayed());
-            Console.WriteLine(AttemptCounter);
-            Thread.Sleep(50);
+
+
+
+            // Console.WriteLine(AttemptCounter);
+            Thread.Sleep(500);
             isOperationInProcess = false;
 
         }
@@ -59,7 +98,7 @@ namespace MultiPlayerNIIES.Tools
         /// <summary>
         /// Пауза всех плееров
         /// </summary>
-        public void PauseAll()
+        void PauseAll()
         {
             if (IsOperationInProcess) return;
             isOperationInProcess = true;
@@ -80,7 +119,7 @@ namespace MultiPlayerNIIES.Tools
             Console.WriteLine(AttemptCounter);
             
 
-            Thread.Sleep(50);
+            Thread.Sleep(500);
             isOperationInProcess = false;
 
         }
